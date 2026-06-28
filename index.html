@@ -429,10 +429,17 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-compact-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;margin-bottom:14px}
 .hk-compact-row:last-child{margin-bottom:0}
 .hk-compact-row .fr{margin-bottom:0}
+.hk-three-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:start;margin-bottom:14px}
+.hk-three-row:last-child{margin-bottom:0}
+.hk-three-row .fr{margin-bottom:0}
+.est-price-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;align-items:start;margin-bottom:14px}
+.est-price-row .fr{margin-bottom:0}
+.est-inline-unit{display:flex;align-items:center;gap:5px}
+.est-inline-unit .fi{min-width:0}
 .hk-mini-field .fi{font-size:14px;padding:11px 10px}
 .hk-mini-field .fi[type="number"]{text-align:center}
 .hk-mini-field .fl{font-size:10px;letter-spacing:0}
-@media (max-width:360px){.hk-compact-row{gap:6px}.hk-mini-field .fi{font-size:13px;padding-left:8px;padding-right:8px}}
+@media (max-width:360px){.hk-compact-row,.hk-three-row,.est-price-row{gap:6px}.hk-mini-field .fi{font-size:13px;padding-left:8px;padding-right:8px}}
 .hk-radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .hk-radio-label{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--g2);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid transparent;user-select:none}
 .hk-radio-label:has(input:checked){background:var(--gl);border-color:var(--g);color:var(--g)}
@@ -1268,12 +1275,12 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 日程 -->
     <div class="fc">
       <div class="sec-label">日程</div>
-      <div class="fr">
-        <label class="fl">受注日</label>
-        <input type="date" class="fi" id="hk-order-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→今日</span>
-      </div>
-      <div class="hk-compact-row">
+      <div class="hk-three-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">受注日</label>
+          <input type="date" class="fi" id="hk-order-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→今日</span>
+        </div>
         <div class="fr hk-mini-field">
           <label class="fl">生産日</label>
           <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
@@ -1424,14 +1431,16 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <label class="fl" style="margin-bottom:8px;display:block">🏢 クボタ営業所を選択</label>
         <div id="est-kubota-chips" style="display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto"></div>
       </div>
-      <div class="fr">
-        <label class="fl">担当者名（お客様の担当者）</label>
-        <input type="text" class="fi" id="est-staff" placeholder="">
-      </div>
-      <div class="fr">
-        <label class="fl">見積日</label>
-        <input type="date" class="fi" id="est-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→今日</span>
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">担当者名（お客様の担当者）</label>
+          <input type="text" class="fi" id="est-staff" placeholder="">
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">見積日</label>
+          <input type="date" class="fi" id="est-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→今日</span>
+        </div>
       </div>
     </div>
 
@@ -1439,7 +1448,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">値引き設定</div>
       <div id="est-shikiri-bar" style="display:none;background:var(--gl);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--g);font-weight:700;margin-bottom:10px"></div>
-      <div class="hk-compact-row">
+      <div class="hk-three-row">
         <div class="fr hk-mini-field">
           <label class="fl">値引方法</label>
           <div class="hk-radio-row" style="margin-top:0">
@@ -1448,17 +1457,27 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           </div>
         </div>
         <div class="fr hk-mini-field">
-          <label class="fl">追加値引率</label>
+          <label class="fl">値引率</label>
           <div style="display:flex;align-items:center;gap:6px">
             <input type="number" class="fi" id="est-extra-rate" placeholder="0" min="0" max="99" step="0.1" inputmode="decimal"
                    oninput="estCalcRatioDisp();estCalcAllPricesP()">
             <span style="font-size:13px;color:var(--tm)">%</span>
           </div>
         </div>
-      </div>
-      <div class="fr">
-        <label class="fl">値引名</label>
-        <input type="text" class="fi" id="est-disc-name" placeholder="例: ALL66%">
+        <div class="fr hk-mini-field">
+          <label class="fl">値引名</label>
+          <select class="fi" id="est-disc-name" onchange="estDiscountNameChanged()">
+          <option value="">-- 選択（任意）--</option>
+          <option value="実演機値引">実演機値引（外掛）</option>
+          <option value="実演機対応値引">実演機対応値引（外掛）</option>
+          <option value="展示機値引">展示機値引（内掛）</option>
+          <option value="不需要期値引">不需要期値引（内掛）</option>
+          <option value="早期確注値引">早期確注値引（内掛）</option>
+          <option value="台数値引">台数値引（内掛）</option>
+          <option value="推進値引">推進値引（内掛）</option>
+          <option value="展示会値引">展示会値引（内掛）</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -3737,13 +3756,14 @@ function estBuildTextPrompt(text) {
     '- 在庫状況（在庫あり/在庫限り/受注生産等）をstock_statusに\n' +
     '- 伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
     '- 月だけの生産日・出荷日は「8月」「2026年9月」のようにテキストで\n' +
+    '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
     '- 回答期限・運賃・支払条件は抽出しない\n\n' +
     'テキスト:「' + text + '」\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
     '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
-    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
+    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
     '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
@@ -3754,15 +3774,46 @@ function estBuildImagePrompt() {
   return '見積書または見積依頼書の画像を読み取り、見積フォーム用の項目をJSONだけで抽出してください。\n' +
     '今日=' + today + '。日付はYYYY-MM-DDへ正規化。回答期限・運賃・支払条件は抽出しない。\n' +
     '伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
+    '値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択。\n' +
     '月だけの日付は production_text/ship_text に「8月」「2026年9月以降」のように入れる。\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
     '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
-    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
+    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
     '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
+}
+
+function estSelectDiscountName(name) {
+  var sel = document.getElementById('est-disc-name');
+  if (!sel || !name) return;
+  var norm = function(s) {
+    return _hkNorm(s).replace(/値引き/g, '値引').replace(/引き/g, '値引');
+  };
+  var want = norm(name);
+  for (var i = 0; i < sel.options.length; i++) {
+    var opt = sel.options[i];
+    var ov = norm(opt.value || opt.textContent || '');
+    if (opt.value && (ov === want || ov.indexOf(want) >= 0 || want.indexOf(ov) >= 0)) {
+      sel.value = opt.value;
+      estDiscountNameChanged();
+      return;
+    }
+  }
+}
+
+function estDiscountNameChanged() {
+  var sel = document.getElementById('est-disc-name');
+  var name = sel ? sel.value : '';
+  if (name) {
+    var method = (name === '実演機値引' || name === '実演機対応値引') ? '外掛' : '内掛';
+    var radio = document.querySelector('input[name="est-extra-method"][value="' + method + '"]');
+    if (radio) radio.checked = true;
+  }
+  estCalcRatioDisp();
+  estCalcAllPricesP();
 }
 
 function estFillFromAI(json) {
@@ -3773,7 +3824,7 @@ function estFillFromAI(json) {
   });
   if (json.staff_name) document.getElementById('est-staff').value = json.staff_name;
   if (json.quote_date) document.getElementById('est-date').value = json.quote_date;
-  if (json.discount_name) document.getElementById('est-disc-name').value = json.discount_name;
+  if (json.discount_name) estSelectDiscountName(json.discount_name);
   if (json.discount_rate != null) document.getElementById('est-extra-rate').value = json.discount_rate;
 
   var firstCard = document.querySelector('.est-prod-card');
@@ -3883,22 +3934,21 @@ function estMakeProdCard(id) {
     '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
     '<input type="text" class="fi est-pr-code" placeholder="自動" autocomplete="off"' +
     ' onblur="estProdCodeLookupP(' + id + ',this.value)"></div></div>' +
-    '<div class="fr"><label class="fl">小売単価（上代）</label>' +
-    '<div style="display:flex;align-items:center;gap:6px">' +
-    '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric" style="max-width:120px"' +
+    '<div class="est-price-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">小売単価</label>' +
+    '<div class="est-inline-unit">' +
+    '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric"' +
     ' oninput="estCalcPricesP(' + id + ')">' +
     '<span style="font-size:12px;color:var(--tm)">円</span></div></div>' +
-    '<div class="fr" style="display:flex;gap:12px;flex-wrap:wrap">' +
-    '<div><label class="fl">仕切単価</label>' +
-    '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div>' +
-    '<div class="est-pr-disc-wrap" style="display:none"><label class="fl">値引後単価</label>' +
-    '<input type="number" class="fi est-pr-disc" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div></div>' +
-    '<div class="hk-compact-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">仕切単価</label>' +
+    '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field est-pr-disc-wrap" style="display:none"><label class="fl">値引後単価</label>' +
+    '<input type="number" class="fi est-pr-disc" placeholder="—" min="0" inputmode="numeric"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
-    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
+    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric"></div></div>' +
+    '<div class="hk-three-row">' +
     '<div class="fr hk-mini-field"><label class="fl">在庫状況</label>' +
-    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 受注生産"></div></div>' +
-    '<div class="hk-compact-row">' +
+    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 受注生産"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">生産日</label>' +
     '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD / 8月"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">出荷予定日</label>' +
