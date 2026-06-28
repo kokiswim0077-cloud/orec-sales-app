@@ -3955,7 +3955,7 @@ function estBuildTextPrompt(text) {
     'ルール:\n- 見積日未指定→' + today + '\n- 数量未指定→1\n- 金額はカンマなし数値\n' +
     '- 在庫状況（在庫あり/在庫限り/受注生産等）をstock_statusに\n' +
     '- 伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
-    '- 月だけの生産日・出荷日は「8月」「2026年9月」のようにテキストで\n' +
+    '- 生産日・出荷予定日はカレンダー入力用にYYYY-MM-DDへ正規化。月だけで日付が確定できない場合はnullにして備考へ入れる\n' +
     '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
     '- 回答期限・運賃・支払条件は抽出しない\n\n' +
     'テキスト:「' + text + '」\n\n' +
@@ -3965,7 +3965,7 @@ function estBuildTextPrompt(text) {
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
-    '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
+    '  "production_date": "YYYY-MM-DDまたはnull",\n  "ship_date": "YYYY-MM-DDまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
 }
 
@@ -3975,14 +3975,14 @@ function estBuildImagePrompt() {
     '今日=' + today + '。日付はYYYY-MM-DDへ正規化。回答期限・運賃・支払条件は抽出しない。\n' +
     '伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
     '値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択。\n' +
-    '月だけの日付は production_text/ship_text に「8月」「2026年9月以降」のように入れる。\n\n' +
+    '生産日・出荷予定日はカレンダー入力用にYYYY-MM-DDへ正規化。月だけで日付が確定できない場合はnullにして備考へ入れる。\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
     '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
-    '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
+    '  "production_date": "YYYY-MM-DDまたはnull",\n  "ship_date": "YYYY-MM-DDまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
 }
 
@@ -4014,6 +4014,19 @@ function estDiscountNameChanged() {
   }
   estCalcRatioDisp();
   estCalcAllPricesP();
+}
+
+function estNormalizeDateValue(value) {
+  var s = (value || '').trim();
+  return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : '';
+}
+
+function estAppendNote(el, text) {
+  if (!el || !text) return;
+  var s = String(text).trim();
+  if (!s) return;
+  if (el.value && el.value.indexOf(s) < 0) el.value += '\n' + s;
+  else if (!el.value) el.value = s;
 }
 
 function estFillFromAI(json) {
@@ -4053,9 +4066,13 @@ function estFillFromAI(json) {
     if (json.quantity != null && qtyEl) qtyEl.value = json.quantity;
     if (json.retail_price != null && retailEl) retailEl.value = json.retail_price;
     if (json.stock_status && stockEl) stockEl.value = json.stock_status;
-    if (json.production_text && pdEl) pdEl.value = json.production_text;
-    if (json.ship_text && sdEl) sdEl.value = json.ship_text;
-    if (json.note && noteEl) noteEl.value = json.note;
+    var prodDate = estNormalizeDateValue(json.production_date || json.production_text);
+    var shipDate = estNormalizeDateValue(json.ship_date || json.ship_text);
+    if (prodDate && pdEl) pdEl.value = prodDate;
+    else if ((json.production_date || json.production_text) && noteEl) estAppendNote(noteEl, '生産日 ' + (json.production_date || json.production_text));
+    if (shipDate && sdEl) sdEl.value = shipDate;
+    else if ((json.ship_date || json.ship_text) && noteEl) estAppendNote(noteEl, '出荷予定日 ' + (json.ship_date || json.ship_text));
+    if (json.note && noteEl) estAppendNote(noteEl, json.note);
     if (whEl) whEl.value = '';
     estCalcPricesP(pid);
   }
@@ -4150,9 +4167,9 @@ function estMakeProdCard(id) {
     '<div class="fr hk-mini-field"><label class="fl">在庫状況</label>' +
     '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 受注生産"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">生産日</label>' +
-    '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD / 8月"></div>' +
+    '<input type="date" class="fi est-pr-proddate"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">出荷予定日</label>' +
-    '<input type="text" class="fi est-pr-shipdate" placeholder="YYYY-MM-DD / 2026年9月"></div></div>' +
+    '<input type="date" class="fi est-pr-shipdate"></div></div>' +
     '<div class="fr"><label class="fl">備考 <span class="opt">（任意）</span></label>' +
     '<textarea class="fi est-pr-note" rows="2" placeholder="例: 次回生産 7/9" style="resize:vertical;font-family:inherit;padding:10px"></textarea></div>' +
     '</div>';
