@@ -3393,8 +3393,33 @@ async function hkDiagnose() {
 }
 
 /* ── 販売店検索＋確認 ── */
+function hkIsInvalidDealerQuery(name) {
+  var n = _hkNorm(name);
+  if (!n) return true;
+  if (/オーレック|orec|関東営業|営業g|営業Ｇ|関物|福岡倉庫|本社/.test(String(name || ''))) return true;
+  if (/ラビットモア|スパイダーモア|ウィングモア|ブルモア|草刈機|カタログ|見積書|注文書/.test(String(name || ''))) return true;
+  return false;
+}
+
+function hkCleanDealerName(name) {
+  return String(name || '').replace(/御中|様|殿|宛/g, '').trim();
+}
+
+function hkFindDealerByCode(code) {
+  var c = String(code || '').trim();
+  if (!c || typeof MSG_DEALERS === 'undefined') return null;
+  return MSG_DEALERS.find(function(d) { return d.code === c; }) || null;
+}
+
 function hkFindDealer(name, nameId, codeId, callback) {
   if (!name) { if (callback) callback(); return; }
+  name = hkCleanDealerName(name);
+  if (hkIsInvalidDealerQuery(name)) {
+    document.getElementById(nameId).value = '';
+    document.getElementById(codeId).value = '';
+    if (callback) callback();
+    return;
+  }
   var norm = _hkNorm(name);
   var matches = MSG_DEALERS.filter(function(d) { return _hkNorm(d.name).includes(norm); });
   if (matches.length === 0) {
@@ -3463,6 +3488,56 @@ function hkResolveProducts(query, limit){
   return out.slice(0, limit||25);
 }
 
+function hkNormalizeProductCode(value) {
+  var s = String(value || '').trim().replace(/[‐‑‒–—ー−]/g, '-');
+  if (!s) return '';
+  var compact = s.replace(/\s+/g, '');
+  if (/^\d{4}-\d{4,5}$/.test(compact)) return compact;
+  var digits = compact.replace(/\D/g, '');
+  if ((digits.length === 8 || digits.length === 9) && compact === digits) {
+    return digits.slice(0, 4) + '-' + digits.slice(4);
+  }
+  return '';
+}
+
+function hkExtractModelName(value) {
+  var s = String(value || '')
+    .normalize('NFKC')
+    .toUpperCase()
+    .replace(/／/g, '/')
+    .replace(/[‐‑‒–—ー−]/g, '-');
+  var matches = s.match(/[A-Z]{1,6}\s*\d{2,5}\s*[A-Z]*(?:\s*\/\s*[A-Z0-9]+)?/g) || [];
+  if (!matches.length) return '';
+  matches = matches.map(function(m) { return m.replace(/\s+/g, ''); });
+  matches.sort(function(a, b) { return b.length - a.length; });
+  return matches[0];
+}
+
+function hkNormalizeModelName(value) {
+  var model = hkExtractModelName(value);
+  return /^[A-Z0-9\/]+$/.test(model) ? model : '';
+}
+
+function hkFindProductByCode(code) {
+  var c = hkNormalizeProductCode(code);
+  if (!c || typeof HK_PRODUCTS === 'undefined') return null;
+  for (var i = 0; i < HK_PRODUCTS.length; i++) {
+    if (HK_PRODUCTS[i][0] === c) return {c: HK_PRODUCTS[i][0], n: HK_PRODUCTS[i][1], p: HK_PRODUCTS[i][2], s: 100};
+  }
+  return null;
+}
+
+function hkResolveAiProduct(rawCode, rawName) {
+  var code = hkNormalizeProductCode(rawCode);
+  var byCode = hkFindProductByCode(code);
+  if (byCode) return byCode;
+  var model = hkNormalizeModelName(rawName) || hkNormalizeModelName(rawCode);
+  if (code) return { c: code, n: model, p: null, s: 0 };
+  var matches = model ? hkResolveProducts(model, 1) : [];
+  if (matches.length) return matches[0];
+  return { c: code, n: model, p: null, s: 0 };
+}
+
 var _hkProdNextId = 0;
 var _hkProdMatchesById = {};
 
@@ -3504,12 +3579,12 @@ function hkMakeProdCard(id) {
     '<div class="hk-prod-head"><span class="hk-prod-num">商品 1</span>' +
     '<button type="button" class="hk-prod-del" onclick="hkRemoveProd(' + id + ')">× 削除</button></div>' +
     '<div class="hk-code-row" style="margin-bottom:10px">' +
-    '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名（型式）</label>' +
     '<input type="text" class="fi hk-pr-name" placeholder="例: SP853A" autocomplete="off"' +
     ' oninput="hkProdSearch(' + id + ',this.value)" onfocus="hkProdSearch(' + id + ',this.value)" onblur="hkProdBlur(' + id + ')">' +
     '<div class="hk-prod-dd" id="hk-prod-dd-' + id + '"></div></div>' +
     '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
-    '<input type="text" class="fi hk-pr-code" placeholder="自動" autocomplete="off"></div></div>' +
+    '<input type="text" class="fi hk-pr-code" placeholder="自動" autocomplete="off" onblur="hkProdCodeLookup(' + id + ',this.value)"></div></div>' +
     '<div class="hk-three-row">' +
     '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
     '<input type="number" class="fi hk-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
@@ -3588,7 +3663,29 @@ function hkProdPick(id, i){
   var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open');
   hkSetStatus('✅ '+m.n+' → コード '+m.c+(m.p!=null?'（¥'+Number(m.p).toLocaleString()+'）':''), 'var(--g)');
 }
-function hkProdBlur(id){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open'); }, 180); }
+function hkProdNameNormalize(id) {
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.hk-pr-name');
+  var codeEl = card.querySelector('.hk-pr-code');
+  var raw = nameEl ? nameEl.value : '';
+  if (!raw) return;
+  var product = hkResolveAiProduct('', raw);
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+  else if (nameEl && !hkNormalizeModelName(raw)) nameEl.value = '';
+}
+function hkProdBlur(id){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open'); hkProdNameNormalize(id); }, 180); }
+
+function hkProdCodeLookup(id, value) {
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var codeEl = card.querySelector('.hk-pr-code');
+  var nameEl = card.querySelector('.hk-pr-name');
+  var product = hkResolveAiProduct(value, value || (nameEl ? nameEl.value : ''));
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+}
 
 function hkGetProducts() {
   return Array.from(document.querySelectorAll('.hk-prod-card')).map(function(card) {
@@ -3613,19 +3710,14 @@ function hkFillProductCard(card, item) {
   var orderNoEl = card.querySelector('.hk-pr-order-no');
   var discNameEl = card.querySelector('.hk-pr-disc-name');
   var discRateEl = card.querySelector('.hk-pr-disc-rate');
-  if (item.prod_code && codeEl) codeEl.value = item.prod_code;
-  if (item.prod_name && nameEl) {
-    nameEl.value = item.prod_name;
-    if (!item.prod_code) {
-      var pm = hkResolveProducts(item.prod_name, 5);
-      if (pm.length) {
-        if (codeEl) codeEl.value = pm[0].c;
-        nameEl.value = pm[0].n;
-        var extra = pm.length > 1 ? '（他' + (pm.length - 1) + '件候補・商品名欄で選び直し可）' : '';
-        hkSetStatus('✅ 製品名「' + item.prod_name + '」→ ' + pm[0].n + ' / コード ' + pm[0].c +
-          (pm[0].p != null ? '（¥' + Number(pm[0].p).toLocaleString() + '）' : '') + extra,
-          pm.length > 1 ? '#B45309' : 'var(--g)');
-      }
+  var product = hkResolveAiProduct(item.prod_code, item.prod_name);
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) {
+    nameEl.value = hkNormalizeModelName(product.n) || product.n;
+    if (product.s > 0) {
+      hkSetStatus('✅ 製品「' + (item.prod_name || item.prod_code) + '」→ ' + nameEl.value + ' / コード ' + product.c +
+        (product.p != null ? '（¥' + Number(product.p).toLocaleString() + '）' : ''),
+        'var(--g)');
     }
   }
   if (item.qty != null && qtyEl) qtyEl.value = item.qty;
@@ -3663,8 +3755,10 @@ function hkFillFromAI(json) {
     var destCode = json.dest_code || null;
     var custName = document.getElementById('hk-cust-name').value;
     if (destCode) {
+      var destByCode = hkFindDealerByCode(destCode);
       document.getElementById('hk-dest-code').value = destCode;
-      if (destName) document.getElementById('hk-dest-name').value = destName;
+      if (destByCode) document.getElementById('hk-dest-name').value = destByCode.name;
+      else if (destName && !hkIsInvalidDealerQuery(destName)) document.getElementById('hk-dest-name').value = hkCleanDealerName(destName);
     } else if (!destName || destName === custName) {
       document.getElementById('hk-dest-name').value = document.getElementById('hk-cust-name').value;
       document.getElementById('hk-dest-code').value = document.getElementById('hk-cust-code').value;
@@ -3675,11 +3769,19 @@ function hkFillFromAI(json) {
   // 得意先から順に処理（cust_codeが直接来た場合はコードを優先設定）
   var custName = json.cust_name || null;
   var custCode = json.cust_code || null;
-  if (custCode) document.getElementById('hk-cust-code').value = custCode;
-  if (custName) {
+  var custByCode = hkFindDealerByCode(custCode);
+  if (custByCode) {
+    document.getElementById('hk-cust-name').value = custByCode.name;
+    document.getElementById('hk-cust-code').value = custByCode.code;
+    applyRest();
+  } else if (custCode) {
+    document.getElementById('hk-cust-code').value = custCode;
+    if (custName && !hkIsInvalidDealerQuery(custName)) {
+      document.getElementById('hk-cust-name').value = hkCleanDealerName(custName);
+    }
+    applyRest();
+  } else if (custName) {
     hkFindDealer(custName, 'hk-cust-name', 'hk-cust-code', function() {
-      // cust_codeが明示指定された場合は dealer lookup のコードより優先
-      if (custCode) document.getElementById('hk-cust-code').value = custCode;
       applyRest();
     });
   } else {
@@ -3699,10 +3801,11 @@ function hkBuildTextPrompt(text) {
     '- 値引名は「展示機値引」「推進値引」「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「展示会値引」から近いものを選択\n' +
     '- 商品が複数ある場合は products 配列へ入れる\n' +
     '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」が出荷元→"031" / 「福岡倉庫」「本社」→"011" / 未指定→"011"\n' +
-    '- 商品コードは数字のみ（例: 03178500）\n\nテキスト:「' + text + '」\n\n' +
+    '- prod_name は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない\n' +
+    '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない\n\nテキスト:「' + text + '」\n\n' +
     '{\n  "cust_name": "得意先名またはnull",\n  "dest_name": "納入先名またはnull",\n' +
-    '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名またはnull", "qty": 数量, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
-    '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名またはnull",\n  "qty": 数量,\n  "order_no": "注文番号またはnull",\n' +
+    '  "products": [{"prod_code": "数字ハイフンの商品コードまたはnull", "prod_name": "英数字スラッシュの型式またはnull", "qty": 数量, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+    '  "prod_code": "数字ハイフンの商品コードまたはnull",\n  "prod_name": "英数字スラッシュの型式またはnull",\n  "qty": 数量,\n  "order_no": "注文番号またはnull",\n' +
     '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
     '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
     '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
@@ -3770,7 +3873,7 @@ function hkPhotoReadFile(file) {
       var mime = file.type || 'image/jpeg';
       var _today = new Date().toISOString().slice(0,10);
       var prompt = '以下の注文書・引合書の画像から情報を抽出してください。JSONのみ返してください（説明不要）。\n' +
-        '今日=' + _today + '。日付はYYYY-MM-DDに変換。商品コードはハイフン付き形式（例: 0353-0060）。\n\n' +
+        '今日=' + _today + '。日付はYYYY-MM-DDに変換。\n\n' +
         '特別ルール:\n' +
         '- クボタ「注文書（出荷指示書）」で「関東甲信クボタ」→ cust_name="関東甲信クボタ", cust_code="61110"\n' +
         '- クボタ「大網営業所」またはオフィスコード040 → dest_code="61110005"\n' +
@@ -3778,8 +3881,9 @@ function hkPhotoReadFile(file) {
         '- 「木嶋商店」→ cust_code="61310"\n' +
         '- 「エルタ」→ cust_code="65137"\n' +
         '- 「大竹産業」→ cust_code="61323"\n' +
-        '- 「オーレック」「関東営業所」「谷尾」等のオーレック社内宛先は得意先・納入先にしない\n' +
-        '- 形式名/モデル名（例: RM953X/K）を prod_name に\n' +
+        '- 「オーレック」「関東営業所」「谷尾」等のオーレック社内宛先は得意先・納入先にしない。得意先・納入先は発注元/販売店/宛先の実在名称だけ\n' +
+        '- prod_name は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない\n' +
+        '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない\n' +
         '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「033」→"031"\n' +
         '- 出荷日・生産日は備考・注記欄から読む（例: "6/29(月)出荷"→ship_date）\n' +
         '- 商品が複数ある場合は products 配列へ入れる\n' +
@@ -3787,8 +3891,8 @@ function hkPhotoReadFile(file) {
         '- 受注日は今日=' + _today + '\n\n' +
         '{\n  "cust_name": "得意先名またはnull",\n  "cust_code": "得意先コードまたはnull",\n' +
         '  "dest_name": "納入先名またはnull",\n  "dest_code": "納入先コードまたはnull",\n' +
-        '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名・形式名またはnull", "qty": 数量またはnull, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
-        '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名・形式名またはnull",\n  "qty": 数量またはnull,\n  "order_no": "注文番号またはnull",\n' +
+        '  "products": [{"prod_code": "数字ハイフンの商品コードまたはnull", "prod_name": "英数字スラッシュの型式またはnull", "qty": 数量またはnull, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+        '  "prod_code": "数字ハイフンの商品コードまたはnull",\n  "prod_name": "英数字スラッシュの型式またはnull",\n  "qty": 数量またはnull,\n  "order_no": "注文番号またはnull",\n' +
         '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
         '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
         '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
@@ -4129,13 +4233,16 @@ function estBuildTextPrompt(text) {
     'ルール:\n- 見積日未指定→' + today + '\n- 数量未指定→1\n- 金額はカンマなし数値\n' +
     '- 在庫状況（在庫あり/在庫限り/受注生産等）をstock_statusに\n' +
     '- 伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
+    '- customer_query は得意先・販売店の実在名称だけ。「オーレック」「関東営業G」など社内名は得意先にしない\n' +
+    '- product_query は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない\n' +
+    '- product_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない\n' +
     '- 生産日・出荷予定日はカレンダー入力用にYYYY-MM-DDへ正規化。月だけで日付が確定できない場合はnullにして備考へ入れる\n' +
     '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
     '- 回答期限・運賃・支払条件は抽出しない\n\n' +
     'テキスト:「' + text + '」\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
     '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
-    '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
+    '  "product_query": "英数字スラッシュの型式またはnull",\n  "product_code": "数字ハイフンの商品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
@@ -4148,11 +4255,14 @@ function estBuildImagePrompt() {
   return '見積書または見積依頼書の画像を読み取り、見積フォーム用の項目をJSONだけで抽出してください。\n' +
     '今日=' + today + '。日付はYYYY-MM-DDへ正規化。回答期限・運賃・支払条件は抽出しない。\n' +
     '伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
+    'customer_query は得意先・販売店の実在名称だけ。「オーレック」「関東営業G」など社内名は得意先にしない。\n' +
+    'product_query は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない。\n' +
+    'product_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない。\n' +
     '値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択。\n' +
     '生産日・出荷予定日はカレンダー入力用にYYYY-MM-DDへ正規化。月だけで日付が確定できない場合はnullにして備考へ入れる。\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
     '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
-    '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
+    '  "product_query": "英数字スラッシュの型式またはnull",\n  "product_code": "数字ハイフンの商品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
@@ -4204,9 +4314,15 @@ function estAppendNote(el, text) {
 }
 
 function estFillFromAI(json) {
-  if (json.customer_code) document.getElementById('est-cust-code').value = json.customer_code;
+  var custByCode = hkFindDealerByCode(json.customer_code);
+  if (custByCode) {
+    document.getElementById('est-cust-name').value = custByCode.name;
+    document.getElementById('est-cust-code').value = custByCode.code;
+  } else if (json.customer_code) {
+    document.getElementById('est-cust-code').value = json.customer_code;
+  }
   var custQ = json.customer_query || null;
-  if (custQ) hkFindDealer(custQ, 'est-cust-name', 'est-cust-code', function() {
+  if (custQ && !custByCode) hkFindDealer(custQ, 'est-cust-name', 'est-cust-code', function() {
     estCheckKubota(); estCalcRatioDisp(); estCalcAllPricesP();
   });
   if (json.staff_name) document.getElementById('est-staff').value = json.staff_name;
@@ -4226,17 +4342,16 @@ function estFillFromAI(json) {
     var pdEl    = firstCard.querySelector('.est-pr-proddate');
     var sdEl    = firstCard.querySelector('.est-pr-shipdate');
     var noteEl  = firstCard.querySelector('.est-pr-note');
-    if (json.product_code && codeEl) codeEl.value = json.product_code;
     var pq = json.product_query || null;
-    if (pq && !json.product_code) {
-      var pm = hkResolveProducts(pq, 3);
-      if (pm.length) {
-        if (codeEl) codeEl.value = pm[0].c;
-        if (nameEl) nameEl.value = pm[0].n;
-        var ex = pm.length > 1 ? '（他' + (pm.length-1) + '件候補）' : '';
-        estSetStatus('✅ 製品「' + pq + '」→ ' + pm[0].n + ' / ' + pm[0].c + ex, 'var(--g)');
-      } else if (nameEl) { nameEl.value = pq; }
-    } else if (pq && nameEl) { nameEl.value = pq; }
+    var aiProduct = hkResolveAiProduct(json.product_code, pq);
+    if (aiProduct.c && codeEl) codeEl.value = aiProduct.c;
+    if (aiProduct.n && nameEl) nameEl.value = hkNormalizeModelName(aiProduct.n) || aiProduct.n;
+    if (aiProduct.s > 0) {
+      estSetStatus('✅ 製品「' + (pq || json.product_code) + '」→ ' + nameEl.value + ' / ' + aiProduct.c, 'var(--g)');
+    } else if (pq && nameEl) {
+      var model = hkNormalizeModelName(pq);
+      if (model) nameEl.value = model;
+    }
     if (json.quantity != null && qtyEl) qtyEl.value = json.quantity;
     if (json.retail_price != null && retailEl) retailEl.value = json.retail_price;
     if (json.stock_status && stockEl) stockEl.value = json.stock_status;
@@ -4318,7 +4433,7 @@ function estMakeProdCard(id) {
     ' style="display:none;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;color:#DC2626;font-size:12px;padding:4px 10px;cursor:pointer;font-family:inherit">× 削除</button>' +
     '</div>' +
     '<div class="hk-code-row" style="margin-bottom:14px">' +
-    '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名（型式）</label>' +
     '<input type="text" class="fi est-pr-name" placeholder="例: SP853A" autocomplete="off"' +
     ' oninput="estProdSearchP(' + id + ',this.value)" onfocus="estProdSearchP(' + id + ',this.value)" onblur="estProdBlurP(' + id + ')">' +
     '<div class="hk-prod-dd" id="est-pdd-' + id + '"></div></div>' +
@@ -4548,23 +4663,47 @@ function estProdBlurP(id) {
   setTimeout(function() {
     var dd = document.getElementById('est-pdd-' + id);
     if (dd) { dd.classList.remove('open'); dd.innerHTML = ''; }
+    estProdNameNormalizeP(id);
   }, 180);
+}
+
+function estProdNameNormalizeP(id) {
+  var card = document.querySelector('.est-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.est-pr-name');
+  var codeEl = card.querySelector('.est-pr-code');
+  var retailEl = card.querySelector('.est-pr-retail');
+  var whEl = card.querySelector('.est-pr-whole');
+  var discEl = card.querySelector('.est-pr-disc');
+  var raw = nameEl ? nameEl.value : '';
+  if (!raw) return;
+  var product = hkResolveAiProduct('', raw);
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+  else if (nameEl && !hkNormalizeModelName(raw)) nameEl.value = '';
+  if (product.p != null && retailEl && !retailEl.value) {
+    retailEl.value = product.p;
+    if (whEl) whEl.value = '';
+    if (discEl) discEl.value = '';
+    estCalcPricesP(id, true);
+  }
 }
 
 function estProdCodeLookupP(id, code) {
   if (!code) return;
-  var matches = hkResolveProducts(code, 1);
-  if (!matches.length) return;
-  var m = matches[0];
   var card = document.querySelector('.est-prod-card[data-pid="' + id + '"]');
   if (!card) return;
+  var codeEl = card.querySelector('.est-pr-code');
   var nameEl = card.querySelector('.est-pr-name');
   var retailEl = card.querySelector('.est-pr-retail');
   var whEl = card.querySelector('.est-pr-whole');
   var discEl = card.querySelector('.est-pr-disc');
-  if (nameEl && !nameEl.value) nameEl.value = m.n;
-  if (m.p != null && retailEl && !retailEl.value) {
-    retailEl.value = m.p;
+  var product = hkResolveAiProduct(code, code || (nameEl ? nameEl.value : ''));
+  if (!product.c && !product.n) return;
+  if (codeEl && product.c) codeEl.value = product.c;
+  if (nameEl && product.n) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+  if (product.p != null && retailEl && !retailEl.value) {
+    retailEl.value = product.p;
     if (whEl) whEl.value = '';
     if (discEl) discEl.value = '';
     estCalcPricesP(id, true);
