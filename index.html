@@ -426,6 +426,14 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-code-side .fi{font-size:13px;padding:10px 8px;text-align:center;font-family:"Barlow Condensed",monospace;font-weight:700;letter-spacing:.03em}
 .hk-code-side .fi::placeholder{font-size:11px;letter-spacing:0;font-family:"Noto Sans JP",sans-serif;font-weight:500}
 @media (max-width:360px){.hk-code-row{grid-template-columns:minmax(0,1fr) 96px;gap:6px}.hk-code-side .fi{font-size:12px;padding-left:6px;padding-right:6px}}
+.hk-party-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.hk-party-box{min-width:0}
+.hk-party-title{font-size:12px;font-weight:800;color:var(--bk);margin-bottom:8px}
+.hk-prod-card{border:1.5px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+.hk-prod-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hk-prod-num{font-size:12px;font-weight:800;color:var(--g)}
+.hk-prod-del{display:none;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;color:#DC2626;font-size:12px;padding:4px 10px;cursor:pointer;font-family:inherit}
+.hk-prod-add{width:100%;padding:13px;background:var(--gl);color:var(--g);border:2px dashed var(--g);border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
 .hk-compact-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;margin-bottom:14px}
 .hk-compact-row:last-child{margin-bottom:0}
 .hk-compact-row .fr{margin-bottom:0}
@@ -1200,47 +1208,50 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <div class="hk-voice-hint">音声入力で話した内容、またはキーボードで入力 → Geminiが解析してフォームに反映します</div>
     <textarea class="hk-voice-textarea" id="hk-voice-text"
-      placeholder="例: 得意先：○○、納入先：○○、製品：○○、受注日、生産日、出荷希望日あれば：○○、値引：値引き名・値引き方法、値引率"></textarea>
+      placeholder="例: 得意先：○○、納入先：○○、製品：○○、受注日、生産日、出荷希望日あれば：○○、値引：値引名・値引率"></textarea>
     <button class="hk-voice-submit" onclick="hkVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="hk-ai-status"></div>
 
   <div class="fa" id="hk-scroll">
 
-    <!-- 得意先 -->
+    <!-- 得意先・納入先 -->
     <div class="fc">
-      <div class="sec-label">得意先</div>
-      <div class="hk-code-row">
-        <div class="fr hk-ac-wrap">
-          <label class="fl">得意先名</label>
-          <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
-                 oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-                 onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-                 onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
-          <div class="hk-ac-list" id="hk-cust-list"></div>
+      <div class="sec-label">得意先・納入先 <span style="font-weight:400;color:var(--tm);font-size:11px">（納入先空欄→得意先と同じ）</span></div>
+      <div class="hk-party-row">
+        <div class="hk-party-box">
+          <div class="hk-party-title">得意先</div>
+          <div class="hk-code-row">
+            <div class="fr hk-ac-wrap">
+              <label class="fl">得意先名</label>
+              <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
+                     oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                     onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                     onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
+              <div class="hk-ac-list" id="hk-cust-list"></div>
+            </div>
+            <div class="fr hk-code-side">
+              <label class="fl">コード</label>
+              <input type="text" class="fi" id="hk-cust-code" placeholder="自動" inputmode="numeric">
+            </div>
+          </div>
         </div>
-        <div class="fr hk-code-side">
-          <label class="fl">コード</label>
-          <input type="text" class="fi" id="hk-cust-code" placeholder="自動" inputmode="numeric">
-        </div>
-      </div>
-    </div>
-
-    <!-- 納入先 -->
-    <div class="fc">
-      <div class="sec-label">納入先 <span style="font-weight:400;color:var(--tm);font-size:11px">（空欄→得意先と同じ）</span></div>
-      <div class="hk-code-row">
-        <div class="fr hk-ac-wrap">
-          <label class="fl">納入先名</label>
-          <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
-                 oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-                 onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-                 onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
-          <div class="hk-ac-list" id="hk-dest-list"></div>
-        </div>
-        <div class="fr hk-code-side">
-          <label class="fl">コード</label>
-          <input type="text" class="fi" id="hk-dest-code" placeholder="自動" inputmode="numeric">
+        <div class="hk-party-box">
+          <div class="hk-party-title">納入先</div>
+          <div class="hk-code-row">
+            <div class="fr hk-ac-wrap">
+              <label class="fl">納入先名</label>
+              <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
+                     oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                     onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                     onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
+              <div class="hk-ac-list" id="hk-dest-list"></div>
+            </div>
+            <div class="fr hk-code-side">
+              <label class="fl">コード</label>
+              <input type="text" class="fi" id="hk-dest-code" placeholder="自動" inputmode="numeric">
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1248,28 +1259,8 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 商品 -->
     <div class="fc">
       <div class="sec-label">商品</div>
-      <div class="hk-code-row" style="margin-bottom:14px">
-        <div class="fr" style="position:relative">
-          <label class="fl">商品名</label>
-          <input type="text" class="fi" id="hk-prod-name" placeholder="例: SP853A" autocomplete="off"
-                 oninput="hkProdSearch(this.value)" onfocus="hkProdSearch(this.value)" onblur="hkProdBlur()">
-          <div class="hk-prod-dd" id="hk-prod-dd"></div>
-        </div>
-        <div class="fr hk-code-side">
-          <label class="fl">商品コード</label>
-          <input type="text" class="fi" id="hk-prod-code" placeholder="自動" autocomplete="off">
-        </div>
-      </div>
-      <div class="hk-compact-row">
-        <div class="fr hk-mini-field">
-          <label class="fl">数量</label>
-          <input type="number" class="fi" id="hk-qty" value="1" min="1" inputmode="numeric">
-        </div>
-        <div class="fr hk-mini-field">
-          <label class="fl">注文番号</label>
-          <input type="text" class="fi" id="hk-order-no" placeholder="">
-        </div>
-      </div>
+      <div id="hk-prod-list"></div>
+      <button type="button" class="hk-prod-add" onclick="hkAddProd()">＋ 商品を追加</button>
     </div>
 
     <!-- 日程 -->
@@ -1308,41 +1299,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="hk-radio-row">
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011" checked> 011（デフォルト）</label>
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031"> 031</label>
-      </div>
-    </div>
-
-    <!-- 値引（任意） -->
-    <div class="fc">
-      <div class="sec-label">値引 <span style="font-weight:400;color:var(--tm)">（任意）</span></div>
-      <div class="fr">
-        <label class="fl">値引名</label>
-        <select class="fi" id="hk-disc-name">
-          <option value="">-- 選択（任意）--</option>
-          <option value="実演機値引">実演機値引（外掛）</option>
-          <option value="実演機対応値引">実演機対応値引（外掛）</option>
-          <option value="展示機値引">展示機値引（内掛）</option>
-          <option value="不需要期値引">不需要期値引（内掛）</option>
-          <option value="早期確注値引">早期確注値引（内掛）</option>
-          <option value="台数値引">台数値引（内掛）</option>
-          <option value="推進値引">推進値引（内掛）</option>
-          <option value="展示会値引">展示会値引（内掛）</option>
-        </select>
-      </div>
-      <div class="hk-compact-row">
-        <div class="fr hk-mini-field">
-          <label class="fl">値引方法</label>
-          <div class="hk-radio-row" style="margin-top:0">
-            <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="外掛" checked> 外掛</label>
-            <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="内掛"> 内掛</label>
-          </div>
-        </div>
-        <div class="fr hk-mini-field">
-          <label class="fl">値引率</label>
-          <div style="display:flex;align-items:center;gap:6px">
-            <input type="number" class="fi" id="hk-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal">
-            <span style="font-size:13px;color:var(--tm)">%</span>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1448,14 +1404,9 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">値引き設定</div>
       <div id="est-shikiri-bar" style="display:none;background:var(--gl);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--g);font-weight:700;margin-bottom:10px"></div>
-      <div class="hk-three-row">
-        <div class="fr hk-mini-field">
-          <label class="fl">値引方法</label>
-          <div class="hk-radio-row" style="margin-top:0">
-            <label class="hk-radio-label"><input type="radio" name="est-extra-method" value="外掛" checked onchange="estCalcRatioDisp();estCalcAllPricesP()"> 外掛</label>
-            <label class="hk-radio-label"><input type="radio" name="est-extra-method" value="内掛" onchange="estCalcRatioDisp();estCalcAllPricesP()"> 内掛</label>
-          </div>
-        </div>
+      <input type="radio" name="est-extra-method" value="外掛" checked style="display:none">
+      <input type="radio" name="est-extra-method" value="内掛" style="display:none">
+      <div class="hk-compact-row">
         <div class="fr hk-mini-field">
           <label class="fl">値引率</label>
           <div style="display:flex;align-items:center;gap:6px">
@@ -1468,14 +1419,14 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <label class="fl">値引名</label>
           <select class="fi" id="est-disc-name" onchange="estDiscountNameChanged()">
           <option value="">-- 選択（任意）--</option>
-          <option value="実演機値引">実演機値引（外掛）</option>
-          <option value="実演機対応値引">実演機対応値引（外掛）</option>
-          <option value="展示機値引">展示機値引（内掛）</option>
-          <option value="不需要期値引">不需要期値引（内掛）</option>
-          <option value="早期確注値引">早期確注値引（内掛）</option>
-          <option value="台数値引">台数値引（内掛）</option>
-          <option value="推進値引">推進値引（内掛）</option>
-          <option value="展示会値引">展示会値引（内掛）</option>
+          <option value="実演機値引">実演機値引</option>
+          <option value="実演機対応値引">実演機対応値引</option>
+          <option value="展示機値引">展示機値引</option>
+          <option value="不需要期値引">不需要期値引</option>
+          <option value="早期確注値引">早期確注値引</option>
+          <option value="台数値引">台数値引</option>
+          <option value="推進値引">推進値引</option>
+          <option value="展示会値引">展示会値引</option>
           </select>
         </div>
       </div>
@@ -3405,50 +3356,190 @@ function hkResolveProducts(query, limit){
   return out.slice(0, limit||25);
 }
 
-var _hkProdMatches = [];
-function hkProdSearch(val){
-  var dd=document.getElementById('hk-prod-dd'); if(!dd) return;
+var _hkProdNextId = 0;
+var _hkProdMatchesById = {};
+
+function hkDiscountOptionsHtml() {
+  return '<option value="">-- 選択（任意）--</option>' +
+    '<option value="実演機値引">実演機値引</option>' +
+    '<option value="実演機対応値引">実演機対応値引</option>' +
+    '<option value="展示機値引">展示機値引</option>' +
+    '<option value="不需要期値引">不需要期値引</option>' +
+    '<option value="早期確注値引">早期確注値引</option>' +
+    '<option value="台数値引">台数値引</option>' +
+    '<option value="推進値引">推進値引</option>' +
+    '<option value="展示会値引">展示会値引</option>';
+}
+
+function hkDiscountMethodForName(name) {
+  if (!name) return '';
+  return (name === '実演機値引' || name === '実演機対応値引') ? '外掛' : '内掛';
+}
+
+function hkSelectDiscountName(sel, name) {
+  if (!sel || !name) return;
+  var norm = function(s) {
+    return _hkNorm(s).replace(/値引き/g, '値引').replace(/引き/g, '値引');
+  };
+  var want = norm(name);
+  for (var i = 0; i < sel.options.length; i++) {
+    var opt = sel.options[i];
+    var ov = norm(opt.value || opt.textContent || '');
+    if (opt.value && (ov === want || ov.indexOf(want) >= 0 || want.indexOf(ov) >= 0)) {
+      sel.value = opt.value;
+      return;
+    }
+  }
+}
+
+function hkMakeProdCard(id) {
+  return '<div class="hk-prod-card" data-pid="' + id + '">' +
+    '<div class="hk-prod-head"><span class="hk-prod-num">商品 1</span>' +
+    '<button type="button" class="hk-prod-del" onclick="hkRemoveProd(' + id + ')">× 削除</button></div>' +
+    '<div class="hk-code-row" style="margin-bottom:10px">' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
+    '<input type="text" class="fi hk-pr-name" placeholder="例: SP853A" autocomplete="off"' +
+    ' oninput="hkProdSearch(' + id + ',this.value)" onfocus="hkProdSearch(' + id + ',this.value)" onblur="hkProdBlur(' + id + ')">' +
+    '<div class="hk-prod-dd" id="hk-prod-dd-' + id + '"></div></div>' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
+    '<input type="text" class="fi hk-pr-code" placeholder="自動" autocomplete="off"></div></div>' +
+    '<div class="hk-three-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
+    '<input type="number" class="fi hk-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">注文番号</label>' +
+    '<input type="text" class="fi hk-pr-order-no" placeholder=""></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">値引率</label>' +
+    '<div style="display:flex;align-items:center;gap:6px">' +
+    '<input type="number" class="fi hk-pr-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal">' +
+    '<span style="font-size:13px;color:var(--tm)">%</span></div></div></div>' +
+    '<div class="fr" style="margin-bottom:0"><label class="fl">値引名</label>' +
+    '<select class="fi hk-pr-disc-name">' + hkDiscountOptionsHtml() + '</select></div>' +
+    '</div>';
+}
+
+function hkInitProds() {
+  _hkProdNextId = 0;
+  _hkProdMatchesById = {};
+  var list = document.getElementById('hk-prod-list');
+  if (list) list.innerHTML = '';
+  hkAddProd();
+}
+
+function hkAddProd() {
+  var list = document.getElementById('hk-prod-list');
+  if (!list) return;
+  var id = _hkProdNextId++;
+  var tmp = document.createElement('div');
+  tmp.innerHTML = hkMakeProdCard(id);
+  list.appendChild(tmp.firstElementChild);
+  hkUpdateProdNums();
+}
+
+function hkRemoveProd(id) {
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (card) card.remove();
+  if (!document.querySelector('.hk-prod-card')) hkAddProd();
+  hkUpdateProdNums();
+}
+
+function hkUpdateProdNums() {
+  var cards = document.querySelectorAll('.hk-prod-card');
+  var total = cards.length;
+  cards.forEach(function(card, i) {
+    var numEl = card.querySelector('.hk-prod-num');
+    if (numEl) numEl.textContent = '商品 ' + (i + 1);
+    var del = card.querySelector('.hk-prod-del');
+    if (del) del.style.display = total > 1 ? '' : 'none';
+  });
+}
+
+function hkFirstProdCard() {
+  return document.querySelector('.hk-prod-card');
+}
+
+function hkProdSearch(id, val){
+  var dd=document.getElementById('hk-prod-dd-' + id); if(!dd) return;
   var matches=hkResolveProducts(val, 25);
-  _hkProdMatches=matches;
+  _hkProdMatchesById[id]=matches;
   if(!matches.length){ dd.classList.remove('open'); dd.innerHTML=''; return; }
   dd.innerHTML = matches.map(function(m,i){
     var pr = (m.p!=null) ? '¥'+Number(m.p).toLocaleString() : '—';
-    return '<div class="hk-prod-item" onmousedown="hkProdPick('+i+')">'+
+    return '<div class="hk-prod-item" onmousedown="hkProdPick('+id+','+i+')">'+
       '<span><span class="nm">'+_hkEsc(m.n)+'</span><span class="cd">'+_hkEsc(m.c)+'</span></span>'+
       '<span class="pr">'+pr+'</span></div>';
   }).join('');
   dd.classList.add('open');
 }
-function hkProdPick(i){
-  var m=_hkProdMatches[i]; if(!m) return;
-  document.getElementById('hk-prod-name').value=m.n;
-  document.getElementById('hk-prod-code').value=m.c;
-  var dd=document.getElementById('hk-prod-dd'); if(dd) dd.classList.remove('open');
+function hkProdPick(id, i){
+  var m=(_hkProdMatchesById[id] || [])[i]; if(!m) return;
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.hk-pr-name');
+  var codeEl = card.querySelector('.hk-pr-code');
+  if (nameEl) nameEl.value=m.n;
+  if (codeEl) codeEl.value=m.c;
+  var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open');
   hkSetStatus('✅ '+m.n+' → コード '+m.c+(m.p!=null?'（¥'+Number(m.p).toLocaleString()+'）':''), 'var(--g)');
 }
-function hkProdBlur(){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd'); if(dd) dd.classList.remove('open'); }, 180); }
+function hkProdBlur(id){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open'); }, 180); }
+
+function hkGetProducts() {
+  return Array.from(document.querySelectorAll('.hk-prod-card')).map(function(card) {
+    return {
+      pCode: (card.querySelector('.hk-pr-code') || {value:''}).value.trim(),
+      pName: (card.querySelector('.hk-pr-name') || {value:''}).value.trim(),
+      qty: parseInt((card.querySelector('.hk-pr-qty') || {}).value) || 1,
+      orderNo: (card.querySelector('.hk-pr-order-no') || {value:''}).value.trim(),
+      discName: (card.querySelector('.hk-pr-disc-name') || {value:''}).value.trim(),
+      discRate: parseFloat((card.querySelector('.hk-pr-disc-rate') || {}).value)
+    };
+  }).filter(function(p) {
+    return p.pCode || p.pName || p.orderNo || p.discName || (!isNaN(p.discRate) && p.discRate > 0);
+  });
+}
+
+function hkFillProductCard(card, item) {
+  if (!card || !item) return;
+  var codeEl = card.querySelector('.hk-pr-code');
+  var nameEl = card.querySelector('.hk-pr-name');
+  var qtyEl = card.querySelector('.hk-pr-qty');
+  var orderNoEl = card.querySelector('.hk-pr-order-no');
+  var discNameEl = card.querySelector('.hk-pr-disc-name');
+  var discRateEl = card.querySelector('.hk-pr-disc-rate');
+  if (item.prod_code && codeEl) codeEl.value = item.prod_code;
+  if (item.prod_name && nameEl) {
+    nameEl.value = item.prod_name;
+    if (!item.prod_code) {
+      var pm = hkResolveProducts(item.prod_name, 5);
+      if (pm.length) {
+        if (codeEl) codeEl.value = pm[0].c;
+        nameEl.value = pm[0].n;
+        var extra = pm.length > 1 ? '（他' + (pm.length - 1) + '件候補・商品名欄で選び直し可）' : '';
+        hkSetStatus('✅ 製品名「' + item.prod_name + '」→ ' + pm[0].n + ' / コード ' + pm[0].c +
+          (pm[0].p != null ? '（¥' + Number(pm[0].p).toLocaleString() + '）' : '') + extra,
+          pm.length > 1 ? '#B45309' : 'var(--g)');
+      }
+    }
+  }
+  if (item.qty != null && qtyEl) qtyEl.value = item.qty;
+  if (item.order_no && orderNoEl) orderNoEl.value = item.order_no;
+  if (item.disc_name && discNameEl) hkSelectDiscountName(discNameEl, item.disc_name);
+  if (item.disc_rate != null && discRateEl) discRateEl.value = item.disc_rate;
+}
 
 /* ── AI解析結果をフォームに反映 ── */
 function hkFillFromAI(json) {
   function applyRest() {
-    if (json.prod_code) document.getElementById('hk-prod-code').value = json.prod_code;
-    if (json.prod_name) {
-      document.getElementById('hk-prod-name').value = json.prod_name;
-      // コードが取れていない時は製品名から商品コードを自動解決（最有力を採用）
-      if (!json.prod_code) {
-        var _pm = hkResolveProducts(json.prod_name, 5);
-        if (_pm.length) {
-          document.getElementById('hk-prod-code').value = _pm[0].c;
-          document.getElementById('hk-prod-name').value = _pm[0].n;   // 正式名称に補正
-          var _extra = _pm.length > 1 ? '（他' + (_pm.length-1) + '件候補・商品名欄で選び直し可）' : '';
-          hkSetStatus('✅ 製品名「' + json.prod_name + '」→ ' + _pm[0].n + ' / コード ' + _pm[0].c +
-            (_pm[0].p!=null ? '（¥' + Number(_pm[0].p).toLocaleString() + '）' : '') + _extra,
-            _pm.length > 1 ? '#B45309' : 'var(--g)');
-        }
-      }
+    var items = Array.isArray(json.products) && json.products.length ? json.products : [json];
+    var list = document.getElementById('hk-prod-list');
+    if (list && items.length > 1) {
+      list.innerHTML = '';
+      _hkProdNextId = 0;
+      items.forEach(function() { hkAddProd(); });
     }
-    if (json.qty != null) document.getElementById('hk-qty').value = json.qty;
-    if (json.order_no) document.getElementById('hk-order-no').value = json.order_no;
+    document.querySelectorAll('.hk-prod-card').forEach(function(card, i) {
+      hkFillProductCard(card, items[i] || {});
+    });
     if (json.remarks) document.getElementById('hk-remarks').value = json.remarks;
     if (json.order_date) document.getElementById('hk-order-date').value = json.order_date;
     if (json.prod_date) {
@@ -3460,19 +3551,6 @@ function hkFillFromAI(json) {
       var wh = document.querySelector('input[name="hk-wh"][value="' + json.warehouse + '"]');
       if (wh) wh.checked = true;
     }
-    if (json.disc_name) {
-      var sel = document.getElementById('hk-disc-name');
-      var opt = Array.from(sel.options).find(function(o) {
-        return o.value && (o.value.indexOf(json.disc_name) >= 0 || json.disc_name.indexOf(o.value) >= 0 ||
-          _hkNorm(o.value) === _hkNorm(json.disc_name));
-      });
-      if (opt) sel.value = opt.value;
-    }
-    if (json.disc_method) {
-      var dm = document.querySelector('input[name="hk-disc-method"][value="' + json.disc_method + '"]');
-      if (dm) dm.checked = true;
-    }
-    if (json.disc_rate != null) document.getElementById('hk-disc-rate').value = json.disc_rate;
     // 納入先：dest_codeが直接来た場合は優先。nullまたは未指定なら得意先と同じ
     var destName = json.dest_name || null;
     var destCode = json.dest_code || null;
@@ -3511,15 +3589,16 @@ function hkBuildTextPrompt(text) {
     '以下のテキストから引合書の情報を抽出してください。JSONのみ返してください（説明不要）。\n\n' +
     'ルール:\n- 受注日未指定→' + today + '\n- 数量未指定→1\n- 生産日未指定または「在庫」→null\n' +
     '- 出荷希望日未指定→null\n- 納入先未指定→null（得意先と同じに自動設定）\n' +
-    '- 値引名は「展示機値引き」「推進引き」「実演機値引き」「入札対応値引き」「実演機対応値引き」から近いものを選択\n' +
+    '- 値引名は「展示機値引」「推進値引」「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「展示会値引」から近いものを選択\n' +
+    '- 商品が複数ある場合は products 配列へ入れる\n' +
     '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」が出荷元→"031" / 「福岡倉庫」「本社」→"011" / 未指定→"011"\n' +
     '- 商品コードは数字のみ（例: 03178500）\n\nテキスト:「' + text + '」\n\n' +
     '{\n  "cust_name": "得意先名またはnull",\n  "dest_name": "納入先名またはnull",\n' +
-    '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名またはnull",\n' +
-    '  "qty": 数量,\n  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名またはnull", "qty": 数量, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+    '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名またはnull",\n  "qty": 数量,\n  "order_no": "注文番号またはnull",\n' +
+    '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
     '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
-    '  "disc_name": "値引名またはnull",\n  "disc_method": "外掛または内掛またはnull",\n' +
-    '  "disc_rate": 値引率またはnull,\n  "order_no": "注文番号またはnull",\n  "remarks": "備考またはnull"\n}';
+    '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
 }
 
 function hkVoiceToggle() {
@@ -3596,14 +3675,16 @@ function hkPhotoReadFile(file) {
         '- 形式名/モデル名（例: RM953X/K）を prod_name に\n' +
         '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「033」→"031"\n' +
         '- 出荷日・生産日は備考・注記欄から読む（例: "6/29(月)出荷"→ship_date）\n' +
+        '- 商品が複数ある場合は products 配列へ入れる\n' +
+        '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
         '- 受注日は今日=' + _today + '\n\n' +
         '{\n  "cust_name": "得意先名またはnull",\n  "cust_code": "得意先コードまたはnull",\n' +
         '  "dest_name": "納入先名またはnull",\n  "dest_code": "納入先コードまたはnull",\n' +
-        '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名・形式名またはnull",\n' +
-        '  "qty": 数量またはnull,\n  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
+        '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名・形式名またはnull", "qty": 数量またはnull, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+        '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名・形式名またはnull",\n  "qty": 数量またはnull,\n  "order_no": "注文番号またはnull",\n' +
+        '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
         '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
-        '  "disc_name": "値引名またはnull",\n  "disc_method": "外掛または内掛またはnull",\n' +
-        '  "disc_rate": 値引率またはnull,\n  "order_no": "注文番号またはnull",\n  "remarks": "備考またはnull"\n}';
+        '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
       var json = await hkCallGemini(prompt, b64, mime);
       if (json.qty == null) json.qty = 1;
       if (!json.order_date) json.order_date = new Date().toISOString().slice(0,10);
@@ -3654,21 +3735,35 @@ async function hkExport() {
     // 倉庫
     var wh = document.querySelector('input[name="hk-wh"]:checked');
     if (wh) setCell('B17', wh.value);
-    // 商品
-    var prodCode = (document.getElementById('hk-prod-code').value || '').trim();
-    if (prodCode) setCell('A11', prodCode);
-    var qty = parseInt(document.getElementById('hk-qty').value) || 1;
-    setCell('E11', qty);
-    var orderNo = (document.getElementById('hk-order-no').value || '').trim();
-    if (orderNo) setCell('I11', orderNo);
-    // 値引
-    var discName = (document.getElementById('hk-disc-name').value || '').trim();
+    // 商品（テンプレートはA11〜A14に複数商品を持てる）
+    var products = hkGetProducts();
+    if (!products.length) throw new Error('商品を1件以上入力してください');
+    ['11','12','13','14'].forEach(function(r) {
+      setCell('A' + r, '');
+      setCell('E' + r, '');
+      setCell('I' + r, '');
+    });
+    products.slice(0, 4).forEach(function(p, i) {
+      var row = 11 + i;
+      var code = p.pCode;
+      if (!code && p.pName) {
+        var pm = hkResolveProducts(p.pName, 1);
+        if (pm.length) code = pm[0].c;
+      }
+      if (code) setCell('A' + row, code);
+      setCell('E' + row, p.qty || 1);
+      if (p.orderNo) setCell('I' + row, p.orderNo);
+    });
+    // 値引（テンプレートはシート共通のため、最初に入力された値引を使用）
+    var discProduct = products.find(function(p) {
+      return p.discName || (!isNaN(p.discRate) && p.discRate > 0);
+    }) || products[0];
+    var discName = (discProduct.discName || '').trim();
     if (discName) setCell('L7', discName);
-    // 値引方法(L8): 値引+シートでは L7(値引名)からVLOOKUPで自動計算される数式。
-    // 数式セルの時は書かない（書くと自動計算が壊れる）。数式でないシートのみ手動値を入れる。
-    var discMethod = document.querySelector('input[name="hk-disc-method"]:checked');
-    if (discMethod && !(ws['L8'] && ws['L8'].f)) setCell('L8', discMethod.value);
-    var discRate = parseFloat(document.getElementById('hk-disc-rate').value);
+    // L8は値引名から自動判定。数式セルの時はExcel側のVLOOKUPを優先。
+    var discMethod = hkDiscountMethodForName(discName);
+    if (discMethod && !(ws['L8'] && ws['L8'].f)) setCell('L8', discMethod);
+    var discRate = discProduct.discRate;
     if (!isNaN(discRate) && discRate > 0) setCell('N8', discRate);
     // 備考（A18:D18 結合セル）。空なら何も書かない
     var remarks = (document.getElementById('hk-remarks').value || '').trim();
@@ -3709,19 +3804,18 @@ async function hkExport() {
 /* ── リセット ── */
 function hkReset() {
   ['hk-cust-name','hk-cust-code','hk-dest-name','hk-dest-code',
-   'hk-prod-code','hk-prod-name','hk-order-no','hk-prod-date','hk-ship-date','hk-disc-rate','hk-remarks'].forEach(function(id) {
+   'hk-prod-date','hk-ship-date','hk-remarks'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.value = '';
   });
-  document.getElementById('hk-qty').value = 1;
+  hkInitProds();
   document.getElementById('hk-order-date').value = new Date().toISOString().slice(0,10);
-  document.getElementById('hk-disc-name').value = '';
   var wh = document.querySelector('input[name="hk-wh"][value="011"]'); if (wh) wh.checked = true;
-  var dm = document.querySelector('input[name="hk-disc-method"][value="外掛"]'); if (dm) dm.checked = true;
   document.getElementById('hk-ai-status').classList.remove('visible');
 }
 
 // 受注日を今日に初期化
 (function() {
+  hkInitProds();
   var el = document.getElementById('hk-order-date');
   if (el && !el.value) el.value = new Date().toISOString().slice(0,10);
 })();
@@ -4001,12 +4095,12 @@ function estPrEl(id, cls) {
 function estGetBaseRatio() {
   var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
   if (code) { var r = estGetShikiri(code); if (r) return r; }
-  var hkDr = document.getElementById('hk-disc-rate');
-  if (hkDr && hkDr.value) {
-    var dr = parseFloat(hkDr.value) || 0;
+  var hkDisc = hkGetProducts().find(function(p) { return !isNaN(p.discRate) && p.discRate > 0; });
+  if (hkDisc) {
+    var dr = hkDisc.discRate || 0;
     if (dr > 0) {
-      var mEl = document.querySelector('input[name="hk-disc-method"]:checked');
-      return (mEl && mEl.value === '内掛') ? 1 / (1 + dr / 100) : 1 - dr / 100;
+      var method = hkDiscountMethodForName(hkDisc.discName) || '外掛';
+      return method === '内掛' ? 1 / (1 + dr / 100) : 1 - dr / 100;
     }
   }
   return null;
@@ -4031,8 +4125,7 @@ function estCalcRatioDisp() {
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
   var text = '仕切率 ' + Math.round(base * 100) + '%';
   if (xRate && final !== base) {
-    var mEl = document.querySelector('input[name="est-extra-method"]:checked');
-    text += ' − ' + (mEl ? mEl.value : '外掛') + ' ' + xRate + '% = ' + Math.round(final * 100) + '%';
+    text += ' − 値引率 ' + xRate + '% = ' + Math.round(final * 100) + '%';
   }
   bar.textContent = text;
   bar.style.display = '';
@@ -4177,9 +4270,10 @@ function estSyncFromInquiry() {
   var nameEl = firstCard.querySelector('.est-pr-name');
   var retailEl = firstCard.querySelector('.est-pr-retail');
   var whEl = firstCard.querySelector('.est-pr-whole');
-  var hkProd = gv('hk-prod-code');
-  if (codeEl && !codeEl.value && hkProd) codeEl.value = hkProd;
-  if (nameEl && !nameEl.value && gv('hk-prod-name')) nameEl.value = gv('hk-prod-name');
+  var hkProducts = hkGetProducts();
+  var hkFirst = hkProducts[0] || {};
+  if (codeEl && !codeEl.value && hkFirst.pCode) codeEl.value = hkFirst.pCode;
+  if (nameEl && !nameEl.value && hkFirst.pName) nameEl.value = hkFirst.pName;
   if (retailEl && !retailEl.value) {
     var useCode = (codeEl && codeEl.value) || '';
     if (useCode) {
