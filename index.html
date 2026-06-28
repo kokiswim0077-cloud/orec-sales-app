@@ -33,7 +33,6 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .bnav-btn.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--g);border-radius:0 0 3px 3px}
 .bnav-badge{position:absolute;top:4px;right:calc(50% - 14px);background:#CC0000;color:#fff;border-radius:10px;font-size:9px;font-weight:900;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:"Barlow Condensed",sans-serif}
 .sa{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 8px 20px;-webkit-overflow-scrolling:touch}
-#s-home .sa{padding-bottom:calc(var(--nh) + 132px)}
 .sec-label{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin:0 0 8px}
 .tile-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .home-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}
@@ -41,26 +40,6 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .home-act-btn:active{background:var(--gl);border-color:var(--g)}
 .home-act-ic{font-size:22px;display:block;margin-bottom:5px}
 .home-act-lbl{font-size:9.5px;font-weight:700;color:var(--bk);line-height:1.35;display:block}
-.home-gemini{background:var(--wh);border:1.5px solid #B8D9CC;border-radius:14px;padding:14px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,122,89,.08)}
-.home-gemini-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.home-gemini-title{font-size:13px;font-weight:900;color:var(--gd);letter-spacing:.02em}
-.home-gemini-sub{font-size:10px;color:var(--tm);margin-top:2px}
-.home-gemini-keyrow{display:flex;gap:7px;margin-bottom:8px}
-.home-gemini-key{flex:1;min-width:0;padding:9px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-family:monospace;outline:none;background:var(--g2)}
-.home-gemini-key:focus{border-color:var(--g);background:var(--wh)}
-.home-gemini-save{padding:9px 12px;background:var(--g2);border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-weight:700;color:var(--bk);cursor:pointer;font-family:"Noto Sans JP",sans-serif;white-space:nowrap}
-.home-gemini-save:active{background:var(--gl);border-color:var(--g)}
-.home-gemini-text{width:100%;min-height:88px;padding:11px 12px;border:2px solid var(--bd);border-radius:10px;font-size:14px;font-family:"Noto Sans JP",sans-serif;line-height:1.7;resize:vertical;outline:none;background:var(--g2);margin-bottom:8px}
-.home-gemini-text:focus{border-color:var(--g);background:var(--wh)}
-.home-gemini-actions{display:flex;align-items:center;gap:8px}
-.home-gemini-send{flex:1;padding:12px;background:var(--g);color:var(--wh);border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:"Noto Sans JP",sans-serif}
-.home-gemini-send:disabled{background:#9CA3AF;cursor:not-allowed}
-.home-gemini-clear{padding:12px;background:transparent;border:1.5px solid var(--bd);border-radius:10px;color:var(--tm);font-size:12px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif}
-.home-gemini-status{display:none;margin-top:8px;font-size:12px;color:var(--tm);line-height:1.6}
-.home-gemini-status.visible{display:block}
-.home-gemini-answer{display:none;margin-top:10px;padding:12px 13px;background:var(--gl);border:1.5px solid #A7D8C2;border-radius:10px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:#12352B}
-.home-gemini-answer.visible{display:block}
-.home-bottom-spacer{height:calc(var(--nh) + 72px);flex-shrink:0}
 .tile{background:var(--wh);border-radius:12px;padding:16px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1.5px solid var(--bd);transition:background .1s;user-select:none}
 .tile:active{background:var(--gl);border-color:var(--g)}
 .tile-ic{width:42px;height:42px;border-radius:10px;background:var(--bk);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
@@ -586,27 +565,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div style="font-size:9px;color:var(--tm);margin-top:2px">消耗品</div>
       </div>
     </div>
-    <div class="home-gemini">
-      <div class="home-gemini-head">
-        <div>
-          <div class="home-gemini-title">Gemini 壁打ち</div>
-          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます</div>
-        </div>
-      </div>
-      <div class="home-gemini-keyrow">
-        <input type="password" class="home-gemini-key" id="home-gemini-key" placeholder="Gemini API Key（保存済みなら空でOK）">
-        <button type="button" class="home-gemini-save" onclick="homeSaveGeminiKey()">保存</button>
-      </div>
-      <textarea class="home-gemini-text" id="home-gemini-text"
-        placeholder="例: 大竹産業からRM832Aの見積依頼。返答文と確認すべき点を整理して"></textarea>
-      <div class="home-gemini-actions">
-        <button type="button" class="home-gemini-send" id="home-gemini-send" onclick="homeAskGemini()">Geminiに相談</button>
-        <button type="button" class="home-gemini-clear" onclick="homeClearGemini()">クリア</button>
-      </div>
-      <div class="home-gemini-status" id="home-gemini-status"></div>
-      <div class="home-gemini-answer" id="home-gemini-answer"></div>
-    </div>
-    <div class="home-bottom-spacer" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -3024,138 +2982,6 @@ async function hkCallGemini(prompt, imageBase64, imageMime) {
         : last.msg || '通信エラー');
   throw new Error('Gemini APIが応答しませんでした (' + last.status + ')\n' + hint);
 }
-
-/* ── HOME: Gemini壁打ち ── */
-function homeSetGeminiStatus(msg, color) {
-  var el = document.getElementById('home-gemini-status');
-  if (!el) return;
-  el.textContent = msg || '';
-  el.style.color = color || 'var(--tm)';
-  el.classList.toggle('visible', !!msg);
-}
-
-function homeSaveGeminiKey() {
-  var inp = document.getElementById('home-gemini-key');
-  var key = inp ? inp.value.trim() : '';
-  if (!key) {
-    homeSetGeminiStatus('APIキーを入力してください。保存済みの場合はそのまま相談できます。', '#B45309');
-    return false;
-  }
-  localStorage.setItem(HK_GEMINI_LS, key);
-  inp.value = '';
-  homeSetGeminiStatus('APIキーを保存しました。', 'var(--g)');
-  return true;
-}
-
-function homeClearGemini() {
-  var text = document.getElementById('home-gemini-text');
-  var answer = document.getElementById('home-gemini-answer');
-  if (text) text.value = '';
-  if (answer) {
-    answer.textContent = '';
-    answer.classList.remove('visible');
-  }
-  homeSetGeminiStatus('', '');
-}
-
-async function homeCallGeminiText(userText) {
-  var keyInput = document.getElementById('home-gemini-key');
-  var typedKey = keyInput ? keyInput.value.trim() : '';
-  var key = typedKey || localStorage.getItem(HK_GEMINI_LS);
-  if (!key) throw new Error('Gemini APIキーを入力して「保存」してください。');
-  if (typedKey) {
-    localStorage.setItem(HK_GEMINI_LS, typedKey);
-    keyInput.value = '';
-  }
-
-  var prompt =
-    'あなたはOREC営業担当者の壁打ち相手です。日本語で、現場でそのまま使いやすい短さで答えてください。\n' +
-    '役割: 営業対応、見積り依頼、引合書、価格表、納期確認、返信文の整理を支援します。\n' +
-    'ルール: 不明な型式・価格・コードは断定せず、確認項目として出してください。必要なら箇条書きで、最後に次の一手を1つ示してください。\n\n' +
-    '相談内容:\n' + userText;
-
-  var body = JSON.stringify({
-    contents: [{parts: [{text: prompt}]}],
-    generationConfig: {temperature: 0.45, maxOutputTokens: 900}
-  });
-
-  var lastErr = null;
-  for (var mi = 0; mi < HK_GEMINI_MODELS.length; mi++) {
-    var model = HK_GEMINI_MODELS[mi];
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent';
-    var resp, rawText;
-    try {
-      resp = await fetch(url, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json', 'x-goog-api-key': key},
-        body: body
-      });
-      rawText = await resp.text();
-    } catch(e) {
-      lastErr = e.message;
-      continue;
-    }
-
-    if (resp.ok) {
-      var data = JSON.parse(rawText);
-      var parts = data && data.candidates && data.candidates[0] && data.candidates[0].content
-        ? data.candidates[0].content.parts || [] : [];
-      var text = parts.map(function(p) { return p.text || ''; }).join('\n').trim();
-      if (!text) throw new Error('Geminiから返信文を取得できませんでした。');
-      return text;
-    }
-
-    var errMsg = rawText;
-    try { errMsg = JSON.parse(rawText)?.error?.message || rawText; } catch(e) {}
-    lastErr = 'Gemini API ' + resp.status + ' / ' + model + ': ' + String(errMsg).slice(0, 160);
-    if (resp.status === 400 || resp.status === 401 || resp.status === 403) break;
-    if (mi < HK_GEMINI_MODELS.length - 1) {
-      homeSetGeminiStatus(model + ' が混雑または非対応のため、別モデルで再試行中...', '#B45309');
-    }
-  }
-  throw new Error(lastErr || 'Gemini APIが応答しませんでした。');
-}
-
-async function homeAskGemini() {
-  var textarea = document.getElementById('home-gemini-text');
-  var btn = document.getElementById('home-gemini-send');
-  var answer = document.getElementById('home-gemini-answer');
-  var text = textarea ? textarea.value.trim() : '';
-  if (!text) { homeSetGeminiStatus('相談内容を入力してください。', '#B45309'); return; }
-  if (btn) { btn.disabled = true; btn.textContent = '相談中...'; }
-  if (answer) answer.classList.remove('visible');
-  homeSetGeminiStatus('Geminiに送信しています...', '#2563EB');
-  try {
-    var reply = await homeCallGeminiText(text);
-    if (answer) {
-      answer.textContent = reply;
-      answer.classList.add('visible');
-      setTimeout(function() {
-        answer.scrollIntoView({ behavior: 'smooth', block: 'end' });
-      }, 80);
-    }
-    homeSetGeminiStatus('返信を受信しました。', 'var(--g)');
-  } catch(e) {
-    homeSetGeminiStatus(e.message, '#DC2626');
-  } finally {
-    if (btn) { btn.disabled = false; btn.textContent = 'Geminiに相談'; }
-  }
-}
-
-function homeInitGemini() {
-  var textarea = document.getElementById('home-gemini-text');
-  var keyInput = document.getElementById('home-gemini-key');
-  if (keyInput && localStorage.getItem(HK_GEMINI_LS)) keyInput.placeholder = 'Gemini API Key（保存済み）';
-  if (textarea) {
-    textarea.addEventListener('keydown', function(e) {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-        e.preventDefault();
-        homeAskGemini();
-      }
-    });
-  }
-}
-homeInitGemini();
 
 /* 診断: APIキー設定画面から呼び出す（完全なエラー詳細を表示） */
 async function hkDiagnose() {
