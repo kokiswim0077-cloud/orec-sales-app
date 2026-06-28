@@ -4038,7 +4038,7 @@ function estMakeProdCard(id) {
     '<div class="fr hk-mini-field"><label class="fl">小売単価</label>' +
     '<div class="est-inline-unit">' +
     '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric"' +
-    ' oninput="estCalcPricesP(' + id + ')">' +
+    ' oninput="estCalcPricesP(' + id + ',true)">' +
     '<span style="font-size:12px;color:var(--tm)">円</span></div></div>' +
     '<div class="fr hk-mini-field"><label class="fl">仕切単価</label>' +
     '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric"></div>' +
@@ -4105,11 +4105,26 @@ function estGetBaseRatio() {
   if (hkDisc) {
     var dr = hkDisc.discRate || 0;
     if (dr > 0) {
-      var method = hkDiscountMethodForName(hkDisc.discName) || '外掛';
-      return method === '内掛' ? 1 / (1 + dr / 100) : 1 - dr / 100;
+      return 1 - dr / 100;
     }
   }
   return null;
+}
+
+function estGetDiscountMethod() {
+  var sel = document.getElementById('est-disc-name');
+  var byName = hkDiscountMethodForName(sel ? sel.value : '');
+  if (byName) return byName;
+  var mEl = document.querySelector('input[name="est-extra-method"]:checked');
+  return (mEl && mEl.value) || '外掛';
+}
+
+function estRoundRatio(n) {
+  return Math.max(0, Math.round(n * 100000) / 100000);
+}
+
+function estFormatRatioPct(n) {
+  return Number((n * 100).toFixed(2)).toString() + '%';
 }
 
 function estGetFinalRatio() {
@@ -4117,9 +4132,9 @@ function estGetFinalRatio() {
   if (!base) return null;
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
   if (!xRate) return base;
-  var mEl = document.querySelector('input[name="est-extra-method"]:checked');
-  if (mEl && mEl.value === '内掛') return Math.round(base * 100 / (100 + xRate) * 1000) / 1000;
-  return Math.round((base - xRate / 100) * 1000) / 1000;
+  var method = estGetDiscountMethod();
+  if (method === '内掛') return estRoundRatio(base * (1 - xRate / 100));
+  return estRoundRatio(base - xRate / 100);
 }
 
 function estCalcRatioDisp() {
@@ -4129,15 +4144,17 @@ function estCalcRatioDisp() {
   if (!base) { bar.style.display = 'none'; return; }
   var final = estGetFinalRatio();
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
-  var text = '仕切率 ' + Math.round(base * 100) + '%';
+  var method = estGetDiscountMethod();
+  var dName = ((document.getElementById('est-disc-name') || {}).value || '').trim();
+  var text = '仕切率 ' + estFormatRatioPct(base);
   if (xRate && final !== base) {
-    text += ' − 値引率 ' + xRate + '% = ' + Math.round(final * 100) + '%';
+    text += ' − ' + (dName ? dName + ' ' : '') + method + ' ' + xRate + '% = ' + estFormatRatioPct(final);
   }
   bar.textContent = text;
   bar.style.display = '';
 }
 
-function estCalcPricesP(id) {
+function estCalcPricesP(id, force) {
   var card = document.querySelector('.est-prod-card[data-pid="' + id + '"]');
   if (!card) return;
   var retail = parseFloat((card.querySelector('.est-pr-retail') || {}).value) || 0;
@@ -4147,9 +4164,9 @@ function estCalcPricesP(id) {
   var discEl = card.querySelector('.est-pr-disc');
   var discWrap = card.querySelector('.est-pr-disc-wrap');
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
-  if (retail && base && whEl && !whEl.value) whEl.value = Math.round(retail * base);
+  if (retail && base && whEl && (force || !whEl.value)) whEl.value = Math.round(retail * base);
   if (xRate > 0 && retail && final !== null && Math.abs(final - base) > 0.0001) {
-    if (discEl && !discEl.value) discEl.value = Math.round(retail * final);
+    if (discEl && (force || !discEl.value)) discEl.value = Math.round(retail * final);
     if (discWrap) discWrap.style.display = '';
   } else {
     if (discWrap) discWrap.style.display = 'none';
@@ -4226,12 +4243,14 @@ function estProdPickP(id, i) {
   var codeEl = card.querySelector('.est-pr-code');
   var retailEl = card.querySelector('.est-pr-retail');
   var whEl = card.querySelector('.est-pr-whole');
+  var discEl = card.querySelector('.est-pr-disc');
   if (nameEl) nameEl.value = m.n;
   if (codeEl) codeEl.value = m.c;
   if (m.p != null && retailEl && !retailEl.value) retailEl.value = m.p;
   if (whEl) whEl.value = '';
+  if (discEl) discEl.value = '';
   if (dd) { dd.classList.remove('open'); dd.innerHTML = ''; }
-  estCalcPricesP(id);
+  estCalcPricesP(id, true);
 }
 
 function estProdBlurP(id) {
@@ -4251,11 +4270,13 @@ function estProdCodeLookupP(id, code) {
   var nameEl = card.querySelector('.est-pr-name');
   var retailEl = card.querySelector('.est-pr-retail');
   var whEl = card.querySelector('.est-pr-whole');
+  var discEl = card.querySelector('.est-pr-disc');
   if (nameEl && !nameEl.value) nameEl.value = m.n;
   if (m.p != null && retailEl && !retailEl.value) {
     retailEl.value = m.p;
     if (whEl) whEl.value = '';
-    estCalcPricesP(id);
+    if (discEl) discEl.value = '';
+    estCalcPricesP(id, true);
   }
 }
 
