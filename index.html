@@ -426,6 +426,13 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-code-side .fi{font-size:13px;padding:10px 8px;text-align:center;font-family:"Barlow Condensed",monospace;font-weight:700;letter-spacing:.03em}
 .hk-code-side .fi::placeholder{font-size:11px;letter-spacing:0;font-family:"Noto Sans JP",sans-serif;font-weight:500}
 @media (max-width:360px){.hk-code-row{grid-template-columns:minmax(0,1fr) 96px;gap:6px}.hk-code-side .fi{font-size:12px;padding-left:6px;padding-right:6px}}
+.hk-compact-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;margin-bottom:14px}
+.hk-compact-row:last-child{margin-bottom:0}
+.hk-compact-row .fr{margin-bottom:0}
+.hk-mini-field .fi{font-size:14px;padding:11px 10px}
+.hk-mini-field .fi[type="number"]{text-align:center}
+.hk-mini-field .fl{font-size:10px;letter-spacing:0}
+@media (max-width:360px){.hk-compact-row{gap:6px}.hk-mini-field .fi{font-size:13px;padding-left:8px;padding-right:8px}}
 .hk-radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .hk-radio-label{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--g2);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid transparent;user-select:none}
 .hk-radio-label:has(input:checked){background:var(--gl);border-color:var(--g);color:var(--g)}
@@ -1234,23 +1241,27 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 商品 -->
     <div class="fc">
       <div class="sec-label">商品</div>
-      <div class="fr">
-        <label class="fl">商品コード</label>
-        <input type="text" class="fi" id="hk-prod-code" placeholder="0353-0060（商品名から自動入力）" autocomplete="off">
+      <div class="hk-code-row" style="margin-bottom:14px">
+        <div class="fr" style="position:relative">
+          <label class="fl">商品名</label>
+          <input type="text" class="fi" id="hk-prod-name" placeholder="例: SP853A" autocomplete="off"
+                 oninput="hkProdSearch(this.value)" onfocus="hkProdSearch(this.value)" onblur="hkProdBlur()">
+          <div class="hk-prod-dd" id="hk-prod-dd"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">商品コード</label>
+          <input type="text" class="fi" id="hk-prod-code" placeholder="自動" autocomplete="off">
+        </div>
       </div>
-      <div class="fr" style="position:relative">
-        <label class="fl">商品名</label>
-        <input type="text" class="fi" id="hk-prod-name" placeholder="例: SP853A（入力で候補→選ぶとコード自動入力）" autocomplete="off"
-               oninput="hkProdSearch(this.value)" onfocus="hkProdSearch(this.value)" onblur="hkProdBlur()">
-        <div class="hk-prod-dd" id="hk-prod-dd"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">数量</label>
-        <input type="number" class="fi" id="hk-qty" value="1" min="1" inputmode="numeric" style="max-width:100px">
-      </div>
-      <div class="fr">
-        <label class="fl">注文番号</label>
-        <input type="text" class="fi" id="hk-order-no" placeholder="">
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">数量</label>
+          <input type="number" class="fi" id="hk-qty" value="1" min="1" inputmode="numeric">
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">注文番号</label>
+          <input type="text" class="fi" id="hk-order-no" placeholder="">
+        </div>
       </div>
     </div>
 
@@ -1262,15 +1273,17 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <input type="date" class="fi" id="hk-order-date">
         <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→今日</span>
       </div>
-      <div class="fr">
-        <label class="fl">生産日</label>
-        <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→在庫</span>
-      </div>
-      <div class="fr">
-        <label class="fl">出荷希望日</label>
-        <input type="date" class="fi" id="hk-ship-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→自動</span>
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">生産日</label>
+          <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→在庫</span>
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">出荷希望日</label>
+          <input type="date" class="fi" id="hk-ship-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→自動</span>
+        </div>
       </div>
     </div>
 
@@ -1308,17 +1321,21 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <option value="展示会値引">展示会値引（内掛）</option>
         </select>
       </div>
-      <div class="fr">
-        <label class="fl">値引方法</label>
-        <div class="hk-radio-row">
-          <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="外掛" checked> 外掛</label>
-          <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="内掛"> 内掛</label>
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">値引方法</label>
+          <div class="hk-radio-row" style="margin-top:0">
+            <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="外掛" checked> 外掛</label>
+            <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="内掛"> 内掛</label>
+          </div>
         </div>
-      </div>
-      <div class="fr">
-        <label class="fl">値引率</label>
-        <input type="number" class="fi" id="hk-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal" style="max-width:100px">
-        <span style="font-size:13px;color:var(--tm);margin-left:6px">%</span>
+        <div class="fr hk-mini-field">
+          <label class="fl">値引率</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" class="fi" id="hk-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal">
+            <span style="font-size:13px;color:var(--tm)">%</span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1422,18 +1439,21 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">値引き設定</div>
       <div id="est-shikiri-bar" style="display:none;background:var(--gl);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--g);font-weight:700;margin-bottom:10px"></div>
-      <div class="fr">
-        <label class="fl">追加値引率 <span class="opt">（仕切率から追加値引きがある場合）</span></label>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <input type="number" class="fi" id="est-extra-rate" placeholder="0" min="0" max="99" step="0.1" inputmode="decimal" style="max-width:80px"
-                 oninput="estCalcRatioDisp();estCalcAllPricesP()">
-          <span style="font-size:13px;color:var(--tm)">%</span>
-          <label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer">
-            <input type="radio" name="est-extra-method" value="外掛" checked onchange="estCalcRatioDisp();estCalcAllPricesP()"> 外掛
-          </label>
-          <label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer">
-            <input type="radio" name="est-extra-method" value="内掛" onchange="estCalcRatioDisp();estCalcAllPricesP()"> 内掛
-          </label>
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">値引方法</label>
+          <div class="hk-radio-row" style="margin-top:0">
+            <label class="hk-radio-label"><input type="radio" name="est-extra-method" value="外掛" checked onchange="estCalcRatioDisp();estCalcAllPricesP()"> 外掛</label>
+            <label class="hk-radio-label"><input type="radio" name="est-extra-method" value="内掛" onchange="estCalcRatioDisp();estCalcAllPricesP()"> 内掛</label>
+          </div>
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">追加値引率</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" class="fi" id="est-extra-rate" placeholder="0" min="0" max="99" step="0.1" inputmode="decimal"
+                   oninput="estCalcRatioDisp();estCalcAllPricesP()">
+            <span style="font-size:13px;color:var(--tm)">%</span>
+          </div>
         </div>
       </div>
       <div class="fr">
@@ -3836,13 +3856,14 @@ function estMakeProdCard(id) {
     '<button type="button" onclick="estRemoveProd(' + id + ')" class="est-prod-del"' +
     ' style="display:none;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;color:#DC2626;font-size:12px;padding:4px 10px;cursor:pointer;font-family:inherit">× 削除</button>' +
     '</div>' +
+    '<div class="hk-code-row" style="margin-bottom:14px">' +
     '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
     '<input type="text" class="fi est-pr-name" placeholder="例: SP853A" autocomplete="off"' +
     ' oninput="estProdSearchP(' + id + ',this.value)" onfocus="estProdSearchP(' + id + ',this.value)" onblur="estProdBlurP(' + id + ')">' +
     '<div class="hk-prod-dd" id="est-pdd-' + id + '"></div></div>' +
-    '<div class="fr"><label class="fl">商品コード</label>' +
-    '<input type="text" class="fi est-pr-code" placeholder="0353-0060" autocomplete="off"' +
-    ' onblur="estProdCodeLookupP(' + id + ',this.value)"></div>' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
+    '<input type="text" class="fi est-pr-code" placeholder="自動" autocomplete="off"' +
+    ' onblur="estProdCodeLookupP(' + id + ',this.value)"></div></div>' +
     '<div class="fr"><label class="fl">小売単価（上代）</label>' +
     '<div style="display:flex;align-items:center;gap:6px">' +
     '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric" style="max-width:120px"' +
@@ -3853,14 +3874,16 @@ function estMakeProdCard(id) {
     '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div>' +
     '<div class="est-pr-disc-wrap" style="display:none"><label class="fl">値引後単価</label>' +
     '<input type="number" class="fi est-pr-disc" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div></div>' +
-    '<div class="fr"><label class="fl">数量</label>' +
-    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric" style="max-width:80px"></div>' +
-    '<div class="fr"><label class="fl">在庫状況</label>' +
-    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 在庫限り / 受注生産"></div>' +
-    '<div class="fr"><label class="fl">生産日</label>' +
-    '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD または 8月"></div>' +
-    '<div class="fr"><label class="fl">出荷予定日</label>' +
-    '<input type="text" class="fi est-pr-shipdate" placeholder="YYYY-MM-DD または 2026年9月"></div>' +
+    '<div class="hk-compact-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
+    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">在庫状況</label>' +
+    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 受注生産"></div></div>' +
+    '<div class="hk-compact-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">生産日</label>' +
+    '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD / 8月"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">出荷予定日</label>' +
+    '<input type="text" class="fi est-pr-shipdate" placeholder="YYYY-MM-DD / 2026年9月"></div></div>' +
     '<div class="fr"><label class="fl">備考 <span class="opt">（任意）</span></label>' +
     '<textarea class="fi est-pr-note" rows="2" placeholder="例: 次回生産 7/9" style="resize:vertical;font-family:inherit;padding:10px"></textarea></div>' +
     '</div>';
