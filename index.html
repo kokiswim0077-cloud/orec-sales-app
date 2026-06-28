@@ -513,6 +513,21 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-apikey-cancel{padding:11px 16px;background:var(--g2);border:none;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
 .hk-apikey-set{width:28px;height:28px;background:none;border:1.5px solid rgba(255,255,255,.4);border-radius:6px;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+/* ── 画面ロック ─────────────────────────────────── */
+#lock-modal{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.65);align-items:center;justify-content:center}
+#lock-modal.open{display:flex}
+.lock-card{background:#fff;border-radius:18px;padding:30px 24px;max-width:320px;width:90%;text-align:center}
+.lock-icon{font-size:42px;margin-bottom:12px}
+.lock-title{font-size:16px;font-weight:700;color:var(--bk);margin-bottom:4px}
+.lock-sub{font-size:12px;color:var(--tm);margin-bottom:18px;line-height:1.6}
+.lock-input{width:100%;padding:14px;border:1.5px solid var(--bd);border-radius:10px;font-size:16px;box-sizing:border-box;text-align:center;font-family:'Noto Sans JP',sans-serif;outline:none;letter-spacing:2px}
+.lock-input:focus{border-color:var(--g)}
+.lock-err{color:#DC2626;font-size:12px;min-height:20px;margin:8px 0}
+.lock-ok-btn{width:100%;padding:14px;background:var(--g);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-bottom:10px}
+.lock-ok-btn:active{background:var(--gd)}
+.lock-cancel-btn{width:100%;padding:11px;background:var(--g2);color:var(--tm);border:1.5px solid var(--bd);border-radius:10px;font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+@keyframes lockShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+#lock-modal.shake .lock-card{animation:lockShake .4s ease}
 </style>
 </head>
 <body>
@@ -1016,6 +1031,17 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <textarea id="fb-text" class="fb-textarea" placeholder="例: ○○機種の部品データを追加してほしい&#10;例: ○○の操作がわかりにくい"></textarea>
     <button class="fb-send" onclick="submitFeedback()">📩 送信する</button>
+    <div style="margin-top:24px;border-top:1px solid var(--bd);padding-top:20px">
+      <div style="font-size:12px;font-weight:700;color:var(--tm);margin-bottom:12px">🔑 管理者設定：認証キー変更</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <input type="password" id="lock-cur-inp" placeholder="現在の認証キー" autocomplete="off"
+          style="width:100%;padding:11px 12px;border:1.5px solid var(--bd);border-radius:9px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;box-sizing:border-box">
+        <input type="password" id="lock-new-inp" placeholder="新しい認証キー（4文字以上）" autocomplete="off"
+          style="width:100%;padding:11px 12px;border:1.5px solid var(--bd);border-radius:9px;font-size:14px;font-family:'Noto Sans JP',sans-serif;outline:none;box-sizing:border-box">
+        <button onclick="lockChangeKey()"
+          style="padding:12px;background:var(--acc);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif">キーを変更する</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1505,8 +1531,63 @@ let ICAT_DOC = null, ICAT_PAGE = 1, ICAT_TOTAL = 0, ICAT_RENDERING = false, ICAT
 // ===== 見積もり STATE =====
 let ESTIMATE = [];  // {pn, name, price, qty}
 
+// ===== 画面ロック =====
+var _lockOk = sessionStorage.getItem('orec_lock') === '1';
+var _lockTarget = '';
+function _lh(s) {
+  var h = 0;
+  for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
+  return String(h >>> 0);
+}
+var _lockHash = localStorage.getItem('orec_lock_h') || _lh('orec2026');
+
+function lockNav(p) {
+  if (_lockOk) { nav(p); return; }
+  _lockTarget = p;
+  document.getElementById('lock-input').value = '';
+  document.getElementById('lock-err').textContent = '';
+  var m = document.getElementById('lock-modal');
+  m.classList.add('open'); m.classList.remove('shake');
+  setTimeout(function() { document.getElementById('lock-input').focus(); }, 100);
+}
+
+function lockSubmit() {
+  var val = (document.getElementById('lock-input').value || '').trim();
+  if (!val) return;
+  if (_lh(val) === _lockHash) {
+    _lockOk = true;
+    sessionStorage.setItem('orec_lock', '1');
+    document.getElementById('lock-modal').classList.remove('open');
+    nav(_lockTarget);
+  } else {
+    document.getElementById('lock-err').textContent = '認証キーが違います';
+    document.getElementById('lock-input').value = '';
+    document.getElementById('lock-input').focus();
+    var m = document.getElementById('lock-modal');
+    m.classList.remove('shake'); void m.offsetWidth; m.classList.add('shake');
+  }
+}
+
+function lockClose() {
+  document.getElementById('lock-modal').classList.remove('open');
+}
+
+function lockChangeKey() {
+  var cur = (document.getElementById('lock-cur-inp').value || '').trim();
+  var nw = (document.getElementById('lock-new-inp').value || '').trim();
+  if (!cur || !nw) { alert('両方入力してください'); return; }
+  if (_lh(cur) !== _lockHash) { alert('現在のキーが違います'); return; }
+  if (nw.length < 4) { alert('新しいキーは4文字以上にしてください'); return; }
+  _lockHash = _lh(nw);
+  localStorage.setItem('orec_lock_h', _lockHash);
+  document.getElementById('lock-cur-inp').value = '';
+  document.getElementById('lock-new-inp').value = '';
+  alert('認証キーを変更しました');
+}
+
 // ===== NAV =====
 function nav(p) {
+  if ((p === 'hikiai' || p === 'est') && !_lockOk) { lockNav(p); return; }
   try {
     document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
     document.querySelectorAll(".bnav-btn").forEach(b => b.classList.remove("on"));
@@ -4535,6 +4616,19 @@ function estReset() {
       </button>
     </div>
     <div class="lyt-foot">設定はこの端末に保存されます</div>
+  </div>
+</div>
+<!-- ── 画面ロック モーダル ──────────────────────── -->
+<div id="lock-modal">
+  <div class="lock-card">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">認証が必要です</div>
+    <div class="lock-sub">引合書・見積書へのアクセスには<br>認証キーが必要です</div>
+    <input type="password" id="lock-input" class="lock-input" placeholder="認証キーを入力"
+      autocomplete="off" onkeydown="if(event.key==='Enter')lockSubmit()">
+    <div class="lock-err" id="lock-err"></div>
+    <button class="lock-ok-btn" onclick="lockSubmit()">ロック解除</button>
+    <button class="lock-cancel-btn" onclick="lockClose()">キャンセル</button>
   </div>
 </div>
 </body>
