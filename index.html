@@ -3893,6 +3893,11 @@ async function hkExport() {
       delete ws[addr].w;
       delete ws[addr].f;   // 数式セル(I4=TODAY()等)に値を入れる時は数式を除去（後のキャッシュ削除で復活させない）
     }
+    // 【重要】得意先名・納入先名だけ入力されコードが空のままだと、テンプレの
+    // VLOOKUP数式が引けず 得意先名・納入先名・住所・TEL・価格 が全て空欄になる。
+    // 出力直前に名称→コードを自動解決して取りこぼしを防ぐ。
+    try { hkAcAutofill('hk-cust-name', 'hk-cust-code'); } catch(e){}
+    try { hkAcAutofill('hk-dest-name', 'hk-dest-code'); } catch(e){}
     // 得意先コード
     var custCode = (document.getElementById('hk-cust-code').value || '').trim();
     if (custCode) setCell('A4', custCode);
@@ -3996,13 +4001,19 @@ async function hkExport() {
     var mHin    = hkMasterMap('商品コード'); // A:コード B:商品名 C:税別小売
 
     // ② 得意先名（C4）・納入先名（C6）・住所（B8）・TEL（I8）
+    // マスタにヒットすれば正式名称、無ければ入力された名称をフォールバックで表示
+    var custNameInput = (document.getElementById('hk-cust-name').value || '').trim();
+    var destNameInput = (document.getElementById('hk-dest-name').value || '').trim() || custNameInput;
     var rSe = mSeikyu[String(custCode)];
     if (rSe && rSe[1] != null) hkSetCache('C4', rSe[1]);
+    else if (custNameInput) hkSetCache('C4', custNameInput);
     var rSh = mShukka[String(destCode)];
     if (rSh) {
       if (rSh[2] != null) hkSetCache('C6', rSh[2]);
       if (rSh[4] != null) hkSetCache('B8', rSh[4]);
       if (rSh[5] != null) hkSetCache('I8', rSh[5]);
+    } else if (destNameInput) {
+      hkSetCache('C6', destNameInput);
     }
 
     // 価格計算に必要な係数（数式と同じ：仕切率=請求先D列、値引率=N8/100）
