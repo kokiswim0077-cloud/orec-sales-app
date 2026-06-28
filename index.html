@@ -412,11 +412,13 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-ac-wrap{position:relative}
 .hk-ac-list{display:none;position:absolute;top:calc(100% + 2px);left:0;right:0;background:var(--wh);border:2px solid var(--g);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:300;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .hk-ac-list.open{display:block}
-.hk-ac-item{padding:11px 14px;cursor:pointer;border-bottom:1px solid #f3f4f6;display:flex;align-items:baseline;gap:8px}
+.hk-ac-item{padding:11px 14px;cursor:pointer;border-bottom:1px solid #f3f4f6;display:block}
 .hk-ac-item:last-child{border-bottom:none}
 .hk-ac-item:active{background:var(--gl)}
+.hk-ac-top{display:flex;align-items:baseline;gap:8px}
 .hk-ac-name{font-size:14px;font-weight:600;color:var(--bk);flex:1}
 .hk-ac-code{font-size:11px;color:var(--tm);font-family:monospace;flex-shrink:0}
+.hk-ac-address{font-size:11px;color:#64748B;line-height:1.45;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hk-ac-empty{padding:12px 14px;font-size:13px;color:var(--tm);text-align:center}
 .hk-code-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:8px;align-items:start}
 .hk-code-row .fr{margin-bottom:0}
@@ -468,10 +470,12 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-overlay.open{display:flex}
 .hk-modal{background:var(--wh);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:20px 0 calc(20px + env(safe-area-inset-bottom));max-height:70vh;overflow-y:auto}
 .hk-modal-title{font-size:14px;font-weight:700;color:var(--bk);padding:0 16px 12px;border-bottom:1px solid var(--bd);margin-bottom:8px}
-.hk-modal-item{padding:13px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;display:flex;align-items:baseline;gap:8px}
+.hk-modal-item{padding:13px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;display:block}
 .hk-modal-item:active{background:var(--gl)}
+.hk-modal-main{display:flex;align-items:baseline;gap:8px}
 .hk-modal-name{font-size:14px;font-weight:600;flex:1}
 .hk-modal-code{font-size:11px;color:var(--tm);font-family:monospace}
+.hk-modal-address{font-size:11px;color:#64748B;line-height:1.45;margin-top:4px}
 /* APIキー設定 */
 .hk-apikey-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:900;display:none;align-items:center;justify-content:center;padding:16px}
 .hk-apikey-ov.open{display:flex}
@@ -2835,6 +2839,12 @@ function _hkFuzzyScore(a, b) {
   for (var k in ba) if (bb[k]) inter++;
   return 2 * inter / (na + nb);
 }
+function _hkDealerAddressText(d) {
+  if (!d) return '';
+  var addr = (d.address || '').replace(/\s+/g, ' ').trim();
+  if (!addr) return '住所未登録';
+  return (d.zip ? '〒' + d.zip + ' ' : '') + addr;
+}
 
 /* ── オートコンプリート ── */
 function hkAcSearch(inp, listId, nameId, codeId) {
@@ -2865,10 +2875,12 @@ function hkAcSearch(inp, listId, nameId, codeId) {
   }
   list.innerHTML = results.map(function(d) {
     var sn = d.name.replace(/'/g, "\\'");
+    var address = _hkDealerAddressText(d);
     var tag = !exactSet[d.code]
       ? '<span style="font-size:10px;color:#9CA3AF;margin-left:4px">類似</span>' : '';
     return '<div class="hk-ac-item" onmousedown="hkAcSelect(\'' + sn + '\',\'' + d.code + '\',\'' + nameId + '\',\'' + codeId + '\',\'' + listId + '\')">' +
-      '<span class="hk-ac-name">' + d.name + tag + '</span><span class="hk-ac-code">' + d.code + '</span></div>';
+      '<div class="hk-ac-top"><span class="hk-ac-name">' + esc(d.name) + tag + '</span><span class="hk-ac-code">' + esc(d.code) + '</span></div>' +
+      '<div class="hk-ac-address">' + esc(address) + '</div></div>';
   }).join('');
   list.classList.add('open');
 }
@@ -3286,8 +3298,10 @@ function hkDealerModalShow(matches, nameId, codeId, callback) {
   document.getElementById('hk-dealer-modal-title').textContent = '「' + matches[0].name + '」が複数あります。選択してください';
   document.getElementById('hk-dealer-modal-list').innerHTML = matches.slice(0,10).map(function(d) {
     var sn = d.name.replace(/'/g, "\\'");
+    var address = _hkDealerAddressText(d);
     return '<div class="hk-modal-item" onclick="hkDealerModalSelect(\'' + nameId + '\',\'' + codeId + '\',\'' + sn + '\',\'' + d.code + '\')">' +
-      '<span class="hk-modal-name">' + d.name + '</span><span class="hk-modal-code">' + d.code + '</span></div>';
+      '<div class="hk-modal-main"><span class="hk-modal-name">' + esc(d.name) + '</span><span class="hk-modal-code">' + esc(d.code) + '</span></div>' +
+      '<div class="hk-modal-address">' + esc(address) + '</div></div>';
   }).join('');
   document.getElementById('hk-dealer-overlay').classList.add('open');
 }
