@@ -1425,7 +1425,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div id="est-kubota-chips" style="display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto"></div>
       </div>
       <div class="fr">
-        <label class="fl">担当者名</label>
+        <label class="fl">担当者名（お客様の担当者）</label>
         <input type="text" class="fi" id="est-staff" placeholder="">
       </div>
       <div class="fr">
@@ -2859,11 +2859,30 @@ function _hkFuzzyScore(a, b) {
   for (var k in ba) if (bb[k]) inter++;
   return 2 * inter / (na + nb);
 }
+function _hkAddressSourceDealer(d) {
+  if (!d || !Array.isArray(S)) return null;
+  var code = String(d.code || '').trim();
+  if (code) {
+    for (var i = 0; i < S.length; i++) {
+      if (String(S[i].code || '').trim() === code && S[i].address) return S[i];
+    }
+  }
+  var name = _hkNorm(d.name);
+  if (!name) return null;
+  var match = null;
+  for (var j = 0; j < S.length; j++) {
+    if (!S[j].address || _hkNorm(S[j].name) !== name) continue;
+    if (match) return null;
+    match = S[j];
+  }
+  return match;
+}
 function _hkDealerAddressText(d) {
   if (!d) return '';
-  var addr = (d.address || '').replace(/\s+/g, ' ').trim();
+  var src = d.address ? d : _hkAddressSourceDealer(d);
+  var addr = ((src && src.address) || '').replace(/\s+/g, ' ').trim();
   if (!addr) return '住所未登録';
-  return (d.zip ? '〒' + d.zip + ' ' : '') + addr;
+  return (src.zip ? '〒' + src.zip + ' ' : '') + addr;
 }
 
 /* ── オートコンプリート ── */
@@ -3721,7 +3740,7 @@ function estBuildTextPrompt(text) {
     '- 回答期限・運賃・支払条件は抽出しない\n\n' +
     'テキスト:「' + text + '」\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
-    '  "staff_name": "担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
@@ -3737,7 +3756,7 @@ function estBuildImagePrompt() {
     '伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
     '月だけの日付は production_text/ship_text に「8月」「2026年9月以降」のように入れる。\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
-    '  "staff_name": "担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
     '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
