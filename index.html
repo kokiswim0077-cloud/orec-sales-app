@@ -35,6 +35,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .bnav-btn.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--g);border-radius:0 0 3px 3px}
 .bnav-badge{position:absolute;top:4px;right:calc(50% - 14px);background:#CC0000;color:#fff;border-radius:10px;font-size:9px;font-weight:900;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:"Barlow Condensed",sans-serif}
 .sa{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 8px calc(var(--nh)+12px);-webkit-overflow-scrolling:touch}
+#s-home .sa{padding-bottom:calc(var(--nh) + 132px)}
 .sec-label{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin:0 0 8px}
 .tile-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .home-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}
@@ -61,6 +62,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .home-gemini-status.visible{display:block}
 .home-gemini-answer{display:none;margin-top:10px;padding:12px 13px;background:var(--gl);border:1.5px solid #A7D8C2;border-radius:10px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:#12352B}
 .home-gemini-answer.visible{display:block}
+.home-bottom-spacer{height:calc(var(--nh) + 72px);flex-shrink:0}
 .tile{background:var(--wh);border-radius:12px;padding:16px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1.5px solid var(--bd);transition:background .1s;user-select:none}
 .tile:active{background:var(--gl);border-color:var(--g)}
 .tile-ic{width:42px;height:42px;border-radius:10px;background:var(--bk);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
@@ -623,6 +625,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="home-gemini-status" id="home-gemini-status"></div>
       <div class="home-gemini-answer" id="home-gemini-answer"></div>
     </div>
+    <div class="home-bottom-spacer" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -3197,6 +3200,9 @@ async function homeAskGemini() {
     if (answer) {
       answer.textContent = reply;
       answer.classList.add('visible');
+      setTimeout(function() {
+        answer.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }, 80);
     }
     homeSetGeminiStatus('返信を受信しました。', 'var(--g)');
   } catch(e) {
