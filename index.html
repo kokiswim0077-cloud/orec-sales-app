@@ -166,6 +166,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .kchip-sub{font-size:10px;padding:5px 10px;border-color:#AABB99;color:#446633;background:#F0F5EE}
 .kchip-sub.on{border-color:#005C42;background:#005C42;color:var(--wh)}
 .pdf-viewer{flex:1;overflow-y:auto;overflow-x:hidden;background:#555;display:flex;flex-direction:column;align-items:center;padding:8px 0 calc(var(--nh)+8px);-webkit-overflow-scrolling:touch}
+.pdf-viewer.zoomed{overflow:auto;align-items:flex-start;touch-action:none}
 .pdf-spread{display:flex;justify-content:center;align-items:flex-start;gap:3px;width:100%;max-width:100%}
 .pdf-spread canvas{height:auto;display:block;box-shadow:0 2px 8px rgba(0,0,0,.5)}
 .pdf-navbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--wh);border-bottom:1px solid var(--bd);flex-shrink:0;gap:6px}
@@ -1625,12 +1626,13 @@ async function kRenderSpread(startPage) {
   KPDF_RENDERING = true;
   const sp = document.getElementById("kpdf-spread");
   const ld = document.getElementById("kpdf-loading");
+  const viewer = document.getElementById("kpdf-viewer");
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = "none"; ld.style.display = "flex";
   // p.1は単ページ・p.2以降は偶数左スタート
   KPDF_PAGE = KPDF_SPREAD ? kSpreadStart(startPage) : Math.max(1, Math.min(startPage, KPDF_TOTAL));
   // p.1=単ページ(全幅), p.2+=見開き(半幅)
   const isSpread = KPDF_SPREAD && KPDF_PAGE > 1;
-  const viewer = document.getElementById("kpdf-viewer");
   const useW = isSpread
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -1770,9 +1772,10 @@ async function cRenderSpread(startPage) {
   CPDF_RENDERING = true;
   const sp = document.getElementById("cpdf-spread");
   const ld = document.getElementById("cpdf-loading");
+  const viewer = document.getElementById("cpdf-viewer");
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = "none"; ld.style.display = "flex";
   CPDF_PAGE = CPDF_SPREAD ? spreadStart(startPage) : Math.max(1, Math.min(startPage, CPDF_TOTAL));
-  const viewer = document.getElementById("cpdf-viewer");
   const useW = CPDF_SPREAD
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -1857,9 +1860,10 @@ async function icatRenderSpread(startPage) {
   ICAT_RENDERING = true;
   const sp = document.getElementById('icat-spread');
   const ld = document.getElementById('icat-loading');
+  const viewer = document.getElementById('icat-viewer');
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = 'none'; ld.style.display = 'flex';
   ICAT_PAGE = ICAT_SPREAD ? spreadStart(startPage) : Math.max(1, Math.min(startPage, ICAT_TOTAL));
-  const viewer = document.getElementById('icat-viewer');
   const useW = ICAT_SPREAD
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -2328,6 +2332,8 @@ function partsSearch() {
     let base = 1, cur = 1, d0 = 0, lastTap = 0;
     let panX = 0, panY = 0, p0x = 0, p0y = 0, panning = false;
     let pivotX = 0, pivotY = 0, layoutLeft = 0, layoutTop = 0, pinching = false;
+    const zoomSensitivity = 1.45;
+    const maxZoom = 6;
 
     function touchDistance(e) {
       return Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
@@ -2350,21 +2356,45 @@ function partsSearch() {
         sp.style.transformOrigin = '';
         viewer.style.paddingBottom = '';
         viewer.style.overflowX = '';
+        viewer.classList.remove('zoomed');
         viewer._zoomScale = 1;
         if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
         return;
       }
-      const minPanX = Math.min(0, viewer.clientWidth - sp.offsetWidth * cur);
-      const minPanY = Math.min(0, viewer.clientHeight - sp.offsetHeight * cur);
-      panX = Math.max(minPanX, Math.min(0, panX));
-      panY = Math.max(minPanY, Math.min(0, panY));
+      const css = getComputedStyle(viewer);
+      const padTop = parseFloat(css.paddingTop) || 0;
+      const defaultPadBottom = parseFloat(css.getPropertyValue('--nh')) || 56;
+      const safeBottom = defaultPadBottom + 12;
+      const visibleW = viewer.clientWidth;
+      const visibleH = Math.max(1, viewer.clientHeight - padTop - safeBottom);
+      const scaledW = sp.offsetWidth * cur;
+      const scaledH = sp.offsetHeight * cur;
+      const edgePad = 14;
+      const minPanX = Math.min(edgePad, visibleW - scaledW - edgePad);
+      const maxPanX = edgePad;
+      const minPanY = Math.min(edgePad, visibleH - scaledH - edgePad);
+      const maxPanY = edgePad;
+      panX = Math.max(minPanX, Math.min(maxPanX, panX));
+      panY = Math.max(minPanY, Math.min(maxPanY, panY));
       sp.style.transformOrigin = '0 0';
       sp.style.transform = 'translate(' + panX + 'px,' + panY + 'px) scale(' + cur + ')';
-      viewer.style.paddingBottom = Math.max(0, (cur - 1) * sp.offsetHeight * 0.6) + 'px';
+      viewer.style.paddingBottom = Math.max(safeBottom, safeBottom + (cur - 1) * sp.offsetHeight + 24) + 'px';
       viewer.style.overflowX = 'auto';
+      viewer.classList.add('zoomed');
       viewer._zoomScale = cur;
       if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
     }
+
+    viewer._resetPdfZoom = function() {
+      cur = base = 1;
+      d0 = 0;
+      panX = 0;
+      panY = 0;
+      pinching = false;
+      panning = false;
+      const sp = document.getElementById(spreadId);
+      if (sp) applyTransform(sp);
+    };
 
     viewer.addEventListener('touchstart', function(e) {
       const sp = document.getElementById(spreadId);
@@ -2394,7 +2424,8 @@ function partsSearch() {
         if (!sp) return;
         const d = touchDistance(e);
         const center = touchCenter(e);
-        cur = Math.min(5, Math.max(1, base * d / d0));
+        const ratio = Math.max(0.2, d / d0);
+        cur = Math.min(maxZoom, Math.max(1, base * Math.pow(ratio, zoomSensitivity)));
         panX = center.x - layoutLeft - pivotX * cur;
         panY = center.y - layoutTop - pivotY * cur;
         applyTransform(sp);
