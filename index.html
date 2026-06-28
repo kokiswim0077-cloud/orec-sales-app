@@ -1506,9 +1506,15 @@ function spreadStart(page) {
 function addSwipe(elId, prevFn, nextFn) {
   const el = document.getElementById(elId);
   if (!el) return;
-  let sx = 0, sy = 0;
-  el.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+  let sx = 0, sy = 0, singleTouch = false;
+  el.addEventListener("touchstart", e => {
+    singleTouch = e.touches.length === 1;
+    if (!singleTouch) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, {passive: true});
   el.addEventListener("touchend", e => {
+    if (!singleTouch) return;
+    singleTouch = false;
     if (el._zoomScale > 1) return; // ズーム中はページ遷移しない
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
@@ -1605,6 +1611,7 @@ async function kRenderSpread(startPage) {
     document.getElementById("kpdf-next").disabled = KPDF_SPREAD
       ? (KPDF_PAGE === 1 ? (KPDF_TOTAL < 2) : (KPDF_PAGE + 2 > KPDF_TOTAL))
       : (KPDF_PAGE >= KPDF_TOTAL);
+    setKakakuPagingDisabledByZoom();
   } finally {
     ld.style.display = "none"; sp.style.display = "flex";
     KPDF_RENDERING = false; viewer.scrollTop = 0;
@@ -1613,6 +1620,11 @@ async function kRenderSpread(startPage) {
 
 async function kNav(dir) {
   if (!KPDF_DOC) return;
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ送りを停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   // p.1から次: 1ステップ(→p.2), p.2以降: 2ステップ(→p.4...)
   const step = (KPDF_SPREAD && KPDF_PAGE > 1) ? 2 : 1;
   const next = dir > 0 ? KPDF_PAGE + step : KPDF_PAGE - step;
@@ -1629,6 +1641,11 @@ async function kToggleSpread() {
 }
 async function kJumpPage() {
   if (!KPDF_DOC) return;
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ移動を停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   const inp = prompt("ページ番号を入力 (1–" + KPDF_TOTAL + "):");
   if (inp === null) return;
   const n = parseInt(inp);
@@ -1636,6 +1653,11 @@ async function kJumpPage() {
   else toast("無効なページ番号です");
 }
 async function gotoKakaku(page, el) {
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ移動を停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   document.querySelectorAll("#kakaku-chips .kchip").forEach(c => c.classList.remove("on"));
   if (el) el.classList.add("on");
   if (KPDF_DOC) {
@@ -1655,6 +1677,28 @@ function updateKchip(page) {
   let best = 0;
   for (let i = 0; i < pages.length; i++) { if (pages[i] <= page) best = i; }
   chips.forEach((c, i) => c.classList.toggle("on", i === best));
+}
+
+function isKakakuZoomed() {
+  const viewer = document.getElementById("kpdf-viewer");
+  return !!(viewer && viewer._zoomScale && viewer._zoomScale > 1.01);
+}
+
+function setKakakuPagingDisabledByZoom() {
+  const zoomed = isKakakuZoomed();
+  const prev = document.getElementById("kpdf-prev");
+  const next = document.getElementById("kpdf-next");
+  if (prev) {
+    prev.disabled = zoomed || (KPDF_PAGE <= 1);
+    prev.title = zoomed ? "拡大中は画面内スクロールのみ有効です" : "";
+  }
+  if (next) {
+    const atEnd = KPDF_SPREAD
+      ? (KPDF_PAGE === 1 ? (KPDF_TOTAL < 2) : (KPDF_PAGE + 2 > KPDF_TOTAL))
+      : (KPDF_PAGE >= KPDF_TOTAL);
+    next.disabled = zoomed || atEnd;
+    next.title = zoomed ? "拡大中は画面内スクロールのみ有効です" : "";
+  }
 }
 
 // ===== カタログPDF =====
@@ -2244,21 +2288,58 @@ function partsSearch() {
     if (!viewer) return;
     let base = 1, cur = 1, d0 = 0, lastTap = 0;
     let panX = 0, panY = 0, p0x = 0, p0y = 0, panning = false;
+    let pivotX = 0, pivotY = 0, layoutLeft = 0, layoutTop = 0, pinching = false;
+
+    function touchDistance(e) {
+      return Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY);
+    }
+
+    function touchCenter(e) {
+      return {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+      };
+    }
 
     function applyTransform(sp) {
-      const maxPanX = Math.max(0, (sp.offsetWidth * (cur - 1)) / 2);
-      const maxPanY = Math.max(0, (sp.offsetHeight * (cur - 1)) / 2);
-      panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
-      panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
-      sp.style.transformOrigin = 'top center';
+      if (cur <= 1.01) {
+        cur = base = 1;
+        panX = 0;
+        panY = 0;
+        sp.style.transform = '';
+        sp.style.transformOrigin = '';
+        viewer.style.paddingBottom = '';
+        viewer.style.overflowX = '';
+        viewer._zoomScale = 1;
+        if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
+        return;
+      }
+      const minPanX = Math.min(0, viewer.clientWidth - sp.offsetWidth * cur);
+      const minPanY = Math.min(0, viewer.clientHeight - sp.offsetHeight * cur);
+      panX = Math.max(minPanX, Math.min(0, panX));
+      panY = Math.max(minPanY, Math.min(0, panY));
+      sp.style.transformOrigin = '0 0';
       sp.style.transform = 'translate(' + panX + 'px,' + panY + 'px) scale(' + cur + ')';
       viewer.style.paddingBottom = Math.max(0, (cur - 1) * sp.offsetHeight * 0.6) + 'px';
+      viewer.style.overflowX = 'auto';
+      viewer._zoomScale = cur;
+      if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
     }
 
     viewer.addEventListener('touchstart', function(e) {
+      const sp = document.getElementById(spreadId);
       if (e.touches.length === 2) {
-        d0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                        e.touches[0].clientY - e.touches[1].clientY);
+        if (!sp) return;
+        d0 = touchDistance(e);
+        base = cur;
+        const center = touchCenter(e);
+        const rect = sp.getBoundingClientRect();
+        pivotX = (center.x - rect.left) / cur;
+        pivotY = (center.y - rect.top) / cur;
+        layoutLeft = rect.left - panX;
+        layoutTop = rect.top - panY;
+        pinching = true;
         panning = false;
         e.preventDefault();
       } else if (e.touches.length === 1 && cur > 1) {
@@ -2270,11 +2351,14 @@ function partsSearch() {
 
     viewer.addEventListener('touchmove', function(e) {
       if (e.touches.length === 2 && d0) {
-        const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                             e.touches[0].clientY - e.touches[1].clientY);
-        cur = Math.min(5, Math.max(0.5, base * d / d0));
         const sp = document.getElementById(spreadId);
-        if (sp) applyTransform(sp);
+        if (!sp) return;
+        const d = touchDistance(e);
+        const center = touchCenter(e);
+        cur = Math.min(5, Math.max(1, base * d / d0));
+        panX = center.x - layoutLeft - pivotX * cur;
+        panY = center.y - layoutTop - pivotY * cur;
+        applyTransform(sp);
         e.preventDefault();
       } else if (e.touches.length === 1 && panning && cur > 1) {
         const dx = e.touches[0].clientX - p0x;
@@ -2291,13 +2375,25 @@ function partsSearch() {
 
     viewer.addEventListener('touchend', function(e) {
       if (e.touches.length < 2 && d0) { base = cur; d0 = 0; }
+      if (e.touches.length === 1 && cur > 1) {
+        p0x = e.touches[0].clientX;
+        p0y = e.touches[0].clientY;
+        panning = true;
+      }
       if (e.touches.length === 0) panning = false;
+      if (pinching && !e.touches.length) {
+        pinching = false;
+        lastTap = 0;
+        viewer._zoomScale = cur;
+        if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
+        return;
+      }
       // ダブルタップでリセット
       const now = Date.now();
-      if (now - lastTap < 300 && !e.touches.length && cur !== 1) {
+      if (!pinching && now - lastTap < 300 && !e.touches.length && cur !== 1) {
         cur = base = 1; panX = 0; panY = 0; d0 = 0;
         const sp = document.getElementById(spreadId);
-        if (sp) { sp.style.transform = ''; }
+        if (sp) { applyTransform(sp); }
         viewer.style.paddingBottom = '';
       }
       lastTap = now;
