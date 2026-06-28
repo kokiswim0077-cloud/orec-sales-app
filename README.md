@@ -77,5 +77,5 @@ aws s3 cp index.html s3://orec-parts-chatbot/sales/index.html --region ap-northe
 
 ## 連絡先
 
-オーレック関東営業G  担当: 関根  
-TEL: 0480-50-9020
+オーレック関東営業G  担当:   
+
