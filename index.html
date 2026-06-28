@@ -206,6 +206,9 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .icat-section.open{display:block}
 .icat-hdr{padding:10px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:8px;background:var(--gl)}
 .icat-hdr-title{font-size:14px;font-weight:700;flex:1;color:var(--gd)}
+.icat-actions{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.icat-action{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 9px;border-radius:8px;border:1.5px solid var(--g);background:var(--wh);color:var(--g);font-size:11px;font-weight:800;text-decoration:none;white-space:nowrap}
+.icat-action.primary{background:var(--g);color:var(--wh)}
 .icat-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--tm);padding:0 4px;line-height:1}
 .icat-navbar{display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--bd);background:var(--g2)}
 .icat-viewer{background:#444;display:flex;flex-direction:column;align-items:center;padding:8px 4px;min-height:180px;overflow:auto;position:relative}
@@ -218,6 +221,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .icat-spread.continuous canvas{flex:none;max-width:100%;width:100%;height:auto;display:block;box-shadow:0 1px 4px rgba(0,0,0,.3)}
 .icat-viewer.continuous-mode{max-height:80vh;overflow:auto;-webkit-overflow-scrolling:touch}
 .icat-loading{display:flex;align-items:center;gap:10px;color:#fff;padding:40px 16px;justify-content:center;font-size:13px}
+@media (max-width:420px){.icat-hdr{padding:9px 10px}.icat-action{font-size:10px;padding:6px 7px}.icat-hdr-title{font-size:13px}}
 /* ボトムナビ「作成中」バッジ */
 .bnav-wip{position:absolute;top:3px;right:3px;background:#F59E0B;color:#fff;font-size:7px;font-weight:900;padding:1px 4px;border-radius:4px;letter-spacing:0.3px;pointer-events:none}
 
@@ -907,9 +911,13 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       </div>
     </div>
     <!-- インラインカタログビューアー -->
-    <div class="icat-section" id="icat-section">
+      <div class="icat-section" id="icat-section">
       <div class="icat-hdr">
         <div class="icat-hdr-title" id="icat-title">カタログ</div>
+        <div class="icat-actions">
+          <a class="icat-action primary" id="icat-open-link" href="#" target="_blank" rel="noopener">PDFを開く</a>
+          <a class="icat-action" id="icat-dl-link" href="#" download>保存</a>
+        </div>
         <button class="icat-close" onclick="icatClose()">✕</button>
       </div>
       <div class="icat-navbar">
@@ -1645,6 +1653,10 @@ function addSwipe(elId, prevFn, nextFn) {
 }
 
 // ===== PDF 共通描画 (DPR対応) =====
+const PDF_RENDER_DPR_MAX = 3;
+function pdfRenderDpr() {
+  return Math.min(window.devicePixelRatio || 1, PDF_RENDER_DPR_MAX);
+}
 async function renderPdfPage(pdfDoc, pageNum, canvasId, containerWidth) {
   if (!pdfDoc || pageNum < 1 || pageNum > pdfDoc.numPages) {
     const c = document.getElementById(canvasId);
@@ -1655,7 +1667,7 @@ async function renderPdfPage(pdfDoc, pageNum, canvasId, containerWidth) {
   if (!c) return;
   c.style.display = "block";
   const page = await pdfDoc.getPage(pageNum);
-  const dpr = Math.min(window.devicePixelRatio || 1, 2); // DPR上限2（高解像度端末でのキャンバス肥大化防止）
+  const dpr = pdfRenderDpr();
   const baseScale = containerWidth / page.getViewport({scale: 1}).width;
   const vp = page.getViewport({scale: baseScale * dpr});
   c.width  = vp.width;
@@ -2008,6 +2020,13 @@ async function openCatalogInline(pdfPath, title, cardEl) {
   }
   sec.dataset.path = pdfPath;
   document.getElementById('icat-title').textContent = title;
+  const openLink = document.getElementById('icat-open-link');
+  const dlLink = document.getElementById('icat-dl-link');
+  if (openLink) openLink.href = pdfPath;
+  if (dlLink) {
+    dlLink.href = pdfPath;
+    dlLink.setAttribute('download', title + '.pdf');
+  }
   sec.classList.add('open');
   // カードグリッドの直下に移動
   cardEl && cardEl.closest('.cat-grid') && cardEl.closest('.cat-grid').after(sec);
@@ -2038,11 +2057,11 @@ async function openCatalogInline(pdfPath, title, cardEl) {
   sp.style.display = 'none';
   sp.innerHTML = '';
   ld.style.display = 'flex';
-  ld.innerHTML = '<div class="pdf-spinner"></div><span>読込中…</span>';
+  ld.innerHTML = '<div class="pdf-spinner"></div><span>高精細プレビューを読込中…</span>';
   try {
     const doc = await pdfjsLib.getDocument(pdfPath).promise;
     const useW = Math.max(1, viewer.clientWidth - 8);
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = pdfRenderDpr();
     for (let i = 1; i <= doc.numPages; i++) {
       const page = await doc.getPage(i);
       const baseScale = useW / page.getViewport({scale: 1}).width;
