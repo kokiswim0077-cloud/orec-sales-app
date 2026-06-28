@@ -25,6 +25,8 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .hd-sub{font-size:10px;color:rgba(255,255,255,.45)}
 .hd-reload{background:none;border:1px solid rgba(255,255,255,.2);border-radius:6px;color:rgba(255,255,255,.6);font-size:16px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .hd-reload:active{background:rgba(255,255,255,.1)}
+.hd-feedback{height:30px;padding:0 10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);border-radius:6px;color:rgba(255,255,255,.86);font-size:12px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif;flex-shrink:0}
+.hd-feedback:active{background:rgba(255,255,255,.2)}
 .back-btn{background:none;border:none;color:var(--g);font-size:13px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif;padding:4px 8px;white-space:nowrap}
 .bnav{position:fixed;bottom:0;left:0;right:0;height:var(--nh);background:var(--wh);border-top:2px solid var(--g);display:flex;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
 .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:transparent;cursor:pointer;padding:5px 0;font-family:"Noto Sans JP",sans-serif;font-size:8px;font-weight:500;color:var(--tm);position:relative;user-select:none;touch-action:manipulation}
@@ -327,6 +329,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 [data-layout="6"] .hd-title{color:#007A59}
 [data-layout="6"] .hd-logo{background:#007A59}
 [data-layout="6"] .hd-reload{border-color:#007A59;color:#007A59}
+[data-layout="6"] .hd-feedback{border-color:#007A59;color:#007A59;background:#fff}
 [data-layout="6"] .hd-lyt{border-color:#007A59;color:#007A59}
 [data-layout="6"] .tile{background:transparent;border:none;border-bottom:1px solid #eee;border-radius:0;padding:13px 2px;box-shadow:none}
 [data-layout="6"] .tile-grid{gap:0}
@@ -490,6 +493,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="hd-title">OREC SALES</div>
     <button class="hd-lyt" onclick="openLyt()" title="レイアウト変更">🎨</button>
     <button class="hd-reload" onclick="location.reload()" title="リロード">↺</button>
+    <button class="hd-feedback" onclick="nav('feedback')" title="要望">要望</button>
   </div>
   <div class="sa">
     <!-- 4業務アクション（小タブ） -->
@@ -510,26 +514,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <span class="home-act-ic">📋</span>
         <span class="home-act-lbl">発送依頼書<br>作成</span>
       </div>
-    </div>
-    <div class="home-gemini">
-      <div class="home-gemini-head">
-        <div>
-          <div class="home-gemini-title">Gemini 壁打ち</div>
-          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます</div>
-        </div>
-      </div>
-      <div class="home-gemini-keyrow">
-        <input type="password" class="home-gemini-key" id="home-gemini-key" placeholder="Gemini API Key（保存済みなら空でOK）">
-        <button type="button" class="home-gemini-save" onclick="homeSaveGeminiKey()">保存</button>
-      </div>
-      <textarea class="home-gemini-text" id="home-gemini-text"
-        placeholder="例: 大竹産業からRM832Aの見積依頼。返答文と確認すべき点を整理して"></textarea>
-      <div class="home-gemini-actions">
-        <button type="button" class="home-gemini-send" id="home-gemini-send" onclick="homeAskGemini()">Geminiに相談</button>
-        <button type="button" class="home-gemini-clear" onclick="homeClearGemini()">クリア</button>
-      </div>
-      <div class="home-gemini-status" id="home-gemini-status"></div>
-      <div class="home-gemini-answer" id="home-gemini-answer"></div>
     </div>
     <div class="sec-label">クイックアクセス</div>
     <div class="tile-grid">
@@ -589,6 +573,26 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--g)">消耗</div>
         <div style="font-size:9px;color:var(--tm);margin-top:2px">消耗品</div>
       </div>
+    </div>
+    <div class="home-gemini">
+      <div class="home-gemini-head">
+        <div>
+          <div class="home-gemini-title">Gemini 壁打ち</div>
+          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます</div>
+        </div>
+      </div>
+      <div class="home-gemini-keyrow">
+        <input type="password" class="home-gemini-key" id="home-gemini-key" placeholder="Gemini API Key（保存済みなら空でOK）">
+        <button type="button" class="home-gemini-save" onclick="homeSaveGeminiKey()">保存</button>
+      </div>
+      <textarea class="home-gemini-text" id="home-gemini-text"
+        placeholder="例: 大竹産業からRM832Aの見積依頼。返答文と確認すべき点を整理して"></textarea>
+      <div class="home-gemini-actions">
+        <button type="button" class="home-gemini-send" id="home-gemini-send" onclick="homeAskGemini()">Geminiに相談</button>
+        <button type="button" class="home-gemini-clear" onclick="homeClearGemini()">クリア</button>
+      </div>
+      <div class="home-gemini-status" id="home-gemini-status"></div>
+      <div class="home-gemini-answer" id="home-gemini-answer"></div>
     </div>
   </div>
 </div>
