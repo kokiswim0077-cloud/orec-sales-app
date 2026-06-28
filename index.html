@@ -3894,6 +3894,75 @@ async function hkExport() {
       wb.Workbook.Views[0].activeTab = _sIdx;
     }
 
+    // ── 解決済みの実値を直接書き込む ──
+    // 数式を再計算しないビューア（モバイル・プレビュー等）でも、得意先名・単価・価格が
+    // 空欄にならないよう、アプリ側で計算した値を直接埋める。
+    // （テンプレのG列「単価」は =O13 を参照しており常に0=空欄になる不具合も修正）
+    function hkRetailByCode(code) {
+      if (typeof HK_PRODUCTS === 'undefined' || !code) return null;
+      for (var i = 0; i < HK_PRODUCTS.length; i++) { if (HK_PRODUCTS[i][0] === code) return HK_PRODUCTS[i]; }
+      return null;
+    }
+    function hkNameByCode(code) {
+      if (typeof MSG_DEALERS === 'undefined' || !code) return '';
+      var s = String(code);
+      for (var i = 0; i < MSG_DEALERS.length; i++) { if (MSG_DEALERS[i].code === s) return MSG_DEALERS[i].name; }
+      return '';
+    }
+    function hkRoundDown(x, rd) { var f = Math.pow(10, -rd); return Math.floor(x / f) * f; } // rd=-2→100単位, -1→10単位
+
+    // ② 得意先名・納入先名（数式 C4/C6 の代わりに実値を書き込む）
+    var hkCustName = (document.getElementById('hk-cust-name').value || '').trim() || hkNameByCode(custCode);
+    var hkDestName = (document.getElementById('hk-dest-name').value || '').trim() || hkNameByCode(destCode) || hkCustName;
+    if (hkCustName) setCell('C4', hkCustName);
+    if (hkDestName) setCell('C6', hkDestName);
+
+    // 仕切率・値引（① 単価・価格の計算用）
+    var hkShikiri = estGetShikiri(custCode) || 0;
+    var hkDiscFrac = (!isNaN(discRate) && discRate > 0) ? discRate / 100 : 0;
+    var hkMethod = hkDiscountMethodForName(discName) || '外掛';
+    var hkSpecial = ['61121', '61123', '64445001', '64445002'].indexOf(String(custCode)) >= 0;
+    var hkRd = hkSpecial ? -1 : -2;
+    var hkFinalRatio = (hkMethod === '内掛') ? hkShikiri * (1 - hkDiscFrac) : (hkShikiri - hkDiscFrac);
+    if (hkShikiri) {
+      setCell('P10', hkShikiri);
+      setCell('R10', hkDiscFrac);
+      setCell('T10', Math.round(hkFinalRatio * 100000) / 100000);
+    }
+
+    // ① 各商品行の商品名・税別小売・通常・値引・最終・単価
+    products.slice(0, 4).forEach(function(p, i) {
+      var row = 11 + i;
+      var code = p.pCode;
+      if (!code && p.pName) { var pm = hkResolveProducts(p.pName, 1); if (pm.length) code = pm[0].c; }
+      if (!code) return;
+      var rec = hkRetailByCode(code);
+      if (rec && rec[1]) setCell('B' + row, rec[1]);          // 商品名
+      var retail = rec ? rec[2] : null;
+      if (retail != null && hkShikiri) {
+        var normal = hkRoundDown(retail * hkShikiri, hkRd);   // 通常
+        var fin = (hkMethod === '内掛')
+          ? hkRoundDown(normal * (1 - hkDiscFrac), hkRd)
+          : hkRoundDown(retail * hkFinalRatio, hkRd);         // 最終
+        setCell('L' + row, retail);                           // 税別小売
+        setCell('N' + row, normal);                           // 通常
+        setCell('S' + row, fin);                              // 最終
+        setCell('Q' + row, fin - normal);                     // 値引
+        setCell('G' + row, fin);                              // 単価 = 最終単価（=O13 不具合を上書き）
+      } else if (retail != null) {
+        setCell('L' + row, retail);
+        setCell('G' + row, retail);                           // 仕切率不明時は小売を単価に
+      }
+    });
+
+    // ③ 運賃=元払い・便名=福山便 を常に〇で囲む
+    setCell('E17', '◯元払い');
+    var hkBin = (ws['D20'] && ws['D20'].v) ? String(ws['D20'].v) : '福山便　　西濃便　JPロジ';
+    setCell('D20', '◯' + hkBin.replace(/^◯/, ''));
+
+    // ④ 作成者：谷尾（常に）
+    setCell('J20', '谷尾');
+
     // ファイル名
     var today = new Date().toISOString().slice(0,10).replace(/-/g,'');
     var custName = (document.getElementById('hk-cust-name').value || '').trim().slice(0, 20);
