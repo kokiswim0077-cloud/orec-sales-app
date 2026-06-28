@@ -1,0 +1,10 @@
+# PDFファイル（大きいので除外）
+*.pdf
+
+# OS
+.DS_Store
+Thumbs.db
+
+# エディタ
+.vscode/
+*.swp
