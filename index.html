@@ -4002,12 +4002,14 @@ async function hkExport() {
     // 出力直前に名称→コードを自動解決して取りこぼしを防ぐ。
     try { hkAcAutofill('hk-cust-name', 'hk-cust-code'); } catch(e){}
     try { hkAcAutofill('hk-dest-name', 'hk-dest-code'); } catch(e){}
-    // 得意先コード
+    // 得意先コード ※数値コードは「数値」で入れる。文字列だと請求先/出荷先マスタ(数値)と
+    // VLOOKUPが一致せず、Excelで編集を有効化(再計算)した瞬間に 得意先名・納入先名・住所・
+    // TEL・価格・仕切率(P10)・掛率(B40)などが全て空欄になる。
     var custCode = (document.getElementById('hk-cust-code').value || '').trim();
-    if (custCode) setCell('A4', custCode);
+    if (custCode) setCell('A4', /^\d+$/.test(custCode) ? parseInt(custCode, 10) : custCode);
     // 納入先コード（空なら得意先コードを使用）
     var destCode = (document.getElementById('hk-dest-code').value || custCode).trim();
-    if (destCode) setCell('A6', destCode);
+    if (destCode) setCell('A6', /^\d+$/.test(destCode) ? parseInt(destCode, 10) : destCode);
     // 受注日
     var orderDate = document.getElementById('hk-order-date').value;
     setCell('I4', orderDate ? _hkFmtDate(orderDate) : _hkFmtDate(new Date().toISOString().slice(0,10)));
