@@ -418,6 +418,12 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-ac-name{font-size:14px;font-weight:600;color:var(--bk);flex:1}
 .hk-ac-code{font-size:11px;color:var(--tm);font-family:monospace;flex-shrink:0}
 .hk-ac-empty{padding:12px 14px;font-size:13px;color:var(--tm);text-align:center}
+.hk-code-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:8px;align-items:start}
+.hk-code-row .fr{margin-bottom:0}
+.hk-code-side .fl{font-size:10px;letter-spacing:0;white-space:nowrap}
+.hk-code-side .fi{font-size:13px;padding:10px 8px;text-align:center;font-family:"Barlow Condensed",monospace;font-weight:700;letter-spacing:.03em}
+.hk-code-side .fi::placeholder{font-size:11px;letter-spacing:0;font-family:"Noto Sans JP",sans-serif;font-weight:500}
+@media (max-width:360px){.hk-code-row{grid-template-columns:minmax(0,1fr) 96px;gap:6px}.hk-code-side .fi{font-size:12px;padding-left:6px;padding-right:6px}}
 .hk-radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .hk-radio-label{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--g2);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid transparent;user-select:none}
 .hk-radio-label:has(input:checked){background:var(--gl);border-color:var(--g);color:var(--g)}
@@ -440,14 +446,11 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-voice-textarea{width:100%;min-height:90px;border:1.5px solid #93C5FD;border-radius:8px;padding:10px;font-size:14px;font-family:'Noto Sans JP',sans-serif;resize:vertical;outline:none;box-sizing:border-box}
 .hk-voice-textarea:focus{border-color:#2563EB}
 .hk-voice-submit{padding:12px;background:#2563EB;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
-/* 写真ボタン群（選択 / 撮影）— 下段に横並び */
+/* 写真選択 */
 .hk-photo-group{display:flex;gap:8px}
 .hk-drop-zone{flex:1;padding:12px 8px;background:#DC2626;color:#fff;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;border:2px dashed transparent;transition:background .2s;white-space:nowrap;box-sizing:border-box}
 .hk-drop-zone.drag-over{background:#B91C1C;border-color:#fff}
 .hk-drop-zone input{display:none}
-.hk-cam-btn{flex:1;padding:12px 8px;background:#B45309;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;white-space:nowrap;box-sizing:border-box}
-.hk-cam-btn:active{background:#92400E}
-.hk-cam-btn input{display:none}
 .hk-ai-status{margin:8px 8px 0;padding:10px 12px;background:#EEF2FF;border-radius:8px;font-size:12px;color:#2563EB;display:none;line-height:1.5;white-space:pre-wrap}
 .hk-ai-status.visible{display:block}
 /* 製品名オートコンプリート */
@@ -1169,11 +1172,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         📁 写真を選択
         <input type="file" accept="image/*" id="hk-photo-input" onchange="hkPhotoRead(this)">
       </div>
-      <button type="button" class="hk-cam-btn" id="hk-cam-btn"
-              onclick="document.getElementById('hk-cam-input').click()">
-        📷 撮影
-        <input type="file" accept="image/*" capture="environment" id="hk-cam-input" onchange="hkPhotoRead(this)">
-      </button>
     </div>
   </div>
   <!-- 音声テキスト入力パネル -->
@@ -1194,34 +1192,38 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 得意先 -->
     <div class="fc">
       <div class="sec-label">得意先</div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">得意先名</label>
-        <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
-               oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-               onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-               onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
-        <div class="hk-ac-list" id="hk-cust-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">得意先コード</label>
-        <input type="text" class="fi" id="hk-cust-code" placeholder="61376（得意先名から自動入力）" inputmode="numeric">
+      <div class="hk-code-row">
+        <div class="fr hk-ac-wrap">
+          <label class="fl">得意先名</label>
+          <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
+                 oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                 onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                 onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
+          <div class="hk-ac-list" id="hk-cust-list"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">コード</label>
+          <input type="text" class="fi" id="hk-cust-code" placeholder="自動" inputmode="numeric">
+        </div>
       </div>
     </div>
 
     <!-- 納入先 -->
     <div class="fc">
       <div class="sec-label">納入先 <span style="font-weight:400;color:var(--tm);font-size:11px">（空欄→得意先と同じ）</span></div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">納入先名</label>
-        <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
-               oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-               onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-               onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
-        <div class="hk-ac-list" id="hk-dest-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">納入先コード</label>
-        <input type="text" class="fi" id="hk-dest-code" placeholder="61376（納入先名から自動入力）" inputmode="numeric">
+      <div class="hk-code-row">
+        <div class="fr hk-ac-wrap">
+          <label class="fl">納入先名</label>
+          <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
+                 oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                 onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                 onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
+          <div class="hk-ac-list" id="hk-dest-list"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">コード</label>
+          <input type="text" class="fi" id="hk-dest-code" placeholder="自動" inputmode="numeric">
+        </div>
       </div>
     </div>
 
@@ -1363,10 +1365,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         📁 写真を選択
         <input type="file" accept="image/*" id="est-photo-input" onchange="estPhotoRead(this)">
       </div>
-      <button type="button" class="hk-cam-btn" onclick="document.getElementById('est-cam-input').click()">
-        📷 撮影
-        <input type="file" accept="image/*" capture="environment" id="est-cam-input" onchange="estPhotoRead(this)">
-      </button>
     </div>
   </div>
   <div class="hk-voice-panel" id="est-voice-panel">
@@ -1385,18 +1383,20 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 得意先 -->
     <div class="fc">
       <div class="sec-label">得意先</div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">得意先名</label>
-        <input type="text" class="fi" id="est-cust-name" placeholder="伊藤産業機械" autocomplete="off"
-               oninput="hkAcSearch(this,'est-cust-list','est-cust-name','est-cust-code')"
-               onfocus="hkAcOpen(this,'est-cust-list','est-cust-name','est-cust-code')"
-               onblur="hkAcBlur('est-cust-list'); hkAcAutofill('est-cust-name','est-cust-code')">
-        <div class="hk-ac-list" id="est-cust-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">得意先コード</label>
-        <input type="text" class="fi" id="est-cust-code" placeholder="（得意先名から自動入力）" inputmode="numeric"
-               oninput="estCheckKubota();estCalcRatioDisp();estCalcAllPricesP()">
+      <div class="hk-code-row">
+        <div class="fr hk-ac-wrap">
+          <label class="fl">得意先名</label>
+          <input type="text" class="fi" id="est-cust-name" placeholder="伊藤産業機械" autocomplete="off"
+                 oninput="hkAcSearch(this,'est-cust-list','est-cust-name','est-cust-code')"
+                 onfocus="hkAcOpen(this,'est-cust-list','est-cust-name','est-cust-code')"
+                 onblur="hkAcBlur('est-cust-list'); hkAcAutofill('est-cust-name','est-cust-code')">
+          <div class="hk-ac-list" id="est-cust-list"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">コード</label>
+          <input type="text" class="fi" id="est-cust-code" placeholder="自動" inputmode="numeric"
+                 oninput="estCheckKubota();estCalcRatioDisp();estCalcAllPricesP()">
+        </div>
       </div>
       <!-- クボタ営業所選択（61110xxの時のみ表示） -->
       <div id="est-kubota-panel" style="display:none;margin-top:6px;background:var(--gl);border-radius:10px;padding:10px 12px">
