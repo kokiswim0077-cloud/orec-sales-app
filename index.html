@@ -16,7 +16,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2);color:var(--bk);overflow:hidden}
-.screen{display:none;position:fixed;top:0;left:0;right:0;bottom:calc(var(--nh) + env(safe-area-inset-bottom,0px));flex-direction:column}
+.screen{display:none;position:fixed;inset:0;flex-direction:column}
 .screen.active{display:flex}
 .hd{background:var(--bk);height:52px;display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
 .hd-logo{width:30px;height:30px;background:var(--g);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
@@ -25,6 +25,8 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .hd-sub{font-size:10px;color:rgba(255,255,255,.45)}
 .hd-reload{background:none;border:1px solid rgba(255,255,255,.2);border-radius:6px;color:rgba(255,255,255,.6);font-size:16px;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
 .hd-reload:active{background:rgba(255,255,255,.1)}
+.hd-feedback{height:30px;padding:0 10px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.26);border-radius:6px;color:rgba(255,255,255,.86);font-size:12px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif;flex-shrink:0}
+.hd-feedback:active{background:rgba(255,255,255,.2)}
 .back-btn{background:none;border:none;color:var(--g);font-size:13px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif;padding:4px 8px;white-space:nowrap}
 .bnav{position:fixed;bottom:0;left:0;right:0;height:var(--nh);background:var(--wh);border-top:2px solid var(--g);display:flex;z-index:50;padding-bottom:env(safe-area-inset-bottom)}
 .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:none;background:transparent;cursor:pointer;padding:5px 0;font-family:"Noto Sans JP",sans-serif;font-size:8px;font-weight:500;color:var(--tm);position:relative;user-select:none;touch-action:manipulation}
@@ -32,7 +34,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .bnav-btn.on{color:var(--g);font-weight:700}
 .bnav-btn.on::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:3px;background:var(--g);border-radius:0 0 3px 3px}
 .bnav-badge{position:absolute;top:4px;right:calc(50% - 14px);background:#CC0000;color:#fff;border-radius:10px;font-size:9px;font-weight:900;min-width:16px;height:16px;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:"Barlow Condensed",sans-serif}
-.sa{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 8px 20px;-webkit-overflow-scrolling:touch}
+.sa{flex:1;overflow-y:auto;overflow-x:hidden;padding:12px 8px calc(var(--nh)+12px);-webkit-overflow-scrolling:touch}
 .sec-label{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--tm);margin:0 0 8px}
 .tile-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
 .home-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:16px}
@@ -40,6 +42,25 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .home-act-btn:active{background:var(--gl);border-color:var(--g)}
 .home-act-ic{font-size:22px;display:block;margin-bottom:5px}
 .home-act-lbl{font-size:9.5px;font-weight:700;color:var(--bk);line-height:1.35;display:block}
+.home-gemini{background:var(--wh);border:1.5px solid #B8D9CC;border-radius:14px;padding:14px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,122,89,.08)}
+.home-gemini-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.home-gemini-title{font-size:13px;font-weight:900;color:var(--gd);letter-spacing:.02em}
+.home-gemini-sub{font-size:10px;color:var(--tm);margin-top:2px}
+.home-gemini-keyrow{display:flex;gap:7px;margin-bottom:8px}
+.home-gemini-key{flex:1;min-width:0;padding:9px 10px;border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-family:monospace;outline:none;background:var(--g2)}
+.home-gemini-key:focus{border-color:var(--g);background:var(--wh)}
+.home-gemini-save{padding:9px 12px;background:var(--g2);border:1.5px solid var(--bd);border-radius:8px;font-size:12px;font-weight:700;color:var(--bk);cursor:pointer;font-family:"Noto Sans JP",sans-serif;white-space:nowrap}
+.home-gemini-save:active{background:var(--gl);border-color:var(--g)}
+.home-gemini-text{width:100%;min-height:88px;padding:11px 12px;border:2px solid var(--bd);border-radius:10px;font-size:14px;font-family:"Noto Sans JP",sans-serif;line-height:1.7;resize:vertical;outline:none;background:var(--g2);margin-bottom:8px}
+.home-gemini-text:focus{border-color:var(--g);background:var(--wh)}
+.home-gemini-actions{display:flex;align-items:center;gap:8px}
+.home-gemini-send{flex:1;padding:12px;background:var(--g);color:var(--wh);border:none;border-radius:10px;font-size:13px;font-weight:800;cursor:pointer;font-family:"Noto Sans JP",sans-serif}
+.home-gemini-send:disabled{background:#9CA3AF;cursor:not-allowed}
+.home-gemini-clear{padding:12px;background:transparent;border:1.5px solid var(--bd);border-radius:10px;color:var(--tm);font-size:12px;font-weight:700;cursor:pointer;font-family:"Noto Sans JP",sans-serif}
+.home-gemini-status{display:none;margin-top:8px;font-size:12px;color:var(--tm);line-height:1.6}
+.home-gemini-status.visible{display:block}
+.home-gemini-answer{display:none;margin-top:10px;padding:12px 13px;background:var(--gl);border:1.5px solid #A7D8C2;border-radius:10px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:#12352B}
+.home-gemini-answer.visible{display:block}
 .tile{background:var(--wh);border-radius:12px;padding:16px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;border:1.5px solid var(--bd);transition:background .1s;user-select:none}
 .tile:active{background:var(--gl);border-color:var(--g)}
 .tile-ic{width:42px;height:42px;border-radius:10px;background:var(--bk);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
@@ -50,7 +71,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .lnk-ic{width:40px;height:40px;border-radius:9px;background:var(--bk);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
 .lnk h4{font-size:13px;font-weight:700;margin-bottom:2px}
 .lnk p{font-size:11px;color:var(--tm)}
-.fa{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 8px 24px}
+.fa{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 8px calc(var(--nh)+76px)}
 .fc{background:var(--wh);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
 .fr{margin-bottom:14px}
 .fr:last-child{margin-bottom:0}
@@ -88,7 +109,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .chips::-webkit-scrollbar{display:none}
 .chip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--bd);background:var(--wh);font-size:12px;font-weight:500;cursor:pointer;font-family:"Noto Sans JP",sans-serif;color:var(--tm);white-space:nowrap;flex-shrink:0}
 .chip.on{border-color:var(--g);background:var(--bk);color:var(--wh);font-weight:700}
-.dla{flex:1;overflow-y:auto;padding:12px 8px 20px;-webkit-overflow-scrolling:touch}
+.dla{flex:1;overflow-y:auto;padding:12px 8px calc(var(--nh)+12px);-webkit-overflow-scrolling:touch}
 .dc{background:var(--wh);border-radius:12px;padding:14px 16px;margin-bottom:10px;border-left:4px solid var(--g);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06)}
 .dc:active{background:var(--gl)}
 .dn{font-size:15px;font-weight:700;margin-bottom:5px}
@@ -126,7 +147,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
 
 /* PARTS SEARCH */
-.parts-list-wrap{flex:1;overflow-y:auto;padding:12px 8px 24px;-webkit-overflow-scrolling:touch}
+.parts-list-wrap{flex:1;overflow-y:auto;padding:12px 8px calc(var(--nh)+64px);-webkit-overflow-scrolling:touch}
 .pc{background:var(--wh);border-radius:10px;padding:12px 14px;margin-bottom:8px;border-left:4px solid var(--acc);box-shadow:0 1px 3px rgba(0,0,0,.06);display:flex;align-items:center;gap:8px}
 .pc-info{flex:1;min-width:0}
 .pc-no{font-family:monospace;font-size:13px;font-weight:700;color:var(--bk);letter-spacing:.03em;cursor:pointer}
@@ -146,7 +167,8 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .kchip.on{border-color:#CC0000;background:#CC0000;color:var(--wh)}
 .kchip-sub{font-size:10px;padding:5px 10px;border-color:#AABB99;color:#446633;background:#F0F5EE}
 .kchip-sub.on{border-color:#005C42;background:#005C42;color:var(--wh)}
-.pdf-viewer{flex:1;overflow-y:auto;overflow-x:hidden;background:#555;display:flex;flex-direction:column;align-items:center;padding:8px 0 16px;-webkit-overflow-scrolling:touch}
+.pdf-viewer{flex:1;overflow-y:auto;overflow-x:hidden;background:#555;display:flex;flex-direction:column;align-items:center;padding:8px 0 calc(var(--nh)+8px);-webkit-overflow-scrolling:touch}
+.pdf-viewer.zoomed{overflow:auto;align-items:flex-start;touch-action:none}
 .pdf-spread{display:flex;justify-content:center;align-items:flex-start;gap:3px;width:100%;max-width:100%}
 .pdf-spread canvas{height:auto;display:block;box-shadow:0 2px 8px rgba(0,0,0,.5)}
 .pdf-navbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--wh);border-bottom:1px solid var(--bd);flex-shrink:0;gap:6px}
@@ -161,7 +183,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .pdf-toggle.spread-on{border-color:var(--g);color:var(--g)}
 
 /* CATALOG */
-.cat-scroll{flex:1;overflow-y:auto;padding:12px 8px 32px;-webkit-overflow-scrolling:touch}
+.cat-scroll{flex:1;overflow-y:auto;padding:12px 8px calc(var(--nh)+28px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
 .cat-card{background:var(--wh);border-radius:12px;padding:14px;cursor:pointer;border:1.5px solid var(--bd);transition:all .15s;position:relative;overflow:hidden}
 .cat-card:active{background:var(--gl);border-color:var(--g)}
@@ -176,7 +198,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 .yt-iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
 .yt-channel-link{padding:10px 16px;text-align:right;border-top:1px solid var(--bd)}
 .yt-channel-link a{font-size:13px;font-weight:700;color:#CC0000;text-decoration:none}
-#s-pdfview .pdf-viewer{padding-bottom:16px}
+#s-pdfview .pdf-viewer{padding-bottom:calc(var(--nh)+8px)}
 /* インラインカタログビューアー */
 .icat-section{background:var(--wh);border-radius:12px;border:1.5px solid var(--g);overflow:hidden;margin-bottom:14px;display:none}
 .icat-section.open{display:block}
@@ -307,6 +329,7 @@ html,body{height:100%;font-family:"Noto Sans JP",sans-serif;background:var(--g2)
 [data-layout="6"] .hd-title{color:#007A59}
 [data-layout="6"] .hd-logo{background:#007A59}
 [data-layout="6"] .hd-reload{border-color:#007A59;color:#007A59}
+[data-layout="6"] .hd-feedback{border-color:#007A59;color:#007A59;background:#fff}
 [data-layout="6"] .hd-lyt{border-color:#007A59;color:#007A59}
 [data-layout="6"] .tile{background:transparent;border:none;border-bottom:1px solid #eee;border-radius:0;padding:13px 2px;box-shadow:none}
 [data-layout="6"] .tile-grid{gap:0}
@@ -389,12 +412,42 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-ac-wrap{position:relative}
 .hk-ac-list{display:none;position:absolute;top:calc(100% + 2px);left:0;right:0;background:var(--wh);border:2px solid var(--g);border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.12);z-index:300;max-height:220px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .hk-ac-list.open{display:block}
-.hk-ac-item{padding:11px 14px;cursor:pointer;border-bottom:1px solid #f3f4f6;display:flex;align-items:baseline;gap:8px}
+.hk-ac-item{padding:11px 14px;cursor:pointer;border-bottom:1px solid #f3f4f6;display:block}
 .hk-ac-item:last-child{border-bottom:none}
 .hk-ac-item:active{background:var(--gl)}
+.hk-ac-top{display:flex;align-items:baseline;gap:8px}
 .hk-ac-name{font-size:14px;font-weight:600;color:var(--bk);flex:1}
 .hk-ac-code{font-size:11px;color:var(--tm);font-family:monospace;flex-shrink:0}
+.hk-ac-address{font-size:11px;color:#64748B;line-height:1.45;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hk-ac-empty{padding:12px 14px;font-size:13px;color:var(--tm);text-align:center}
+.hk-code-row{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:8px;align-items:start}
+.hk-code-row .fr{margin-bottom:0}
+.hk-code-side .fl{font-size:10px;letter-spacing:0;white-space:nowrap}
+.hk-code-side .fi{font-size:13px;padding:10px 8px;text-align:center;font-family:"Barlow Condensed",monospace;font-weight:700;letter-spacing:.03em}
+.hk-code-side .fi::placeholder{font-size:11px;letter-spacing:0;font-family:"Noto Sans JP",sans-serif;font-weight:500}
+@media (max-width:360px){.hk-code-row{grid-template-columns:minmax(0,1fr) 96px;gap:6px}.hk-code-side .fi{font-size:12px;padding-left:6px;padding-right:6px}}
+.hk-party-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.hk-party-box{min-width:0}
+.hk-party-title{font-size:12px;font-weight:800;color:var(--bk);margin-bottom:8px}
+.hk-prod-card{border:1.5px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:10px;background:#fff}
+.hk-prod-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.hk-prod-num{font-size:12px;font-weight:800;color:var(--g)}
+.hk-prod-del{display:none;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;color:#DC2626;font-size:12px;padding:4px 10px;cursor:pointer;font-family:inherit}
+.hk-prod-add{width:100%;padding:13px;background:var(--gl);color:var(--g);border:2px dashed var(--g);border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+.hk-compact-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-items:start;margin-bottom:14px}
+.hk-compact-row:last-child{margin-bottom:0}
+.hk-compact-row .fr{margin-bottom:0}
+.hk-three-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;align-items:start;margin-bottom:14px}
+.hk-three-row:last-child{margin-bottom:0}
+.hk-three-row .fr{margin-bottom:0}
+.est-price-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:8px;align-items:start;margin-bottom:14px}
+.est-price-row .fr{margin-bottom:0}
+.est-inline-unit{display:flex;align-items:center;gap:5px}
+.est-inline-unit .fi{min-width:0}
+.hk-mini-field .fi{font-size:14px;padding:11px 10px}
+.hk-mini-field .fi[type="number"]{text-align:center}
+.hk-mini-field .fl{font-size:10px;letter-spacing:0}
+@media (max-width:360px){.hk-compact-row,.hk-three-row,.est-price-row{gap:6px}.hk-mini-field .fi{font-size:13px;padding-left:8px;padding-right:8px}}
 .hk-radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .hk-radio-label{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--g2);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid transparent;user-select:none}
 .hk-radio-label:has(input:checked){background:var(--gl);border-color:var(--g);color:var(--g)}
@@ -417,14 +470,11 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-voice-textarea{width:100%;min-height:90px;border:1.5px solid #93C5FD;border-radius:8px;padding:10px;font-size:14px;font-family:'Noto Sans JP',sans-serif;resize:vertical;outline:none;box-sizing:border-box}
 .hk-voice-textarea:focus{border-color:#2563EB}
 .hk-voice-submit{padding:12px;background:#2563EB;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
-/* 写真ボタン群（選択 / 撮影）— 下段に横並び */
+/* 写真選択 */
 .hk-photo-group{display:flex;gap:8px}
 .hk-drop-zone{flex:1;padding:12px 8px;background:#DC2626;color:#fff;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;border:2px dashed transparent;transition:background .2s;white-space:nowrap;box-sizing:border-box}
 .hk-drop-zone.drag-over{background:#B91C1C;border-color:#fff}
 .hk-drop-zone input{display:none}
-.hk-cam-btn{flex:1;padding:12px 8px;background:#B45309;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;white-space:nowrap;box-sizing:border-box}
-.hk-cam-btn:active{background:#92400E}
-.hk-cam-btn input{display:none}
 .hk-ai-status{margin:8px 8px 0;padding:10px 12px;background:#EEF2FF;border-radius:8px;font-size:12px;color:#2563EB;display:none;line-height:1.5;white-space:pre-wrap}
 .hk-ai-status.visible{display:block}
 /* 製品名オートコンプリート */
@@ -442,10 +492,12 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-overlay.open{display:flex}
 .hk-modal{background:var(--wh);border-radius:16px 16px 0 0;width:100%;max-width:480px;padding:20px 0 calc(20px + env(safe-area-inset-bottom));max-height:70vh;overflow-y:auto}
 .hk-modal-title{font-size:14px;font-weight:700;color:var(--bk);padding:0 16px 12px;border-bottom:1px solid var(--bd);margin-bottom:8px}
-.hk-modal-item{padding:13px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;display:flex;align-items:baseline;gap:8px}
+.hk-modal-item{padding:13px 16px;border-bottom:1px solid #f3f4f6;cursor:pointer;display:block}
 .hk-modal-item:active{background:var(--gl)}
+.hk-modal-main{display:flex;align-items:baseline;gap:8px}
 .hk-modal-name{font-size:14px;font-weight:600;flex:1}
 .hk-modal-code{font-size:11px;color:var(--tm);font-family:monospace}
+.hk-modal-address{font-size:11px;color:#64748B;line-height:1.45;margin-top:4px}
 /* APIキー設定 */
 .hk-apikey-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:900;display:none;align-items:center;justify-content:center;padding:16px}
 .hk-apikey-ov.open{display:flex}
@@ -470,6 +522,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="hd-title">OREC SALES</div>
     <button class="hd-lyt" onclick="openLyt()" title="レイアウト変更">🎨</button>
     <button class="hd-reload" onclick="location.reload()" title="リロード">↺</button>
+    <button class="hd-feedback" onclick="nav('feedback')" title="要望">要望</button>
   </div>
   <div class="sa">
     <!-- 4業務アクション（小タブ） -->
@@ -549,6 +602,26 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--g)">消耗</div>
         <div style="font-size:9px;color:var(--tm);margin-top:2px">消耗品</div>
       </div>
+    </div>
+    <div class="home-gemini">
+      <div class="home-gemini-head">
+        <div>
+          <div class="home-gemini-title">Gemini 壁打ち</div>
+          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます</div>
+        </div>
+      </div>
+      <div class="home-gemini-keyrow">
+        <input type="password" class="home-gemini-key" id="home-gemini-key" placeholder="Gemini API Key（保存済みなら空でOK）">
+        <button type="button" class="home-gemini-save" onclick="homeSaveGeminiKey()">保存</button>
+      </div>
+      <textarea class="home-gemini-text" id="home-gemini-text"
+        placeholder="例: 大竹産業からRM832Aの見積依頼。返答文と確認すべき点を整理して"></textarea>
+      <div class="home-gemini-actions">
+        <button type="button" class="home-gemini-send" id="home-gemini-send" onclick="homeAskGemini()">Geminiに相談</button>
+        <button type="button" class="home-gemini-clear" onclick="homeClearGemini()">クリア</button>
+      </div>
+      <div class="home-gemini-status" id="home-gemini-status"></div>
+      <div class="home-gemini-answer" id="home-gemini-answer"></div>
     </div>
   </div>
 </div>
@@ -904,7 +977,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="hd-title">修理見積もり</div>
     <div class="hd-sub" id="mitsu-count">0件</div>
   </div>
-  <div class="sa">
+  <div class="sa" style="padding-bottom:calc(var(--nh)+14px)">
     <div class="mitsu-print" style="display:none" id="mitsu-print-area"></div>
     <div id="mitsu-items"></div>
     <div class="mitsu-total" id="mitsu-total" style="display:none">
@@ -1125,11 +1198,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         📁 写真を選択
         <input type="file" accept="image/*" id="hk-photo-input" onchange="hkPhotoRead(this)">
       </div>
-      <button type="button" class="hk-cam-btn" id="hk-cam-btn"
-              onclick="document.getElementById('hk-cam-input').click()">
-        📷 撮影
-        <input type="file" accept="image/*" capture="environment" id="hk-cam-input" onchange="hkPhotoRead(this)">
-      </button>
     </div>
   </div>
   <!-- 音声テキスト入力パネル -->
@@ -1140,87 +1208,80 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <div class="hk-voice-hint">音声入力で話した内容、またはキーボードで入力 → Geminiが解析してフォームに反映します</div>
     <textarea class="hk-voice-textarea" id="hk-voice-text"
-      placeholder="例: 得意先：○○、納入先：○○、製品：○○、受注日、生産日、出荷希望日あれば：○○、値引：値引き名・値引き方法、値引率"></textarea>
+      placeholder="例: 得意先：○○、納入先：○○、製品：○○、受注日、生産日、出荷希望日あれば：○○、値引：値引名・値引率"></textarea>
     <button class="hk-voice-submit" onclick="hkVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="hk-ai-status"></div>
 
   <div class="fa" id="hk-scroll">
 
-    <!-- 得意先 -->
+    <!-- 得意先・納入先 -->
     <div class="fc">
-      <div class="sec-label">得意先</div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">得意先名</label>
-        <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
-               oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-               onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
-               onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
-        <div class="hk-ac-list" id="hk-cust-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">得意先コード</label>
-        <input type="text" class="fi" id="hk-cust-code" placeholder="61376（得意先名から自動入力）" inputmode="numeric">
-      </div>
-    </div>
-
-    <!-- 納入先 -->
-    <div class="fc">
-      <div class="sec-label">納入先 <span style="font-weight:400;color:var(--tm);font-size:11px">（空欄→得意先と同じ）</span></div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">納入先名</label>
-        <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
-               oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-               onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
-               onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
-        <div class="hk-ac-list" id="hk-dest-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">納入先コード</label>
-        <input type="text" class="fi" id="hk-dest-code" placeholder="61376（納入先名から自動入力）" inputmode="numeric">
+      <div class="sec-label">得意先・納入先 <span style="font-weight:400;color:var(--tm);font-size:11px">（納入先空欄→得意先と同じ）</span></div>
+      <div class="hk-party-row">
+        <div class="hk-party-box">
+          <div class="hk-party-title">得意先</div>
+          <div class="hk-code-row">
+            <div class="fr hk-ac-wrap">
+              <label class="fl">得意先名</label>
+              <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
+                     oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                     onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
+                     onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
+              <div class="hk-ac-list" id="hk-cust-list"></div>
+            </div>
+            <div class="fr hk-code-side">
+              <label class="fl">コード</label>
+              <input type="text" class="fi" id="hk-cust-code" placeholder="自動" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+        <div class="hk-party-box">
+          <div class="hk-party-title">納入先</div>
+          <div class="hk-code-row">
+            <div class="fr hk-ac-wrap">
+              <label class="fl">納入先名</label>
+              <input type="text" class="fi" id="hk-dest-name" placeholder="良栄社" autocomplete="off"
+                     oninput="hkAcSearch(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                     onfocus="hkAcOpen(this,'hk-dest-list','hk-dest-name','hk-dest-code')"
+                     onblur="hkAcBlur('hk-dest-list'); hkAcAutofill('hk-dest-name','hk-dest-code')">
+              <div class="hk-ac-list" id="hk-dest-list"></div>
+            </div>
+            <div class="fr hk-code-side">
+              <label class="fl">コード</label>
+              <input type="text" class="fi" id="hk-dest-code" placeholder="自動" inputmode="numeric">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- 商品 -->
     <div class="fc">
       <div class="sec-label">商品</div>
-      <div class="fr">
-        <label class="fl">商品コード</label>
-        <input type="text" class="fi" id="hk-prod-code" placeholder="0353-0060（商品名から自動入力）" autocomplete="off">
-      </div>
-      <div class="fr" style="position:relative">
-        <label class="fl">商品名</label>
-        <input type="text" class="fi" id="hk-prod-name" placeholder="例: SP853A（入力で候補→選ぶとコード自動入力）" autocomplete="off"
-               oninput="hkProdSearch(this.value)" onfocus="hkProdSearch(this.value)" onblur="hkProdBlur()">
-        <div class="hk-prod-dd" id="hk-prod-dd"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">数量</label>
-        <input type="number" class="fi" id="hk-qty" value="1" min="1" inputmode="numeric" style="max-width:100px">
-      </div>
-      <div class="fr">
-        <label class="fl">注文番号</label>
-        <input type="text" class="fi" id="hk-order-no" placeholder="">
-      </div>
+      <div id="hk-prod-list"></div>
+      <button type="button" class="hk-prod-add" onclick="hkAddProd()">＋ 商品を追加</button>
     </div>
 
     <!-- 日程 -->
     <div class="fc">
       <div class="sec-label">日程</div>
-      <div class="fr">
-        <label class="fl">受注日</label>
-        <input type="date" class="fi" id="hk-order-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→今日</span>
-      </div>
-      <div class="fr">
-        <label class="fl">生産日</label>
-        <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→在庫</span>
-      </div>
-      <div class="fr">
-        <label class="fl">出荷希望日</label>
-        <input type="date" class="fi" id="hk-ship-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→自動</span>
+      <div class="hk-three-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">受注日</label>
+          <input type="date" class="fi" id="hk-order-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→今日</span>
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">生産日</label>
+          <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→在庫</span>
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">出荷希望日</label>
+          <input type="date" class="fi" id="hk-ship-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→自動</span>
+        </div>
       </div>
     </div>
 
@@ -1238,37 +1299,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="hk-radio-row">
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011" checked> 011（デフォルト）</label>
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031"> 031</label>
-      </div>
-    </div>
-
-    <!-- 値引（任意） -->
-    <div class="fc">
-      <div class="sec-label">値引 <span style="font-weight:400;color:var(--tm)">（任意）</span></div>
-      <div class="fr">
-        <label class="fl">値引名</label>
-        <select class="fi" id="hk-disc-name">
-          <option value="">-- 選択（任意）--</option>
-          <option value="実演機値引">実演機値引（外掛）</option>
-          <option value="実演機対応値引">実演機対応値引（外掛）</option>
-          <option value="展示機値引">展示機値引（内掛）</option>
-          <option value="不需要期値引">不需要期値引（内掛）</option>
-          <option value="早期確注値引">早期確注値引（内掛）</option>
-          <option value="台数値引">台数値引（内掛）</option>
-          <option value="推進値引">推進値引（内掛）</option>
-          <option value="展示会値引">展示会値引（内掛）</option>
-        </select>
-      </div>
-      <div class="fr">
-        <label class="fl">値引方法</label>
-        <div class="hk-radio-row">
-          <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="外掛" checked> 外掛</label>
-          <label class="hk-radio-label"><input type="radio" name="hk-disc-method" value="内掛"> 内掛</label>
-        </div>
-      </div>
-      <div class="fr">
-        <label class="fl">値引率</label>
-        <input type="number" class="fi" id="hk-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal" style="max-width:100px">
-        <span style="font-size:13px;color:var(--tm);margin-left:6px">%</span>
       </div>
     </div>
 
@@ -1319,10 +1349,6 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         📁 写真を選択
         <input type="file" accept="image/*" id="est-photo-input" onchange="estPhotoRead(this)">
       </div>
-      <button type="button" class="hk-cam-btn" onclick="document.getElementById('est-cam-input').click()">
-        📷 撮影
-        <input type="file" accept="image/*" capture="environment" id="est-cam-input" onchange="estPhotoRead(this)">
-      </button>
     </div>
   </div>
   <div class="hk-voice-panel" id="est-voice-panel">
@@ -1341,32 +1367,36 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 得意先 -->
     <div class="fc">
       <div class="sec-label">得意先</div>
-      <div class="fr hk-ac-wrap">
-        <label class="fl">得意先名</label>
-        <input type="text" class="fi" id="est-cust-name" placeholder="伊藤産業機械" autocomplete="off"
-               oninput="hkAcSearch(this,'est-cust-list','est-cust-name','est-cust-code')"
-               onfocus="hkAcOpen(this,'est-cust-list','est-cust-name','est-cust-code')"
-               onblur="hkAcBlur('est-cust-list'); hkAcAutofill('est-cust-name','est-cust-code')">
-        <div class="hk-ac-list" id="est-cust-list"></div>
-      </div>
-      <div class="fr">
-        <label class="fl">得意先コード</label>
-        <input type="text" class="fi" id="est-cust-code" placeholder="（得意先名から自動入力）" inputmode="numeric"
-               oninput="estCheckKubota();estCalcRatioDisp();estCalcAllPricesP()">
+      <div class="hk-code-row">
+        <div class="fr hk-ac-wrap">
+          <label class="fl">得意先名</label>
+          <input type="text" class="fi" id="est-cust-name" placeholder="伊藤産業機械" autocomplete="off"
+                 oninput="hkAcSearch(this,'est-cust-list','est-cust-name','est-cust-code')"
+                 onfocus="hkAcOpen(this,'est-cust-list','est-cust-name','est-cust-code')"
+                 onblur="hkAcBlur('est-cust-list'); hkAcAutofill('est-cust-name','est-cust-code')">
+          <div class="hk-ac-list" id="est-cust-list"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">コード</label>
+          <input type="text" class="fi" id="est-cust-code" placeholder="自動" inputmode="numeric"
+                 oninput="estCheckKubota();estCalcRatioDisp();estCalcAllPricesP()">
+        </div>
       </div>
       <!-- クボタ営業所選択（61110xxの時のみ表示） -->
       <div id="est-kubota-panel" style="display:none;margin-top:6px;background:var(--gl);border-radius:10px;padding:10px 12px">
         <label class="fl" style="margin-bottom:8px;display:block">🏢 クボタ営業所を選択</label>
         <div id="est-kubota-chips" style="display:flex;flex-wrap:wrap;gap:6px;max-height:200px;overflow-y:auto"></div>
       </div>
-      <div class="fr">
-        <label class="fl">担当者名</label>
-        <input type="text" class="fi" id="est-staff" placeholder="">
-      </div>
-      <div class="fr">
-        <label class="fl">見積日</label>
-        <input type="date" class="fi" id="est-date">
-        <span style="font-size:11px;color:var(--tm);margin-left:6px">空欄→今日</span>
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">担当者名（お客様の担当者）</label>
+          <input type="text" class="fi" id="est-staff" placeholder="">
+        </div>
+        <div class="fr hk-mini-field">
+          <label class="fl">見積日</label>
+          <input type="date" class="fi" id="est-date">
+          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→今日</span>
+        </div>
       </div>
     </div>
 
@@ -1374,23 +1404,31 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">値引き設定</div>
       <div id="est-shikiri-bar" style="display:none;background:var(--gl);border-radius:8px;padding:8px 12px;font-size:12px;color:var(--g);font-weight:700;margin-bottom:10px"></div>
-      <div class="fr">
-        <label class="fl">追加値引率 <span class="opt">（仕切率から追加値引きがある場合）</span></label>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-          <input type="number" class="fi" id="est-extra-rate" placeholder="0" min="0" max="99" step="0.1" inputmode="decimal" style="max-width:80px"
-                 oninput="estCalcRatioDisp();estCalcAllPricesP()">
-          <span style="font-size:13px;color:var(--tm)">%</span>
-          <label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer">
-            <input type="radio" name="est-extra-method" value="外掛" checked onchange="estCalcRatioDisp();estCalcAllPricesP()"> 外掛
-          </label>
-          <label style="display:flex;align-items:center;gap:3px;font-size:13px;cursor:pointer">
-            <input type="radio" name="est-extra-method" value="内掛" onchange="estCalcRatioDisp();estCalcAllPricesP()"> 内掛
-          </label>
+      <input type="radio" name="est-extra-method" value="外掛" checked style="display:none">
+      <input type="radio" name="est-extra-method" value="内掛" style="display:none">
+      <div class="hk-compact-row">
+        <div class="fr hk-mini-field">
+          <label class="fl">値引率</label>
+          <div style="display:flex;align-items:center;gap:6px">
+            <input type="number" class="fi" id="est-extra-rate" placeholder="0" min="0" max="99" step="0.1" inputmode="decimal"
+                   oninput="estCalcRatioDisp();estCalcAllPricesP()">
+            <span style="font-size:13px;color:var(--tm)">%</span>
+          </div>
         </div>
-      </div>
-      <div class="fr">
-        <label class="fl">値引名</label>
-        <input type="text" class="fi" id="est-disc-name" placeholder="例: ALL66%">
+        <div class="fr hk-mini-field">
+          <label class="fl">値引名</label>
+          <select class="fi" id="est-disc-name" onchange="estDiscountNameChanged()">
+          <option value="">-- 選択（任意）--</option>
+          <option value="実演機値引">実演機値引</option>
+          <option value="実演機対応値引">実演機対応値引</option>
+          <option value="展示機値引">展示機値引</option>
+          <option value="不需要期値引">不需要期値引</option>
+          <option value="早期確注値引">早期確注値引</option>
+          <option value="台数値引">台数値引</option>
+          <option value="推進値引">推進値引</option>
+          <option value="展示会値引">展示会値引</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -1420,17 +1458,17 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
   <button class="bnav-btn" id="bn-msg" onclick="nav('msg')">
     <span class="ic">✉️</span>メッセージ
   </button>
-  <button class="bnav-btn" id="bn-hasso" onclick="nav('hasso')">
-    <span class="ic">📋</span>発送
+  <button class="bnav-btn" id="bn-hikiai" onclick="nav('hikiai')">
+    <span class="ic">📊</span>引合書
+  </button>
+  <button class="bnav-btn" id="bn-est" onclick="nav('est')">
+    <span class="ic">🧾</span>見積書
   </button>
   <button class="bnav-btn" id="bn-kakaku" onclick="nav('kakaku')">
     <span class="ic">📄</span>価格表
   </button>
   <button class="bnav-btn" id="bn-catalog" onclick="nav('catalog')" style="position:relative">
     <span class="ic">📚</span>カタログ<span class="bnav-wip">作成中</span>
-  </button>
-  <button class="bnav-btn" id="bn-feedback" onclick="nav('feedback')">
-    <span class="ic">📝</span>要望
   </button>
 </nav>
 
@@ -1506,9 +1544,15 @@ function spreadStart(page) {
 function addSwipe(elId, prevFn, nextFn) {
   const el = document.getElementById(elId);
   if (!el) return;
-  let sx = 0, sy = 0;
-  el.addEventListener("touchstart", e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});
+  let sx = 0, sy = 0, singleTouch = false;
+  el.addEventListener("touchstart", e => {
+    singleTouch = e.touches.length === 1;
+    if (!singleTouch) return;
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, {passive: true});
   el.addEventListener("touchend", e => {
+    if (!singleTouch) return;
+    singleTouch = false;
     if (el._zoomScale > 1) return; // ズーム中はページ遷移しない
     const dx = e.changedTouches[0].clientX - sx;
     const dy = e.changedTouches[0].clientY - sy;
@@ -1580,12 +1624,13 @@ async function kRenderSpread(startPage) {
   KPDF_RENDERING = true;
   const sp = document.getElementById("kpdf-spread");
   const ld = document.getElementById("kpdf-loading");
+  const viewer = document.getElementById("kpdf-viewer");
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = "none"; ld.style.display = "flex";
   // p.1は単ページ・p.2以降は偶数左スタート
   KPDF_PAGE = KPDF_SPREAD ? kSpreadStart(startPage) : Math.max(1, Math.min(startPage, KPDF_TOTAL));
   // p.1=単ページ(全幅), p.2+=見開き(半幅)
   const isSpread = KPDF_SPREAD && KPDF_PAGE > 1;
-  const viewer = document.getElementById("kpdf-viewer");
   const useW = isSpread
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -1605,6 +1650,7 @@ async function kRenderSpread(startPage) {
     document.getElementById("kpdf-next").disabled = KPDF_SPREAD
       ? (KPDF_PAGE === 1 ? (KPDF_TOTAL < 2) : (KPDF_PAGE + 2 > KPDF_TOTAL))
       : (KPDF_PAGE >= KPDF_TOTAL);
+    setKakakuPagingDisabledByZoom();
   } finally {
     ld.style.display = "none"; sp.style.display = "flex";
     KPDF_RENDERING = false; viewer.scrollTop = 0;
@@ -1613,6 +1659,11 @@ async function kRenderSpread(startPage) {
 
 async function kNav(dir) {
   if (!KPDF_DOC) return;
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ送りを停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   // p.1から次: 1ステップ(→p.2), p.2以降: 2ステップ(→p.4...)
   const step = (KPDF_SPREAD && KPDF_PAGE > 1) ? 2 : 1;
   const next = dir > 0 ? KPDF_PAGE + step : KPDF_PAGE - step;
@@ -1629,6 +1680,11 @@ async function kToggleSpread() {
 }
 async function kJumpPage() {
   if (!KPDF_DOC) return;
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ移動を停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   const inp = prompt("ページ番号を入力 (1–" + KPDF_TOTAL + "):");
   if (inp === null) return;
   const n = parseInt(inp);
@@ -1636,6 +1692,11 @@ async function kJumpPage() {
   else toast("無効なページ番号です");
 }
 async function gotoKakaku(page, el) {
+  if (isKakakuZoomed()) {
+    toast("拡大中はページ移動を停止しています");
+    setKakakuPagingDisabledByZoom();
+    return;
+  }
   document.querySelectorAll("#kakaku-chips .kchip").forEach(c => c.classList.remove("on"));
   if (el) el.classList.add("on");
   if (KPDF_DOC) {
@@ -1655,6 +1716,28 @@ function updateKchip(page) {
   let best = 0;
   for (let i = 0; i < pages.length; i++) { if (pages[i] <= page) best = i; }
   chips.forEach((c, i) => c.classList.toggle("on", i === best));
+}
+
+function isKakakuZoomed() {
+  const viewer = document.getElementById("kpdf-viewer");
+  return !!(viewer && viewer._zoomScale && viewer._zoomScale > 1.01);
+}
+
+function setKakakuPagingDisabledByZoom() {
+  const zoomed = isKakakuZoomed();
+  const prev = document.getElementById("kpdf-prev");
+  const next = document.getElementById("kpdf-next");
+  if (prev) {
+    prev.disabled = zoomed || (KPDF_PAGE <= 1);
+    prev.title = zoomed ? "拡大中は画面内スクロールのみ有効です" : "";
+  }
+  if (next) {
+    const atEnd = KPDF_SPREAD
+      ? (KPDF_PAGE === 1 ? (KPDF_TOTAL < 2) : (KPDF_PAGE + 2 > KPDF_TOTAL))
+      : (KPDF_PAGE >= KPDF_TOTAL);
+    next.disabled = zoomed || atEnd;
+    next.title = zoomed ? "拡大中は画面内スクロールのみ有効です" : "";
+  }
 }
 
 // ===== カタログPDF =====
@@ -1687,9 +1770,10 @@ async function cRenderSpread(startPage) {
   CPDF_RENDERING = true;
   const sp = document.getElementById("cpdf-spread");
   const ld = document.getElementById("cpdf-loading");
+  const viewer = document.getElementById("cpdf-viewer");
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = "none"; ld.style.display = "flex";
   CPDF_PAGE = CPDF_SPREAD ? spreadStart(startPage) : Math.max(1, Math.min(startPage, CPDF_TOTAL));
-  const viewer = document.getElementById("cpdf-viewer");
   const useW = CPDF_SPREAD
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -1774,9 +1858,10 @@ async function icatRenderSpread(startPage) {
   ICAT_RENDERING = true;
   const sp = document.getElementById('icat-spread');
   const ld = document.getElementById('icat-loading');
+  const viewer = document.getElementById('icat-viewer');
+  if (viewer && viewer._resetPdfZoom) viewer._resetPdfZoom();
   sp.style.display = 'none'; ld.style.display = 'flex';
   ICAT_PAGE = ICAT_SPREAD ? spreadStart(startPage) : Math.max(1, Math.min(startPage, ICAT_TOTAL));
-  const viewer = document.getElementById('icat-viewer');
   const useW = ICAT_SPREAD
     ? Math.max(1, Math.floor((viewer.clientWidth - 12) / 2))
     : Math.max(1, viewer.clientWidth - 8);
@@ -2244,21 +2329,84 @@ function partsSearch() {
     if (!viewer) return;
     let base = 1, cur = 1, d0 = 0, lastTap = 0;
     let panX = 0, panY = 0, p0x = 0, p0y = 0, panning = false;
+    let pivotX = 0, pivotY = 0, layoutLeft = 0, layoutTop = 0, pinching = false;
+    const zoomSensitivity = 1.45;
+    const maxZoom = 6;
 
-    function applyTransform(sp) {
-      const maxPanX = Math.max(0, (sp.offsetWidth * (cur - 1)) / 2);
-      const maxPanY = Math.max(0, (sp.offsetHeight * (cur - 1)) / 2);
-      panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
-      panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
-      sp.style.transformOrigin = 'top center';
-      sp.style.transform = 'translate(' + panX + 'px,' + panY + 'px) scale(' + cur + ')';
-      viewer.style.paddingBottom = Math.max(0, (cur - 1) * sp.offsetHeight * 0.6) + 'px';
+    function touchDistance(e) {
+      return Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
+                        e.touches[0].clientY - e.touches[1].clientY);
     }
 
+    function touchCenter(e) {
+      return {
+        x: (e.touches[0].clientX + e.touches[1].clientX) / 2,
+        y: (e.touches[0].clientY + e.touches[1].clientY) / 2
+      };
+    }
+
+    function applyTransform(sp) {
+      if (cur <= 1.01) {
+        cur = base = 1;
+        panX = 0;
+        panY = 0;
+        sp.style.transform = '';
+        sp.style.transformOrigin = '';
+        viewer.style.paddingBottom = '';
+        viewer.style.overflowX = '';
+        viewer.classList.remove('zoomed');
+        viewer._zoomScale = 1;
+        if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
+        return;
+      }
+      const css = getComputedStyle(viewer);
+      const padTop = parseFloat(css.paddingTop) || 0;
+      const defaultPadBottom = parseFloat(css.getPropertyValue('--nh')) || 56;
+      const safeBottom = defaultPadBottom + 12;
+      const visibleW = viewer.clientWidth;
+      const visibleH = Math.max(1, viewer.clientHeight - padTop - safeBottom);
+      const scaledW = sp.offsetWidth * cur;
+      const scaledH = sp.offsetHeight * cur;
+      const edgePad = 14;
+      const minPanX = Math.min(edgePad, visibleW - scaledW - edgePad);
+      const maxPanX = edgePad;
+      const minPanY = Math.min(edgePad, visibleH - scaledH - edgePad);
+      const maxPanY = edgePad;
+      panX = Math.max(minPanX, Math.min(maxPanX, panX));
+      panY = Math.max(minPanY, Math.min(maxPanY, panY));
+      sp.style.transformOrigin = '0 0';
+      sp.style.transform = 'translate(' + panX + 'px,' + panY + 'px) scale(' + cur + ')';
+      viewer.style.paddingBottom = Math.max(safeBottom, safeBottom + (cur - 1) * sp.offsetHeight + 24) + 'px';
+      viewer.style.overflowX = 'auto';
+      viewer.classList.add('zoomed');
+      viewer._zoomScale = cur;
+      if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
+    }
+
+    viewer._resetPdfZoom = function() {
+      cur = base = 1;
+      d0 = 0;
+      panX = 0;
+      panY = 0;
+      pinching = false;
+      panning = false;
+      const sp = document.getElementById(spreadId);
+      if (sp) applyTransform(sp);
+    };
+
     viewer.addEventListener('touchstart', function(e) {
+      const sp = document.getElementById(spreadId);
       if (e.touches.length === 2) {
-        d0 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                        e.touches[0].clientY - e.touches[1].clientY);
+        if (!sp) return;
+        d0 = touchDistance(e);
+        base = cur;
+        const center = touchCenter(e);
+        const rect = sp.getBoundingClientRect();
+        pivotX = (center.x - rect.left) / cur;
+        pivotY = (center.y - rect.top) / cur;
+        layoutLeft = rect.left - panX;
+        layoutTop = rect.top - panY;
+        pinching = true;
         panning = false;
         e.preventDefault();
       } else if (e.touches.length === 1 && cur > 1) {
@@ -2270,11 +2418,15 @@ function partsSearch() {
 
     viewer.addEventListener('touchmove', function(e) {
       if (e.touches.length === 2 && d0) {
-        const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
-                             e.touches[0].clientY - e.touches[1].clientY);
-        cur = Math.min(5, Math.max(0.5, base * d / d0));
         const sp = document.getElementById(spreadId);
-        if (sp) applyTransform(sp);
+        if (!sp) return;
+        const d = touchDistance(e);
+        const center = touchCenter(e);
+        const ratio = Math.max(0.2, d / d0);
+        cur = Math.min(maxZoom, Math.max(1, base * Math.pow(ratio, zoomSensitivity)));
+        panX = center.x - layoutLeft - pivotX * cur;
+        panY = center.y - layoutTop - pivotY * cur;
+        applyTransform(sp);
         e.preventDefault();
       } else if (e.touches.length === 1 && panning && cur > 1) {
         const dx = e.touches[0].clientX - p0x;
@@ -2291,13 +2443,25 @@ function partsSearch() {
 
     viewer.addEventListener('touchend', function(e) {
       if (e.touches.length < 2 && d0) { base = cur; d0 = 0; }
+      if (e.touches.length === 1 && cur > 1) {
+        p0x = e.touches[0].clientX;
+        p0y = e.touches[0].clientY;
+        panning = true;
+      }
       if (e.touches.length === 0) panning = false;
+      if (pinching && !e.touches.length) {
+        pinching = false;
+        lastTap = 0;
+        viewer._zoomScale = cur;
+        if (viewerId === 'kpdf-viewer') setKakakuPagingDisabledByZoom();
+        return;
+      }
       // ダブルタップでリセット
       const now = Date.now();
-      if (now - lastTap < 300 && !e.touches.length && cur !== 1) {
+      if (!pinching && now - lastTap < 300 && !e.touches.length && cur !== 1) {
         cur = base = 1; panX = 0; panY = 0; d0 = 0;
         const sp = document.getElementById(spreadId);
-        if (sp) { sp.style.transform = ''; }
+        if (sp) { applyTransform(sp); }
         viewer.style.paddingBottom = '';
       }
       lastTap = now;
@@ -2665,6 +2829,31 @@ function _hkFuzzyScore(a, b) {
   for (var k in ba) if (bb[k]) inter++;
   return 2 * inter / (na + nb);
 }
+function _hkAddressSourceDealer(d) {
+  if (!d || !Array.isArray(S)) return null;
+  var code = String(d.code || '').trim();
+  if (code) {
+    for (var i = 0; i < S.length; i++) {
+      if (String(S[i].code || '').trim() === code && S[i].address) return S[i];
+    }
+  }
+  var name = _hkNorm(d.name);
+  if (!name) return null;
+  var match = null;
+  for (var j = 0; j < S.length; j++) {
+    if (!S[j].address || _hkNorm(S[j].name) !== name) continue;
+    if (match) return null;
+    match = S[j];
+  }
+  return match;
+}
+function _hkDealerAddressText(d) {
+  if (!d) return '';
+  var src = d.address ? d : _hkAddressSourceDealer(d);
+  var addr = ((src && src.address) || '').replace(/\s+/g, ' ').trim();
+  if (!addr) return '住所未登録';
+  return (src.zip ? '〒' + src.zip + ' ' : '') + addr;
+}
 
 /* ── オートコンプリート ── */
 function hkAcSearch(inp, listId, nameId, codeId) {
@@ -2695,10 +2884,12 @@ function hkAcSearch(inp, listId, nameId, codeId) {
   }
   list.innerHTML = results.map(function(d) {
     var sn = d.name.replace(/'/g, "\\'");
+    var address = _hkDealerAddressText(d);
     var tag = !exactSet[d.code]
       ? '<span style="font-size:10px;color:#9CA3AF;margin-left:4px">類似</span>' : '';
     return '<div class="hk-ac-item" onmousedown="hkAcSelect(\'' + sn + '\',\'' + d.code + '\',\'' + nameId + '\',\'' + codeId + '\',\'' + listId + '\')">' +
-      '<span class="hk-ac-name">' + d.name + tag + '</span><span class="hk-ac-code">' + d.code + '</span></div>';
+      '<div class="hk-ac-top"><span class="hk-ac-name">' + esc(d.name) + tag + '</span><span class="hk-ac-code">' + esc(d.code) + '</span></div>' +
+      '<div class="hk-ac-address">' + esc(address) + '</div></div>';
   }).join('');
   list.classList.add('open');
 }
@@ -2901,6 +3092,135 @@ async function hkCallGemini(prompt, imageBase64, imageMime) {
   throw new Error('Gemini APIが応答しませんでした (' + last.status + ')\n' + hint);
 }
 
+/* ── HOME: Gemini壁打ち ── */
+function homeSetGeminiStatus(msg, color) {
+  var el = document.getElementById('home-gemini-status');
+  if (!el) return;
+  el.textContent = msg || '';
+  el.style.color = color || 'var(--tm)';
+  el.classList.toggle('visible', !!msg);
+}
+
+function homeSaveGeminiKey() {
+  var inp = document.getElementById('home-gemini-key');
+  var key = inp ? inp.value.trim() : '';
+  if (!key) {
+    homeSetGeminiStatus('APIキーを入力してください。保存済みの場合はそのまま相談できます。', '#B45309');
+    return false;
+  }
+  localStorage.setItem(HK_GEMINI_LS, key);
+  inp.value = '';
+  homeSetGeminiStatus('APIキーを保存しました。', 'var(--g)');
+  return true;
+}
+
+function homeClearGemini() {
+  var text = document.getElementById('home-gemini-text');
+  var answer = document.getElementById('home-gemini-answer');
+  if (text) text.value = '';
+  if (answer) {
+    answer.textContent = '';
+    answer.classList.remove('visible');
+  }
+  homeSetGeminiStatus('', '');
+}
+
+async function homeCallGeminiText(userText) {
+  var keyInput = document.getElementById('home-gemini-key');
+  var typedKey = keyInput ? keyInput.value.trim() : '';
+  var key = typedKey || localStorage.getItem(HK_GEMINI_LS);
+  if (!key) throw new Error('Gemini APIキーを入力して「保存」してください。');
+  if (typedKey) {
+    localStorage.setItem(HK_GEMINI_LS, typedKey);
+    keyInput.value = '';
+  }
+
+  var prompt =
+    'あなたはOREC営業担当者の壁打ち相手です。日本語で、現場でそのまま使いやすい短さで答えてください。\n' +
+    '役割: 営業対応、見積り依頼、引合書、価格表、納期確認、返信文の整理を支援します。\n' +
+    'ルール: 不明な型式・価格・コードは断定せず、確認項目として出してください。必要なら箇条書きで、最後に次の一手を1つ示してください。\n\n' +
+    '相談内容:\n' + userText;
+
+  var body = JSON.stringify({
+    contents: [{parts: [{text: prompt}]}],
+    generationConfig: {temperature: 0.45, maxOutputTokens: 900}
+  });
+
+  var lastErr = null;
+  for (var mi = 0; mi < HK_GEMINI_MODELS.length; mi++) {
+    var model = HK_GEMINI_MODELS[mi];
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent';
+    var resp, rawText;
+    try {
+      resp = await fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', 'x-goog-api-key': key},
+        body: body
+      });
+      rawText = await resp.text();
+    } catch(e) {
+      lastErr = e.message;
+      continue;
+    }
+
+    if (resp.ok) {
+      var data = JSON.parse(rawText);
+      var parts = data && data.candidates && data.candidates[0] && data.candidates[0].content
+        ? data.candidates[0].content.parts || [] : [];
+      var text = parts.map(function(p) { return p.text || ''; }).join('\n').trim();
+      if (!text) throw new Error('Geminiから返信文を取得できませんでした。');
+      return text;
+    }
+
+    var errMsg = rawText;
+    try { errMsg = JSON.parse(rawText)?.error?.message || rawText; } catch(e) {}
+    lastErr = 'Gemini API ' + resp.status + ' / ' + model + ': ' + String(errMsg).slice(0, 160);
+    if (resp.status === 400 || resp.status === 401 || resp.status === 403) break;
+    if (mi < HK_GEMINI_MODELS.length - 1) {
+      homeSetGeminiStatus(model + ' が混雑または非対応のため、別モデルで再試行中...', '#B45309');
+    }
+  }
+  throw new Error(lastErr || 'Gemini APIが応答しませんでした。');
+}
+
+async function homeAskGemini() {
+  var textarea = document.getElementById('home-gemini-text');
+  var btn = document.getElementById('home-gemini-send');
+  var answer = document.getElementById('home-gemini-answer');
+  var text = textarea ? textarea.value.trim() : '';
+  if (!text) { homeSetGeminiStatus('相談内容を入力してください。', '#B45309'); return; }
+  if (btn) { btn.disabled = true; btn.textContent = '相談中...'; }
+  if (answer) answer.classList.remove('visible');
+  homeSetGeminiStatus('Geminiに送信しています...', '#2563EB');
+  try {
+    var reply = await homeCallGeminiText(text);
+    if (answer) {
+      answer.textContent = reply;
+      answer.classList.add('visible');
+    }
+    homeSetGeminiStatus('返信を受信しました。', 'var(--g)');
+  } catch(e) {
+    homeSetGeminiStatus(e.message, '#DC2626');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Geminiに相談'; }
+  }
+}
+
+function homeInitGemini() {
+  var textarea = document.getElementById('home-gemini-text');
+  var keyInput = document.getElementById('home-gemini-key');
+  if (keyInput && localStorage.getItem(HK_GEMINI_LS)) keyInput.placeholder = 'Gemini API Key（保存済み）';
+  if (textarea) {
+    textarea.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        homeAskGemini();
+      }
+    });
+  }
+}
+homeInitGemini();
+
 /* 診断: APIキー設定画面から呼び出す（完全なエラー詳細を表示） */
 async function hkDiagnose() {
   var key = localStorage.getItem(HK_GEMINI_LS);
@@ -2987,8 +3307,10 @@ function hkDealerModalShow(matches, nameId, codeId, callback) {
   document.getElementById('hk-dealer-modal-title').textContent = '「' + matches[0].name + '」が複数あります。選択してください';
   document.getElementById('hk-dealer-modal-list').innerHTML = matches.slice(0,10).map(function(d) {
     var sn = d.name.replace(/'/g, "\\'");
+    var address = _hkDealerAddressText(d);
     return '<div class="hk-modal-item" onclick="hkDealerModalSelect(\'' + nameId + '\',\'' + codeId + '\',\'' + sn + '\',\'' + d.code + '\')">' +
-      '<span class="hk-modal-name">' + d.name + '</span><span class="hk-modal-code">' + d.code + '</span></div>';
+      '<div class="hk-modal-main"><span class="hk-modal-name">' + esc(d.name) + '</span><span class="hk-modal-code">' + esc(d.code) + '</span></div>' +
+      '<div class="hk-modal-address">' + esc(address) + '</div></div>';
   }).join('');
   document.getElementById('hk-dealer-overlay').classList.add('open');
 }
@@ -3034,50 +3356,190 @@ function hkResolveProducts(query, limit){
   return out.slice(0, limit||25);
 }
 
-var _hkProdMatches = [];
-function hkProdSearch(val){
-  var dd=document.getElementById('hk-prod-dd'); if(!dd) return;
+var _hkProdNextId = 0;
+var _hkProdMatchesById = {};
+
+function hkDiscountOptionsHtml() {
+  return '<option value="">-- 選択（任意）--</option>' +
+    '<option value="実演機値引">実演機値引</option>' +
+    '<option value="実演機対応値引">実演機対応値引</option>' +
+    '<option value="展示機値引">展示機値引</option>' +
+    '<option value="不需要期値引">不需要期値引</option>' +
+    '<option value="早期確注値引">早期確注値引</option>' +
+    '<option value="台数値引">台数値引</option>' +
+    '<option value="推進値引">推進値引</option>' +
+    '<option value="展示会値引">展示会値引</option>';
+}
+
+function hkDiscountMethodForName(name) {
+  if (!name) return '';
+  return (name === '実演機値引' || name === '実演機対応値引') ? '外掛' : '内掛';
+}
+
+function hkSelectDiscountName(sel, name) {
+  if (!sel || !name) return;
+  var norm = function(s) {
+    return _hkNorm(s).replace(/値引き/g, '値引').replace(/引き/g, '値引');
+  };
+  var want = norm(name);
+  for (var i = 0; i < sel.options.length; i++) {
+    var opt = sel.options[i];
+    var ov = norm(opt.value || opt.textContent || '');
+    if (opt.value && (ov === want || ov.indexOf(want) >= 0 || want.indexOf(ov) >= 0)) {
+      sel.value = opt.value;
+      return;
+    }
+  }
+}
+
+function hkMakeProdCard(id) {
+  return '<div class="hk-prod-card" data-pid="' + id + '">' +
+    '<div class="hk-prod-head"><span class="hk-prod-num">商品 1</span>' +
+    '<button type="button" class="hk-prod-del" onclick="hkRemoveProd(' + id + ')">× 削除</button></div>' +
+    '<div class="hk-code-row" style="margin-bottom:10px">' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
+    '<input type="text" class="fi hk-pr-name" placeholder="例: SP853A" autocomplete="off"' +
+    ' oninput="hkProdSearch(' + id + ',this.value)" onfocus="hkProdSearch(' + id + ',this.value)" onblur="hkProdBlur(' + id + ')">' +
+    '<div class="hk-prod-dd" id="hk-prod-dd-' + id + '"></div></div>' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
+    '<input type="text" class="fi hk-pr-code" placeholder="自動" autocomplete="off"></div></div>' +
+    '<div class="hk-three-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
+    '<input type="number" class="fi hk-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">注文番号</label>' +
+    '<input type="text" class="fi hk-pr-order-no" placeholder=""></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">値引率</label>' +
+    '<div style="display:flex;align-items:center;gap:6px">' +
+    '<input type="number" class="fi hk-pr-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal">' +
+    '<span style="font-size:13px;color:var(--tm)">%</span></div></div></div>' +
+    '<div class="fr" style="margin-bottom:0"><label class="fl">値引名</label>' +
+    '<select class="fi hk-pr-disc-name">' + hkDiscountOptionsHtml() + '</select></div>' +
+    '</div>';
+}
+
+function hkInitProds() {
+  _hkProdNextId = 0;
+  _hkProdMatchesById = {};
+  var list = document.getElementById('hk-prod-list');
+  if (list) list.innerHTML = '';
+  hkAddProd();
+}
+
+function hkAddProd() {
+  var list = document.getElementById('hk-prod-list');
+  if (!list) return;
+  var id = _hkProdNextId++;
+  var tmp = document.createElement('div');
+  tmp.innerHTML = hkMakeProdCard(id);
+  list.appendChild(tmp.firstElementChild);
+  hkUpdateProdNums();
+}
+
+function hkRemoveProd(id) {
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (card) card.remove();
+  if (!document.querySelector('.hk-prod-card')) hkAddProd();
+  hkUpdateProdNums();
+}
+
+function hkUpdateProdNums() {
+  var cards = document.querySelectorAll('.hk-prod-card');
+  var total = cards.length;
+  cards.forEach(function(card, i) {
+    var numEl = card.querySelector('.hk-prod-num');
+    if (numEl) numEl.textContent = '商品 ' + (i + 1);
+    var del = card.querySelector('.hk-prod-del');
+    if (del) del.style.display = total > 1 ? '' : 'none';
+  });
+}
+
+function hkFirstProdCard() {
+  return document.querySelector('.hk-prod-card');
+}
+
+function hkProdSearch(id, val){
+  var dd=document.getElementById('hk-prod-dd-' + id); if(!dd) return;
   var matches=hkResolveProducts(val, 25);
-  _hkProdMatches=matches;
+  _hkProdMatchesById[id]=matches;
   if(!matches.length){ dd.classList.remove('open'); dd.innerHTML=''; return; }
   dd.innerHTML = matches.map(function(m,i){
     var pr = (m.p!=null) ? '¥'+Number(m.p).toLocaleString() : '—';
-    return '<div class="hk-prod-item" onmousedown="hkProdPick('+i+')">'+
+    return '<div class="hk-prod-item" onmousedown="hkProdPick('+id+','+i+')">'+
       '<span><span class="nm">'+_hkEsc(m.n)+'</span><span class="cd">'+_hkEsc(m.c)+'</span></span>'+
       '<span class="pr">'+pr+'</span></div>';
   }).join('');
   dd.classList.add('open');
 }
-function hkProdPick(i){
-  var m=_hkProdMatches[i]; if(!m) return;
-  document.getElementById('hk-prod-name').value=m.n;
-  document.getElementById('hk-prod-code').value=m.c;
-  var dd=document.getElementById('hk-prod-dd'); if(dd) dd.classList.remove('open');
+function hkProdPick(id, i){
+  var m=(_hkProdMatchesById[id] || [])[i]; if(!m) return;
+  var card = document.querySelector('.hk-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.hk-pr-name');
+  var codeEl = card.querySelector('.hk-pr-code');
+  if (nameEl) nameEl.value=m.n;
+  if (codeEl) codeEl.value=m.c;
+  var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open');
   hkSetStatus('✅ '+m.n+' → コード '+m.c+(m.p!=null?'（¥'+Number(m.p).toLocaleString()+'）':''), 'var(--g)');
 }
-function hkProdBlur(){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd'); if(dd) dd.classList.remove('open'); }, 180); }
+function hkProdBlur(id){ setTimeout(function(){ var dd=document.getElementById('hk-prod-dd-' + id); if(dd) dd.classList.remove('open'); }, 180); }
+
+function hkGetProducts() {
+  return Array.from(document.querySelectorAll('.hk-prod-card')).map(function(card) {
+    return {
+      pCode: (card.querySelector('.hk-pr-code') || {value:''}).value.trim(),
+      pName: (card.querySelector('.hk-pr-name') || {value:''}).value.trim(),
+      qty: parseInt((card.querySelector('.hk-pr-qty') || {}).value) || 1,
+      orderNo: (card.querySelector('.hk-pr-order-no') || {value:''}).value.trim(),
+      discName: (card.querySelector('.hk-pr-disc-name') || {value:''}).value.trim(),
+      discRate: parseFloat((card.querySelector('.hk-pr-disc-rate') || {}).value)
+    };
+  }).filter(function(p) {
+    return p.pCode || p.pName || p.orderNo || p.discName || (!isNaN(p.discRate) && p.discRate > 0);
+  });
+}
+
+function hkFillProductCard(card, item) {
+  if (!card || !item) return;
+  var codeEl = card.querySelector('.hk-pr-code');
+  var nameEl = card.querySelector('.hk-pr-name');
+  var qtyEl = card.querySelector('.hk-pr-qty');
+  var orderNoEl = card.querySelector('.hk-pr-order-no');
+  var discNameEl = card.querySelector('.hk-pr-disc-name');
+  var discRateEl = card.querySelector('.hk-pr-disc-rate');
+  if (item.prod_code && codeEl) codeEl.value = item.prod_code;
+  if (item.prod_name && nameEl) {
+    nameEl.value = item.prod_name;
+    if (!item.prod_code) {
+      var pm = hkResolveProducts(item.prod_name, 5);
+      if (pm.length) {
+        if (codeEl) codeEl.value = pm[0].c;
+        nameEl.value = pm[0].n;
+        var extra = pm.length > 1 ? '（他' + (pm.length - 1) + '件候補・商品名欄で選び直し可）' : '';
+        hkSetStatus('✅ 製品名「' + item.prod_name + '」→ ' + pm[0].n + ' / コード ' + pm[0].c +
+          (pm[0].p != null ? '（¥' + Number(pm[0].p).toLocaleString() + '）' : '') + extra,
+          pm.length > 1 ? '#B45309' : 'var(--g)');
+      }
+    }
+  }
+  if (item.qty != null && qtyEl) qtyEl.value = item.qty;
+  if (item.order_no && orderNoEl) orderNoEl.value = item.order_no;
+  if (item.disc_name && discNameEl) hkSelectDiscountName(discNameEl, item.disc_name);
+  if (item.disc_rate != null && discRateEl) discRateEl.value = item.disc_rate;
+}
 
 /* ── AI解析結果をフォームに反映 ── */
 function hkFillFromAI(json) {
   function applyRest() {
-    if (json.prod_code) document.getElementById('hk-prod-code').value = json.prod_code;
-    if (json.prod_name) {
-      document.getElementById('hk-prod-name').value = json.prod_name;
-      // コードが取れていない時は製品名から商品コードを自動解決（最有力を採用）
-      if (!json.prod_code) {
-        var _pm = hkResolveProducts(json.prod_name, 5);
-        if (_pm.length) {
-          document.getElementById('hk-prod-code').value = _pm[0].c;
-          document.getElementById('hk-prod-name').value = _pm[0].n;   // 正式名称に補正
-          var _extra = _pm.length > 1 ? '（他' + (_pm.length-1) + '件候補・商品名欄で選び直し可）' : '';
-          hkSetStatus('✅ 製品名「' + json.prod_name + '」→ ' + _pm[0].n + ' / コード ' + _pm[0].c +
-            (_pm[0].p!=null ? '（¥' + Number(_pm[0].p).toLocaleString() + '）' : '') + _extra,
-            _pm.length > 1 ? '#B45309' : 'var(--g)');
-        }
-      }
+    var items = Array.isArray(json.products) && json.products.length ? json.products : [json];
+    var list = document.getElementById('hk-prod-list');
+    if (list && items.length > 1) {
+      list.innerHTML = '';
+      _hkProdNextId = 0;
+      items.forEach(function() { hkAddProd(); });
     }
-    if (json.qty != null) document.getElementById('hk-qty').value = json.qty;
-    if (json.order_no) document.getElementById('hk-order-no').value = json.order_no;
+    document.querySelectorAll('.hk-prod-card').forEach(function(card, i) {
+      hkFillProductCard(card, items[i] || {});
+    });
     if (json.remarks) document.getElementById('hk-remarks').value = json.remarks;
     if (json.order_date) document.getElementById('hk-order-date').value = json.order_date;
     if (json.prod_date) {
@@ -3089,19 +3551,6 @@ function hkFillFromAI(json) {
       var wh = document.querySelector('input[name="hk-wh"][value="' + json.warehouse + '"]');
       if (wh) wh.checked = true;
     }
-    if (json.disc_name) {
-      var sel = document.getElementById('hk-disc-name');
-      var opt = Array.from(sel.options).find(function(o) {
-        return o.value && (o.value.indexOf(json.disc_name) >= 0 || json.disc_name.indexOf(o.value) >= 0 ||
-          _hkNorm(o.value) === _hkNorm(json.disc_name));
-      });
-      if (opt) sel.value = opt.value;
-    }
-    if (json.disc_method) {
-      var dm = document.querySelector('input[name="hk-disc-method"][value="' + json.disc_method + '"]');
-      if (dm) dm.checked = true;
-    }
-    if (json.disc_rate != null) document.getElementById('hk-disc-rate').value = json.disc_rate;
     // 納入先：dest_codeが直接来た場合は優先。nullまたは未指定なら得意先と同じ
     var destName = json.dest_name || null;
     var destCode = json.dest_code || null;
@@ -3140,15 +3589,16 @@ function hkBuildTextPrompt(text) {
     '以下のテキストから引合書の情報を抽出してください。JSONのみ返してください（説明不要）。\n\n' +
     'ルール:\n- 受注日未指定→' + today + '\n- 数量未指定→1\n- 生産日未指定または「在庫」→null\n' +
     '- 出荷希望日未指定→null\n- 納入先未指定→null（得意先と同じに自動設定）\n' +
-    '- 値引名は「展示機値引き」「推進引き」「実演機値引き」「入札対応値引き」「実演機対応値引き」から近いものを選択\n' +
+    '- 値引名は「展示機値引」「推進値引」「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「展示会値引」から近いものを選択\n' +
+    '- 商品が複数ある場合は products 配列へ入れる\n' +
     '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」が出荷元→"031" / 「福岡倉庫」「本社」→"011" / 未指定→"011"\n' +
     '- 商品コードは数字のみ（例: 03178500）\n\nテキスト:「' + text + '」\n\n' +
     '{\n  "cust_name": "得意先名またはnull",\n  "dest_name": "納入先名またはnull",\n' +
-    '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名またはnull",\n' +
-    '  "qty": 数量,\n  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名またはnull", "qty": 数量, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+    '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名またはnull",\n  "qty": 数量,\n  "order_no": "注文番号またはnull",\n' +
+    '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
     '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
-    '  "disc_name": "値引名またはnull",\n  "disc_method": "外掛または内掛またはnull",\n' +
-    '  "disc_rate": 値引率またはnull,\n  "order_no": "注文番号またはnull",\n  "remarks": "備考またはnull"\n}';
+    '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
 }
 
 function hkVoiceToggle() {
@@ -3225,14 +3675,16 @@ function hkPhotoReadFile(file) {
         '- 形式名/モデル名（例: RM953X/K）を prod_name に\n' +
         '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「033」→"031"\n' +
         '- 出荷日・生産日は備考・注記欄から読む（例: "6/29(月)出荷"→ship_date）\n' +
+        '- 商品が複数ある場合は products 配列へ入れる\n' +
+        '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
         '- 受注日は今日=' + _today + '\n\n' +
         '{\n  "cust_name": "得意先名またはnull",\n  "cust_code": "得意先コードまたはnull",\n' +
         '  "dest_name": "納入先名またはnull",\n  "dest_code": "納入先コードまたはnull",\n' +
-        '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名・形式名またはnull",\n' +
-        '  "qty": 数量またはnull,\n  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
+        '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "商品名・形式名またはnull", "qty": 数量またはnull, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
+        '  "prod_code": "商品コードまたはnull",\n  "prod_name": "商品名・形式名またはnull",\n  "qty": 数量またはnull,\n  "order_no": "注文番号またはnull",\n' +
+        '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
         '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
-        '  "disc_name": "値引名またはnull",\n  "disc_method": "外掛または内掛またはnull",\n' +
-        '  "disc_rate": 値引率またはnull,\n  "order_no": "注文番号またはnull",\n  "remarks": "備考またはnull"\n}';
+        '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
       var json = await hkCallGemini(prompt, b64, mime);
       if (json.qty == null) json.qty = 1;
       if (!json.order_date) json.order_date = new Date().toISOString().slice(0,10);
@@ -3283,21 +3735,35 @@ async function hkExport() {
     // 倉庫
     var wh = document.querySelector('input[name="hk-wh"]:checked');
     if (wh) setCell('B17', wh.value);
-    // 商品
-    var prodCode = (document.getElementById('hk-prod-code').value || '').trim();
-    if (prodCode) setCell('A11', prodCode);
-    var qty = parseInt(document.getElementById('hk-qty').value) || 1;
-    setCell('E11', qty);
-    var orderNo = (document.getElementById('hk-order-no').value || '').trim();
-    if (orderNo) setCell('I11', orderNo);
-    // 値引
-    var discName = (document.getElementById('hk-disc-name').value || '').trim();
+    // 商品（テンプレートはA11〜A14に複数商品を持てる）
+    var products = hkGetProducts();
+    if (!products.length) throw new Error('商品を1件以上入力してください');
+    ['11','12','13','14'].forEach(function(r) {
+      setCell('A' + r, '');
+      setCell('E' + r, '');
+      setCell('I' + r, '');
+    });
+    products.slice(0, 4).forEach(function(p, i) {
+      var row = 11 + i;
+      var code = p.pCode;
+      if (!code && p.pName) {
+        var pm = hkResolveProducts(p.pName, 1);
+        if (pm.length) code = pm[0].c;
+      }
+      if (code) setCell('A' + row, code);
+      setCell('E' + row, p.qty || 1);
+      if (p.orderNo) setCell('I' + row, p.orderNo);
+    });
+    // 値引（テンプレートはシート共通のため、最初に入力された値引を使用）
+    var discProduct = products.find(function(p) {
+      return p.discName || (!isNaN(p.discRate) && p.discRate > 0);
+    }) || products[0];
+    var discName = (discProduct.discName || '').trim();
     if (discName) setCell('L7', discName);
-    // 値引方法(L8): 値引+シートでは L7(値引名)からVLOOKUPで自動計算される数式。
-    // 数式セルの時は書かない（書くと自動計算が壊れる）。数式でないシートのみ手動値を入れる。
-    var discMethod = document.querySelector('input[name="hk-disc-method"]:checked');
-    if (discMethod && !(ws['L8'] && ws['L8'].f)) setCell('L8', discMethod.value);
-    var discRate = parseFloat(document.getElementById('hk-disc-rate').value);
+    // L8は値引名から自動判定。数式セルの時はExcel側のVLOOKUPを優先。
+    var discMethod = hkDiscountMethodForName(discName);
+    if (discMethod && !(ws['L8'] && ws['L8'].f)) setCell('L8', discMethod);
+    var discRate = discProduct.discRate;
     if (!isNaN(discRate) && discRate > 0) setCell('N8', discRate);
     // 備考（A18:D18 結合セル）。空なら何も書かない
     var remarks = (document.getElementById('hk-remarks').value || '').trim();
@@ -3338,19 +3804,18 @@ async function hkExport() {
 /* ── リセット ── */
 function hkReset() {
   ['hk-cust-name','hk-cust-code','hk-dest-name','hk-dest-code',
-   'hk-prod-code','hk-prod-name','hk-order-no','hk-prod-date','hk-ship-date','hk-disc-rate','hk-remarks'].forEach(function(id) {
+   'hk-prod-date','hk-ship-date','hk-remarks'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.value = '';
   });
-  document.getElementById('hk-qty').value = 1;
+  hkInitProds();
   document.getElementById('hk-order-date').value = new Date().toISOString().slice(0,10);
-  document.getElementById('hk-disc-name').value = '';
   var wh = document.querySelector('input[name="hk-wh"][value="011"]'); if (wh) wh.checked = true;
-  var dm = document.querySelector('input[name="hk-disc-method"][value="外掛"]'); if (dm) dm.checked = true;
   document.getElementById('hk-ai-status').classList.remove('visible');
 }
 
 // 受注日を今日に初期化
 (function() {
+  hkInitProds();
   var el = document.getElementById('hk-order-date');
   if (el && !el.value) el.value = new Date().toISOString().slice(0,10);
 })();
@@ -3385,13 +3850,14 @@ function estBuildTextPrompt(text) {
     '- 在庫状況（在庫あり/在庫限り/受注生産等）をstock_statusに\n' +
     '- 伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
     '- 月だけの生産日・出荷日は「8月」「2026年9月」のようにテキストで\n' +
+    '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
     '- 回答期限・運賃・支払条件は抽出しない\n\n' +
     'テキスト:「' + text + '」\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
-    '  "staff_name": "担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
-    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
+    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
     '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
@@ -3402,15 +3868,46 @@ function estBuildImagePrompt() {
   return '見積書または見積依頼書の画像を読み取り、見積フォーム用の項目をJSONだけで抽出してください。\n' +
     '今日=' + today + '。日付はYYYY-MM-DDへ正規化。回答期限・運賃・支払条件は抽出しない。\n' +
     '伊藤産業機械→customer_code "61105" / 大竹産業→customer_code "61323"\n' +
+    '値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択。\n' +
     '月だけの日付は production_text/ship_text に「8月」「2026年9月以降」のように入れる。\n\n' +
     '{\n  "customer_query": "得意先名またはnull",\n  "customer_code": "得意先コードまたはnull",\n' +
-    '  "staff_name": "担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
+    '  "staff_name": "お客様の担当者名またはnull",\n  "quote_date": "YYYY-MM-DDまたはnull",\n' +
     '  "product_query": "製品名またはnull",\n  "product_code": "製品コードまたはnull",\n' +
     '  "quantity": 数量,\n  "retail_price": 小売単価またはnull,\n  "wholesale_price": 仕切単価またはnull,\n' +
-    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "値引名またはnull",\n' +
+    '  "discounted_price": 値引後単価またはnull,\n  "discount_name": "指定候補の値引名またはnull",\n' +
     '  "discount_rate": 値引率またはnull,\n  "stock_status": "在庫状況またはnull",\n' +
     '  "production_text": "生産日テキストまたはnull",\n  "ship_text": "出荷日テキストまたはnull",\n' +
     '  "note": "備考またはnull"\n}';
+}
+
+function estSelectDiscountName(name) {
+  var sel = document.getElementById('est-disc-name');
+  if (!sel || !name) return;
+  var norm = function(s) {
+    return _hkNorm(s).replace(/値引き/g, '値引').replace(/引き/g, '値引');
+  };
+  var want = norm(name);
+  for (var i = 0; i < sel.options.length; i++) {
+    var opt = sel.options[i];
+    var ov = norm(opt.value || opt.textContent || '');
+    if (opt.value && (ov === want || ov.indexOf(want) >= 0 || want.indexOf(ov) >= 0)) {
+      sel.value = opt.value;
+      estDiscountNameChanged();
+      return;
+    }
+  }
+}
+
+function estDiscountNameChanged() {
+  var sel = document.getElementById('est-disc-name');
+  var name = sel ? sel.value : '';
+  if (name) {
+    var method = (name === '実演機値引' || name === '実演機対応値引') ? '外掛' : '内掛';
+    var radio = document.querySelector('input[name="est-extra-method"][value="' + method + '"]');
+    if (radio) radio.checked = true;
+  }
+  estCalcRatioDisp();
+  estCalcAllPricesP();
 }
 
 function estFillFromAI(json) {
@@ -3421,7 +3918,7 @@ function estFillFromAI(json) {
   });
   if (json.staff_name) document.getElementById('est-staff').value = json.staff_name;
   if (json.quote_date) document.getElementById('est-date').value = json.quote_date;
-  if (json.discount_name) document.getElementById('est-disc-name').value = json.discount_name;
+  if (json.discount_name) estSelectDiscountName(json.discount_name);
   if (json.discount_rate != null) document.getElementById('est-extra-rate').value = json.discount_rate;
 
   var firstCard = document.querySelector('.est-prod-card');
@@ -3523,31 +4020,33 @@ function estMakeProdCard(id) {
     '<button type="button" onclick="estRemoveProd(' + id + ')" class="est-prod-del"' +
     ' style="display:none;background:#FEE2E2;border:1px solid #FCA5A5;border-radius:6px;color:#DC2626;font-size:12px;padding:4px 10px;cursor:pointer;font-family:inherit">× 削除</button>' +
     '</div>' +
+    '<div class="hk-code-row" style="margin-bottom:14px">' +
     '<div class="fr" style="position:relative"><label class="fl">商品名</label>' +
     '<input type="text" class="fi est-pr-name" placeholder="例: SP853A" autocomplete="off"' +
     ' oninput="estProdSearchP(' + id + ',this.value)" onfocus="estProdSearchP(' + id + ',this.value)" onblur="estProdBlurP(' + id + ')">' +
     '<div class="hk-prod-dd" id="est-pdd-' + id + '"></div></div>' +
-    '<div class="fr"><label class="fl">商品コード</label>' +
-    '<input type="text" class="fi est-pr-code" placeholder="0353-0060" autocomplete="off"' +
-    ' onblur="estProdCodeLookupP(' + id + ',this.value)"></div>' +
-    '<div class="fr"><label class="fl">小売単価（上代）</label>' +
-    '<div style="display:flex;align-items:center;gap:6px">' +
-    '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric" style="max-width:120px"' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
+    '<input type="text" class="fi est-pr-code" placeholder="自動" autocomplete="off"' +
+    ' onblur="estProdCodeLookupP(' + id + ',this.value)"></div></div>' +
+    '<div class="est-price-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">小売単価</label>' +
+    '<div class="est-inline-unit">' +
+    '<input type="number" class="fi est-pr-retail" placeholder="0" min="0" inputmode="numeric"' +
     ' oninput="estCalcPricesP(' + id + ')">' +
     '<span style="font-size:12px;color:var(--tm)">円</span></div></div>' +
-    '<div class="fr" style="display:flex;gap:12px;flex-wrap:wrap">' +
-    '<div><label class="fl">仕切単価</label>' +
-    '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div>' +
-    '<div class="est-pr-disc-wrap" style="display:none"><label class="fl">値引後単価</label>' +
-    '<input type="number" class="fi est-pr-disc" placeholder="—" min="0" inputmode="numeric" style="max-width:110px"></div></div>' +
-    '<div class="fr"><label class="fl">数量</label>' +
-    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric" style="max-width:80px"></div>' +
-    '<div class="fr"><label class="fl">在庫状況</label>' +
-    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 在庫限り / 受注生産"></div>' +
-    '<div class="fr"><label class="fl">生産日</label>' +
-    '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD または 8月"></div>' +
-    '<div class="fr"><label class="fl">出荷予定日</label>' +
-    '<input type="text" class="fi est-pr-shipdate" placeholder="YYYY-MM-DD または 2026年9月"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">仕切単価</label>' +
+    '<input type="number" class="fi est-pr-whole" placeholder="—" min="0" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field est-pr-disc-wrap" style="display:none"><label class="fl">値引後単価</label>' +
+    '<input type="number" class="fi est-pr-disc" placeholder="—" min="0" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
+    '<input type="number" class="fi est-pr-qty" value="1" min="1" inputmode="numeric"></div></div>' +
+    '<div class="hk-three-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">在庫状況</label>' +
+    '<input type="text" class="fi est-pr-stock" placeholder="在庫あり / 受注生産"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">生産日</label>' +
+    '<input type="text" class="fi est-pr-proddate" placeholder="YYYY-MM-DD / 8月"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">出荷予定日</label>' +
+    '<input type="text" class="fi est-pr-shipdate" placeholder="YYYY-MM-DD / 2026年9月"></div></div>' +
     '<div class="fr"><label class="fl">備考 <span class="opt">（任意）</span></label>' +
     '<textarea class="fi est-pr-note" rows="2" placeholder="例: 次回生産 7/9" style="resize:vertical;font-family:inherit;padding:10px"></textarea></div>' +
     '</div>';
@@ -3596,12 +4095,12 @@ function estPrEl(id, cls) {
 function estGetBaseRatio() {
   var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
   if (code) { var r = estGetShikiri(code); if (r) return r; }
-  var hkDr = document.getElementById('hk-disc-rate');
-  if (hkDr && hkDr.value) {
-    var dr = parseFloat(hkDr.value) || 0;
+  var hkDisc = hkGetProducts().find(function(p) { return !isNaN(p.discRate) && p.discRate > 0; });
+  if (hkDisc) {
+    var dr = hkDisc.discRate || 0;
     if (dr > 0) {
-      var mEl = document.querySelector('input[name="hk-disc-method"]:checked');
-      return (mEl && mEl.value === '内掛') ? 1 / (1 + dr / 100) : 1 - dr / 100;
+      var method = hkDiscountMethodForName(hkDisc.discName) || '外掛';
+      return method === '内掛' ? 1 / (1 + dr / 100) : 1 - dr / 100;
     }
   }
   return null;
@@ -3626,8 +4125,7 @@ function estCalcRatioDisp() {
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
   var text = '仕切率 ' + Math.round(base * 100) + '%';
   if (xRate && final !== base) {
-    var mEl = document.querySelector('input[name="est-extra-method"]:checked');
-    text += ' − ' + (mEl ? mEl.value : '外掛') + ' ' + xRate + '% = ' + Math.round(final * 100) + '%';
+    text += ' − 値引率 ' + xRate + '% = ' + Math.round(final * 100) + '%';
   }
   bar.textContent = text;
   bar.style.display = '';
@@ -3772,9 +4270,10 @@ function estSyncFromInquiry() {
   var nameEl = firstCard.querySelector('.est-pr-name');
   var retailEl = firstCard.querySelector('.est-pr-retail');
   var whEl = firstCard.querySelector('.est-pr-whole');
-  var hkProd = gv('hk-prod-code');
-  if (codeEl && !codeEl.value && hkProd) codeEl.value = hkProd;
-  if (nameEl && !nameEl.value && gv('hk-prod-name')) nameEl.value = gv('hk-prod-name');
+  var hkProducts = hkGetProducts();
+  var hkFirst = hkProducts[0] || {};
+  if (codeEl && !codeEl.value && hkFirst.pCode) codeEl.value = hkFirst.pCode;
+  if (nameEl && !nameEl.value && hkFirst.pName) nameEl.value = hkFirst.pName;
   if (retailEl && !retailEl.value) {
     var useCode = (codeEl && codeEl.value) || '';
     if (useCode) {
