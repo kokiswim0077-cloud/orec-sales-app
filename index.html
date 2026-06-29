@@ -4151,11 +4151,16 @@ async function hkExport() {
     var sheetPath = 'xl/' + tm[1].replace(/^\/?xl\//, '').replace(/^\//, '');
     var sx = await zip.file(sheetPath).async('string');
 
-    // セル上書きヘルパ（既存のスタイル s を保持して中身だけ差し替え。数式は除去される）
+    // 共有文字列テーブル（元テンプレは文字列を全て t="s" で持つ。inlineStrは混ぜない＝Excel修復回避）
+    var ssXml = await zip.file('xl/sharedStrings.xml').async('string');
+    var _siAdd = [];
+    var _nextSi = parseInt((ssXml.match(/uniqueCount="(\d+)"/) || [0, 0])[1], 10);
+
+    // セル上書きヘルパ（既存のスタイル s を保持して中身だけ差し替え）
     function _find(ref) { var re = new RegExp('<c r="' + ref + '"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'); var m = sx.match(re); return m ? { re: re, attrs: m[1] } : null; }
     function _sa(attrs) { var sm = attrs.match(/\ss="\d+"/); return sm ? sm[0] : ''; }
     function setNum(ref, num) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '><v>' + num + '</v></c>'); }
-    function setStr(ref, str) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + ' t="inlineStr"><is><t xml:space="preserve">' + _hkXmlEsc(str) + '</t></is></c>'); }
+    function setStr(ref, str) { var c = _find(ref); if (!c) return; var idx = _nextSi++; _siAdd.push('<si><t xml:space="preserve">' + _hkXmlEsc(str) + '</t></si>'); sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + ' t="s"><v>' + idx + '</v></c>'); }
     function clearCell(ref) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '/>'); }
     function setCode(ref, code) { if (/^\d+$/.test(code)) setNum(ref, parseInt(code, 10)); else setStr(ref, code); }
 
@@ -4188,13 +4193,18 @@ async function hkExport() {
       }
     }
 
-    // 数式のキャッシュ値をクリア → Excelで開くと自動再計算（得意先名・商品名・価格が表示）
-    sx = sx.replace(/(<\/f>)<v>[\s\S]*?<\/v>/g, '$1');
-    sx = sx.replace(/(<f[^>]*\/>)<v>[\s\S]*?<\/v>/g, '$1');
-    // 値を消した数式セルに残る型属性(t="str"/"e"/"b")も除去。これを残すとExcelが
-    // 「内容に問題」(修復)ダイアログを出す。Excel標準の未計算数式 <c s=..><f>..</f></c> 形にする。
-    sx = sx.replace(/(<c[^>]*?)\st="(?:str|e|b)"([^>]*?>)(\s*<f)/g, '$1$2$3');
+    // ※数式セル(C4/C6/B11/価格等)は一切触らない＝テンプレと同一でExcel valid。
+    //   キャッシュは残るが fullCalcOnLoad により開いた時に再計算され正しい値になる。
     zip.file(sheetPath, sx);
+
+    // 追加した文字列を共有文字列テーブルへ反映（count/uniqueCountも更新）
+    if (_siAdd.length) {
+      ssXml = ssXml.replace('</sst>', _siAdd.join('') + '</sst>');
+      ssXml = ssXml.replace(/uniqueCount="\d+"/, 'uniqueCount="' + _nextSi + '"');
+      var _cm = ssXml.match(/<sst[^>]*?\scount="(\d+)"/);
+      if (_cm) ssXml = ssXml.replace(/(<sst[^>]*?\s)count="\d+"/, '$1count="' + (parseInt(_cm[1], 10) + _siAdd.length) + '"');
+      zip.file('xl/sharedStrings.xml', ssXml);
+    }
 
     // workbook に fullCalcOnLoad（開いた時に再計算させる）
     if (/<calcPr\b/.test(wbXml)) {
