@@ -4124,6 +4124,8 @@ async function hkExport() {
     // 入力収集
     var custCode = (document.getElementById('hk-cust-code').value || '').trim();
     var destCode = (document.getElementById('hk-dest-code').value || custCode).trim();
+    var custName = (document.getElementById('hk-cust-name').value || '').trim();
+    var destName = (document.getElementById('hk-dest-name').value || '').trim() || custName;
     var orderDate = document.getElementById('hk-order-date').value;
     var prodDate = document.getElementById('hk-prod-date').value;
     var shipDate = document.getElementById('hk-ship-date').value;
@@ -4174,8 +4176,12 @@ async function hkExport() {
     function setCode(ref, code) { if (/^\d+$/.test(code)) setNum(ref, parseInt(code, 10)); else setStr(ref, code); }
 
     // A4/A6: 得意先・納入先番号（数値で入れる＝マスタ数値とVLOOKUP一致）
-    if (custCode) setCode('A4', custCode); else clearCell('A4');
-    if (destCode) setCode('A6', destCode); else clearCell('A6');
+    // コードが解決できた場合はA4/A6に番号→C4/C6は数式で名称表示。
+    // コードが空（曖昧名・未登録先）の場合は、入力された名称をC4/C6に直接表示（取りこぼし防止）。
+    if (custCode) { setCode('A4', custCode); }
+    else { clearCell('A4'); if (custName) setStr('C4', custName); }
+    if (destCode) { setCode('A6', destCode); }
+    else { clearCell('A6'); if (destName) setStr('C6', destName); }
     // 受注日 I4 / 出荷希望日 I6（日付シリアル・既存の日付書式で表示）
     setNum('I4', _hkDateSerial(orderDate || new Date().toISOString().slice(0, 10)));
     if (shipDate) setNum('I6', _hkDateSerial(shipDate)); else clearCell('I6');
