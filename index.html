@@ -4532,11 +4532,43 @@ function estGetDiscountMethod() {
 }
 
 function estRoundRatio(n) {
-  return Math.max(0, Math.round(n * 100000) / 100000);
+  if (!isFinite(n)) return 0;
+  return Math.max(0, Math.floor(n * 100000) / 100000);
 }
 
 function estFormatRatioPct(n) {
   return Number((n * 100).toFixed(2)).toString() + '%';
+}
+
+function estRoundDownTo(n, digits) {
+  if (!isFinite(n)) return 0;
+  var factor = Math.pow(10, -digits);
+  return Math.floor(n / factor) * factor;
+}
+
+function estIsRoundToTenCustomer(code) {
+  var c = String(code || '').trim();
+  return c === '61121' || c === '61123' || c === '64445001' || c === '64445002';
+}
+
+function estGetPriceRoundDigits() {
+  var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
+  return estIsRoundToTenCustomer(code) ? -1 : -2;
+}
+
+function estCalcNormalPrice(retail, base) {
+  if (!retail || !base) return 0;
+  return estRoundDownTo(retail * base, estGetPriceRoundDigits());
+}
+
+function estCalcDiscountPrice(retail, base, xRate, method) {
+  if (!retail || !base || !xRate) return 0;
+  var digits = estGetPriceRoundDigits();
+  if (method === '内掛') {
+    return estRoundDownTo(estCalcNormalPrice(retail, base) * (1 - xRate / 100), digits);
+  }
+  var final = estRoundRatio(base - xRate / 100);
+  return estRoundDownTo(retail * final, digits);
 }
 
 function estGetFinalRatio() {
@@ -4561,6 +4593,7 @@ function estCalcRatioDisp() {
   var text = '仕切率 ' + estFormatRatioPct(base);
   if (xRate && final !== base) {
     text += ' − ' + (dName ? dName + ' ' : '') + method + ' ' + xRate + '% = ' + estFormatRatioPct(final);
+    if (method === '内掛') text += '（通常仕切単価から計算）';
   }
   bar.textContent = text;
   bar.style.display = '';
@@ -4576,9 +4609,10 @@ function estCalcPricesP(id, force) {
   var discEl = card.querySelector('.est-pr-disc');
   var discWrap = card.querySelector('.est-pr-disc-wrap');
   var xRate = parseFloat((document.getElementById('est-extra-rate') || {}).value) || 0;
-  if (retail && base && whEl && (force || !whEl.value)) whEl.value = Math.round(retail * base);
+  var method = estGetDiscountMethod();
+  if (retail && base && whEl && (force || !whEl.value)) whEl.value = estCalcNormalPrice(retail, base);
   if (xRate > 0 && retail && final !== null && Math.abs(final - base) > 0.0001) {
-    if (discEl && (force || !discEl.value)) discEl.value = Math.round(retail * final);
+    if (discEl && (force || !discEl.value)) discEl.value = estCalcDiscountPrice(retail, base, xRate, method);
     if (discWrap) discWrap.style.display = '';
   } else {
     if (discWrap) discWrap.style.display = 'none';
@@ -4774,7 +4808,8 @@ function estExport(type) {
   if (!products.length) products.push({ pCode:'', pName:'', retail:0, whole:0, disc:0, qty:1, stock:'', pDt:'', sDt:'', note:'' });
 
   var p0 = products[0];
-  var shikiriRatio = (p0.retail > 0 && p0.whole > 0) ? Math.round(p0.whole / p0.retail * 100) / 100 : null;
+  var baseRatioForExport = estGetBaseRatio();
+  var shikiriRatio = baseRatioForExport !== null ? baseRatioForExport : ((p0.retail > 0 && p0.whole > 0) ? Math.round(p0.whole / p0.retail * 100) / 100 : null);
   var hasDisc = products.some(function(p) { return p.disc > 0 && Math.abs(p.disc - p.whole) > 0.5; });
   var numProd = products.length;
   var totalQty = products.reduce(function(s, p) { return s + p.qty; }, 0);
