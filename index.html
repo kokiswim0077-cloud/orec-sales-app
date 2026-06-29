@@ -483,9 +483,12 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-voice-panel-title{font-size:13px;font-weight:700;color:#1E3A8A}
 .hk-voice-panel-close{background:none;border:none;font-size:18px;color:#64748B;cursor:pointer;padding:0 2px;line-height:1}
 .hk-voice-hint{font-size:11px;color:#475569}
+.hk-voice-input-row{display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:8px;align-items:start}
+.hk-voice-note{font-size:11px;line-height:1.45;color:#475569;background:#fff;border:1px solid #DBEAFE;border-radius:8px;padding:8px}
 .hk-voice-textarea{width:100%;min-height:90px;border:1.5px solid #93C5FD;border-radius:8px;padding:10px;font-size:14px;font-family:'Noto Sans JP',sans-serif;resize:vertical;outline:none;box-sizing:border-box}
 .hk-voice-textarea:focus{border-color:#2563EB}
 .hk-voice-submit{padding:12px;background:#2563EB;color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
+@media (max-width:520px){.hk-voice-input-row{grid-template-columns:1fr}}
 /* 写真選択 */
 .hk-photo-group{display:flex;gap:8px}
 .hk-drop-zone{flex:1;padding:12px 8px;background:#DC2626;color:#fff;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;border:2px dashed transparent;transition:background .2s;white-space:nowrap;box-sizing:border-box}
@@ -1251,8 +1254,11 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <button class="hk-voice-panel-close" onclick="hkVoiceAreaClose()">✕</button>
     </div>
     <div class="hk-voice-hint">音声入力で話した内容、またはキーボードで入力 → Geminiが解析してフォームに反映します</div>
-    <textarea class="hk-voice-textarea" id="hk-voice-text"
-      placeholder="例: 得意先：○○、納入先：○○、製品：○○、生産日、（受注日・出荷希望日あれば）：○月○日、値引き名、値引き率。出荷希望日は営業日2日後出荷予定日、生産日記入なければ在庫"></textarea>
+    <div class="hk-voice-input-row">
+      <textarea class="hk-voice-textarea" id="hk-voice-text"
+        placeholder="例: 得意先：○○、納入先：○○、製品：○○、生産日、出荷希望日あれば：○月○日、値引き名、値引き率"></textarea>
+      <div class="hk-voice-note">※出荷希望日は営業日2日後出荷、生産日記入なければ在庫</div>
+    </div>
     <button class="hk-voice-submit" onclick="hkVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="hk-ai-status"></div>
@@ -1401,8 +1407,11 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <button class="hk-voice-panel-close" onclick="estVoiceAreaClose()">✕</button>
     </div>
     <div class="hk-voice-hint">見積内容を話すかテキスト入力 → Geminiが解析してフォームに反映します</div>
-    <textarea class="hk-voice-textarea" id="est-voice-text"
-      placeholder="例: 得意先：伊藤産業機械、製品：AM65B、上代15万、生産日、（受注日・出荷希望日あれば）：○月○日、値引き名、値引き率。出荷希望日は営業日2日後出荷予定日、生産日記入なければ在庫"></textarea>
+    <div class="hk-voice-input-row">
+      <textarea class="hk-voice-textarea" id="est-voice-text"
+        placeholder="例: 得意先：伊藤産業機械、製品：AM65B、生産日、出荷希望日あれば：○月○日、値引き名、値引き率"></textarea>
+      <div class="hk-voice-note">※出荷希望日は営業日2日後出荷、生産日記入なければ在庫</div>
+    </div>
     <button class="hk-voice-submit" onclick="estVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="est-ai-status"></div>
