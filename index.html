@@ -4204,6 +4204,19 @@ async function hkExport() {
     }
     zip.file('xl/workbook.xml', wbXml);
 
+    // calcChain.xml を削除（数式・キャッシュを変更したため計算チェーンが不整合になり、
+    // Excelが「calcChainを削除しsheet3を修復」する＝修復ダイアログの原因。
+    // fullCalcOnLoad により開いた時にExcelが計算チェーンを再構築する）
+    if (zip.file('xl/calcChain.xml')) {
+      zip.remove('xl/calcChain.xml');
+      var _ct = await zip.file('[Content_Types].xml').async('string');
+      _ct = _ct.replace(/<Override PartName="\/xl\/calcChain\.xml"[^>]*\/>/, '');
+      zip.file('[Content_Types].xml', _ct);
+      var _wr = await zip.file('xl/_rels/workbook.xml.rels').async('string');
+      _wr = _wr.replace(/<Relationship[^>]*Target="calcChain\.xml"[^>]*\/>/, '');
+      zip.file('xl/_rels/workbook.xml.rels', _wr);
+    }
+
     // ダウンロード（印刷設定・罫線・図形・ハンコはテンプレのまま完全保持）
     var today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     var custName = (document.getElementById('hk-cust-name').value || '').trim().slice(0, 20);
