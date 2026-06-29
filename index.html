@@ -4557,13 +4557,6 @@ function estPrEl(id, cls) {
 function estGetBaseRatio() {
   var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
   if (code) { var r = estGetShikiri(code); if (r) return r; }
-  var hkDisc = hkGetProducts().find(function(p) { return !isNaN(p.discRate) && p.discRate > 0; });
-  if (hkDisc) {
-    var dr = hkDisc.discRate || 0;
-    if (dr > 0) {
-      return 1 - dr / 100;
-    }
-  }
   return null;
 }
 
@@ -4611,7 +4604,7 @@ function estCalcDiscountPrice(retail, base, xRate, method) {
   if (method === '内掛') {
     return estRoundDownTo(estCalcNormalPrice(retail, base) * (1 - xRate / 100), digits);
   }
-  var final = estRoundRatio(base - xRate / 100);
+  var final = Math.max(0, base - xRate / 100);
   return estRoundDownTo(retail * final, digits);
 }
 
@@ -4622,7 +4615,7 @@ function estGetFinalRatio() {
   if (!xRate) return base;
   var method = estGetDiscountMethod();
   if (method === '内掛') return estRoundRatio(base * (1 - xRate / 100));
-  return estRoundRatio(base - xRate / 100);
+  return Math.max(0, base - xRate / 100);
 }
 
 function estCalcRatioDisp() {
