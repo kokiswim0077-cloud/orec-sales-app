@@ -4065,284 +4065,129 @@ function hkPhotoReadFile(file) {
   reader.readAsDataURL(file);
 }
 
-/* ── Excel出力 ── */
-/* ===== 引合書 図形(円)・ハンコ画像の後処理注入 =====
-   SheetJSは書き出し時に図形/画像を削除するため、出力xlsx(zip)に
-   元払い・福山便の赤丸とハンコ画像を後から注入する。計算(数式)には一切触れない。 */
-var HK_DRAWING_XML='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+
-'<xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">'+
-'<xdr:twoCellAnchor><xdr:from><xdr:col>4</xdr:col><xdr:colOff>40901</xdr:colOff><xdr:row>16</xdr:row><xdr:rowOff>37730</xdr:rowOff></xdr:from><xdr:to><xdr:col>4</xdr:col><xdr:colOff>654237</xdr:colOff><xdr:row>17</xdr:row><xdr:rowOff>2804</xdr:rowOff></xdr:to><xdr:sp macro="" textlink=""><xdr:nvSpPr><xdr:cNvPr id="2" name="maru1"/><xdr:cNvSpPr/></xdr:nvSpPr><xdr:spPr><a:xfrm><a:off x="3738842" y="3885083"/><a:ext cx="613336" cy="219074"/></a:xfrm><a:prstGeom prst="roundRect"><a:avLst/></a:prstGeom><a:noFill/><a:ln w="19050"><a:solidFill><a:srgbClr val="FF0000"/></a:solidFill></a:ln></xdr:spPr><xdr:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="ja-JP"/></a:p></xdr:txBody></xdr:sp><xdr:clientData/></xdr:twoCellAnchor>'+
-'<xdr:twoCellAnchor><xdr:from><xdr:col>3</xdr:col><xdr:colOff>179108</xdr:colOff><xdr:row>18</xdr:row><xdr:rowOff>239058</xdr:rowOff></xdr:from><xdr:to><xdr:col>3</xdr:col><xdr:colOff>769470</xdr:colOff><xdr:row>19</xdr:row><xdr:rowOff>170891</xdr:rowOff></xdr:to><xdr:sp macro="" textlink=""><xdr:nvSpPr><xdr:cNvPr id="3" name="maru2"/><xdr:cNvSpPr/></xdr:nvSpPr><xdr:spPr><a:xfrm><a:off x="2943226" y="4594411"/><a:ext cx="590362" cy="185833"/></a:xfrm><a:prstGeom prst="roundRect"><a:avLst/></a:prstGeom><a:noFill/><a:ln w="19050"><a:solidFill><a:srgbClr val="FF0000"/></a:solidFill></a:ln></xdr:spPr><xdr:txBody><a:bodyPr/><a:lstStyle/><a:p><a:endParaRPr lang="ja-JP"/></a:p></xdr:txBody></xdr:sp><xdr:clientData/></xdr:twoCellAnchor>'+
-'<xdr:twoCellAnchor editAs="oneCell"><xdr:from><xdr:col>9</xdr:col><xdr:colOff>209485</xdr:colOff><xdr:row>19</xdr:row><xdr:rowOff>54170</xdr:rowOff></xdr:from><xdr:to><xdr:col>9</xdr:col><xdr:colOff>648092</xdr:colOff><xdr:row>19</xdr:row><xdr:rowOff>495219</xdr:rowOff></xdr:to><xdr:pic><xdr:nvPicPr><xdr:cNvPr id="4" name="hanko"/><xdr:cNvPicPr><a:picLocks noChangeAspect="1"/></xdr:cNvPicPr></xdr:nvPicPr><xdr:blipFill><a:blip r:embed="rId1"/><a:stretch><a:fillRect/></a:stretch></xdr:blipFill><xdr:spPr><a:xfrm><a:off x="6503841" y="4679196"/><a:ext cx="438607" cy="441049"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></xdr:spPr></xdr:pic><xdr:clientData/></xdr:twoCellAnchor>'+
-'</xdr:wsDr>';
-
-var HK_DRAWING_RELS='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="../media/imageHK.png"/></Relationships>';
-
-var HK_HANKO_B64='iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAllBMVEX////ZQjbZQDTYPTDXNCXYOCrXMCDYPjHYOy7XLh3YOSvXMiLWKxnXNSf11NL++vr88vH66unbT0TwvrvWKBX22df66OfdXVTaRjr99fTrpqLxwb7liYPkg33qop733tzolpHhc2zcU0nyyMXhcmrfaWHjfXfvt7Tsranom5bdWlDmj4nfZV3rpaHusq/zzszVHADUAABb7ysYAAAZZklEQVR4nO1d6bKiuhZuAgTCIIg4i6g4a2vf93+5K2RghgBx9zlV56vqH+1WIGRlzcOvX//hP3DBccezURStJ5fLZTJZR6Nw7Dp/+6HEYPx+3c7zha4gBE1TURT7808xIUKK5s2D7WXk/u1H7A1n+to8bcu0VV0DAEhFfD7TdNWGlvF8TMJ/24a60W2uItvQygsrA2iGgtT5Lfq37Kbzvt0tk29x2WWqpnW/jf7xe7mcHBE0tE6LS6GpEB1f/+CtdC5HU9F7ro7upWyj0+WfuZOjs6XI9aQZMxZN1hPIlayHQVb8ffS3l1PE7Oah6t37MExbgRCahjd/HvfBJjjvj8+DZJsQKjGbrfyVDuXb+G8vKoP301erxIH+kQWLU7CaTGflw7WcTSer4AksaBtVwkT1j++/sJYqTA5ILj2fbEPFC64c8twdvR6eAtUye9LRYfIDz9+Gl2QWn+3DEs3jarTscBX3vX1+RExxKzVTun7tyfnw0pXCU2k2/Ii1PtdyoscC2YXXBRT9b67xIhXWp9n+8zWEQ4Sre/FIAwX8LVp9e2buWYCB7tfh4nq8LbJlAA+9iGLogxxRbn2aYm1CQdceBVaeWjVr/9Oyw9n5ufesocNL6PVfBQat+zeR129FpNu526N5pehypqNZ73u8T1buJdrSz+k5y7OVJVDd2lceE0f/gyCyTtsa4vWfv5vJOgxyawTW+Yf01bVhZO4ro2Pdc47P8VHVVOtYeYh2UEWH343naxbkmI6h/cQ2OrkNBOg5bfhypGh4lytlmqclutm66XazvZXhOcDaDHp4HoykzAYC02tRHV0PYH5/rCCwcSJtZNPYNVHrdA4zr1RdiGLYNdj6mbsZZjv/HJnkyeYVfwxRsj/AsO6n4+/aa0wMNbuNQpl2Ac7JTG+loQ3HwT/Sc6TsKv468whFaJqu1O+O88iQKkD7/itowWyROfaK13QAKUaIPRio+rtzhJlXVq+BTr2Mfqh6/WVQIyI/fZGaxSeAPfYTtKr+xipdIjDv9Y++zWyj5n/FclxleKjt8Z33lcIWuKv7zi5H+TXv4YPZgV3scxi/YHBsUOb6nDx7zLggatjyU/rkEvAbJN4u847Ro9vjt+OYPoas8MrdJ1Ut0bbpazuYWaLUwL7easoITLH8xrmn/Nqe81pIV/rklXw0g+wSlXo6/YjXeaoPV8qfvnA99u4A4tYqZpRG9WfbVx8ZdlPJcxk2qc1m3IWpqa7EDBlgXbh/diDMD6jtm75Jlwib+eQlPYy6J2iJrsT4tGbw60wPSlCUeSybnifdRaOFh4S6nC6xi7erFi5gCzQ8fks7sihLwE88O1n2sYFFPSiv1trOV+bMCNnFzALt1vOUYkaJSTnjD3a+BGR0r1eEqEgHUuvF56rAJToeownz3OVn5L2kTD2hWg3ta+n8fVdiH387X8rKLv3O/1DVT3pgFAG7mGZz/DPg79LPzslnun+uPTzbJ0QW10kImCJkdCCsKpyYNQi7KBFnzGVkPXvwIvLi1QYydGacrCxlvnYH0iojYAIW7rr8TCGHJCcmroy5ijBi0yV2erQCtulVuuwgISF1nucCHuE9QOv/RBlsGKF2kNEFTCjDl8ygw8/2eAfNY/7jiL4uUUb6mdIEsHq6xEPmsehC6uHCwHfdFf5wJ9xVnFVwpEIDwF7BBGdBF2ic+H91S/RGzZSLwj0iEt0Q6GaZU0YvH/r8nLFR2etwTzOOalv3crSInEKgCVG06EWpNqL2YKhbepCBzk8Crz/qYr55VfDKC72cJgl0B45ZTBV1jsCNfLpAJMLt46RZGsAX6IGY9n5Mh+UOoEaXNC922UgOFGiev5jC3vEonukhbDPP+UAdNoaVEKt9bP8JLzb03dm7Lj9b0zejd2CjDdhjpqc8iFGlDNK08mAM1e8gFZc0lA5kIVb0CKsOerx1WP+Gja6pTnCprxgs+H+0p6+lr7JQAPZnADN+XS52tDR5DTuC2doqt/Wzpj+xxagfE5hl6KvkKAJFXGCeHUWfJ9DwK0OjXdlTHTAZ6ZS9YPVN66BHtIFqX7zX3FA+aomRzTusPvp006aYRPqoITWYUqJT6kN02a9TIaqI4QYzq3jzDV6yKc4xz8Stz6N/zbVuW94G7NrPUjxVcJp9/Z1A6VTnIIwJFYWI89jyXS/HBOg9LC6i4sGI0qnV/tRUXVPF0JCDU2QLjJyGbMQFyQIaTG6NZtCIH1DFeMwfyZkDev5qMxp96O+AKGBJr4haBC2TFFDMrUOr+rY36vD0hSj2H1wVPvZxs3k3mw9Y9ullY4LarsASpdxQZgMbLcUlzacUJAqJ/mKU7fqQUhUQFZOnbpJm9XRLtrDipfcBMZqsqjUwww7ApphoB1Ax17SJji12C5+JBl9juDFvM4BPIb4bmtkCGk4i9UrzyE0OvGDj0Z+nQTJZiA1zIjII1h9telgtIRk5hEZRHT0s08gr8EXIfqqearXBGmLliNrCe/JK7fo8k1kmJQ+eBMhfuom16hjzSgs5hYSPNnG2USZBRgfDtUR6Euu2KGzd5C4g4qBZxVj7bIUfyTicp1J2WmNi3EgYAAkRUFikt3myrla6xA+lDq1loDJRrT4aEvG7C7HsSSZGK8+6ZZKFJN0fGtQ4kDVUBmHf5F62iNDJG++N0e4bCjJZbR/ROB/GA6i8q0zKORPxZIlI4MAKPLA43E37TAJwnFi5GSL+Hb+e17C/dQmG1gErMxLiMlCe+RogQx1iNAbkYn55ny6EWkSY9jt8LbuBRsfT9fWx38W6TCahBZOq6fW3N6aE1yjll0ukpQg+c8F30asssOU0uu72ng6hYhu6ig4f+9Atlg8DVJ+R0gYSp5RLoRGX6BfqcKE0xdHxggK8DNfX4ClZ0PysLK2K1aD3Tk3+lFSNvpbxViWEUHxHE0Kk/mBXtEuilmCxmRD5Np4EKkSmXVnXrKHjMjSLfwBo3084EuelpBRtKBKq0IYmUX3IhJC7BHQFHTavy8azFL1Ih0BLV6ub09AvrV1X+3EEkvRZNHEdQif2YOfXHqdi2HpCFEC37XR1QNN1Q7UVE6ne/Omln/uj8i5+Pu3lK1oRMkX5j6m4H6p0O/tE5Grwmk11TT7SFajez5vH79f6PYt5+TYVhAD+msJSQXhDgn8DQsJNYd7mJDppk3nMA/eQXAeXfERpdr9uWvfNpaDBPdIKqjh/fXbPlCUQKPcebIFYuQXdlCjlbfm5LRjjohoap6dakgTPVZ1ZTummocQAvpZYqqTb3fkNeXN5d6FLGFBLjnULwqSpCWDlNJRelGrOzzKSJCXAGsgbqqoh53pm8GSbFhARWrDcqg+H6KSjhFmATGYLcS/DysO9pG6vjBI53W1vxwMwTBT3zNDj5kTdnY1Lsl1mVjPakY0dYvtOEs6Sy6IjIkitdMLM2DGFRT/U0p29L7cgCOY6tLs7qciRyx1E+tmAcNc2WaAmZ/eLMO5qp0LEkq7aE7u7gbDN7EGkftIBxxCn2htajvcRGVS9BJZQO5C9lUHeXTa4NCVPovTWdwMoVRRbu2SbUBVDDBinFV1qx26b0tMLv87+0jDO1wXKovSoxKlgVllDd1ZS0/eutSBc2k51og1+nXrPQmnnqMRqWoVVQjiYXaV+sbQrESZ3HkQQZ8j/iV9nTw/NVLNsKF2rBA05EVXaLhWWTT74viBHXEsdfVRu9Yse3FavV80viWiqYqZrGmy2e920EZTD6fSDMRGRlsj0XYw5KUcv/4UQsKTuhN80XRDlcHTJHTLfeEF0RFTeY5oV3S8JvQVygSgvpMJFTKZlDmt8EI1d8Q/MO/uVpixEg2HuKKID9GWlTRjXkMdYo1v4lXYlhJkyHY3I3uH2fQWIaEqzsN33enJl3UOqVdbB2Bb2jO6pqMSPLMjbTCSiM7ruFxZUFDuN/n6nVwk5d8ySIO8ZiknzyuNF77XezX1oFz1Skrr4RgMoyjuJkuaQ28JvdJsgKq+kKTU9P2UgXkZRdQIAfMpponTJhyoCDqxcVwbf4KaUwal4SWOyYEX8nX6lYdkUWVepxBWB6wyHWBdE2NItFVMWWATLOI47mMqqAn3pedL8D8NRjdhLof/5RtMgJcfC6bEUlNVdAM0O+Cigmnf8vZ7iozGerleP89Pzjt/gbzSHlCg1xAAQk6BQxgar2ED6yRblXs4wJVp+OR4lCKdE/Jo/2m6VmNdkhSTsJChPqAInCCTgf6nzUc0tc0oMXaF4W5titfC/0RSoAUfsTychtsvXV/iRuT/cv5ooi8S4IErcV1f40wgy6nC6h187h38BhT0kK/xeo7efBy14xOdw8mVpwYFdsFqvRTLbPKeh8vALTgxOvH1dVcw/ApsF56UF1WmGJyn0BXaj1CQU9kJe4o++52rjgDudPLCBClRxdLrI6aXUthAfP6iF446i9Xo9uT2tj5FB2wYAXZiZQXzcJDbzXfswi9k0em1vm9NBhzCeqqMUmukDMcm7v1LrCbtIXOJf/4pvFsMJL7un4SNo2moyWEeqRpd2cE1wabgQL4kVPIrXjZ1xOB29HnMbKZWDZz42sW7YJmJZtOCPkIeYUaOeKIuLQYGZIvaL+T7Yvtavx1P2EYKwMDIoTvhKpnogy7e90/lxjcZR2rtLiN4xyvvaKGst5br1w9rXdF21leIsJM2wFRNCpB3u98N5NRmFqR9xlPqrhBQkESWGRfKp11ZQhdW1nIUnaaZ/f1zX0Xs0rrIyrmljECjCL11MkaBxC1HGxRqlPBIYqm1C69kcBg3S3ppCfJpBIW7xKoVMB2J2e5KEXH2xW12i1lksCyYRxVQj0qA25czfiB++cXoNn3drSQuuwFmMjx8UeGcpZCoC72QXFa4tIbq/IsrbR9P00mIIRai4IIji8gbA89YinJPYrYVOEyhRpsH1+aBcjDokQby2t+YswxVeoCbOPr0WgmuD82lqkGj0DUHJWXQ7SciCJFVYVAeAX4yVZiIig3OiKpGs0KxY4TJcb8+eCU01V2ihCCMhwpozVSXTvKIqCMkK82HXjwb+OHkQKape0r6BLUoeV+S1Lb/CahJVjL3H5fQVSD6yDTmvpH407w9MZElPUZo/zU20M2R/GJ5fWkbih03O9my9i4d25kLccjJST/HOt+vr9YpCgeRTkV/KcoSFOqNwtpDhzc2C7fTZOBWeNqt1+J0hTlU5wjRfF4l0vhN/F8ibGMCA+mK/++KAKqcqz5vl6os8iFg11Qlt4mmIlgUehPeE2yA4Vs+JGgaWlp/T4YmJWM7O6g/81ozHGZofaxeq8TTEcXrT2R9b12UZnYQHuSvrLehBFCkRExEEFOeXu16/Z27JKCKOd/HjxqprZkTVPWWAWWm9U4KVPf0ReyZr6p4cYs+JsvN/EbKoVdqctOc4FHbLBLR2rXhZWn8oLiEjKWuqS8qdmGlZly82U6mm/pAVOotpaxIjPg41RvX0men5QVOzBIHVkBY9ry7ttyBKrUnuVBmxC/eZsUpxdaWgO2LQOuCyf1tgLXeCOkYTzbPj8DSVzwvAj9pabmpBiWq1h220kvvufUepG05W/PlDsHLTUI+/pD0VBJnBia5WKJYJn+n6dFM5XcRHShp6KrDGs5aQOyWRg3zALtxbtGpUU/0g+kqyZ0NfDNbZX4y3JvGrZ+hh+WIzcIGK7tsvZUg19jahTkYxIjFx/bBIyGyjECNbtn2vbjCpANAqjuqSRqE9hpJbkUKS0fEPjGNNJpDk/aCRz21o6TE0JjQsIikjMSywvH9Lf7z97rp+hyMF6MIHwuVAy8Prel8caVfR4VSUeLHxiXZSrnYxJeWbeUk0W7d2j960Gdhwp1dyDMs13J8DYhRHJ05Xp/vd884CJAcVB/XnjE5KG66cJjZaubwhPupaTk2bnixb1jQA1OFxIdaOrZ5XTswGadIFs0TylLtEJbYbm47nvHeLtBvGn8GbSLfQbEh3kAT1vkxUwKouryYjkfFrb0MjNTE6DcyqBN3Cxup32qp2aL5AwtOqHPoJuzZ2o90i4z6VDUP1hzNZykibowP0rsNGBiTFsVXx6hDrTYYZbx6QVRMhy/JPj91teDHwm25hc90I6zc8KI0v0Z3K7uXlKG1nAgxon35H4XgsSgOgbLJt0DQNmDT3G25B4pvEpYXuexR+EL1u+4NJ2cpHM5Ueb7Gp33RUT2usnn1Rb/liA7C3Cxuazv0PQkm2VxptUhfiFW9H4d4a2oZ6QMw5GYYATPK/U7F10DdKuUhndK5pAOzA9k9zS9hV2tBg6xM/nopNG8G+tQRs/kNl3+kC6DT03swGe5czDtnZ0bINBd63E6NNXPUFpTydJxlgRvvCmj3LXJIksvxY39lrcxkTh16dWuyG/YNtW9bEnusSdBwG6Fc2iwPKlU1nkqhwpV4//qgAH4Zkny99OCyrAOStR6W6m9yLTl/J+6ycM5G4NgrWqTueri9nSBqe6qbeYyPZbGVe7Z2NF+o1sCvhM9XqfeJFYC4U9307Qd9CMFO93mvQXzpbmVsTYzPJeihvWKBWzw/HVmNsQ4SXzQFCtdjWM2FRXXUNyv0lg9+uXVL1tGqqQQsSBw2oLkFP4t7qdXtCqNQrku1h19EsLu2K1ikAwui089w17CeoMis+wMaSmtk6oBk2RBAiFGs9uqbB07Yjr2Ht+XlEYYqAhi/NjhHaJLOT6TNZuNE5c9ykxLaA6LS7TGcf9TuMLrfNef7sHL/cUUHR1NO3Cgvqfu82QwTz7ZKPYDwJFqaZWSDQVaSdfg+PkVzY/MOuAfqQdh8BnQLfOGyQrfl1RqsTyLVoBQry9b2A1f1iHX3jNM/ObokrTZ8HMr8DBQ/GY4zUjXZ3VOSYuhe1ahIO51kcs96LsEcsYs9myfJLqCQ8ieWuO9kcLDPb7gNnDnHlXb05jwY7S2ovtwsbRcs/DzihxVhpcef/8+1spFdXfNxWl6sGL+JTiRkb7TlBbdZ5pnMSviJJELPV3KJUoCnwPJnhHebqZHTlumE605mnu33lA7PRDJyDxxPvRSpCxxsrfskammN9OllhZYfBIh4+x5fYzIHec7l//VqlLUZ3HF/HU1yyTC3cWwq60/vjxG8eHnrnmNErYrY669ohcbVlxjVwhcmes0mqZuIVcnB1x9bubdx0k062H5Q2xkidY4nJRDPg1Wuy25xp0YApbB20nC5waPJ0OpSp7Sy6iY7gN2wRPocclVsruy1h4sxItMvg90pkRjOYzQwOp5c0Pdgq3mQeFeljg9AWT9U4slo3fXgFuguYWLObXhdxkjYZd0lmWWU/2jySoEBTm+snOzt6w6HghpuO1jIO9ddLxlLajUMFk5dQ2a01D1wfWauHuZ6RLlCI49yVGKHqizqVMjG0lXPzDWOtFeitm4ij7XXZvKEhC93BGO6CsRutpmNsogK3TvhNjmqrf4s0W6vRDTIDCfSDsNCH66U1nlal9Il12PZEHDw1zLg37yLtfwaq/HWbtPe+OhcY23Hu6aQG81QmjdglAGC7ckgGeelNWhYbfCsBo/gq3HlaMNzI93pgn8ZXdKP4gNd4bywOH9ma1MlbQc02htdnZsJVcRPfauomgMIbBj3SaRVFSh19KAcgLtWCKhAGfOSf3p2uV8HJQFmTq5gI8EiPILC+kHp0zcwcUeYZinx/FqhBvtxi12R+SmgE1/V6fb09zvOFDeNhCIW2C2aOKkIvpVBgiS0GpSux0vcrQ2bm3XzdQMU0oFqM0mJ9oNuKqdi4faJUhpEbk3zL3V1s5jTD2MvMTTHvZFHn037XwR83VcvzZCoADCvIcLTRIt1AyW5hxgPg7DPdSDXUz2oZH+zyggrL002YTY9eBpn5LJwnvi+yHSGADfp1eNhZRo1LP+4AqttIO+eI4gpT2vm8WFGjvGswXWSG+QE47+X1HG8UGJ+/GLIsxzOg4q4gyegV77zKXzPylMz7sA/f7794zs5x0qx9rzs6o9dtF5zP5/3xeDzvtq/LJBrNxuX6r+kzO0AIWN/pHV3A2sjGH3QUfO+thieUkY+SKv1Qi9DlPjeOS7eC7yRuj45Wlu8CP/i5/pKRnButqVsn8S83X1zzOYGLLwnBajgPP3d7GR1eIl+w8/Jy9CnpvtA6cx7MjlbuETTb2ogi1lHg2zl5olkikqQ74+0VJvoZ6HAd/iDhbYEKoVR4/0rDaA5cgJJfo2b7z0EFFeFvz1JBYX3eN0Ya8GKl2AX1RLPh/daLJyyjxwIVlvfRfxdiWpD1hnMFZrGvvKZC87gadfESjde7u2WWlDkN/u31JbgcCucmfvWyDZXDYzJtX+b4vToDaFaMTtDR4Z+wvhijvV+krniVwFCgtTgFq8l0VuJAzjhOHD7PNctUq3JrgOrvf1QAtmB888obiZ806SD4MeEN77kPNpvN+fi8e3KsaMcpNFVZUVJs44LbN0vAemEUlIfi5nY0niSbWBNxiUz9F5Pq2ePfZJ/1cCZ722xYJA+ArpjHyzfKSwXBiQIFqmWmwYcPE4b7yT94eQTT7TNOM+m2lyBe3XM7/eHu9L3hRre4bZJRw0eKizMUpD63ggswvg9nenmcgB9PiZerOEvCelQbWsbzcQn/batLsZyuV7vjYaGbCJpxd2Q77pD8ERVI0bz5eXtp7Yv5b8HSnY2iaD25XC6TyToaheOfHgjxH/69+D845YCkGtcakgAAAABJRU5ErkJggg==';
-
-async function hkInjectStamps(bytes, targetSheetName){
-  if (typeof JSZip==='undefined') throw new Error('JSZip未読込');
-  var zip=await JSZip.loadAsync(bytes);
-  var wbXml=await zip.file('xl/workbook.xml').async('string');
-  // <sheet ...> 群を走査して name 一致の r:id を取得（indexOfで照合）
-  var sheetTags=wbXml.match(/<sheet\b[^>]*>/g)||[];
-  var rid=null;
-  for(var i=0;i<sheetTags.length;i++){
-    if(sheetTags[i].indexOf('name="'+targetSheetName+'"')>=0){
-      var mm=sheetTags[i].match(/r:id="(rId\d+)"/); if(mm) rid=mm[1]; break;
-    }
-  }
-  if(!rid) throw new Error('シート特定失敗: '+targetSheetName);
-  var wbRels=await zip.file('xl/_rels/workbook.xml.rels').async('string');
-  var tm=wbRels.match(new RegExp('<Relationship[^>]*Id="'+rid+'"[^>]*Target="([^"]+)"'))
-       ||wbRels.match(new RegExp('<Relationship[^>]*Target="([^"]+)"[^>]*Id="'+rid+'"'));
-  if(!tm) throw new Error('シートTarget特定失敗');
-  var sheetPath='xl/'+tm[1].replace(/^\/?xl\//,'').replace(/^\//,'');
-  var sheetFile=sheetPath.split('/').pop();
-  console.log('対象シート:',targetSheetName,'->',rid,'->',sheetPath);
-
-  zip.file('xl/drawings/drawingHK.xml', HK_DRAWING_XML);
-  zip.file('xl/drawings/_rels/drawingHK.xml.rels', HK_DRAWING_RELS);
-  zip.file('xl/media/imageHK.png', HK_HANKO_B64, {base64:true});
-
-  // sheet rels に drawing 関係を追加
-  var relsPath='xl/worksheets/_rels/'+sheetFile+'.rels';
-  var srels=zip.file(relsPath)?await zip.file(relsPath).async('string')
-    :'<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"></Relationships>';
-  var ids=(srels.match(/Id="rId(\d+)"/g)||[]).map(function(s){return parseInt(s.replace(/\D/g,''),10);});
-  var nextId='rId'+((ids.length?Math.max.apply(null,ids):0)+1);
-  srels=srels.replace('</Relationships>','<Relationship Id="'+nextId+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawingHK.xml"/></Relationships>');
-  zip.file(relsPath, srels);
-
-  // sheet XML に <drawing> を追加（末尾extLstがあればその前）
-  var sx=await zip.file(sheetPath).async('string');
-  if(!/<worksheet[^>]*\sxmlns:r=/.test(sx)){
-    sx=sx.replace('<worksheet ','<worksheet xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ');
-  }
-  var drawingTag='<drawing r:id="'+nextId+'"/>';
-  if(/<extLst>[\s\S]*<\/extLst>\s*<\/worksheet>\s*$/.test(sx)){
-    sx=sx.replace(/(<extLst>[\s\S]*<\/extLst>)(\s*<\/worksheet>)/, drawingTag+'$1$2');
-  } else {
-    sx=sx.replace(/<\/worksheet>\s*$/, drawingTag+'</worksheet>');
-  }
-  zip.file(sheetPath, sx);
-
-  // [Content_Types].xml
-  var ct=await zip.file('[Content_Types].xml').async('string');
-  if(ct.indexOf('Extension="png"')<0) ct=ct.replace('</Types>','<Default Extension="png" ContentType="image/png"/></Types>');
-  if(ct.indexOf('/xl/drawings/drawingHK.xml')<0) ct=ct.replace('</Types>','<Override PartName="/xl/drawings/drawingHK.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/></Types>');
-  zip.file('[Content_Types].xml', ct);
-
-  return await zip.generateAsync({type:'uint8array',compression:'DEFLATE'});
-}
+/* ── 引合書 Excel出力（テンプレートZIP直接上書き方式） ──
+   SheetJSのread/writeは罫線・印刷設定・図形・ハンコを壊すため使わない。
+   テンプレートをZIPとして開き、指定セルの値だけを直接上書きする。
+   計算(VLOOKUP/値引)は数式のまま温存。C4/C6/B11等は触らず、Excelで開くと自動計算される。
+   入力ルール: A4=得意先番号 / A6=納入先番号 / I4=受注日 / I6=出荷希望日 / H5=生産日 /
+   A11-A14=商品コード / E11-E14=数量 / B17=倉庫 / L7=値引名 / N8=値引率 /
+   A18=備考 / I11-I14=オーダーNo。22行目以降・印刷設定・C4/C6/B11は触らない。 */
+function _hkXmlEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function _hkDateSerial(ymd){ var p=String(ymd).split('-'); return Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(1899,11,30))/86400000); }
 
 async function hkExport() {
   var btn = document.getElementById('hk-export-btn');
-  btn.textContent = '📊 テンプレート取得中...';
+  btn.textContent = '📊 出力中...';
   btn.disabled = true;
   try {
-    var resp = await fetch(HK_TEMPLATE_URL);
-    if (!resp.ok) throw new Error('template取得失敗: ' + resp.status);
-    var buf = await resp.arrayBuffer();
-    var wb = XLSX.read(buf, { type: 'array', cellStyles: true, bookVBA: true });
-    // 出力先は「引合書+値引」シート（全角＋にも対応）。無ければ引合書系→先頭
-    var sheetName = wb.SheetNames.find(function(n) { return n.replace('＋','+').indexOf('引合書+値引') >= 0; })
-      || wb.SheetNames.find(function(n) { return n.indexOf('引合') >= 0; }) || wb.SheetNames[0];
-    var ws = wb.Sheets[sheetName];
-    function setCell(addr, val) {
-      if (!ws[addr]) ws[addr] = {};
-      ws[addr].v = val;
-      ws[addr].t = (typeof val === 'number') ? 'n' : 's';
-      delete ws[addr].w;
-      delete ws[addr].f;   // 数式セル(I4=TODAY()等)に値を入れる時は数式を除去（後のキャッシュ削除で復活させない）
-    }
-    // 【重要】得意先名・納入先名だけ入力されコードが空のままだと、テンプレの
-    // VLOOKUP数式が引けず 得意先名・納入先名・住所・TEL・価格 が全て空欄になる。
-    // 出力直前に名称→コードを自動解決して取りこぼしを防ぐ。
+    // 得意先名だけ入力でコードが空の事故を防ぐ（名称→コード自動解決）
     try { hkAcAutofill('hk-cust-name', 'hk-cust-code'); } catch(e){}
     try { hkAcAutofill('hk-dest-name', 'hk-dest-code'); } catch(e){}
-    // 得意先コード ※数値コードは「数値」で入れる。文字列だと請求先/出荷先マスタ(数値)と
-    // VLOOKUPが一致せず、Excelで編集を有効化(再計算)した瞬間に 得意先名・納入先名・住所・
-    // TEL・価格・仕切率(P10)・掛率(B40)などが全て空欄になる。
+
+    // 入力収集
     var custCode = (document.getElementById('hk-cust-code').value || '').trim();
-    if (custCode) setCell('A4', /^\d+$/.test(custCode) ? parseInt(custCode, 10) : custCode);
-    // 納入先コード（空なら得意先コードを使用）
     var destCode = (document.getElementById('hk-dest-code').value || custCode).trim();
-    if (destCode) setCell('A6', /^\d+$/.test(destCode) ? parseInt(destCode, 10) : destCode);
-    // 受注日
     var orderDate = document.getElementById('hk-order-date').value;
-    setCell('I4', orderDate ? _hkFmtDate(orderDate) : _hkFmtDate(new Date().toISOString().slice(0,10)));
-    // 生産日
     var prodDate = document.getElementById('hk-prod-date').value;
-    setCell('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
-    // 出荷希望日
     var shipDate = document.getElementById('hk-ship-date').value;
     if (!shipDate && prodDate) shipDate = _hkAddBizDays(prodDate, 2);
-    if (shipDate) setCell('I6', _hkFmtDate(shipDate));
-    // 倉庫
     var wh = document.querySelector('input[name="hk-wh"]:checked');
-    if (wh) setCell('B17', wh.value);
-    // 商品（テンプレートはA11〜A14に複数商品を持てる）
+    var warehouse = wh ? wh.value : '';
     var products = hkGetProducts();
     if (!products.length) throw new Error('商品を1件以上入力してください');
-    ['11','12','13','14'].forEach(function(r) {
-      setCell('A' + r, '');
-      setCell('E' + r, '');
-      setCell('I' + r, '');
-    });
-    products.slice(0, 4).forEach(function(p, i) {
-      var row = 11 + i;
-      var code = p.pCode;
-      if (!code && p.pName) {
-        var pm = hkResolveProducts(p.pName, 1);
-        if (pm.length) code = pm[0].c;
-      }
-      if (code) setCell('A' + row, code);
-      setCell('E' + row, p.qty || 1);
-      if (p.orderNo) setCell('I' + row, p.orderNo);
-    });
-    // 値引（テンプレートはシート共通のため、最初に入力された値引を使用）
-    var discProduct = products.find(function(p) {
-      return p.discName || (!isNaN(p.discRate) && p.discRate > 0);
-    }) || products[0];
+    var discProduct = products.find(function(p){ return p.discName || (!isNaN(p.discRate) && p.discRate > 0); }) || products[0];
     var discName = (discProduct.discName || '').trim();
-    if (discName) setCell('L7', discName);
-    // L8は値引名から自動判定。数式セルの時はExcel側のVLOOKUPを優先。
-    var discMethod = hkDiscountMethodForName(discName);
-    if (discMethod && !(ws['L8'] && ws['L8'].f)) setCell('L8', discMethod);
     var discRate = discProduct.discRate;
-    if (!isNaN(discRate) && discRate > 0) setCell('N8', discRate);
-    // 備考（A18:D18 結合セル）。空なら何も書かない
     var remarks = (document.getElementById('hk-remarks').value || '').trim();
-    if (remarks) setCell('A18', remarks);
 
-    // 【重要】数式(VLOOKUP)の古いキャッシュ値を削除 → Excelが開いた時に再計算する
-    // これをしないと得意先名・商品名・価格がテンプレのサンプル値(良栄社/SP431F等)のまま残る
-    Object.keys(ws).forEach(function(addr) {
-      if (addr.charAt(0) === '!') return;
-      var c = ws[addr];
-      if (c && c.f) { delete c.v; delete c.w; }   // 数式セルのキャッシュ値・表示文字列を消す
-    });
-    // 開いた時に全再計算するようフラグも設定（対応ビューア向けの保険）
-    wb.Workbook = wb.Workbook || {};
-    wb.Workbook.CalcPr = wb.Workbook.CalcPr || {};
-    wb.Workbook.CalcPr.fullCalcOnLoad = true;
-    // 開いた時に「引合書+値引」タブを最前面（アクティブ）にする
-    var _sIdx = wb.SheetNames.indexOf(sheetName);
-    if (_sIdx >= 0) {
-      wb.Workbook.Views = wb.Workbook.Views || [{}];
-      wb.Workbook.Views[0] = wb.Workbook.Views[0] || {};
-      wb.Workbook.Views[0].activeTab = _sIdx;
-    }
+    // テンプレ取得（ZIPとして開く。SheetJSは使わない）
+    btn.textContent = '📊 テンプレート取得中...';
+    var resp = await fetch(HK_TEMPLATE_URL);
+    if (!resp.ok) throw new Error('テンプレート取得失敗: ' + resp.status);
+    var buf = await resp.arrayBuffer();
+    var zip = await JSZip.loadAsync(buf);
 
-    // ── 数式は保持したまま、計算結果をキャッシュ値として書き込む ──
-    // 計算方法（VLOOKUP・値引計算の数式）は一切変更しない。
-    // 数式を再計算しないビューア（モバイル・プレビュー等）でも得意先名・価格が空欄に
-    // ならないよう、テンプレート自身のマスタシートから読んだ値で数式の結果を先に埋める。
-    // （Excelで開くと fullCalcOnLoad により数式が再計算され同じ値になる）
-    function hkSetCache(addr, val) {
-      var c = ws[addr]; if (!c) { ws[addr] = c = {}; }
-      c.v = val; c.t = (typeof val === 'number') ? 'n' : 's';
-      delete c.w;   // 表示文字列は再生成させる（数式 c.f は保持）
-    }
-    // テンプレ内マスタシートを {コード: 行配列} のマップ化（数式と同じデータ源）
-    function hkMasterMap(sheetNm) {
-      var sh = wb.Sheets[sheetNm];
-      if (!sh) return {};
-      var rows = XLSX.utils.sheet_to_json(sh, { header: 1, raw: true });
-      var map = {};
-      rows.forEach(function(r) {
-        var k = r[0];
-        if (k === undefined || k === null || k === '') return;
-        var key = String(k).trim();
-        if (!(key in map)) map[key] = r;
-      });
-      return map;
-    }
-    function hkRoundDown(x, rd) { var f = Math.pow(10, -rd); return Math.floor(x / f) * f; }
-
-    var mSeikyu = hkMasterMap('請求先');     // A:コード B:得意先名 D:掛け率
-    var mShukka = hkMasterMap('出荷先');     // A:コード C:納入先名 E:住所 F:TEL
-    var mHin    = hkMasterMap('商品コード'); // A:コード B:商品名 C:税別小売
-
-    // ② 得意先名（C4）・納入先名（C6）・住所（B8）・TEL（I8）
-    // マスタにヒットすれば正式名称、無ければ入力された名称をフォールバックで表示
-    var custNameInput = (document.getElementById('hk-cust-name').value || '').trim();
-    var destNameInput = (document.getElementById('hk-dest-name').value || '').trim() || custNameInput;
-    var rSe = mSeikyu[String(custCode)];
-    if (rSe && rSe[1] != null) hkSetCache('C4', rSe[1]);
-    else if (custNameInput) hkSetCache('C4', custNameInput);
-    var rSh = mShukka[String(destCode)];
-    if (rSh) {
-      if (rSh[2] != null) hkSetCache('C6', rSh[2]);
-      if (rSh[4] != null) hkSetCache('B8', rSh[4]);
-      if (rSh[5] != null) hkSetCache('I8', rSh[5]);
-    } else if (destNameInput) {
-      hkSetCache('C6', destNameInput);
-    }
-
-    // 価格計算に必要な係数（数式と同じ：仕切率=請求先D列、値引率=N8/100）
-    var hkShikiri = (rSe && typeof rSe[3] === 'number') ? rSe[3] : 0;
-    var hkDiscFrac = (!isNaN(discRate) && discRate > 0) ? discRate / 100 : 0;
-    var hkMethod = hkDiscountMethodForName(discName) || '外掛';
-    var hkSpecial = ['61121', '61123', '64445001', '64445002'].indexOf(String(custCode)) >= 0;
-    var hkRd = hkSpecial ? -1 : -2;
-    var hkFinalRatio = (hkMethod === '内掛') ? hkShikiri * (1 - hkDiscFrac) : (hkShikiri - hkDiscFrac);
-    if (hkShikiri) {
-      hkSetCache('P10', hkShikiri);
-      hkSetCache('R10', hkDiscFrac);
-      hkSetCache('T10', Math.round(hkFinalRatio * 100000) / 100000);
-    }
-
-    // ① 各商品行：商品名（B）・税別小売（L）・通常（N）・値引（Q）・最終（S）
-    //    ※ G列「単価」(=O13) は参考ファイルでも未記入のため触らない
-    products.slice(0, 4).forEach(function(p, i) {
-      var row = 11 + i;
-      var code = p.pCode;
-      if (!code && p.pName) { var pm = hkResolveProducts(p.pName, 1); if (pm.length) code = pm[0].c; }
-      if (!code) return;
-      var rh = mHin[String(code)];
-      if (rh && rh[1] != null) hkSetCache('B' + row, rh[1]);   // 商品名
-      var retail = (rh && typeof rh[2] === 'number') ? rh[2] : null;
-      if (retail != null) hkSetCache('L' + row, retail);       // 税別小売
-      if (retail != null && hkShikiri) {
-        var normal = hkRoundDown(retail * hkShikiri, hkRd);    // 通常
-        var fin = (hkMethod === '内掛')
-          ? hkRoundDown(normal * (1 - hkDiscFrac), hkRd)
-          : hkRoundDown(retail * hkFinalRatio, hkRd);          // 最終
-        hkSetCache('N' + row, normal);
-        hkSetCache('S' + row, fin);
-        hkSetCache('Q' + row, fin - normal);
+    // 「引合書+値引」シートのXMLパスを特定
+    var wbXml = await zip.file('xl/workbook.xml').async('string');
+    var wbRels = await zip.file('xl/_rels/workbook.xml.rels').async('string');
+    var rid = null, tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
+    for (var i = 0; i < tags.length; i++) {
+      if (tags[i].replace('＋', '+').indexOf('name="引合書+値引"') >= 0) {
+        var mm = tags[i].match(/r:id="(rId\d+)"/); if (mm) rid = mm[1]; break;
       }
-    });
+    }
+    if (!rid) throw new Error('引合書+値引 シートが見つかりません');
+    var tm = wbRels.match(new RegExp('Id="' + rid + '"[^>]*Target="([^"]+)"'))
+          || wbRels.match(new RegExp('Target="([^"]+)"[^>]*Id="' + rid + '"'));
+    if (!tm) throw new Error('シート参照の解決に失敗');
+    var sheetPath = 'xl/' + tm[1].replace(/^\/?xl\//, '').replace(/^\//, '');
+    var sx = await zip.file(sheetPath).async('string');
 
-    // ③④ 運賃=元払い・便名=福山便 の〇、作成者=谷尾のハンコは
-    //     SheetJS が図形・画像を保持できないため、書き出し後に hkInjectStamps() で再注入する。
+    // セル上書きヘルパ（既存のスタイル s を保持して中身だけ差し替え。数式は除去される）
+    function _find(ref) { var re = new RegExp('<c r="' + ref + '"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'); var m = sx.match(re); return m ? { re: re, attrs: m[1] } : null; }
+    function _sa(attrs) { var sm = attrs.match(/\ss="\d+"/); return sm ? sm[0] : ''; }
+    function setNum(ref, num) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '><v>' + num + '</v></c>'); }
+    function setStr(ref, str) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + ' t="inlineStr"><is><t xml:space="preserve">' + _hkXmlEsc(str) + '</t></is></c>'); }
+    function clearCell(ref) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '/>'); }
+    function setCode(ref, code) { if (/^\d+$/.test(code)) setNum(ref, parseInt(code, 10)); else setStr(ref, code); }
 
-    // ファイル名
-    var today = new Date().toISOString().slice(0,10).replace(/-/g,'');
+    // A4/A6: 得意先・納入先番号（数値で入れる＝マスタ数値とVLOOKUP一致）
+    if (custCode) setCode('A4', custCode); else clearCell('A4');
+    if (destCode) setCode('A6', destCode); else clearCell('A6');
+    // 受注日 I4 / 出荷希望日 I6（日付シリアル・既存の日付書式で表示）
+    setNum('I4', _hkDateSerial(orderDate || new Date().toISOString().slice(0, 10)));
+    if (shipDate) setNum('I6', _hkDateSerial(shipDate)); else clearCell('I6');
+    // 生産日 H5（文字列書式）: 日付 or 在庫
+    setStr('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
+    // 倉庫 B17（文字列）
+    if (warehouse) setStr('B17', warehouse);
+    // 値引名 L7（文字列）/ 値引率 N8（数値）
+    if (discName) setStr('L7', discName); else clearCell('L7');
+    if (!isNaN(discRate) && discRate > 0) setNum('N8', discRate); else clearCell('N8');
+    // 備考 A18（文字列・任意）
+    if (remarks) setStr('A18', remarks); else clearCell('A18');
+    // 製品 A11-A14（商品コード=文字列）/ E11-E14（数量=数値）/ I11-I14（オーダーNo=任意）
+    for (var r = 11; r <= 14; r++) {
+      var p = products[r - 11];
+      var code = p ? p.pCode : '';
+      if (p && !code && p.pName) { var pm = hkResolveProducts(p.pName, 1); if (pm.length) code = pm[0].c; }
+      if (code) {
+        setStr('A' + r, code);
+        setNum('E' + r, (p.qty || 1));
+        if (p.orderNo) setStr('I' + r, p.orderNo); else clearCell('I' + r);
+      } else {
+        clearCell('A' + r); clearCell('E' + r); clearCell('I' + r);
+      }
+    }
+
+    // 数式のキャッシュ値をクリア → Excelで開くと自動再計算（得意先名・商品名・価格が表示）
+    sx = sx.replace(/(<\/f>)<v>[\s\S]*?<\/v>/g, '$1');
+    sx = sx.replace(/(<f[^>]*\/>)<v>[\s\S]*?<\/v>/g, '$1');
+    zip.file(sheetPath, sx);
+
+    // workbook に fullCalcOnLoad（開いた時に再計算させる）
+    if (/<calcPr\b/.test(wbXml)) {
+      if (!/fullCalcOnLoad/.test(wbXml)) wbXml = wbXml.replace(/<calcPr\b([^>]*?)\/>/, '<calcPr$1 fullCalcOnLoad="1"/>');
+    } else {
+      wbXml = wbXml.replace('</workbook>', '<calcPr fullCalcOnLoad="1"/></workbook>');
+    }
+    zip.file('xl/workbook.xml', wbXml);
+
+    // ダウンロード（印刷設定・罫線・図形・ハンコはテンプレのまま完全保持）
+    var today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     var custName = (document.getElementById('hk-cust-name').value || '').trim().slice(0, 20);
     var fileName = '引合書_' + today + (custName ? '_' + custName : '') + '.xlsx';
-    // SheetJSで書き出し → 図形(円)・ハンコ画像を後処理で注入 → ダウンロード
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array', compression: true });
-    var finalBytes = wbout;
-    try {
-      finalBytes = await hkInjectStamps(new Uint8Array(wbout), sheetName);
-    } catch (ie) {
-      // 注入失敗時は図形なしのまま出力（計算結果は維持）
-      console.warn('スタンプ注入スキップ:', ie && ie.message);
-    }
-    var blob = new Blob([finalBytes], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = URL.createObjectURL(out);
     a.download = fileName;
     document.body.appendChild(a); a.click();
     setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     btn.textContent = '✅ ダウンロード完了！';
     setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 2500);
-  } catch(e) {
+  } catch (e) {
     btn.textContent = '❌ エラー: ' + e.message;
-    setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 3000);
+    setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 3500);
   }
 }
 
