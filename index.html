@@ -3898,6 +3898,20 @@ function hkGetProducts() {
   });
 }
 
+function hkResolveProductCodesBeforeExport() {
+  document.querySelectorAll('.hk-prod-card').forEach(function(card) {
+    var codeEl = card.querySelector('.hk-pr-code');
+    var nameEl = card.querySelector('.hk-pr-name');
+    var code = codeEl ? (codeEl.value || '').trim() : '';
+    var name = nameEl ? (nameEl.value || '').trim() : '';
+    if (!code && name) {
+      var product = hkResolveAiProduct('', name);
+      if (product.c && codeEl) codeEl.value = product.c;
+      if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+    }
+  });
+}
+
 function hkFillProductCard(card, item) {
   if (!card || !item) return;
   var codeEl = card.querySelector('.hk-pr-code');
@@ -4120,6 +4134,7 @@ async function hkExport() {
     // 得意先名だけ入力でコードが空の事故を防ぐ（名称→コード自動解決）
     try { hkAcAutofill('hk-cust-name', 'hk-cust-code'); } catch(e){}
     try { hkAcAutofill('hk-dest-name', 'hk-dest-code'); } catch(e){}
+    hkResolveProductCodesBeforeExport();
 
     // 入力収集
     var custCode = (document.getElementById('hk-cust-code').value || '').trim();
@@ -4133,7 +4148,10 @@ async function hkExport() {
     var wh = document.querySelector('input[name="hk-wh"]:checked');
     var warehouse = wh ? wh.value : '';
     var products = hkGetProducts();
+    if (!custCode) throw new Error('得意先コードが必要です。得意先候補を選択して、右横のコードが入っているか確認してください。');
     if (!products.length) throw new Error('商品を1件以上入力してください');
+    var missingCode = products.find(function(p) { return !p.pCode; });
+    if (missingCode) throw new Error('商品コードが必要です。商品名の候補を選択して、右横の商品コードが入っているか確認してください。');
     var discProduct = products.find(function(p){ return p.discName || (!isNaN(p.discRate) && p.discRate > 0); }) || products[0];
     var discName = (discProduct.discName || '').trim();
     var discRate = discProduct.discRate;
@@ -4256,6 +4274,7 @@ async function hkExport() {
     setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 2500);
   } catch (e) {
     btn.textContent = '❌ エラー: ' + e.message;
+    hkSetStatus('❌ ' + e.message, '#CC0000');
     setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 3500);
   }
 }
@@ -4846,11 +4865,16 @@ function estSyncFromInquiry() {
 
 function estExport(type) {
   if (typeof XLSX === 'undefined') { estSetStatus('❌ SheetJSが読み込まれていません', '#DC2626'); return; }
+  try { hkAcAutofill('est-cust-name', 'est-cust-code'); } catch(e){}
   var custName = (document.getElementById('est-cust-name').value || '').trim();
   var custCode = (document.getElementById('est-cust-code').value || '').trim();
   var staff    = (document.getElementById('est-staff').value || '').trim();
   var qDate    = document.getElementById('est-date').value || new Date().toISOString().slice(0,10);
   var dName    = (document.getElementById('est-disc-name').value || '').trim();
+  if (!custCode) {
+    estSetStatus('❌ 得意先コードが必要です。得意先候補を選択して、右横のコードが入っているか確認してください。', '#DC2626');
+    return;
+  }
 
   var products = [];
   document.querySelectorAll('.est-prod-card').forEach(function(card) {
