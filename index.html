@@ -1252,7 +1252,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <div class="hk-voice-hint">音声入力で話した内容、またはキーボードで入力 → Geminiが解析してフォームに反映します</div>
     <textarea class="hk-voice-textarea" id="hk-voice-text"
-      placeholder="例: 得意先：○○、納入先：○○、製品：○○、受注日、生産日、出荷希望日あれば：○○、値引：値引名・値引率"></textarea>
+      placeholder="例: 得意先：○○、納入先：○○、製品：○○、生産日、（受注日・出荷希望日あれば）：○月○日、値引き名、値引き率。出荷希望日は営業日2日後出荷予定日、生産日記入なければ在庫"></textarea>
     <button class="hk-voice-submit" onclick="hkVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="hk-ai-status"></div>
@@ -1402,7 +1402,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <div class="hk-voice-hint">見積内容を話すかテキスト入力 → Geminiが解析してフォームに反映します</div>
     <textarea class="hk-voice-textarea" id="est-voice-text"
-      placeholder="例: 得意先：伊藤産業機械、製品：AM65B、上代15万、在庫あり、出荷8月"></textarea>
+      placeholder="例: 得意先：伊藤産業機械、製品：AM65B、上代15万、生産日、（受注日・出荷希望日あれば）：○月○日、値引き名、値引き率。出荷希望日は営業日2日後出荷予定日、生産日記入なければ在庫"></textarea>
     <button class="hk-voice-submit" onclick="estVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
   </div>
   <div class="hk-ai-status" id="est-ai-status"></div>
