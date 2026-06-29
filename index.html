@@ -4163,6 +4163,9 @@ async function hkExport() {
     // 数式のキャッシュ値をクリア → Excelで開くと自動再計算（得意先名・商品名・価格が表示）
     sx = sx.replace(/(<\/f>)<v>[\s\S]*?<\/v>/g, '$1');
     sx = sx.replace(/(<f[^>]*\/>)<v>[\s\S]*?<\/v>/g, '$1');
+    // 値を消した数式セルに残る型属性(t="str"/"e"/"b")も除去。これを残すとExcelが
+    // 「内容に問題」(修復)ダイアログを出す。Excel標準の未計算数式 <c s=..><f>..</f></c> 形にする。
+    sx = sx.replace(/(<c[^>]*?)\st="(?:str|e|b)"([^>]*?>)(\s*<f)/g, '$1$2$3');
     zip.file(sheetPath, sx);
 
     // workbook に fullCalcOnLoad（開いた時に再計算させる）
