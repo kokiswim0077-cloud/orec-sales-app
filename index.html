@@ -4577,35 +4577,39 @@ function estFormatRatioPct(n) {
   return Number((n * 100).toFixed(2)).toString() + '%';
 }
 
-function estRoundDownTo(n, digits) {
-  if (!isFinite(n)) return 0;
-  var factor = Math.pow(10, -digits);
-  return Math.floor(n / factor) * factor;
-}
+var EST_PRICE_ROUND_RULES = {
+  '61121': { digits: -1, mode: 'down' },
+  '61123': { digits: -1, mode: 'down' },
+  '64445001': { digits: -1, mode: 'down' },
+  '64445002': { digits: -1, mode: 'down' }
+};
 
-function estIsRoundToTenCustomer(code) {
-  var c = String(code || '').trim();
-  return c === '61121' || c === '61123' || c === '64445001' || c === '64445002';
-}
-
-function estGetPriceRoundDigits() {
+function estGetPriceRoundRule() {
   var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
-  return estIsRoundToTenCustomer(code) ? -1 : -2;
+  return EST_PRICE_ROUND_RULES[code] || { digits: -2, mode: 'down' };
+}
+
+function estRoundPriceByRule(n, rule) {
+  if (!isFinite(n)) return 0;
+  var r = rule || { digits: -2, mode: 'down' };
+  var factor = Math.pow(10, -r.digits);
+  if (r.mode === 'nearest') return Math.round(n / factor) * factor;
+  return Math.floor(n / factor) * factor;
 }
 
 function estCalcNormalPrice(retail, base) {
   if (!retail || !base) return 0;
-  return estRoundDownTo(retail * base, estGetPriceRoundDigits());
+  return estRoundPriceByRule(retail * base, estGetPriceRoundRule());
 }
 
 function estCalcDiscountPrice(retail, base, xRate, method) {
   if (!retail || !base || !xRate) return 0;
-  var digits = estGetPriceRoundDigits();
+  var rule = estGetPriceRoundRule();
   if (method === '内掛') {
-    return estRoundDownTo(estCalcNormalPrice(retail, base) * (1 - xRate / 100), digits);
+    return estRoundPriceByRule(estCalcNormalPrice(retail, base) * (1 - xRate / 100), rule);
   }
   var final = Math.max(0, base - xRate / 100);
-  return estRoundDownTo(retail * final, digits);
+  return estRoundPriceByRule(retail * final, rule);
 }
 
 function estGetFinalRatio() {
