@@ -4577,39 +4577,35 @@ function estFormatRatioPct(n) {
   return Number((n * 100).toFixed(2)).toString() + '%';
 }
 
-var EST_PRICE_ROUND_RULES = {
-  '61121': { digits: -1, mode: 'down' },
-  '61123': { digits: -1, mode: 'down' },
-  '64445001': { digits: -1, mode: 'down' },
-  '64445002': { digits: -1, mode: 'down' }
-};
-
-function estGetPriceRoundRule() {
+function estIsN11RoundDownToTenCustomer() {
   var code = ((document.getElementById('est-cust-code') || {}).value || '').trim();
-  return EST_PRICE_ROUND_RULES[code] || { digits: -2, mode: 'down' };
+  return code === '61121' || code === '61123' || code === '64445001' || code === '64445002';
 }
 
-function estRoundPriceByRule(n, rule) {
+function estRoundDownPrice(n, digits) {
   if (!isFinite(n)) return 0;
-  var r = rule || { digits: -2, mode: 'down' };
-  var factor = Math.pow(10, -r.digits);
-  if (r.mode === 'nearest') return Math.round(n / factor) * factor;
+  var factor = Math.pow(10, -digits);
   return Math.floor(n / factor) * factor;
 }
 
+// Excel「引合書+値引」N11:
+// IF(A4=61121/61123/64445001/64445002, ROUNDDOWN(L11*P10,-1), ROUNDDOWN(L11*P10,-2))
 function estCalcNormalPrice(retail, base) {
   if (!retail || !base) return 0;
-  return estRoundPriceByRule(retail * base, estGetPriceRoundRule());
+  return estRoundDownPrice(retail * base, estIsN11RoundDownToTenCustomer() ? -1 : -2);
 }
 
+// Excel「引合書+値引」S11:
+// 内掛: ROUNDDOWN(N11*(1-R10), 同じ桁)
+// 外掛: ROUNDDOWN(L11*T10, 同じ桁) / T10 = P10-R10
 function estCalcDiscountPrice(retail, base, xRate, method) {
   if (!retail || !base || !xRate) return 0;
-  var rule = estGetPriceRoundRule();
+  var digits = estIsN11RoundDownToTenCustomer() ? -1 : -2;
   if (method === '内掛') {
-    return estRoundPriceByRule(estCalcNormalPrice(retail, base) * (1 - xRate / 100), rule);
+    return estRoundDownPrice(estCalcNormalPrice(retail, base) * (1 - xRate / 100), digits);
   }
   var final = Math.max(0, base - xRate / 100);
-  return estRoundPriceByRule(retail * final, rule);
+  return estRoundDownPrice(retail * final, digits);
 }
 
 function estGetFinalRatio() {
