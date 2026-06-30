@@ -2789,12 +2789,12 @@ function msgGenParts() {
     return (i + 1) + '. ' + (p.name || '___') + ' / ' + (p.code || '___') + '　' + (p.qty || '1') + '個';
   }).join('\n');
 
-  return '①請求先:' + name + '　' + code + '\n' +
-    '②納入先コード:' + dest + '\n' +
-    '③部品情報\n' + (partLines || '1. ___ / ___　1個') + '\n' +
-    '⑤' + mach + '　' + per + '\n' +
-    '⑥' + type + '\n' +
-    '⑦0伝出荷対応お願い致します。';
+  return '請求先:' + name + '　' + code + '\n' +
+    '納入先:' + dest + '\n' +
+    '部品情報\n' + (partLines || '1. ___ / ___　1個') + '\n' +
+    mach + '　' + per + '\n' +
+    type + '\n' +
+    '0伝出荷対応お願い致します。';
 }
 
 // --- generate loan message ---
