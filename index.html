@@ -1079,6 +1079,23 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="hd-logo"><span>OR</span></div>
     <div class="hd-title">メッセージ生成</div>
   </div>
+  <div class="hk-ai-bar">
+    <button class="hk-voice-btn" id="msg-voice-btn" onclick="msgVoiceToggle()">🎤 音声・テキスト入力</button>
+  </div>
+  <div class="hk-voice-panel" id="msg-voice-panel">
+    <div class="hk-voice-panel-hd">
+      <span class="hk-voice-panel-title">🎤 音声・テキスト入力</span>
+      <button class="hk-voice-panel-close" onclick="msgVoiceAreaClose()">✕</button>
+    </div>
+    <div class="hk-voice-hint">話した内容、または入力した文章をGeminiが解析してフォームへ反映します</div>
+    <div class="hk-voice-input-row">
+      <textarea class="hk-voice-textarea" id="msg-voice-text"
+        placeholder="借り先：岡山広川&#10;機種名：HRC805&#10;岡田所長了承済み&#10;返却日：6/25&#10;出荷先名：東モーターズ分"></textarea>
+      <div class="hk-voice-note" id="msg-voice-note">※上のタブに合わせて、部品発注または機種貸し出しへ反映します</div>
+    </div>
+    <button class="hk-voice-submit" onclick="msgVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
+  </div>
+  <div class="hk-ai-status" id="msg-ai-status"></div>
   <div class="fa" id="msg-scroll">
     <!-- Sub-tabs -->
     <div class="msg-tabs">
@@ -1092,7 +1109,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div class="sec-label">請求先 / 得意先</div>
         <div class="fr msg-ac-wrap">
           <label class="fl">① 請求先名</label>
-          <input type="text" class="fi" id="msg-p1-name" placeholder="伊藤産業機械"
+          <input type="text" class="fi" id="msg-p1-name" placeholder="クボタ印西"
                  autocomplete="off"
                  oninput="msgDealerSearch(this)"
                  onfocus="msgDealerOpen(this)"
@@ -1106,7 +1123,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         </div>
         <div class="fr msg-ac-wrap">
           <label class="fl">② 納入先名 <span class="opt">（空欄の場合は請求先名）</span></label>
-          <input type="text" class="fi" id="msg-p2-name" placeholder="伊藤産業機械"
+          <input type="text" class="fi" id="msg-p2-name" placeholder="クボタ印西"
                  autocomplete="off"
                  oninput="msgDestSearch(this)"
                  onfocus="msgDestOpen(this)"
@@ -1134,7 +1151,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div class="sec-label">機種 / 担当</div>
         <div class="fr msg-ac-wrap">
           <label class="fl">⑤ 機種名</label>
-          <input type="text" class="fi" id="msg-p5-machine" placeholder="WM646F"
+          <input type="text" class="fi" id="msg-p5-machine" placeholder="WM746AF"
                  autocomplete="off"
                  oninput="msgMachineSearch(this,'msg-p5-machine-list')"
                  onfocus="msgMachineOpen(this,'msg-p5-machine-list')"
@@ -1143,7 +1160,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         </div>
         <div class="fr">
           <label class="fl">⑤ 担当者名</label>
-          <input type="text" class="fi" id="msg-p5-person" placeholder="伊藤社長"
+          <input type="text" class="fi" id="msg-p5-person" placeholder="伊藤社長分"
                  autocomplete="off" oninput="msgUpd()">
         </div>
       </div>
@@ -1177,7 +1194,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         </div>
         <div class="fr msg-ac-wrap">
           <label class="fl">機種名</label>
-          <input type="text" class="fi" id="msg-l-machine" placeholder="HR805"
+          <input type="text" class="fi" id="msg-l-machine" placeholder="HRC805"
                  autocomplete="off"
                  oninput="msgMachineSearch(this,'msg-l-machine-list')"
                  onfocus="msgMachineOpen(this,'msg-l-machine-list')"
@@ -2692,7 +2709,169 @@ function msgSwitchTab(i) {
   _msgTab = i;
   document.querySelectorAll('.msg-tab').forEach((t,j) => t.classList.toggle('on', j===i));
   document.querySelectorAll('.msg-panel').forEach((p,j) => p.classList.toggle('active', j===i));
+  msgUpdateVoicePlaceholder();
   msgUpd();
+}
+
+function msgSetStatus(msg, color) {
+  var el = document.getElementById('msg-ai-status');
+  if (!el) return;
+  if (!msg) { el.classList.remove('visible'); el.textContent = ''; return; }
+  el.textContent = msg;
+  el.style.color = color || '#2563EB';
+  el.classList.add('visible');
+}
+
+function msgVoiceToggle() {
+  var panel = document.getElementById('msg-voice-panel');
+  var btn = document.getElementById('msg-voice-btn');
+  var isOpen = panel.classList.contains('open');
+  panel.classList.toggle('open', !isOpen);
+  btn.classList.toggle('active', !isOpen);
+  msgUpdateVoicePlaceholder();
+  if (!isOpen) setTimeout(function() { document.getElementById('msg-voice-text').focus(); }, 80);
+}
+
+function msgVoiceAreaClose() {
+  document.getElementById('msg-voice-panel').classList.remove('open');
+  document.getElementById('msg-voice-btn').classList.remove('active');
+}
+
+function msgUpdateVoicePlaceholder() {
+  var ta = document.getElementById('msg-voice-text');
+  var note = document.getElementById('msg-voice-note');
+  if (!ta) return;
+  if (_msgTab === 0) {
+    ta.placeholder = '得意先：クボタ印西\n納入先名：クボタ印西\n部品コード：88-4109-5102\nもしくは部品名：主軸カラー\n機種：WM746AF\n担当者名：伊藤社長分\n対応種別：クレーム対応';
+    if (note) note.textContent = '※部品発注へ反映します。部品は複数件でも読み取れます';
+  } else {
+    ta.placeholder = '借り先：岡山広川\n機種名：HRC805\n岡田所長了承済み\n返却日：6/25\n出荷先名：東モーターズ分';
+    if (note) note.textContent = '※機種貸し出しへ反映します。日付は今年の日付として読み取ります';
+  }
+}
+
+function msgBuildVoicePrompt(text) {
+  var mode = _msgTab === 0 ? 'parts' : 'loan';
+  return '今日は' + _hkTodayYmd() + 'です。以下の文章からメッセージ生成フォームへ入れる内容を抽出し、JSONのみ返してください。説明文は禁止。\n\n' +
+    '現在のタブ: ' + (mode === 'parts' ? '部品発注' : '機種貸し出し') + '\n' +
+    '共通ルール:\n' +
+    '- 日付はYYYY-MM-DD。年がなければ今年。\n' +
+    '- 「分」は担当者名や出荷先名の一部として自然なら残してよいが、出荷先の会社名だけなら外す。\n' +
+    '- 機種名は英数字と / を中心に型式だけ（例: WM746AF, HRC805）。\n' +
+    '- 対応種別は「クレーム対応」「サービス品」「その他」のどれか。不明ならnull。\n' +
+    '- 部品が複数ある場合は parts 配列にすべて入れる。数量未指定は1。\n\n' +
+    '返すJSON:\n' +
+    '{\n' +
+    '  \"kind\": \"parts または loan\",\n' +
+    '  \"billing_name\": \"得意先/請求先名またはnull\",\n' +
+    '  \"billing_code\": \"請求先コードまたはnull\",\n' +
+    '  \"dest_name\": \"納入先名またはnull\",\n' +
+    '  \"dest_code\": \"納入先コードまたはnull\",\n' +
+    '  \"parts\": [{\"part_code\":\"部品コードまたはnull\", \"part_name\":\"部品名またはnull\", \"qty\": 数量}],\n' +
+    '  \"machine\": \"機種名またはnull\",\n' +
+    '  \"person\": \"担当者名またはnull\",\n' +
+    '  \"response_type\": \"クレーム対応/サービス品/その他/null\",\n' +
+    '  \"loan_from\": \"借り先またはnull\",\n' +
+    '  \"loan_qty\": 数量またはnull,\n' +
+    '  \"approver\": \"承認者名またはnull\",\n' +
+    '  \"return_date\": \"YYYY-MM-DDまたはnull\",\n' +
+    '  \"ship_dest\": \"出荷先名またはnull\"\n' +
+    '}\n\n' +
+    '入力文:\n' + text;
+}
+
+function _msgFindDealerByLooseName(nameOrCode) {
+  var q = String(nameOrCode || '').trim();
+  if (!q) return null;
+  var qn = _msgNormAc(q.replace(/分$/, ''));
+  if (!qn) return null;
+  return MSG_DEALERS.find(function(d) { return d.code === q || _msgNormAc(d.name).includes(qn) || qn.includes(_msgNormAc(d.name)); }) || null;
+}
+
+function _msgResolveMachineName(name) {
+  var q = String(name || '').trim();
+  if (!q || typeof HK_PRODUCTS === 'undefined') return q;
+  var qn = q.toUpperCase().replace(/[\s　]/g, '');
+  var hit = HK_PRODUCTS.find(function(p) {
+    var n = String(p[1] || '').toUpperCase().replace(/[\s　]/g, '');
+    return n === qn || n.includes(qn) || qn.includes(n);
+  });
+  return hit ? hit[1] : q;
+}
+
+function _msgSetDealerFields(name, code, nameId, codeId) {
+  var dealer = code ? MSG_DEALERS.find(function(d) { return d.code === String(code); }) : null;
+  if (!dealer) dealer = _msgFindDealerByLooseName(name);
+  document.getElementById(nameId).value = dealer ? dealer.name : (name || '');
+  document.getElementById(codeId).value = dealer ? dealer.code : (code || '');
+}
+
+function msgSetPartsFromAI(parts) {
+  var list = document.getElementById('msg-parts-list');
+  if (!list) return;
+  list.innerHTML = '';
+  _msgPartNextId = 0;
+  (parts && parts.length ? parts : [{}]).forEach(function(p) {
+    msgAddPart();
+    var card = Array.from(document.querySelectorAll('.msg-part-card')).slice(-1)[0];
+    if (!card) return;
+    var code = p.part_code || p.code || '';
+    var name = p.part_name || p.name || '';
+    if (code && !name && typeof PARTS_NAMES !== 'undefined' && PARTS_NAMES[code]) name = PARTS_NAMES[code];
+    card.querySelector('.msg-part-code').value = code;
+    card.querySelector('.msg-part-name').value = name;
+    card.querySelector('.msg-part-qty').value = p.qty || 1;
+    if (code && !name) msgPartLookup(card.getAttribute('data-pid'), code);
+  });
+  msgUpdatePartTitles();
+}
+
+function msgFillFromAI(json) {
+  if (!json || typeof json !== 'object') throw new Error('解析結果が空です');
+  var kind = json.kind === 'loan' ? 'loan' : (json.kind === 'parts' ? 'parts' : (_msgTab === 0 ? 'parts' : 'loan'));
+  msgSwitchTab(kind === 'parts' ? 0 : 1);
+  if (kind === 'parts') {
+    _msgSetDealerFields(json.billing_name || json.cust_name, json.billing_code || json.cust_code, 'msg-p1-name', 'msg-p1-code');
+    _msgSetDealerFields(json.dest_name, json.dest_code, 'msg-p2-name', 'msg-p2-code');
+    if (!document.getElementById('msg-p2-name').value && document.getElementById('msg-p1-name').value) msgSameAsBilling();
+    msgSetPartsFromAI(json.parts);
+    if (json.machine) document.getElementById('msg-p5-machine').value = _msgResolveMachineName(json.machine);
+    if (json.person) document.getElementById('msg-p5-person').value = json.person;
+    var rt = json.response_type || '';
+    document.querySelectorAll('input[name=\"msg-type\"]').forEach(function(r) { r.checked = r.value === rt; });
+    if (rt && !document.querySelector('input[name=\"msg-type\"]:checked')) {
+      document.getElementById('msg-t-other').checked = true;
+      document.getElementById('msg-t-other-txt').value = rt;
+    }
+    msgChkOther();
+  } else {
+    if (json.loan_from) document.getElementById('msg-l-from').value = json.loan_from;
+    if (json.machine) document.getElementById('msg-l-machine').value = _msgResolveMachineName(json.machine);
+    if (json.loan_qty) document.getElementById('msg-l-qty').value = json.loan_qty;
+    if (json.approver) document.getElementById('msg-l-approver').value = String(json.approver).replace(/了承済み/g, '').trim();
+    if (json.return_date) document.getElementById('msg-l-return').value = json.return_date;
+    if (json.ship_dest) document.getElementById('msg-l-dest').value = String(json.ship_dest).replace(/分$/, '').trim();
+  }
+  msgUpd();
+}
+
+async function msgVoiceSubmit() {
+  var text = (document.getElementById('msg-voice-text').value || '').trim();
+  if (!text) { msgSetStatus('入力内容が空です', '#B45309'); return; }
+  var btn = document.querySelector('#msg-voice-panel .hk-voice-submit');
+  if (btn) { btn.disabled = true; btn.textContent = '⏳ Gemini解析中...'; }
+  msgSetStatus('Geminiで解析しています...', '#2563EB');
+  try {
+    var json = await hkCallGemini(msgBuildVoicePrompt(text), null, null);
+    msgFillFromAI(json);
+    document.getElementById('msg-voice-text').value = '';
+    msgVoiceAreaClose();
+    msgSetStatus('フォームへ反映しました', 'var(--g)');
+  } catch(e) {
+    msgSetStatus('❌ ' + e.message, '#DC2626');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = '✨ Geminiで解析してフォームに入力'; }
+  }
 }
 
 // --- helpers ---
@@ -2739,7 +2918,7 @@ function msgMakePartCard(id) {
     '<div class="fr">' +
     '<label class="fl">部品コード &amp; 個数</label>' +
     '<div class="msg-row">' +
-    '<input type="text" class="fi msg-part-code" placeholder="0286-01300" autocomplete="off" spellcheck="false" style="flex:1" oninput="msgUpd(); msgPartLookupDebounce(' + id + ',this.value)">' +
+    '<input type="text" class="fi msg-part-code" placeholder="88-4109-5102" autocomplete="off" spellcheck="false" style="flex:1" oninput="msgUpd(); msgPartLookupDebounce(' + id + ',this.value)">' +
     '<input type="number" class="fi msg-part-qty" value="1" min="1" oninput="msgUpd()" style="width:72px;text-align:center;flex:none">' +
     '<span class="msg-unit">個</span>' +
     '</div></div>' +
@@ -3101,6 +3280,7 @@ function _msgSetPartStatus(id, txt) {
 
 // init preview
 msgInitParts();
+msgUpdateVoicePlaceholder();
 msgUpd();
 
 /* ════════════════════════════════════════
