@@ -3107,7 +3107,7 @@ msgUpd();
    引合書 (hikiaisyo)
 ════════════════════════════════════════ */
 /* ─── 引合書 JS ─── */
-const HK_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/hikiaisyo/main/template.xlsx?v=20260630-nodiscount';
+const HK_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/hikiaisyo/main/template.xlsx?v=20260701-nodiscount';
 var HK_PRODUCTS = [["0353-0020","SP753B/M",328000],["0331-0220","AM63AX/M",278000],["0332-0220","AM63BX/M",309000],["0332-0320","AM64B/M",396000],["0333-0220","AM73BX/M",367000],["0333-0320","AM74B/M",468000],["0311-0220","AM81X/M",388000],["0051-0020","AR301/M",217000],["0027-0020","AR400/M",228000],["0036-0220","AR660/M",280000],["0038-0020","AR604/M",327000],["0039-0020","AR704/M",366000],["0040-0020","AR607N/M",291000],["0040-0520","AR707NF/M",369000],["0936-0100","B91RLX",179000],["0253-0320","BM93/M",518000],["0935-0020","BXC800/M",418000],["0935-0120","BXC800/M10",458000],["0935-0220","BXC800X/M",438000],["0935-0320","BXC800X/M10",480000],["0266-0270","FL520X/H",312000],["0250-0110","GH1308X",1460000],["0912-0110","GHK1810X/K",3226000],["0270-0270","GR538AX/H",213000],["0267-0320","GR638X/M",547000],["0269-0270","GRH537AX/H",208000],["0909-0200","H751X",199000],["0903-0100","HM122X",305000],["0344-0120","HR403/M",318000],["0256-0520","HR532SX/M",475000],["0256-0420","HR532X/M",399000],["0285-0520","HR665/M",489000],["0285-0620","HR665/M(ｽﾃﾝﾚｽ仕様）",533000],["0291-0420","HR805/M",619000],["0334-0320","HRC665/M",619000],["0334-0420","HRC665S/M (ｾﾙ仕様）",698000],["0335-0220","HRC805/M",719000],["0226-0120","HRH802/M",533000],["0226-0220","HRH802X/M",614000],["0251-0320","HRT663/M",615000],["0260-0520","HRT802X/M10",575000],["0940-0070","ZHR800/H",1390000],["0357-0020","KU350/M",316000],["0928-0000","MX50A-S80/BT2",250000],["0316-0180","RM831GX/B",660000],["0310-0280","RM831X/B",719000],["0316-0280","RM832G/B",750000],["0310-0380","RM832/B",800000],["0341-0210","RM883X/K",854000],["0343-0210","RM953X/K",909000],["0347-0210","RM983FX/K",1290000],["0342-0410","RM983X/K",998000],["0342-0510","RM983X/K ﾀｰﾌﾀｲﾔ",1020000],["0352-0110","RM984X/K",1110000],["0349-0210","RMK151X/K",1297000],["0356-0110","RMK180X/K",1598000],["0361-0010","RMT110/K",1177000],["0031-0220","SF601/M",227000],["0032-0120","SF601D/M",264000],["0046-0120","SF601V/M",198000],["0052-0120","SF701/M",208000],["0265-0220","SH51X/M",197000],["0930-0220","SJ600X/M",4446000],["0930-0320","SJ600X-33/M",4481000],["0931-0220","SJ800X/M",4561000],["0931-0320","SJ800X-33/M",4620000],["0951-0020","SJ800A/M",5104000],["0306-0020","SP301A/M",185000],["0326-0220","SP431F/M",263000],["0353-0260","SP853A/Y",308000],["0359-0020","WM634/M",228000],["0321-0220","WM646F/M",279000],["0317-0320","WM746F/M",299000],["0328-0120","WM757P/M",349000],["0358-0020","WMC747P/M",399000],["0315-0320","WMC1317F/M",439000],["0343-80000","剪定枝ﾌｫｰｸｾｯﾄ",96800],["0347-80300","剪定枝ﾌｫｰｸｾｯﾄ　4WD",88000],["0312-89000","牽引式ｽｲｰﾊﾟｰﾋｯﾁｾｯﾄ",167000],["0342-90000","HS100",350000],["0371-0160","RCSP530A/Y",1320000],["0354-0020","HRS815/M",999000],["0342-81000","SW700",279000],["0929-0220","SGW804/M",261000],["0929-0320","SGW804S/M",294000],["0342-86000","落葉収集ﾚｰｷｾｯﾄ",44000],["0934-0020","BX800/M",484000],["0941-0000","MP750",385000],["0372-0080","RCHR800",3000000],["0365-0020","HR403",318000],["0317-0420","WM746AF/M",309000],["0328-0220","WM757AP/M",359000],["0374-0060","RCSP540/Y",1480000],["0321-0320","WM646AF/M",299000],["0358-0120","WMC747AP/M",409000],["0315-0420","WMC1327F/M",449000],["0372-0180","RCHR800A",3200000],["0354-0120","HRS815A/M",1098000],["0940-0170","ZHR800A/M",1550000],["0310-0480","RM832A",800000],["0333-0420","AM75B/M",468000],["0332-0420","AM65B/M",396000],["0365-0020","HR403",318000],["0317-0420","WM746AF",309000],["0328-0220","WM757AP",359000],["0365-0020","HR403",318000],["0317-0420","WM746AF",309000],["0328-0220","WM757AP",359000],["0353-71210","変速ワイヤー",null],["0353-2051H","刈高さ調整フレーム",null],["0353-01800","変速ｱｰﾑ",null],["9001-0360","GEH802",77000],["9016-0620","GB300PN-406",null],["0208-09910","防振ｺﾞﾑ",null],["88-A021-005400","ﾀﾞｲﾔﾌﾗﾑｷｬﾌﾞﾚﾀｰ",null],["88-14075-0707","ｷｬｯﾌﾟｱｯｼ",null]]; /* [品番コード,品番名,価格] 商品コードシート1-150行 116件 */
 
 const HK_GEMINI_LS = 'hk_gemini_api_key';
@@ -4063,7 +4063,7 @@ function hkFillFromAI(json) {
 
 /* ── 音声・テキスト入力パネル ── */
 function hkBuildTextPrompt(text) {
-  var today = new Date().toISOString().slice(0,10);
+  var today = _hkTodayYmd();
   var d1 = _hkAddBizDays(today, 1);
   var d2 = _hkAddBizDays(today, 2);
   return '今日は' + today + '、明日は' + d1 + '、明後日は' + d2 + 'です。\n\n' +
@@ -4164,7 +4164,7 @@ function hkPhotoReadFile(file) {
     try {
       var b64 = e.target.result.split(',')[1];
       var mime = file.type || 'image/jpeg';
-      var _today = new Date().toISOString().slice(0,10);
+      var _today = _hkTodayYmd();
       var prompt = '以下の注文書・引合書の画像から情報を抽出してください。JSONのみ返してください（説明不要）。\n' +
         '今日=' + _today + '。日付はYYYY-MM-DDに変換。\n\n' +
         '特別ルール:\n' +
@@ -4191,7 +4191,7 @@ function hkPhotoReadFile(file) {
         '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
       var json = await hkCallGemini(prompt, b64, mime);
       if (json.qty == null) json.qty = 1;
-      if (!json.order_date) json.order_date = new Date().toISOString().slice(0,10);
+      if (!json.order_date) json.order_date = _hkTodayYmd();
       hkFillFromAI(json);
       hkSetStatus('✅ 写真から情報を読み取りました', 'var(--g)');
     } catch(ex) { hkSetStatus('❌ ' + ex.message, '#CC0000'); }
@@ -4208,6 +4208,10 @@ function hkPhotoReadFile(file) {
    A18=備考 / I11-I14=オーダーNo。22行目以降・印刷設定・C4/C6/B11は触らない。 */
 function _hkXmlEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function _hkDateSerial(ymd){ var p=String(ymd).split('-'); return Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(1899,11,30))/86400000); }
+function _hkPad2(n){ return String(n).padStart(2, '0'); }
+function _hkTodayYmd(){ var d = new Date(); return d.getFullYear() + '-' + _hkPad2(d.getMonth() + 1) + '-' + _hkPad2(d.getDate()); }
+function _hkTodayMmdd(){ var d = new Date(); return _hkPad2(d.getMonth() + 1) + _hkPad2(d.getDate()); }
+function _hkFilePart(s){ return String(s || '').trim().replace(/[\\/:*?"<>|]/g, '').replace(/\s+/g, ' ').slice(0, 32); }
 function hkNormalizeWarehouse(value) {
   var s = String(value || '').trim();
   if (!s) return '';
@@ -4263,13 +4267,13 @@ async function hkExport() {
     // 作成タイプに合わせた引合書シートのXMLパスを特定
     var wbXml = await zip.file('xl/workbook.xml').async('string');
     var wbRels = await zip.file('xl/_rels/workbook.xml.rels').async('string');
-    var rid = null, sheetTag = null, tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
+    var rid = null, sheetTag = null, sheetIndex = 0, tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
     for (var i = 0; i < tags.length; i++) {
       var normalizedTag = tags[i].replace('＋', '+').replace(/\s+/g, '').replace(/[()（）]/g, '');
       var isDiscountSheet = normalizedTag.indexOf('name="引合書+値引"') >= 0;
       var isNoDiscountSheet = normalizedTag.indexOf('引合書') >= 0 && (normalizedTag.indexOf('値引きなし') >= 0 || normalizedTag.indexOf('値引なし') >= 0);
       if ((isNoDiscount && isNoDiscountSheet) || (!isNoDiscount && isDiscountSheet)) {
-        var mm = tags[i].match(/r:id="(rId\d+)"/); if (mm) { rid = mm[1]; sheetTag = tags[i]; } break;
+        var mm = tags[i].match(/r:id="(rId\d+)"/); if (mm) { rid = mm[1]; sheetTag = tags[i]; sheetIndex = i; } break;
       }
     }
     if (!rid) throw new Error(isNoDiscount ? '引合書（値引きなし）シートが見つかりません' : '引合書+値引 シートが見つかりません');
@@ -4281,6 +4285,26 @@ async function hkExport() {
     if (!tm) throw new Error('シート参照の解決に失敗');
     var sheetPath = 'xl/' + tm[1].replace(/^\/?xl\//, '').replace(/^\//, '');
     var sx = await zip.file(sheetPath).async('string');
+    function setWbViewAttr(attrs, name, value) {
+      var re = new RegExp('\\s' + name + '="[^"]*"');
+      attrs = attrs.replace(re, '');
+      return attrs + ' ' + name + '="' + value + '"';
+    }
+    wbXml = wbXml.replace(/<workbookView\b([^>]*?)\/>/, function(m, attrs) {
+      attrs = setWbViewAttr(attrs, 'activeTab', sheetIndex);
+      attrs = setWbViewAttr(attrs, 'firstSheet', sheetIndex);
+      return '<workbookView' + attrs + '/>';
+    });
+    var worksheetFiles = zip.file(/^xl\/worksheets\/sheet\d+\.xml$/) || [];
+    for (var wf = 0; wf < worksheetFiles.length; wf++) {
+      if (worksheetFiles[wf].name === sheetPath) continue;
+      var wx = await worksheetFiles[wf].async('string');
+      if (wx.indexOf('tabSelected="1"') >= 0) {
+        zip.file(worksheetFiles[wf].name, wx.replace(/\stabSelected="1"/g, ''));
+      }
+    }
+    sx = sx.replace(/\stabSelected="1"/g, '');
+    sx = sx.replace(/<sheetView\b([^>]*)>/, '<sheetView$1 tabSelected="1">');
 
     // 共有文字列テーブル（元テンプレは文字列を全て t="s" で持つ。inlineStrは混ぜない＝Excel修復回避）
     var ssXml = await zip.file('xl/sharedStrings.xml').async('string');
@@ -4303,7 +4327,7 @@ async function hkExport() {
     if (destCode) { setCode('A6', destCode); }
     else { clearCell('A6'); if (destName) setStr('C6', destName); }
     // 受注日 I4 / 出荷希望日 I6（日付シリアル・既存の日付書式で表示）
-    setNum('I4', _hkDateSerial(orderDate || new Date().toISOString().slice(0, 10)));
+    setNum('I4', _hkDateSerial(orderDate || _hkTodayYmd()));
     if (shipDate) setNum('I6', _hkDateSerial(shipDate)); else clearCell('I6');
     // 生産日 H5（文字列書式）: 日付 or 在庫
     setStr('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
@@ -4365,9 +4389,9 @@ async function hkExport() {
     }
 
     // ダウンロード（印刷設定・罫線・図形・ハンコはテンプレのまま完全保持）
-    var today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    var custName = (document.getElementById('hk-cust-name').value || '').trim().slice(0, 20);
-    var fileName = '引合書_' + today + (custName ? '_' + custName : '') + (isNoDiscount ? '_値引なし' : '') + '.xlsx';
+    var fileDate = _hkTodayMmdd();
+    var fileDestName = _hkFilePart(destName || custName);
+    var fileName = '引合書_' + fileDate + (fileDestName ? '_' + fileDestName : '') + '.xlsx';
     var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(out);
@@ -4390,7 +4414,7 @@ function hkReset() {
     var el = document.getElementById(id); if (el) el.value = '';
   });
   hkInitProds();
-  document.getElementById('hk-order-date').value = new Date().toISOString().slice(0,10);
+  document.getElementById('hk-order-date').value = _hkTodayYmd();
   var mode = document.querySelector('input[name="hk-mode"][value="discount"]'); if (mode) mode.checked = true;
   var wh = document.querySelector('input[name="hk-wh"][value="031"]'); if (wh) wh.checked = true;
   document.getElementById('hk-ai-status').classList.remove('visible');
@@ -4401,7 +4425,7 @@ function hkReset() {
 (function() {
   hkInitProds();
   var el = document.getElementById('hk-order-date');
-  if (el && !el.value) el.value = new Date().toISOString().slice(0,10);
+  if (el && !el.value) el.value = _hkTodayYmd();
 })();
 
 /* ==============================
