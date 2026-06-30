@@ -491,7 +491,8 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 @media (max-width:520px){.hk-voice-input-row{grid-template-columns:1fr}}
 /* 写真選択 */
 .hk-photo-group{display:flex;gap:8px}
-.hk-drop-zone{flex:1;padding:12px 8px;background:#DC2626;color:#fff;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;user-select:none;border:2px dashed transparent;transition:background .2s;white-space:nowrap;box-sizing:border-box}
+.hk-drop-zone{flex:1;padding:12px 8px;background:#DC2626;color:#fff;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;user-select:none;border:2px dashed transparent;transition:background .2s;white-space:normal;text-align:center;line-height:1.35;box-sizing:border-box}
+.hk-drop-zone small{font-size:10px;font-weight:600;opacity:.9}
 .hk-drop-zone.drag-over{background:#B91C1C;border-color:#fff}
 .hk-drop-zone input{display:none}
 .hk-ai-status{margin:8px 8px 0;padding:10px 12px;background:#EEF2FF;border-radius:8px;font-size:12px;color:#2563EB;display:none;line-height:1.5;white-space:pre-wrap}
@@ -1242,7 +1243,8 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="hk-drop-zone" id="hk-drop-zone"
            ondragover="hkDragOver(event)" ondragleave="hkDragLeave(event)" ondrop="hkDrop(event)"
            onclick="document.getElementById('hk-photo-input').click()">
-        📁 写真を選択
+        <span>📁 写真を選択</span>
+        <small>ドロップ / Ctrl+V貼り付けも可</small>
         <input type="file" accept="image/*" id="hk-photo-input" onchange="hkPhotoRead(this)">
       </div>
     </div>
@@ -1274,7 +1276,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <div class="hk-code-row">
             <div class="fr hk-ac-wrap">
               <label class="fl">得意先名</label>
-              <input type="text" class="fi" id="hk-cust-name" placeholder="良栄社" autocomplete="off"
+              <input type="text" class="fi" id="hk-cust-name" placeholder="クボタ千葉" autocomplete="off"
                      oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
                      onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
                      onblur="hkAcBlur('hk-cust-list'); hkAcAutofill('hk-cust-name','hk-cust-code')">
@@ -1347,8 +1349,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">倉庫</div>
       <div class="hk-radio-row">
-        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011" checked> 011（デフォルト）</label>
-        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031"> 031</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031" checked> 031（基本）</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011"> 011</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="200"> 200（関東営業所倉庫・箱入り）</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="2001"> 2001（関東営業所実演機倉庫）</label>
       </div>
     </div>
 
@@ -1394,9 +1398,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
   <div class="hk-ai-bar">
     <button class="hk-voice-btn" id="est-voice-btn" onclick="estVoiceToggle()">🎤 音声・テキスト入力</button>
     <div class="hk-photo-group">
-      <div class="hk-drop-zone" ondragover="event.preventDefault()" ondrop="estDrop(event)"
+      <div class="hk-drop-zone" id="est-drop-zone" ondragover="estDragOver(event)" ondragleave="estDragLeave(event)" ondrop="estDrop(event)"
            onclick="document.getElementById('est-photo-input').click()">
-        📁 写真を選択
+        <span>📁 写真を選択</span>
+        <small>ドロップ / Ctrl+V貼り付けも可</small>
         <input type="file" accept="image/*" id="est-photo-input" onchange="estPhotoRead(this)">
       </div>
     </div>
@@ -3957,7 +3962,8 @@ function hkFillFromAI(json) {
     }
     if (json.ship_date) document.getElementById('hk-ship-date').value = json.ship_date;
     if (json.warehouse) {
-      var wh = document.querySelector('input[name="hk-wh"][value="' + json.warehouse + '"]');
+      var warehouseCode = hkNormalizeWarehouse(json.warehouse);
+      var wh = document.querySelector('input[name="hk-wh"][value="' + warehouseCode + '"]');
       if (wh) wh.checked = true;
     }
     // 納入先：dest_codeが直接来た場合は優先。nullまたは未指定なら得意先と同じ
@@ -4010,14 +4016,14 @@ function hkBuildTextPrompt(text) {
     '- 出荷希望日未指定→null\n- 納入先未指定→null（得意先と同じに自動設定）\n' +
     '- 値引名は「展示機値引」「推進値引」「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「展示会値引」から近いものを選択\n' +
     '- 商品が複数ある場合は products 配列へ入れる\n' +
-    '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」が出荷元→"031" / 「福岡倉庫」「本社」→"011" / 未指定→"011"\n' +
+    '- 倉庫: 未指定または「関東」だけ→"031"。 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「関東営業所倉庫」「箱入り」→"200" / 「関東営業所実演機倉庫」「実演機」「展示機」→"2001"\n' +
     '- prod_name は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない\n' +
     '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない\n\nテキスト:「' + text + '」\n\n' +
     '{\n  "cust_name": "得意先名またはnull",\n  "dest_name": "納入先名またはnull",\n' +
     '  "products": [{"prod_code": "数字ハイフンの商品コードまたはnull", "prod_name": "英数字スラッシュの型式またはnull", "qty": 数量, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
     '  "prod_code": "数字ハイフンの商品コードまたはnull",\n  "prod_name": "英数字スラッシュの型式またはnull",\n  "qty": 数量,\n  "order_no": "注文番号またはnull",\n' +
     '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
-    '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
+    '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031または200または2001",\n' +
     '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
 }
 
@@ -4052,7 +4058,26 @@ async function hkVoiceSubmit() {
   } catch(ex) { hkSetStatus('❌ ' + ex.message, '#CC0000'); }
 }
 
-/* ── 写真ドラッグ&ドロップ ── */
+/* ── 写真ドラッグ&ドロップ / クリップボード貼り付け ── */
+function hkGetImageFileFromDrop(e) {
+  var files = e.dataTransfer && e.dataTransfer.files;
+  if (!files) return null;
+  for (var i = 0; i < files.length; i++) {
+    if (files[i] && files[i].type && files[i].type.startsWith('image/')) return files[i];
+  }
+  return null;
+}
+
+function hkGetImageFileFromClipboard(e) {
+  var items = e.clipboardData && e.clipboardData.items;
+  if (!items) return null;
+  for (var i = 0; i < items.length; i++) {
+    var item = items[i];
+    if (item && item.kind === 'file' && item.type && item.type.startsWith('image/')) return item.getAsFile();
+  }
+  return null;
+}
+
 function hkDragOver(e) {
   e.preventDefault();
   document.getElementById('hk-drop-zone').classList.add('drag-over');
@@ -4063,8 +4088,9 @@ function hkDragLeave(e) {
 function hkDrop(e) {
   e.preventDefault();
   document.getElementById('hk-drop-zone').classList.remove('drag-over');
-  var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) hkPhotoReadFile(file);
+  var file = hkGetImageFileFromDrop(e);
+  if (file) hkPhotoReadFile(file);
+  else hkSetStatus('❌ 画像ファイルをドロップしてください', '#CC0000');
 }
 
 /* ── 写真読み取り ── */
@@ -4075,6 +4101,7 @@ function hkPhotoRead(input) {
 }
 
 function hkPhotoReadFile(file) {
+  if (!file || !file.type || !file.type.startsWith('image/')) { hkSetStatus('❌ 画像ファイルを選択してください', '#CC0000'); return; }
   hkSetStatus('📷 写真を読み取り中...', '#DC2626');
   var reader = new FileReader();
   reader.onload = async function(e) {
@@ -4094,7 +4121,7 @@ function hkPhotoReadFile(file) {
         '- 「オーレック」「関東営業所」「谷尾」等のオーレック社内宛先は得意先・納入先にしない。得意先・納入先は発注元/販売店/宛先の実在名称だけ\n' +
         '- prod_name は型式だけ。英数字と / のみ（例: RM832A, RCHR800A, RM832/B）。「ラビットモア」「草刈機」など一般名は入れない\n' +
         '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260, 0245-0000）。RM832A等の型式を商品コードに入れない\n' +
-        '- 倉庫: 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「033」→"031"\n' +
+        '- 倉庫: 未指定または「関東」だけ→"031"。 「オーレック関物」「関東物流」「関物」「関東物」→"031" / 「福岡倉庫」「本社」→"011" / 「033」→"031" / 「関東営業所倉庫」「箱入り」→"200" / 「関東営業所実演機倉庫」「実演機」「展示機」→"2001"\n' +
         '- 出荷日・生産日は備考・注記欄から読む（例: "6/29(月)出荷"→ship_date）\n' +
         '- 商品が複数ある場合は products 配列へ入れる\n' +
         '- 値引名は「実演機値引」「実演機対応値引」「展示機値引」「不需要期値引」「早期確注値引」「台数値引」「推進値引」「展示会値引」から近いものを選択\n' +
@@ -4104,7 +4131,7 @@ function hkPhotoReadFile(file) {
         '  "products": [{"prod_code": "数字ハイフンの商品コードまたはnull", "prod_name": "英数字スラッシュの型式またはnull", "qty": 数量またはnull, "order_no": "注文番号またはnull", "disc_name": "値引名またはnull", "disc_rate": 値引率またはnull}],\n' +
         '  "prod_code": "数字ハイフンの商品コードまたはnull",\n  "prod_name": "英数字スラッシュの型式またはnull",\n  "qty": 数量またはnull,\n  "order_no": "注文番号またはnull",\n' +
         '  "order_date": "YYYY-MM-DD",\n  "prod_date": "YYYY-MM-DDまたはnull",\n' +
-        '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031",\n' +
+        '  "ship_date": "YYYY-MM-DDまたはnull",\n  "warehouse": "011または031または200または2001",\n' +
         '  "disc_name": "値引名またはnull",\n  "disc_rate": 値引率またはnull,\n  "remarks": "備考またはnull"\n}';
       var json = await hkCallGemini(prompt, b64, mime);
       if (json.qty == null) json.qty = 1;
@@ -4125,6 +4152,17 @@ function hkPhotoReadFile(file) {
    A18=備考 / I11-I14=オーダーNo。22行目以降・印刷設定・C4/C6/B11は触らない。 */
 function _hkXmlEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function _hkDateSerial(ymd){ var p=String(ymd).split('-'); return Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(1899,11,30))/86400000); }
+function hkNormalizeWarehouse(value) {
+  var s = String(value || '').trim();
+  if (!s) return '';
+  if (s === '033') return '031';
+  if (s === '011' || s === '031' || s === '200' || s === '2001') return s;
+  if (/2001|関東営業所実演機倉庫|実演|展示/.test(s)) return '2001';
+  if (/200|関東営業所倉庫|箱/.test(s)) return '200';
+  if (/福岡|本社/.test(s)) return '011';
+  if (/関東|関物|関東物流|関東物|オーレック関物/.test(s)) return '031';
+  return '';
+}
 
 async function hkExport() {
   var btn = document.getElementById('hk-export-btn');
@@ -4287,7 +4325,7 @@ function hkReset() {
   });
   hkInitProds();
   document.getElementById('hk-order-date').value = new Date().toISOString().slice(0,10);
-  var wh = document.querySelector('input[name="hk-wh"][value="011"]'); if (wh) wh.checked = true;
+  var wh = document.querySelector('input[name="hk-wh"][value="031"]'); if (wh) wh.checked = true;
   document.getElementById('hk-ai-status').classList.remove('visible');
 }
 
@@ -4482,10 +4520,24 @@ async function estVoiceSubmit() {
   } catch(e) { estSetStatus('❌ ' + e.message, '#DC2626'); }
 }
 
+function estDragOver(e) {
+  e.preventDefault();
+  var zone = document.getElementById('est-drop-zone');
+  if (zone) zone.classList.add('drag-over');
+}
+
+function estDragLeave(e) {
+  var zone = document.getElementById('est-drop-zone');
+  if (zone) zone.classList.remove('drag-over');
+}
+
 function estDrop(e) {
   e.preventDefault();
-  var file = e.dataTransfer.files[0];
+  var zone = document.getElementById('est-drop-zone');
+  if (zone) zone.classList.remove('drag-over');
+  var file = hkGetImageFileFromDrop(e);
   if (file) estPhotoReadFile(file);
+  else estSetStatus('画像ファイルをドロップしてください', '#DC2626');
 }
 
 function estPhotoRead(input) {
@@ -4515,6 +4567,22 @@ function estPhotoReadFile(file) {
   };
   reader.readAsDataURL(file);
 }
+
+document.addEventListener('paste', function(e) {
+  var file = hkGetImageFileFromClipboard(e);
+  if (!file) return;
+  var active = document.querySelector('.screen.active');
+  if (!active) return;
+  if (active.id === 's-hikiai') {
+    e.preventDefault();
+    hkSetStatus('📋 クリップボード画像を読み取り中...', '#DC2626');
+    hkPhotoReadFile(file);
+  } else if (active.id === 's-est') {
+    e.preventDefault();
+    estSetStatus('📋 クリップボード画像を読み取り中...', '#2563EB');
+    estPhotoReadFile(file);
+  }
+});
 
 // ─── 製品カード管理 ───────────────────────────────────────────────
 var _estProdNextId = 0;
