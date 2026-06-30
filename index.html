@@ -467,6 +467,7 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-radio-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .hk-radio-label{display:flex;align-items:center;gap:5px;padding:8px 14px;background:var(--g2);border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;border:2px solid transparent;user-select:none}
 .hk-radio-label:has(input:checked){background:var(--gl);border-color:var(--g);color:var(--g)}
+.hk-no-discount .hk-disc-field{display:none!important}
 .hk-same-btn{background:none;border:1.5px solid var(--g);color:var(--g);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer;margin-top:6px;font-family:'Noto Sans JP',sans-serif}
 .hk-export-btn{width:100%;padding:15px;background:var(--g);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-top:4px}
 .hk-export-btn:active{background:var(--gd)}
@@ -1280,6 +1281,14 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
   <div class="hk-ai-status" id="hk-ai-status"></div>
 
   <div class="fa" id="hk-scroll">
+    <!-- 作成タイプ -->
+    <div class="fc">
+      <div class="sec-label">作成タイプ</div>
+      <div class="hk-radio-row">
+        <label class="hk-radio-label"><input type="radio" name="hk-mode" value="discount" checked onchange="hkUpdateInquiryMode()"> 値引きバージョン</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-mode" value="no_discount" onchange="hkUpdateInquiryMode()"> 値引きなしバージョン</label>
+      </div>
+    </div>
 
     <!-- 得意先・納入先 -->
     <div class="fc">
@@ -3098,7 +3107,7 @@ msgUpd();
    引合書 (hikiaisyo)
 ════════════════════════════════════════ */
 /* ─── 引合書 JS ─── */
-const HK_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/hikiaisyo/main/template.xlsx';
+const HK_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/hikiaisyo/main/template.xlsx?v=20260630-nodiscount';
 var HK_PRODUCTS = [["0353-0020","SP753B/M",328000],["0331-0220","AM63AX/M",278000],["0332-0220","AM63BX/M",309000],["0332-0320","AM64B/M",396000],["0333-0220","AM73BX/M",367000],["0333-0320","AM74B/M",468000],["0311-0220","AM81X/M",388000],["0051-0020","AR301/M",217000],["0027-0020","AR400/M",228000],["0036-0220","AR660/M",280000],["0038-0020","AR604/M",327000],["0039-0020","AR704/M",366000],["0040-0020","AR607N/M",291000],["0040-0520","AR707NF/M",369000],["0936-0100","B91RLX",179000],["0253-0320","BM93/M",518000],["0935-0020","BXC800/M",418000],["0935-0120","BXC800/M10",458000],["0935-0220","BXC800X/M",438000],["0935-0320","BXC800X/M10",480000],["0266-0270","FL520X/H",312000],["0250-0110","GH1308X",1460000],["0912-0110","GHK1810X/K",3226000],["0270-0270","GR538AX/H",213000],["0267-0320","GR638X/M",547000],["0269-0270","GRH537AX/H",208000],["0909-0200","H751X",199000],["0903-0100","HM122X",305000],["0344-0120","HR403/M",318000],["0256-0520","HR532SX/M",475000],["0256-0420","HR532X/M",399000],["0285-0520","HR665/M",489000],["0285-0620","HR665/M(ｽﾃﾝﾚｽ仕様）",533000],["0291-0420","HR805/M",619000],["0334-0320","HRC665/M",619000],["0334-0420","HRC665S/M (ｾﾙ仕様）",698000],["0335-0220","HRC805/M",719000],["0226-0120","HRH802/M",533000],["0226-0220","HRH802X/M",614000],["0251-0320","HRT663/M",615000],["0260-0520","HRT802X/M10",575000],["0940-0070","ZHR800/H",1390000],["0357-0020","KU350/M",316000],["0928-0000","MX50A-S80/BT2",250000],["0316-0180","RM831GX/B",660000],["0310-0280","RM831X/B",719000],["0316-0280","RM832G/B",750000],["0310-0380","RM832/B",800000],["0341-0210","RM883X/K",854000],["0343-0210","RM953X/K",909000],["0347-0210","RM983FX/K",1290000],["0342-0410","RM983X/K",998000],["0342-0510","RM983X/K ﾀｰﾌﾀｲﾔ",1020000],["0352-0110","RM984X/K",1110000],["0349-0210","RMK151X/K",1297000],["0356-0110","RMK180X/K",1598000],["0361-0010","RMT110/K",1177000],["0031-0220","SF601/M",227000],["0032-0120","SF601D/M",264000],["0046-0120","SF601V/M",198000],["0052-0120","SF701/M",208000],["0265-0220","SH51X/M",197000],["0930-0220","SJ600X/M",4446000],["0930-0320","SJ600X-33/M",4481000],["0931-0220","SJ800X/M",4561000],["0931-0320","SJ800X-33/M",4620000],["0951-0020","SJ800A/M",5104000],["0306-0020","SP301A/M",185000],["0326-0220","SP431F/M",263000],["0353-0260","SP853A/Y",308000],["0359-0020","WM634/M",228000],["0321-0220","WM646F/M",279000],["0317-0320","WM746F/M",299000],["0328-0120","WM757P/M",349000],["0358-0020","WMC747P/M",399000],["0315-0320","WMC1317F/M",439000],["0343-80000","剪定枝ﾌｫｰｸｾｯﾄ",96800],["0347-80300","剪定枝ﾌｫｰｸｾｯﾄ　4WD",88000],["0312-89000","牽引式ｽｲｰﾊﾟｰﾋｯﾁｾｯﾄ",167000],["0342-90000","HS100",350000],["0371-0160","RCSP530A/Y",1320000],["0354-0020","HRS815/M",999000],["0342-81000","SW700",279000],["0929-0220","SGW804/M",261000],["0929-0320","SGW804S/M",294000],["0342-86000","落葉収集ﾚｰｷｾｯﾄ",44000],["0934-0020","BX800/M",484000],["0941-0000","MP750",385000],["0372-0080","RCHR800",3000000],["0365-0020","HR403",318000],["0317-0420","WM746AF/M",309000],["0328-0220","WM757AP/M",359000],["0374-0060","RCSP540/Y",1480000],["0321-0320","WM646AF/M",299000],["0358-0120","WMC747AP/M",409000],["0315-0420","WMC1327F/M",449000],["0372-0180","RCHR800A",3200000],["0354-0120","HRS815A/M",1098000],["0940-0170","ZHR800A/M",1550000],["0310-0480","RM832A",800000],["0333-0420","AM75B/M",468000],["0332-0420","AM65B/M",396000],["0365-0020","HR403",318000],["0317-0420","WM746AF",309000],["0328-0220","WM757AP",359000],["0365-0020","HR403",318000],["0317-0420","WM746AF",309000],["0328-0220","WM757AP",359000],["0353-71210","変速ワイヤー",null],["0353-2051H","刈高さ調整フレーム",null],["0353-01800","変速ｱｰﾑ",null],["9001-0360","GEH802",77000],["9016-0620","GB300PN-406",null],["0208-09910","防振ｺﾞﾑ",null],["88-A021-005400","ﾀﾞｲﾔﾌﾗﾑｷｬﾌﾞﾚﾀｰ",null],["88-14075-0707","ｷｬｯﾌﾟｱｯｼ",null]]; /* [品番コード,品番名,価格] 商品コードシート1-150行 116件 */
 
 const HK_GEMINI_LS = 'hk_gemini_api_key';
@@ -3808,6 +3817,19 @@ function hkSelectDiscountName(sel, name) {
   }
 }
 
+function hkGetInquiryMode() {
+  var checked = document.querySelector('input[name="hk-mode"]:checked');
+  return checked ? checked.value : 'discount';
+}
+
+function hkUpdateInquiryMode() {
+  var isNoDiscount = hkGetInquiryMode() === 'no_discount';
+  var screen = document.getElementById('s-hikiai');
+  if (screen) screen.classList.toggle('hk-no-discount', isNoDiscount);
+  var btn = document.getElementById('hk-export-btn');
+  if (btn && !btn.disabled) btn.textContent = isNoDiscount ? '📊 引合書（値引なし）Excel を出力' : '📊 引合書 Excel を出力';
+}
+
 function hkMakeProdCard(id) {
   return '<div class="hk-prod-card" data-pid="' + id + '">' +
     '<div class="hk-prod-head"><span class="hk-prod-num">商品 1</span>' +
@@ -3824,11 +3846,11 @@ function hkMakeProdCard(id) {
     '<input type="number" class="fi hk-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
     '<div class="fr hk-mini-field"><label class="fl">注文番号</label>' +
     '<input type="text" class="fi hk-pr-order-no" placeholder=""></div>' +
-    '<div class="fr hk-mini-field"><label class="fl">値引率</label>' +
+    '<div class="fr hk-mini-field hk-disc-field"><label class="fl">値引率</label>' +
     '<div style="display:flex;align-items:center;gap:6px">' +
     '<input type="number" class="fi hk-pr-disc-rate" placeholder="0" min="0" max="100" step="0.1" inputmode="decimal">' +
     '<span style="font-size:13px;color:var(--tm)">%</span></div></div></div>' +
-    '<div class="fr" style="margin-bottom:0"><label class="fl">値引名</label>' +
+    '<div class="fr hk-disc-field" style="margin-bottom:0"><label class="fl">値引名</label>' +
     '<select class="fi hk-pr-disc-name">' + hkDiscountOptionsHtml() + '</select></div>' +
     '</div>';
 }
@@ -3849,6 +3871,7 @@ function hkAddProd() {
   tmp.innerHTML = hkMakeProdCard(id);
   list.appendChild(tmp.firstElementChild);
   hkUpdateProdNums();
+  hkUpdateInquiryMode();
 }
 
 function hkRemoveProd(id) {
@@ -4181,7 +4204,7 @@ function hkPhotoReadFile(file) {
    テンプレートをZIPとして開き、指定セルの値だけを直接上書きする。
    計算(VLOOKUP/値引)は数式のまま温存。C4/C6/B11等は触らず、Excelで開くと自動計算される。
    入力ルール: A4=得意先番号 / A6=納入先番号 / I4=受注日 / I6=出荷希望日 / H5=生産日 /
-   A11-A14=商品コード / E11-E14=数量 / B17=倉庫 / L7=値引名 / N8=値引率 /
+   A11-A14=商品コード / E11-E14=数量 / B17=倉庫 / 値引ありのみ L7=値引名 / N8=値引率 /
    A18=備考 / I11-I14=オーダーNo。22行目以降・印刷設定・C4/C6/B11は触らない。 */
 function _hkXmlEsc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function _hkDateSerial(ymd){ var p=String(ymd).split('-'); return Math.round((Date.UTC(+p[0],+p[1]-1,+p[2])-Date.UTC(1899,11,30))/86400000); }
@@ -4219,13 +4242,15 @@ async function hkExport() {
     var wh = document.querySelector('input[name="hk-wh"]:checked');
     var warehouse = wh ? wh.value : '';
     var products = hkGetProducts();
+    var inquiryMode = hkGetInquiryMode();
+    var isNoDiscount = inquiryMode === 'no_discount';
     if (!custCode) throw new Error('得意先コードが必要です。得意先候補を選択して、右横のコードが入っているか確認してください。');
     if (!products.length) throw new Error('商品を1件以上入力してください');
     var missingCode = products.find(function(p) { return !p.pCode; });
     if (missingCode) throw new Error('商品コードが必要です。商品名の候補を選択して、右横の商品コードが入っているか確認してください。');
     var discProduct = products.find(function(p){ return p.discName || (!isNaN(p.discRate) && p.discRate > 0); }) || products[0];
-    var discName = (discProduct.discName || '').trim();
-    var discRate = discProduct.discRate;
+    var discName = isNoDiscount ? '' : (discProduct.discName || '').trim();
+    var discRate = isNoDiscount ? NaN : discProduct.discRate;
     var remarks = (document.getElementById('hk-remarks').value || '').trim();
 
     // テンプレ取得（ZIPとして開く。SheetJSは使わない）
@@ -4235,16 +4260,22 @@ async function hkExport() {
     var buf = await resp.arrayBuffer();
     var zip = await JSZip.loadAsync(buf);
 
-    // 「引合書+値引」シートのXMLパスを特定
+    // 作成タイプに合わせた引合書シートのXMLパスを特定
     var wbXml = await zip.file('xl/workbook.xml').async('string');
     var wbRels = await zip.file('xl/_rels/workbook.xml.rels').async('string');
-    var rid = null, tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
+    var rid = null, sheetTag = null, tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
     for (var i = 0; i < tags.length; i++) {
-      if (tags[i].replace('＋', '+').indexOf('name="引合書+値引"') >= 0) {
-        var mm = tags[i].match(/r:id="(rId\d+)"/); if (mm) rid = mm[1]; break;
+      var normalizedTag = tags[i].replace('＋', '+').replace(/\s+/g, '').replace(/[()（）]/g, '');
+      var isDiscountSheet = normalizedTag.indexOf('name="引合書+値引"') >= 0;
+      var isNoDiscountSheet = normalizedTag.indexOf('引合書') >= 0 && (normalizedTag.indexOf('値引きなし') >= 0 || normalizedTag.indexOf('値引なし') >= 0);
+      if ((isNoDiscount && isNoDiscountSheet) || (!isNoDiscount && isDiscountSheet)) {
+        var mm = tags[i].match(/r:id="(rId\d+)"/); if (mm) { rid = mm[1]; sheetTag = tags[i]; } break;
       }
     }
-    if (!rid) throw new Error('引合書+値引 シートが見つかりません');
+    if (!rid) throw new Error(isNoDiscount ? '引合書（値引きなし）シートが見つかりません' : '引合書+値引 シートが見つかりません');
+    if (sheetTag && /state="hidden"/.test(sheetTag)) {
+      wbXml = wbXml.replace(sheetTag, sheetTag.replace(/\sstate="hidden"/, ''));
+    }
     var tm = wbRels.match(new RegExp('Id="' + rid + '"[^>]*Target="([^"]+)"'))
           || wbRels.match(new RegExp('Target="([^"]+)"[^>]*Id="' + rid + '"'));
     if (!tm) throw new Error('シート参照の解決に失敗');
@@ -4278,9 +4309,11 @@ async function hkExport() {
     setStr('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
     // 倉庫 B17（文字列）
     if (warehouse) setStr('B17', warehouse);
-    // 値引名 L7（文字列）/ 値引率 N8（数値）
-    if (discName) setStr('L7', discName); else clearCell('L7');
-    if (!isNaN(discRate) && discRate > 0) setNum('N8', discRate); else clearCell('N8');
+    // 値引ありのみ: 値引名 L7（文字列）/ 値引率 N8（数値）
+    if (!isNoDiscount) {
+      if (discName) setStr('L7', discName); else clearCell('L7');
+      if (!isNaN(discRate) && discRate > 0) setNum('N8', discRate); else clearCell('N8');
+    }
     // 備考 A18（文字列・任意）
     if (remarks) setStr('A18', remarks); else clearCell('A18');
     // 製品 A11-A14（商品コード=文字列）/ E11-E14（数量=数値）/ I11-I14（オーダーNo=任意）
@@ -4334,7 +4367,7 @@ async function hkExport() {
     // ダウンロード（印刷設定・罫線・図形・ハンコはテンプレのまま完全保持）
     var today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     var custName = (document.getElementById('hk-cust-name').value || '').trim().slice(0, 20);
-    var fileName = '引合書_' + today + (custName ? '_' + custName : '') + '.xlsx';
+    var fileName = '引合書_' + today + (custName ? '_' + custName : '') + (isNoDiscount ? '_値引なし' : '') + '.xlsx';
     var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(out);
@@ -4342,11 +4375,11 @@ async function hkExport() {
     document.body.appendChild(a); a.click();
     setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
     btn.textContent = '✅ ダウンロード完了！';
-    setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 2500);
+    setTimeout(function() { btn.disabled = false; hkUpdateInquiryMode(); }, 2500);
   } catch (e) {
     btn.textContent = '❌ エラー: ' + e.message;
     hkSetStatus('❌ ' + e.message, '#CC0000');
-    setTimeout(function() { btn.textContent = '📊 引合書 Excel を出力'; btn.disabled = false; }, 3500);
+    setTimeout(function() { btn.disabled = false; hkUpdateInquiryMode(); }, 3500);
   }
 }
 
@@ -4358,8 +4391,10 @@ function hkReset() {
   });
   hkInitProds();
   document.getElementById('hk-order-date').value = new Date().toISOString().slice(0,10);
+  var mode = document.querySelector('input[name="hk-mode"][value="discount"]'); if (mode) mode.checked = true;
   var wh = document.querySelector('input[name="hk-wh"][value="031"]'); if (wh) wh.checked = true;
   document.getElementById('hk-ai-status').classList.remove('visible');
+  hkUpdateInquiryMode();
 }
 
 // 受注日を今日に初期化
