@@ -1315,7 +1315,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <div class="hk-party-title">得意先</div>
           <div class="hk-code-row">
             <div class="fr hk-ac-wrap">
-              <label class="fl">得意先名</label>
+              <label class="fl">得意先名 <span style="font-weight:400;color:var(--tm);font-size:10px">例: クボタ千葉：61373</span></label>
               <input type="text" class="fi" id="hk-cust-name" placeholder="クボタ千葉" autocomplete="off"
                      oninput="hkAcSearch(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
                      onfocus="hkAcOpen(this,'hk-cust-list','hk-cust-name','hk-cust-code')"
@@ -1358,12 +1358,9 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <!-- 日程 -->
     <div class="fc">
       <div class="sec-label">日程</div>
+      <!-- 受注日は出力した日で固定（記入欄なし） -->
+      <input type="hidden" id="hk-order-date">
       <div class="hk-three-row">
-        <div class="fr hk-mini-field">
-          <label class="fl">受注日</label>
-          <input type="date" class="fi" id="hk-order-date">
-          <span style="font-size:10px;color:var(--tm);margin-left:2px">空欄→今日</span>
-        </div>
         <div class="fr hk-mini-field">
           <label class="fl">生産日</label>
           <input type="date" class="fi" id="hk-prod-date" onchange="hkProdDateChanged()">
@@ -1389,8 +1386,8 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="fc">
       <div class="sec-label">倉庫</div>
       <div class="hk-radio-row">
-        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031" checked> 031（基本）</label>
-        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011"> 011</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="031"> 031（基本）</label>
+        <label class="hk-radio-label"><input type="radio" name="hk-wh" value="011" checked> 011</label>
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="200"> 200（関東営業所倉庫・箱入り）</label>
         <label class="hk-radio-label"><input type="radio" name="hk-wh" value="2001"> 2001（関東営業所実演機倉庫）</label>
       </div>
@@ -4475,6 +4472,17 @@ async function hkExport() {
       attrs = setWbViewAttr(attrs, 'firstSheet', sheetIndex);
       return '<workbookView' + attrs + '/>';
     });
+    // 出力は選んだ版のタブのみ表示：非対象の引合書版シートを非表示にする
+    for (var _hi = 0; _hi < tags.length; _hi++) {
+      if (tags[_hi] === sheetTag) continue;
+      var _hnt = tags[_hi].replace('＋', '+').replace(/\s+/g, '').replace(/[()（）]/g, '');
+      var _hOther = isNoDiscount
+        ? (_hnt.indexOf('name="引合書+値引"') >= 0)
+        : (_hnt.indexOf('引合書') >= 0 && (_hnt.indexOf('値引きなし') >= 0 || _hnt.indexOf('値引なし') >= 0));
+      if (_hOther && !/state="hidden"/.test(tags[_hi])) {
+        wbXml = wbXml.replace(tags[_hi], tags[_hi].replace('<sheet ', '<sheet state="hidden" '));
+      }
+    }
     var worksheetFiles = zip.file(/^xl\/worksheets\/sheet\d+\.xml$/) || [];
     for (var wf = 0; wf < worksheetFiles.length; wf++) {
       if (worksheetFiles[wf].name === sheetPath) continue;
@@ -4506,17 +4514,20 @@ async function hkExport() {
     else { clearCell('A4'); if (custName) setStr('C4', custName); }
     if (destCode) { setCode('A6', destCode); }
     else { clearCell('A6'); if (destName) setStr('C6', destName); }
-    // 受注日 I4 / 出荷希望日 I6（日付シリアル・既存の日付書式で表示）
-    setNum('I4', _hkDateSerial(orderDate || _hkTodayYmd()));
+    // 受注日 I4 は常に「出力した日（今日）」固定 / 出荷希望日 I6
+    setNum('I4', _hkDateSerial(_hkTodayYmd()));
     if (shipDate) setNum('I6', _hkDateSerial(shipDate)); else clearCell('I6');
     // 生産日 H5（文字列書式）: 日付 or 在庫
     setStr('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
     // 倉庫 B17（文字列）
     if (warehouse) setStr('B17', warehouse);
-    // 値引ありのみ: 値引名 L7（文字列）/ 値引率 N8（数値）
+    // 値引名 L7（文字列）/ 値引率 N8（数値）
     if (!isNoDiscount) {
       if (discName) setStr('L7', discName); else clearCell('L7');
       if (!isNaN(discRate) && discRate > 0) setNum('N8', discRate); else clearCell('N8');
+    } else {
+      // 値引きなし版：テンプレに残る値引名・率を消して値引0%にする
+      clearCell('L7'); clearCell('N8');
     }
     // 備考 A18（文字列・任意）
     if (remarks) setStr('A18', remarks); else clearCell('A18');
