@@ -3501,6 +3501,11 @@ function _hkFmtDate(s) {
   var d = new Date(s);
   return d.getFullYear() + '/' + ('0'+(d.getMonth()+1)).slice(-2) + '/' + ('0'+d.getDate()).slice(-2);
 }
+function _hkFmtMonthDay(s) {
+  if (!s) return '';
+  var d = new Date(s);
+  return ('0'+(d.getMonth()+1)).slice(-2) + '/' + ('0'+d.getDate()).slice(-2);
+}
 function hkProdDateChanged() {
   var shipEl = document.getElementById('hk-ship-date');
   if (!shipEl.value) {
@@ -4518,7 +4523,7 @@ async function hkExport() {
     setNum('I4', _hkDateSerial(_hkTodayYmd()));
     if (shipDate) setNum('I6', _hkDateSerial(shipDate)); else clearCell('I6');
     // 生産日 H5（文字列書式）: 日付 or 在庫
-    setStr('H5', prodDate ? _hkFmtDate(prodDate) : '在庫');
+    setStr('H5', prodDate ? _hkFmtMonthDay(prodDate) : '在庫');
     // 倉庫 B17（文字列）
     if (warehouse) setStr('B17', warehouse);
     // 値引名 L7（文字列）/ 値引率 N8（数値）
