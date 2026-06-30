@@ -1098,6 +1098,15 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <input type="text" class="fi" id="msg-p1-code" placeholder="61105"
                  autocomplete="off" inputmode="numeric" oninput="msgUpd()">
         </div>
+        <div class="fr msg-ac-wrap">
+          <label class="fl">② 納入先名 <span class="opt">（空欄の場合は請求先名）</span></label>
+          <input type="text" class="fi" id="msg-p2-name" placeholder="伊藤産業機械"
+                 autocomplete="off"
+                 oninput="msgDestSearch(this)"
+                 onfocus="msgDestOpen(this)"
+                 onblur="msgDestBlur()">
+          <div class="msg-ac-list" id="msg-p2-list"></div>
+        </div>
         <div class="fr">
           <label class="fl">② 納入先コード <span class="opt">（空欄の場合は請求先コード）</span></label>
           <div class="msg-row">
@@ -2691,8 +2700,8 @@ function _msgEsc(s) {
 
 // --- same as billing ---
 function msgSameAsBilling() {
-  var code = _msgV('msg-p1-code');
-  document.getElementById('msg-p2-code').value = code;
+  document.getElementById('msg-p2-code').value = _msgV('msg-p1-code');
+  document.getElementById('msg-p2-name').value = _msgV('msg-p1-name');
   msgUpd();
 }
 
@@ -2773,6 +2782,7 @@ function msgGenParts() {
   var name  = _msgV('msg-p1-name',    '___');
   var code  = _msgV('msg-p1-code',    '___');
   var dest  = _msgV('msg-p2-code') || code || '___';
+  var destName = _msgV('msg-p2-name') || name || '___';
   var parts = msgGetParts();
   var mach  = _msgV('msg-p5-machine', '___');
   var per   = _msgV('msg-p5-person',  '___');
@@ -2790,7 +2800,7 @@ function msgGenParts() {
   }).join('\n');
 
   return '請求先:' + name + '　' + code + '\n' +
-    '納入先:' + dest + '\n' +
+    '納入先:' + destName + '　' + dest + '\n' +
     '部品情報\n' + (partLines || '1. ___ / ___　1個') + '\n' +
     mach + '　' + per + '\n' +
     type + '\n' +
@@ -2946,6 +2956,24 @@ function msgDealerSelect(name, code) {
   document.getElementById('msg-p1-name').value = name;
   document.getElementById('msg-p1-code').value = code;
   var list = document.getElementById('msg-ac-list');
+  list.classList.remove('open'); list.innerHTML = '';
+  msgUpd();
+}
+
+/* 納入先名サジェスト（請求先名と同じ仕組み・選択でコードも自動入力） */
+function msgDestOpen(inp) { if (inp.value.trim()) msgDestSearch(inp); }
+function msgDestBlur() { msgAcBlur('msg-p2-list'); }
+function msgDestSearch(inp) {
+  msgUpd();
+  msgDealerSuggest(inp.value, 'msg-p2-list', function(d) {
+    return "msgDestSelect('" + _msgEscJs(d.name) + "','" + _msgEscJs(d.code) + "')";
+  });
+}
+function msgDestSelect(name, code) {
+  clearTimeout(_msgAcBlurTimer);
+  document.getElementById('msg-p2-name').value = name;
+  document.getElementById('msg-p2-code').value = code;
+  var list = document.getElementById('msg-p2-list');
   list.classList.remove('open'); list.innerHTML = '';
   msgUpd();
 }
