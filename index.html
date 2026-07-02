@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>OREC 営業ツール</title>
@@ -645,7 +645,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="tile" style="grid-column:1/-1" onclick="excelPickSaveFolder()">
         <div class="tile-ic" style="background:#0F766E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 16.5A3.5 3.5 0 0 0 16.7 12 5 5 0 0 0 7 10.5 4 4 0 0 0 8 18h11a3 3 0 0 0 1-1.5z"/><path d="M12 13v6M9.5 16.5 12 19l2.5-2.5"/></svg></div>
         <div><h4>Excel保存先</h4><p id="excel-save-folder-label">OneDrive同期フォルダを選択</p></div>
-        <button type="button" onclick="event.stopPropagation(); excelOpenSaveFolderLink()" style="margin-left:auto;background:var(--g2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font-size:11px;font-weight:700;color:var(--tm);font-family:'Noto Sans JP',sans-serif">開く</button>
+        <div style="margin-left:auto;display:flex;gap:6px;align-items:center">
+          <button type="button" onclick="event.stopPropagation(); excelOpenSaveFolderLink()" style="background:var(--g2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font-size:11px;font-weight:700;color:var(--tm);font-family:'Noto Sans JP',sans-serif">開く</button>
+          <button type="button" onclick="event.stopPropagation(); excelClearSaveFolder()" style="background:#FEF2F2;border:1px solid #FCA5A5;border-radius:8px;padding:8px 10px;font-size:11px;font-weight:700;color:#B91C1C;font-family:'Noto Sans JP',sans-serif">解除</button>
+        </div>
       </div>
     </div>
     <div class="sec-label">価格表 シリーズ別ジャンプ</div>
@@ -687,12 +690,13 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="home-gemini-head">
         <div>
           <div class="home-gemini-title">Gemini 壁打ち</div>
-          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます</div>
+          <div class="home-gemini-sub">営業対応・見積り文面・入力内容の整理を相談できます。保存キーはこの端末に残ります。</div>
         </div>
       </div>
       <div class="home-gemini-keyrow">
         <input type="password" class="home-gemini-key" id="home-gemini-key" placeholder="Gemini API Key（保存済みなら空でOK）">
         <button type="button" class="home-gemini-save" onclick="homeSaveGeminiKey()">保存</button>
+        <button type="button" class="home-gemini-save" onclick="hkClearApiKey()" style="color:#B91C1C;background:#FEF2F2;border-color:#FCA5A5">削除</button>
       </div>
       <textarea class="home-gemini-text" id="home-gemini-text"
         placeholder="例: 大竹産業からRM832Aの見積依頼。返答文と確認すべき点を整理して"></textarea>
@@ -1453,13 +1457,14 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 <div class="hk-apikey-ov" id="hk-apikey-ov">
   <div class="hk-apikey-box">
     <div class="hk-apikey-title">⚙ Gemini API Key 設定</div>
-    <div class="hk-apikey-desc">音声入力・写真読み取りに使用します。ブラウザに保存されるため、次回から入力不要です。</div>
+    <div class="hk-apikey-desc">音声入力・写真読み取りに使用します。保存するとこの端末に残ります。共有PCでは使用後に削除してください。</div>
     <input type="password" class="hk-apikey-inp" id="hk-apikey-inp" placeholder="AIza... または AQ...">
     <div class="hk-apikey-btns">
       <button class="hk-apikey-save" onclick="hkSaveApiKey()">保存</button>
       <button class="hk-apikey-cancel" onclick="hkCloseApiKeyModal()">キャンセル</button>
     </div>
     <button style="width:100%;margin-top:10px;padding:10px;background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif" onclick="hkDiagnose()">🔍 APIキー診断（どのモデルが使えるか確認）</button>
+    <button style="width:100%;margin-top:8px;padding:10px;background:#FEF2F2;border:1.5px solid #FCA5A5;border-radius:8px;font-size:12px;font-weight:700;color:#B91C1C;cursor:pointer;font-family:'Noto Sans JP',sans-serif" onclick="hkClearApiKey()">保存済みAPIキーを削除</button>
     <pre id="hk-diag-result" style="margin:8px 0 0;padding:10px;background:#0F172A;color:#A3E635;border-radius:8px;font-size:11px;line-height:1.6;white-space:pre-wrap;display:none"></pre>
   </div>
 </div>
@@ -2715,6 +2720,23 @@ async function excelGetDirectoryHandle() {
   }
 }
 
+async function excelClearSaveFolder() {
+  try {
+    var db = await excelOpenSaveDb();
+    await new Promise(function(resolve, reject) {
+      var tx = db.transaction(EXCEL_SAVE_STORE, 'readwrite');
+      tx.objectStore(EXCEL_SAVE_STORE).delete(EXCEL_SAVE_KEY);
+      tx.oncomplete = function() { db.close(); resolve(); };
+      tx.onerror = function() { db.close(); reject(tx.error || new Error('保存先を解除できません')); };
+    });
+  } catch (e) {
+    // IndexedDB未対応や未作成でも、表示名は必ず消す。
+  }
+  localStorage.removeItem(EXCEL_SAVE_NAME_KEY);
+  excelUpdateSaveFolderLabel();
+  toast('Excel保存先の記憶を解除しました');
+}
+
 async function excelPickSaveFolder() {
   if (!window.showDirectoryPicker) {
     toast('このブラウザでは保存先指定が使えません。OneDriveを開きます');
@@ -3864,6 +3886,24 @@ function hkSaveApiKey() {
   var k = document.getElementById('hk-apikey-inp').value.trim();
   if (k) { localStorage.setItem(HK_GEMINI_LS, k); hkSetStatus('✅ APIキーを保存しました', 'var(--g)'); }
   hkCloseApiKeyModal();
+}
+function hkClearApiKey() {
+  if (!confirm('この端末に保存したGemini APIキーを削除しますか？')) return;
+  localStorage.removeItem(HK_GEMINI_LS);
+  var modalInp = document.getElementById('hk-apikey-inp');
+  var homeInp = document.getElementById('home-gemini-key');
+  var diag = document.getElementById('hk-diag-result');
+  if (modalInp) modalInp.value = '';
+  if (homeInp) {
+    homeInp.value = '';
+    homeInp.placeholder = 'Gemini API Key（保存済みなら空でOK）';
+  }
+  if (diag) {
+    diag.textContent = '';
+    diag.style.display = 'none';
+  }
+  hkSetStatus('✅ 保存済みAPIキーを削除しました', 'var(--g)');
+  homeSetGeminiStatus('保存済みAPIキーを削除しました。', 'var(--g)');
 }
 function hkCloseApiKeyModal() {
   document.getElementById('hk-apikey-ov').classList.remove('open');
