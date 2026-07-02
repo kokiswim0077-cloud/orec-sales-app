@@ -480,6 +480,10 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .ido-return-date{display:none}
 #s-ido.ido-type-with_return .ido-return-date,#s-ido.ido-type-swap .ido-return-date{display:block}
 #s-ido:not(.ido-type-instruction) .ido-prod-add-btn{display:none}
+.ido-prod-card .hk-code-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.ido-prod-card .hk-code-side .fi{text-align:left;font-size:15px;padding:13px 12px;font-family:"Noto Sans JP",monospace;font-weight:700}
+.ido-prod-card .hk-code-side .fi::placeholder{font-size:13px}
+@media (max-width:360px){.ido-prod-card .hk-code-row{grid-template-columns:1fr}}
 .hk-reset-btn{width:100%;padding:12px;background:none;border:1.5px solid var(--bd);color:var(--tm);border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-top:8px}
 /* AI入力バー */
 .hk-ai-bar{display:flex;flex-direction:column;gap:8px;padding:10px 8px 0;flex-shrink:0}
@@ -4896,8 +4900,8 @@ function idoMakeProdCard(id) {
     '<input type="text" class="fi ido-pr-name" placeholder="例: RM832A" autocomplete="off"' +
     ' oninput="idoProdSearch(' + id + ',this.value)" onfocus="idoProdSearch(' + id + ',this.value)" onblur="idoProdBlur(' + id + ')">' +
     '<div class="hk-prod-dd" id="ido-prod-dd-' + id + '"></div></div>' +
-    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
-    '<input type="text" class="fi ido-pr-code" placeholder="自動" autocomplete="off" onblur="idoProdCodeLookup(' + id + ',this.value)"></div></div>' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード／部品コード</label>' +
+    '<input type="text" class="fi ido-pr-code" placeholder="例: 88-4109-5102" autocomplete="off" onblur="idoProdCodeLookup(' + id + ',this.value)"></div></div>' +
     '<div class="hk-compact-row">' +
     '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
     '<input type="number" class="fi ido-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
