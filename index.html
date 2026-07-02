@@ -640,6 +640,11 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div><h4>Kintone</h4><p>キントーンアプリを開く</p></div>
         <span style="margin-left:auto;color:#B98700;font-size:18px;font-weight:700">›</span>
       </div>
+      <div class="tile" style="grid-column:1/-1" onclick="excelPickSaveFolder()">
+        <div class="tile-ic" style="background:#0F766E"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 16.5A3.5 3.5 0 0 0 16.7 12 5 5 0 0 0 7 10.5 4 4 0 0 0 8 18h11a3 3 0 0 0 1-1.5z"/><path d="M12 13v6M9.5 16.5 12 19l2.5-2.5"/></svg></div>
+        <div><h4>Excel保存先</h4><p id="excel-save-folder-label">OneDrive同期フォルダを選択</p></div>
+        <button type="button" onclick="event.stopPropagation(); excelOpenSaveFolderLink()" style="margin-left:auto;background:var(--g2);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font-size:11px;font-weight:700;color:var(--tm);font-family:'Noto Sans JP',sans-serif">開く</button>
+      </div>
     </div>
     <div class="sec-label">価格表 シリーズ別ジャンプ</div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px">
@@ -2626,6 +2631,124 @@ function toast(msg) {
   clearTimeout(_toastTm);
   _toastTm = setTimeout(() => t.classList.remove("show"), 2200);
 }
+
+// ===== Excel保存先（OneDrive同期フォルダなど） =====
+const EXCEL_SAVE_LINK = 'https://orec5002-my.sharepoint.com/:f:/g/personal/kantou-z00039_orec_co_jp/IgARUH1tIsIlQ4tvrl2xqiHLAXKqwL_rD5iRC54Kz3_vCLA?e=xdVBik';
+const EXCEL_SAVE_DB = 'orec-sales-excel-save';
+const EXCEL_SAVE_STORE = 'handles';
+const EXCEL_SAVE_KEY = 'dir';
+const EXCEL_SAVE_NAME_KEY = 'orecExcelSaveFolderName';
+const EXCEL_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+
+function excelOpenSaveFolderLink() {
+  window.open(EXCEL_SAVE_LINK, '_blank', 'noopener');
+}
+
+function excelUpdateSaveFolderLabel() {
+  var el = document.getElementById('excel-save-folder-label');
+  if (!el) return;
+  var name = localStorage.getItem(EXCEL_SAVE_NAME_KEY);
+  el.textContent = name ? ('保存先: ' + name) : 'OneDrive同期フォルダを選択';
+}
+
+function excelOpenSaveDb() {
+  return new Promise(function(resolve, reject) {
+    if (!window.indexedDB) { reject(new Error('IndexedDB未対応')); return; }
+    var req = indexedDB.open(EXCEL_SAVE_DB, 1);
+    req.onupgradeneeded = function() {
+      req.result.createObjectStore(EXCEL_SAVE_STORE);
+    };
+    req.onsuccess = function() { resolve(req.result); };
+    req.onerror = function() { reject(req.error || new Error('保存先DBを開けません')); };
+  });
+}
+
+async function excelStoreDirectoryHandle(handle) {
+  var db = await excelOpenSaveDb();
+  return new Promise(function(resolve, reject) {
+    var tx = db.transaction(EXCEL_SAVE_STORE, 'readwrite');
+    tx.objectStore(EXCEL_SAVE_STORE).put(handle, EXCEL_SAVE_KEY);
+    tx.oncomplete = function() { db.close(); resolve(); };
+    tx.onerror = function() { db.close(); reject(tx.error || new Error('保存先を保存できません')); };
+  });
+}
+
+async function excelGetDirectoryHandle() {
+  try {
+    var db = await excelOpenSaveDb();
+    return await new Promise(function(resolve, reject) {
+      var tx = db.transaction(EXCEL_SAVE_STORE, 'readonly');
+      var req = tx.objectStore(EXCEL_SAVE_STORE).get(EXCEL_SAVE_KEY);
+      req.onsuccess = function() { db.close(); resolve(req.result || null); };
+      req.onerror = function() { db.close(); reject(req.error || new Error('保存先を取得できません')); };
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+async function excelPickSaveFolder() {
+  if (!window.showDirectoryPicker) {
+    toast('このブラウザでは保存先指定が使えません。OneDriveを開きます');
+    excelOpenSaveFolderLink();
+    return;
+  }
+  try {
+    var handle = await window.showDirectoryPicker({ mode: 'readwrite' });
+    var perm = await handle.requestPermission({ mode: 'readwrite' });
+    if (perm !== 'granted') throw new Error('フォルダへの保存権限が許可されませんでした');
+    await excelStoreDirectoryHandle(handle);
+    localStorage.setItem(EXCEL_SAVE_NAME_KEY, handle.name || '選択済みフォルダ');
+    excelUpdateSaveFolderLabel();
+    toast('Excel保存先を設定しました');
+  } catch (e) {
+    if (e && e.name === 'AbortError') return;
+    toast(e.message || '保存先を設定できませんでした');
+  }
+}
+
+function excelDownloadBlob(blob, fileName) {
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+}
+
+async function excelGetWritableDirectory() {
+  if (!window.showDirectoryPicker) return null;
+  var handle = await excelGetDirectoryHandle();
+  if (!handle) return null;
+  var perm = await handle.queryPermission({ mode: 'readwrite' });
+  if (perm !== 'granted') perm = await handle.requestPermission({ mode: 'readwrite' });
+  return perm === 'granted' ? handle : null;
+}
+
+async function excelSaveBlob(blob, fileName) {
+  try {
+    var dir = await excelGetWritableDirectory();
+    if (dir) {
+      var fileHandle = await dir.getFileHandle(fileName, { create: true });
+      var writable = await fileHandle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      toast('Excelを保存しました: ' + fileName);
+      return 'folder';
+    }
+  } catch (e) {
+    toast('保存先に保存できないため、ダウンロードします');
+  }
+  excelDownloadBlob(blob, fileName);
+  return 'download';
+}
+
+function excelWorkbookToBlob(wb) {
+  var data = XLSX.write(wb, { bookType: 'xlsx', type: 'array', compression: true });
+  return new Blob([data], { type: EXCEL_MIME });
+}
+
+excelUpdateSaveFolderLabel();
 
 // ===== 部品価格検索 =====
 function partsSearch() {
@@ -4769,12 +4892,8 @@ async function hkExport() {
     var fileDestName = _hkFilePart(destName || custName);
     var fileName = '引合書_' + fileDate + (fileDestName ? '_' + fileDestName : '') + '.xlsx';
     var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(out);
-    a.download = fileName;
-    document.body.appendChild(a); a.click();
-    setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    btn.textContent = '✅ ダウンロード完了！';
+    var saveMode = await excelSaveBlob(out, fileName);
+    btn.textContent = saveMode === 'folder' ? '✅ 保存完了！' : '✅ ダウンロード完了！';
     setTimeout(function() { btn.disabled = false; hkUpdateInquiryMode(); }, 2500);
   } catch (e) {
     btn.textContent = '❌ エラー: ' + e.message;
@@ -5331,12 +5450,8 @@ async function idoExport() {
     var fileDestName = _hkFilePart(destName);
     var fileName = '移動書_' + IDO_SHEET_NAMES[type].replace(/[()（）]/g, '') + '_' + fileDate + (fileDestName ? '_' + fileDestName : '') + '.xlsx';
     var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(out);
-    a.download = fileName;
-    document.body.appendChild(a); a.click();
-    setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
-    btn.textContent = '✅ ダウンロード完了！';
+    var saveMode = await excelSaveBlob(out, fileName);
+    btn.textContent = saveMode === 'folder' ? '✅ 保存完了！' : '✅ ダウンロード完了！';
     setTimeout(function() { btn.disabled = false; idoUpdateType(); }, 2500);
   } catch (e) {
     btn.textContent = '❌ エラー: ' + e.message;
@@ -5942,7 +6057,7 @@ function estSyncFromInquiry() {
   estCalcPricesP(pid);
 }
 
-function estExport(type) {
+async function estExport(type) {
   if (typeof XLSX === 'undefined') { estSetStatus('❌ SheetJSが読み込まれていません', '#DC2626'); return; }
   try { hkAcAutofill('est-cust-name', 'est-cust-code'); } catch(e){}
   var custName = (document.getElementById('est-cust-name').value || '').trim();
@@ -6058,7 +6173,7 @@ function estExport(type) {
     ws['!pageSetup'] = { paperSize: 9, orientation: 'portrait', fitToPage: true, fitToWidth: 1, fitToHeight: 1 };
     ws['!margins']   = { left: 0.6, right: 0.4, top: 0.7, bottom: 0.5, header: 0.3, footer: 0.3 };
     XLSX.utils.book_append_sheet(wb, ws, '見積書');
-    XLSX.writeFile(wb, d + '_' + cn + '_' + pn + '_見積書.xlsx', {compression: true});
+    await excelSaveBlob(excelWorkbookToBlob(wb), d + '_' + cn + '_' + pn + '_見積書.xlsx');
 
   } else {
     var ws2 = {};
@@ -6095,7 +6210,7 @@ function estExport(type) {
     ];
     ws2['!cols'] = [{wch:14},{wch:22},{wch:13},{wch:13},{wch:10},{wch:12},{wch:24}];
     XLSX.utils.book_append_sheet(wb, ws2, '見積依頼');
-    XLSX.writeFile(wb, d + '_' + cn + '_' + pn + '_見積依頼.xlsx', {compression: true});
+    await excelSaveBlob(excelWorkbookToBlob(wb), d + '_' + cn + '_' + pn + '_見積依頼.xlsx');
   }
 }
 
