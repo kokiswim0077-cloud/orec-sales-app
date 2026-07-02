@@ -1890,6 +1890,7 @@ function nav(p) {
     if (p === "pdfview") document.getElementById("bn-catalog").classList.add("on");
     if (p === "mitsu") { renderEstimate(); }
     if (p === "est") { estInitProds(); estSyncFromInquiry(); }
+    if (p === "ido") { setTimeout(function() { try { idoLoadParts().catch(function() {}); } catch (e) {} }, 300); }
     // 見積バーの表示制御
     const showBar = (p === "parts") && ESTIMATE.length > 0;
     document.getElementById("mitsu-bar").classList.toggle("show", showBar);
@@ -5015,6 +5016,76 @@ function _idoNormSheetName(s) {
   return String(s || '').replace(/\s+/g, '').replace(/[)）]/g, ')').replace(/[(（]/g, '(');
 }
 
+/* ---- 部品マスタ（テンプレ「商品コード」シート全件を抽出したTSV・約5.7MB）----
+   移動指示入力は部品も移動対象のため、コード→名称の逆引きと名称サジェストに使う。
+   移動処理タブを開いた時にバックグラウンドで遅延ロード（gzip転送・HTTPキャッシュ有効） */
+const IDO_PARTS_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/main/assets/parts_master.txt?v=20260703';
+var _idoParts = null;        // [[code, name, price|null], ...]
+var _idoPartsByCode = null;  // { CODE大文字: [name, price] }
+var _idoPartsNorm = null;    // 検索用の正規化済み名称（初回検索時に生成）
+var _idoPartsPromise = null;
+
+function idoLoadParts() {
+  if (_idoPartsPromise) return _idoPartsPromise;
+  _idoPartsPromise = fetch(IDO_PARTS_URL).then(function(r) {
+    if (!r.ok) throw new Error('部品マスタ取得失敗: ' + r.status);
+    return r.text();
+  }).then(function(t) {
+    var arr = [], map = {};
+    t.split('\n').forEach(function(line) {
+      if (!line) return;
+      var a = line.split('\t');
+      if (a.length < 2 || !a[0] || !a[1]) return;
+      var price = a[2] ? parseInt(a[2], 10) : null;
+      arr.push([a[0], a[1], price]);
+      var k = a[0].toUpperCase();
+      if (!(k in map)) map[k] = [a[1], price];
+    });
+    _idoParts = arr;
+    _idoPartsByCode = map;
+    return arr;
+  }).catch(function(e) { _idoPartsPromise = null; throw e; });
+  return _idoPartsPromise;
+}
+
+/* 部品名は半角カナ登録（例: WMﾌﾘｰﾅｲﾌﾄﾘﾂｹﾎﾞﾙﾄｾﾂﾄ646）のため、
+   全角カナ・ひらがな入力でも一致するよう双方を全角カタカナに正規化して比較する */
+var _IDO_KANA_DAKU = {'ｶ':'ガ','ｷ':'ギ','ｸ':'グ','ｹ':'ゲ','ｺ':'ゴ','ｻ':'ザ','ｼ':'ジ','ｽ':'ズ','ｾ':'ゼ','ｿ':'ゾ','ﾀ':'ダ','ﾁ':'ヂ','ﾂ':'ヅ','ﾃ':'デ','ﾄ':'ド','ﾊ':'バ','ﾋ':'ビ','ﾌ':'ブ','ﾍ':'ベ','ﾎ':'ボ','ｳ':'ヴ'};
+var _IDO_KANA_HANDAKU = {'ﾊ':'パ','ﾋ':'ピ','ﾌ':'プ','ﾍ':'ペ','ﾎ':'ポ'};
+var _IDO_KANA_SINGLE = {'ｱ':'ア','ｲ':'イ','ｳ':'ウ','ｴ':'エ','ｵ':'オ','ｧ':'ァ','ｨ':'ィ','ｩ':'ゥ','ｪ':'ェ','ｫ':'ォ','ｶ':'カ','ｷ':'キ','ｸ':'ク','ｹ':'ケ','ｺ':'コ','ｻ':'サ','ｼ':'シ','ｽ':'ス','ｾ':'セ','ｿ':'ソ','ﾀ':'タ','ﾁ':'チ','ﾂ':'ツ','ｯ':'ッ','ﾃ':'テ','ﾄ':'ト','ﾅ':'ナ','ﾆ':'ニ','ﾇ':'ヌ','ﾈ':'ネ','ﾉ':'ノ','ﾊ':'ハ','ﾋ':'ヒ','ﾌ':'フ','ﾍ':'ヘ','ﾎ':'ホ','ﾏ':'マ','ﾐ':'ミ','ﾑ':'ム','ﾒ':'メ','ﾓ':'モ','ﾔ':'ヤ','ﾕ':'ユ','ﾖ':'ヨ','ｬ':'ャ','ｭ':'ュ','ｮ':'ョ','ﾗ':'ラ','ﾘ':'リ','ﾙ':'ル','ﾚ':'レ','ﾛ':'ロ','ﾜ':'ワ','ｦ':'ヲ','ﾝ':'ン','ｰ':'ー'};
+
+function _idoNormPartName(s) {
+  s = String(s || '');
+  s = s.replace(/([ｦ-ﾟ])([ﾞﾟ])/g, function(m, ch, mark) {
+    var t = mark === 'ﾞ' ? _IDO_KANA_DAKU[ch] : _IDO_KANA_HANDAKU[ch];
+    return t || (_IDO_KANA_SINGLE[ch] || ch);
+  });
+  s = s.replace(/[ｦ-ﾟ]/g, function(c) { return _IDO_KANA_SINGLE[c] || ''; });
+  s = s.replace(/[ぁ-ゖ]/g, function(c) { return String.fromCharCode(c.charCodeAt(0) + 0x60); });
+  /* 全角英数→半角 */
+  s = s.replace(/[Ａ-Ｚａ-ｚ０-９]/g, function(c) { return String.fromCharCode(c.charCodeAt(0) - 0xFEE0); });
+  return s.toUpperCase().replace(/[\s　・･｡。、､｢｣「」]/g, '');
+}
+
+function idoSearchParts(query, limit) {
+  if (!_idoParts) return [];
+  var qCode = String(query || '').trim().toUpperCase();
+  var isCodeQuery = /^\d[\d\-A-Z]{2,}$/.test(qCode);
+  var q = _idoNormPartName(query);
+  if (!isCodeQuery && q.length < 3) return [];
+  if (!isCodeQuery && !_idoPartsNorm) {
+    _idoPartsNorm = _idoParts.map(function(p) { return _idoNormPartName(p[1]); });
+  }
+  var out = [];
+  for (var i = 0; i < _idoParts.length && out.length < (limit || 10); i++) {
+    var hit = isCodeQuery
+      ? _idoParts[i][0].toUpperCase().indexOf(qCode) === 0
+      : _idoPartsNorm[i].indexOf(q) >= 0;
+    if (hit) out.push({ c: _idoParts[i][0], n: _idoParts[i][1], p: _idoParts[i][2], s: 10 });
+  }
+  return out;
+}
+
 var _idoProdNextId = 0;
 var _idoProdMatchesById = {};
 var _idoAcBlurTimers = {};
@@ -5088,8 +5159,8 @@ function idoMakeProdCard(id) {
     '<div class="hk-prod-head"><span class="hk-prod-num">商品</span>' +
     '<button type="button" class="hk-prod-del" onclick="idoRemoveProd(' + id + ')">× 削除</button></div>' +
     '<div class="hk-code-row" style="margin-bottom:10px">' +
-    '<div class="fr" style="position:relative"><label class="fl">商品名（型式）</label>' +
-    '<input type="text" class="fi ido-pr-name" placeholder="例: RM832A" autocomplete="off"' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名（型式・部品名）</label>' +
+    '<input type="text" class="fi ido-pr-name" placeholder="例: RM832A / フリーナイフ" autocomplete="off"' +
     ' oninput="idoProdSearch(' + id + ',this.value)" onfocus="idoProdSearch(' + id + ',this.value)" onblur="idoProdBlur(' + id + ')">' +
     '<div class="hk-prod-dd" id="ido-prod-dd-' + id + '"></div></div>' +
     '<div class="fr hk-code-side"><label class="fl">商品コード／部品コード</label>' +
@@ -5133,7 +5204,20 @@ function idoRemoveProd(id) {
 
 function idoProdSearch(id, val) {
   var dd = document.getElementById('ido-prod-dd-' + id); if (!dd) return;
-  var matches = hkResolveProducts(val, 25);
+  var matches = (hkResolveProducts(val, 12) || []).slice();
+  /* 部品マスタも検索対象（移動指示入力は部品も移動するため）。
+     未ロードなら裏で読み込み→入力が変わっていなければ再検索して表示 */
+  if (_idoParts) {
+    matches = matches.concat(idoSearchParts(val, 12));
+  } else if (String(val || '').trim().length >= 3) {
+    idoLoadParts().then(function() {
+      var card = document.querySelector('.ido-prod-card[data-pid="' + id + '"]');
+      var el = card && card.querySelector('.ido-pr-name');
+      if (el && el.value === val && document.activeElement === el) idoProdSearch(id, val);
+    }).catch(function() {});
+  }
+  var seen = {};
+  matches = matches.filter(function(m) { if (seen[m.c]) return false; seen[m.c] = 1; return true; });
   _idoProdMatchesById[id] = matches;
   if (!matches.length) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
   dd.innerHTML = matches.map(function(m, i) {
@@ -5161,6 +5245,8 @@ function idoProdNameNormalize(id) {
   if (!card) return;
   var nameEl = card.querySelector('.ido-pr-name');
   var codeEl = card.querySelector('.ido-pr-code');
+  /* コード入力済みなら型式の曖昧一致で上書きしない（部品名→WM646F等の誤変換防止） */
+  if (codeEl && codeEl.value.trim()) return;
   var raw = nameEl ? nameEl.value : '';
   if (!raw) return;
   var product = hkResolveAiProduct('', raw);
@@ -5180,9 +5266,22 @@ function idoProdCodeLookup(id, value) {
   if (!card) return;
   var codeEl = card.querySelector('.ido-pr-code');
   var nameEl = card.querySelector('.ido-pr-name');
-  var product = hkResolveAiProduct(value, value || (nameEl ? nameEl.value : ''));
-  if (product.c && codeEl) codeEl.value = product.c;
-  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+  /* 1) 製品マスタ（本体） */
+  var byCode = hkFindProductByCode(hkNormalizeProductCode(value));
+  if (byCode) {
+    if (codeEl) codeEl.value = byCode.c;
+    if (nameEl) nameEl.value = byCode.n;
+    return;
+  }
+  /* 2) 部品マスタ逆引き（コード完全一致→正式名称を自動入力） */
+  var v = String(value || '').trim();
+  if (!v) return;
+  idoLoadParts().then(function() {
+    var hit = _idoPartsByCode[v.toUpperCase()];
+    if (!hit) return;
+    if (codeEl && codeEl.value.trim().toUpperCase() !== v.toUpperCase()) return; /* 入力が変わっていたら反映しない */
+    if (nameEl) nameEl.value = hit[0];
+  }).catch(function() {});
 }
 
 function idoGetProducts() {
