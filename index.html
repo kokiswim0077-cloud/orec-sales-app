@@ -583,9 +583,9 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <span class="home-act-ic">📝</span>
         <span class="home-act-lbl">見積書<br>作成</span>
       </div>
-      <div class="home-act-btn" onclick="nav('hasso')">
-        <span class="home-act-ic">📋</span>
-        <span class="home-act-lbl">発送依頼書<br>作成</span>
+      <div class="home-act-btn" onclick="nav('ido')">
+        <span class="home-act-ic">📦</span>
+        <span class="home-act-lbl">移動処理<br>（実演機）</span>
       </div>
     </div>
     <div class="sec-label">クイックアクセス</div>
@@ -610,6 +610,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="tile" onclick="nav('kakaku')">
         <div class="tile-ic" style="background:#CC0000">📄</div>
         <div><h4>価格表2026</h4><p>全138ページ</p></div>
+      </div>
+      <div class="tile" onclick="nav('hasso')">
+        <div class="tile-ic">📋</div>
+        <div><h4>発送依頼書</h4><p>作成</p></div>
       </div>
       <div class="tile" style="grid-column:1/-1" onclick="window.open('https://m365.cloud.microsoft/chat','_blank','noopener')">
         <div class="tile-ic" style="background:#2563EB">🧠</div>
@@ -4801,7 +4805,7 @@ function hkReset() {
    種類=移動入力（機種交換分）: K20=納入先NO / C9/Q9/S9=もらう機械 / C11/Q11/S11=あげる機械 /
                      F48/L48=①貸し出し倉庫 / F56/L56=②返却倉庫 / E53=返す日程
    ============================== */
-const IDO_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/main/assets/ido_template.xlsx?v=20260702';
+const IDO_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/main/assets/ido_template.xlsx?v=20260702b';
 
 var IDO_SHEET_NAMES = {
   instruction: '移動指示入力',
@@ -4842,7 +4846,11 @@ function idoProdRoleLabel(type, idx) {
 function idoUpdateType() {
   var type = idoGetType();
   var screen = document.getElementById('s-ido');
-  if (screen) screen.className = 'screen ido-type-' + type;
+  if (screen) {
+    // className丸ごと上書きはNG（activeクラスが消えて画面が非表示になる）
+    ['instruction', 'no_return', 'with_return', 'swap'].forEach(function(t) { screen.classList.remove('ido-type-' + t); });
+    screen.classList.add('ido-type-' + type);
+  }
   var btn = document.getElementById('ido-export-btn');
   if (btn && !btn.disabled) btn.textContent = '📊 ' + IDO_SHEET_NAMES[type] + ' Excel を出力';
   var label = document.getElementById('ido-prevno-label');
