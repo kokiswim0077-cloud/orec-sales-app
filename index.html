@@ -2,12 +2,14 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>OREC 営業ツール</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha384-/1qUCSGwTur9vjf/z9lmu/eCUYbpOTgSjmpbMQZ1/CtX2v/WcAIKqRv+U1DUCG6e" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous"></script>
 <style>
 :root{
   --g:#007A59; --gd:#005C42; --gl:#E8F5F0;
@@ -600,20 +602,20 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
     <div class="sec-label">クイックアクセス</div>
     <div class="tile-grid">
-      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://dkl5pcrrq8gba.cloudfront.net/ui/','_blank')">
+      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://dkl5pcrrq8gba.cloudfront.net/ui/','_blank','noopener,noreferrer')">
         <div class="tile-ic" style="background:var(--g)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/><path d="M8 11h6"/></svg></div>
         <div><h4>AIパーツリスト検索</h4><p>243,267件・機種+部品名で検索</p></div>
         <span style="margin-left:auto;color:var(--g);font-size:18px;font-weight:700">›</span>
       </div>
-      <div class="tile" onclick="window.open('https://www.orec-jp.com/keitai/','_blank')">
+      <div class="tile" onclick="window.open('https://www.orec-jp.com/keitai/','_blank','noopener,noreferrer')">
         <div class="tile-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8l9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
         <div><h4>在庫確認</h4><p>全社在庫</p></div>
       </div>
-      <div class="tile" onclick="window.open('https://www.orec-jp.com/kakaQ/','_blank')">
+      <div class="tile" onclick="window.open('https://www.orec-jp.com/kakaQ/','_blank','noopener,noreferrer')">
         <div class="tile-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 7 9 2 3 8l5 5"/><path d="M10 14 5 19l2 2 5-5"/><path d="m13 11 8 8"/><path d="m17 15 2-2"/></svg></div>
         <div><h4>部品情報</h4><p>kakaQ</p></div>
       </div>
-      <div class="tile" onclick="window.open('https://orec.aftama.com/OREC/JA/index.html','_blank')">
+      <div class="tile" onclick="window.open('https://orec.aftama.com/OREC/JA/index.html','_blank','noopener,noreferrer')">
         <div class="tile-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-3 3-3-3z"/></svg></div>
         <div><h4>アフタマ</h4><p>部品・修理</p></div>
       </div>
@@ -625,17 +627,17 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         <div class="tile-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6l1 2h3v15H5V6h3z"/><path d="M9 10h6M9 14h6M9 18h4"/></svg></div>
         <div><h4>発送依頼書</h4><p>作成</p></div>
       </div>
-      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://m365.cloud.microsoft/chat','_blank','noopener')">
+      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://m365.cloud.microsoft/chat','_blank','noopener,noreferrer')">
         <div class="tile-ic" style="background:#2563EB"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a5 5 0 0 0-5 5v1a4 4 0 0 0 0 8v1a3 3 0 0 0 6 0v-1h1a5 5 0 0 0 0-10h-1V3z"/><path d="M12 7h2a2 2 0 0 1 0 4h-2"/></svg></div>
         <div><h4>Microsoft 365 Copilot</h4><p>社内アカウントでCopilot Chatを開く</p></div>
         <span style="margin-left:auto;color:#2563EB;font-size:18px;font-weight:700">›</span>
       </div>
-      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://teachme.jp/129709/manuals?random=1782879542003&page=1&sortKey=date&sortOrder=desc&displayType=published','_blank','noopener')">
+      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://teachme.jp/129709/manuals?random=1782879542003&page=1&sortKey=date&sortOrder=desc&displayType=published','_blank','noopener,noreferrer')">
         <div class="tile-ic" style="background:#F28C28"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a3 3 0 0 1 3-2h13v16H7a3 3 0 0 0-3 2z"/><path d="M4 5v16"/><path d="M8 7h8M8 11h8"/></svg></div>
         <div><h4>Teachme Biz</h4><p>マニュアル一覧を開く（未ログイン時はログイン）</p></div>
         <span style="margin-left:auto;color:#F28C28;font-size:18px;font-weight:700">›</span>
       </div>
-      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://orec.cybozu.com','_blank','noopener')">
+      <div class="tile" style="grid-column:1/-1" onclick="window.open('https://orec.cybozu.com','_blank','noopener,noreferrer')">
         <div class="tile-ic" style="background:#F4C300"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h7l2 2h9v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 10h18"/></svg></div>
         <div><h4>Kintone</h4><p>キントーンアプリを開く</p></div>
         <span style="margin-left:auto;color:#B98700;font-size:18px;font-weight:700">›</span>
@@ -961,10 +963,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen></iframe>
       <div class="yt-channel-link">
-        <a href="https://www.youtube.com/channel/UClEbD9BSQtGs_awL1bjLIcA" target="_blank">▶ YouTubeチャンネルを開く</a>
+        <a href="https://www.youtube.com/channel/UClEbD9BSQtGs_awL1bjLIcA" target="_blank" rel="noopener noreferrer">▶ YouTubeチャンネルを開く</a>
       </div>
       <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
-        <button onclick="window.open('https://dkl5pcrrq8gba.cloudfront.net/ui/','_blank')" style="flex:1;min-width:140px;padding:11px 8px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif">🔍 AIパーツ検索へ</button>
+        <button onclick="window.open('https://dkl5pcrrq8gba.cloudfront.net/ui/','_blank','noopener,noreferrer')" style="flex:1;min-width:140px;padding:11px 8px;background:var(--acc);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif">🔍 AIパーツ検索へ</button>
       </div>
     </div>
     <!-- インラインカタログビューアー -->
@@ -972,7 +974,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="icat-hdr">
         <div class="icat-hdr-title" id="icat-title">カタログ</div>
         <div class="icat-actions">
-          <a class="icat-action primary" id="icat-open-link" href="#" target="_blank" rel="noopener">PDFを開く</a>
+          <a class="icat-action primary" id="icat-open-link" href="#" target="_blank" rel="noopener noreferrer">PDFを開く</a>
           <a class="icat-action" id="icat-dl-link" href="#" download>保存</a>
         </div>
         <button class="icat-close" onclick="icatClose()">✕</button>
@@ -1782,12 +1784,37 @@ let ESTIMATE = [];  // {pn, name, price, qty}
 // ===== 画面ロック =====
 var _lockOk = sessionStorage.getItem('orec_lock') === '1';
 var _lockTarget = '';
+const LOCK_HASH_KEY = 'orec_lock_h2';
+const LOCK_LEGACY_HASH_KEY = 'orec_lock_h';
+const LOCK_SALT = 'orec-sales-doc-tabs-v2';
 function _lh(s) {
   var h = 0;
   for (var i = 0; i < s.length; i++) { h = ((h << 5) - h) + s.charCodeAt(i); h |= 0; }
   return String(h >>> 0);
 }
-var _lockHash = localStorage.getItem('orec_lock_h') || _lh('orec2026');
+var _lockHash = localStorage.getItem(LOCK_LEGACY_HASH_KEY) || _lh('orec2026');
+
+async function _lockDigest(s) {
+  if (!window.crypto || !crypto.subtle || !window.TextEncoder) return 'legacy-' + _lh(LOCK_SALT + ':' + s);
+  var enc = new TextEncoder().encode(LOCK_SALT + ':' + s);
+  var buf = await crypto.subtle.digest('SHA-256', enc);
+  return Array.from(new Uint8Array(buf)).map(function(b) {
+    return b.toString(16).padStart(2, '0');
+  }).join('');
+}
+
+async function _lockVerify(val) {
+  var modern = localStorage.getItem(LOCK_HASH_KEY);
+  var digest = await _lockDigest(val);
+  if (modern && digest === modern) return true;
+  if (!modern && _lh(val) === _lockHash) {
+    localStorage.setItem(LOCK_HASH_KEY, digest);
+    localStorage.removeItem(LOCK_LEGACY_HASH_KEY);
+    _lockHash = '';
+    return true;
+  }
+  return false;
+}
 
 function lockNav(p) {
   if (_lockOk) { nav(p); return; }
@@ -1799,10 +1826,10 @@ function lockNav(p) {
   setTimeout(function() { document.getElementById('lock-input').focus(); }, 100);
 }
 
-function lockSubmit() {
+async function lockSubmit() {
   var val = (document.getElementById('lock-input').value || '').trim();
   if (!val) return;
-  if (_lh(val) === _lockHash) {
+  if (await _lockVerify(val)) {
     _lockOk = true;
     sessionStorage.setItem('orec_lock', '1');
     document.getElementById('lock-modal').classList.remove('open');
@@ -1820,14 +1847,15 @@ function lockClose() {
   document.getElementById('lock-modal').classList.remove('open');
 }
 
-function lockChangeKey() {
+async function lockChangeKey() {
   var cur = (document.getElementById('lock-cur-inp').value || '').trim();
   var nw = (document.getElementById('lock-new-inp').value || '').trim();
   if (!cur || !nw) { alert('両方入力してください'); return; }
-  if (_lh(cur) !== _lockHash) { alert('現在のキーが違います'); return; }
+  if (!(await _lockVerify(cur))) { alert('現在のキーが違います'); return; }
   if (nw.length < 4) { alert('新しいキーは4文字以上にしてください'); return; }
-  _lockHash = _lh(nw);
-  localStorage.setItem('orec_lock_h', _lockHash);
+  localStorage.setItem(LOCK_HASH_KEY, await _lockDigest(nw));
+  localStorage.removeItem(LOCK_LEGACY_HASH_KEY);
+  _lockHash = '';
   document.getElementById('lock-cur-inp').value = '';
   document.getElementById('lock-new-inp').value = '';
   alert('認証キーを変更しました');
@@ -2641,7 +2669,7 @@ const EXCEL_SAVE_NAME_KEY = 'orecExcelSaveFolderName';
 const EXCEL_MIME = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
 function excelOpenSaveFolderLink() {
-  window.open(EXCEL_SAVE_LINK, '_blank', 'noopener');
+  window.open(EXCEL_SAVE_LINK, '_blank', 'noopener,noreferrer');
 }
 
 function excelUpdateSaveFolderLabel() {
@@ -4071,7 +4099,9 @@ async function hkDiagnose() {
 
   /* 1) ListModels: キー自体が有効か & 使えるモデル一覧 */
   try {
-    var lr = await fetch('https://generativelanguage.googleapis.com/v1beta/models?key=' + key);
+    var lr = await fetch('https://generativelanguage.googleapis.com/v1beta/models', {
+      headers: {'x-goog-api-key': key}
+    });
     var lt = await lr.text();
     if (lr.ok) {
       var ld = JSON.parse(lt);
@@ -4086,7 +4116,7 @@ async function hkDiagnose() {
   } catch(e) { out.push('❌ ListModels ネットエラー: ' + e.message); }
   out.push('');
 
-  /* 2) generateContent: クエリ認証 と ヘッダー認証 の両方を試す */
+  /* 2) generateContent: ヘッダー認証で試す（APIキーをURLに出さない） */
   var testBody = JSON.stringify({contents:[{parts:[{text:'Reply {"ok":true}'}]}]});
   var base = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
@@ -4111,9 +4141,6 @@ async function hkDiagnose() {
     } catch(e) { out.push('❌ ' + label + ' ネットエラー: ' + e.message); }
   }
 
-  out.push('【クエリ認証 ?key=】');
-  await _diagGen('query', base + '?key=' + key, {'Content-Type':'application/json'});
-  out.push('');
   out.push('【ヘッダー認証 x-goog-api-key】');
   await _diagGen('header', base, {'Content-Type':'application/json', 'x-goog-api-key': key});
 
@@ -5948,7 +5975,7 @@ function estProdSearchP(id, val) {
   dd._matches = matches;
   dd.innerHTML = matches.map(function(m, i) {
     return '<div class="hk-prod-item" onmousedown="estProdPickP(' + id + ',' + i + ')">' +
-      '<span class="nm">' + m.n + '</span><span class="cd">' + m.c + '</span>' +
+      '<span class="nm">' + _hkEsc(m.n) + '</span><span class="cd">' + _hkEsc(m.c) + '</span>' +
       (m.p != null ? '<span class="pr">¥' + Number(m.p).toLocaleString() + '</span>' : '') + '</div>';
   }).join('');
   dd.classList.add('open');
