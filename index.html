@@ -472,6 +472,14 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 .hk-export-btn{width:100%;padding:15px;background:var(--g);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-top:4px}
 .hk-export-btn:active{background:var(--gd)}
 .hk-export-btn:disabled{background:#aaa;cursor:not-allowed}
+/* 移動処理タブ */
+.ido-ac-wrap{position:relative}
+.ido-wh-pair{display:none}
+#s-ido.ido-type-with_return .ido-wh-pair,#s-ido.ido-type-swap .ido-wh-pair{display:block}
+#s-ido.ido-type-with_return .ido-wh-single,#s-ido.ido-type-swap .ido-wh-single{display:none}
+.ido-return-date{display:none}
+#s-ido.ido-type-with_return .ido-return-date,#s-ido.ido-type-swap .ido-return-date{display:block}
+#s-ido:not(.ido-type-instruction) .ido-prod-add-btn{display:none}
 .hk-reset-btn{width:100%;padding:12px;background:none;border:1.5px solid var(--bd);color:var(--tm);border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Noto Sans JP',sans-serif;margin-top:8px}
 /* AI入力バー */
 .hk-ai-bar{display:flex;flex-direction:column;gap:8px;padding:10px 8px 0;flex-shrink:0}
@@ -1418,18 +1426,160 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
   </div>
 
-  <!-- APIキー設定モーダル -->
-  <div class="hk-apikey-ov" id="hk-apikey-ov">
-    <div class="hk-apikey-box">
-      <div class="hk-apikey-title">⚙ Gemini API Key 設定</div>
-      <div class="hk-apikey-desc">音声入力・写真読み取りに使用します。ブラウザに保存されるため、次回から入力不要です。</div>
-      <input type="password" class="hk-apikey-inp" id="hk-apikey-inp" placeholder="AIza... または AQ...">
-      <div class="hk-apikey-btns">
-        <button class="hk-apikey-save" onclick="hkSaveApiKey()">保存</button>
-        <button class="hk-apikey-cancel" onclick="hkCloseApiKeyModal()">キャンセル</button>
+</div>
+
+<!-- APIキー設定モーダル（画面共通・どのタブからでも開けるようscreen外に配置） -->
+<div class="hk-apikey-ov" id="hk-apikey-ov">
+  <div class="hk-apikey-box">
+    <div class="hk-apikey-title">⚙ Gemini API Key 設定</div>
+    <div class="hk-apikey-desc">音声入力・写真読み取りに使用します。ブラウザに保存されるため、次回から入力不要です。</div>
+    <input type="password" class="hk-apikey-inp" id="hk-apikey-inp" placeholder="AIza... または AQ...">
+    <div class="hk-apikey-btns">
+      <button class="hk-apikey-save" onclick="hkSaveApiKey()">保存</button>
+      <button class="hk-apikey-cancel" onclick="hkCloseApiKeyModal()">キャンセル</button>
+    </div>
+    <button style="width:100%;margin-top:10px;padding:10px;background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif" onclick="hkDiagnose()">🔍 APIキー診断（どのモデルが使えるか確認）</button>
+    <pre id="hk-diag-result" style="margin:8px 0 0;padding:10px;background:#0F172A;color:#A3E635;border-radius:8px;font-size:11px;line-height:1.6;white-space:pre-wrap;display:none"></pre>
+  </div>
+</div>
+
+<!-- 実演機移動書「移動処理」画面 -->
+<div id="s-ido" class="screen ido-type-instruction">
+  <div class="hd">
+    <div class="hd-logo"><span>OR</span></div>
+    <div class="hd-title">移動処理</div>
+    <button class="hk-apikey-set" onclick="hkShowApiKeyModal()" title="Gemini API Key設定" style="margin-left:auto">⚙</button>
+    <button class="back-btn" onclick="nav('home')" style="margin-left:8px">← 戻る</button>
+  </div>
+
+  <!-- AI入力バー -->
+  <div class="hk-ai-bar">
+    <button class="hk-voice-btn" id="ido-voice-btn" onclick="idoVoiceToggle()">🎤 音声・テキスト入力</button>
+  </div>
+  <!-- 音声テキスト入力パネル -->
+  <div class="hk-voice-panel" id="ido-voice-panel">
+    <div class="hk-voice-panel-hd">
+      <span class="hk-voice-panel-title">🎤 音声・テキスト入力</span>
+      <button class="hk-voice-panel-close" onclick="idoVoiceAreaClose()">✕</button>
+    </div>
+    <div class="hk-voice-hint">音声入力で話した内容、またはキーボードで入力 → Geminiが解析してフォームに反映します</div>
+    <div class="hk-voice-input-row">
+      <textarea class="hk-voice-textarea" id="ido-voice-text"
+        placeholder="例: 納入先○○、出庫倉庫011関東広川から入庫倉庫200関東営業所へ、商品RM832A 1台、前回移動番号1234"></textarea>
+    </div>
+    <button class="hk-voice-submit" onclick="idoVoiceSubmit()">✨ Geminiで解析してフォームに入力</button>
+  </div>
+  <div class="hk-ai-status" id="ido-ai-status"></div>
+
+  <div class="fa" id="ido-scroll">
+    <!-- 移動書の種類 -->
+    <div class="fc">
+      <div class="sec-label">移動書の種類</div>
+      <div class="hk-radio-row">
+        <label class="hk-radio-label"><input type="radio" name="ido-type" value="instruction" checked onchange="idoUpdateType()"> 移動指示入力</label>
+        <label class="hk-radio-label"><input type="radio" name="ido-type" value="no_return" onchange="idoUpdateType()"> 移動入力（返却なし）</label>
+        <label class="hk-radio-label"><input type="radio" name="ido-type" value="with_return" onchange="idoUpdateType()"> 移動入力（返却あり）</label>
+        <label class="hk-radio-label"><input type="radio" name="ido-type" value="swap" onchange="idoUpdateType()"> 移動入力（機種交換分）</label>
       </div>
-      <button style="width:100%;margin-top:10px;padding:10px;background:#F1F5F9;border:1.5px solid #CBD5E1;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans JP',sans-serif" onclick="hkDiagnose()">🔍 APIキー診断（どのモデルが使えるか確認）</button>
-      <pre id="hk-diag-result" style="margin:8px 0 0;padding:10px;background:#0F172A;color:#A3E635;border-radius:8px;font-size:11px;line-height:1.6;white-space:pre-wrap;display:none"></pre>
+    </div>
+
+    <!-- 納入先NO -->
+    <div class="fc">
+      <div class="sec-label">納入先NO <span style="font-weight:400;color:var(--tm);font-size:11px">（空欄→社内移動「kt」扱い）</span></div>
+      <div class="hk-code-row">
+        <div class="fr hk-ac-wrap">
+          <label class="fl">納入先名</label>
+          <input type="text" class="fi" id="ido-dest-name" placeholder="空欄でOK（社内移動）" autocomplete="off"
+                 oninput="hkAcSearch(this,'ido-dest-list','ido-dest-name','ido-dest-code')"
+                 onfocus="hkAcOpen(this,'ido-dest-list','ido-dest-name','ido-dest-code')"
+                 onblur="hkAcBlur('ido-dest-list'); hkAcAutofill('ido-dest-name','ido-dest-code')">
+          <div class="hk-ac-list" id="ido-dest-list"></div>
+        </div>
+        <div class="fr hk-code-side">
+          <label class="fl">コード</label>
+          <input type="text" class="fi" id="ido-dest-code" placeholder="kt" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+
+    <!-- 倉庫（種類で構成が変わる） -->
+    <div class="fc ido-wh-single">
+      <div class="sec-label">倉庫</div>
+      <div class="hk-code-row">
+        <div class="fr ido-ac-wrap">
+          <label class="fl">出庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh-out" placeholder="例: 011" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh-out-list')" onfocus="idoWhOpen(this,'ido-wh-out-list')" onblur="idoWhBlur('ido-wh-out-list')">
+          <div class="hk-ac-list" id="ido-wh-out-list"></div>
+        </div>
+        <div class="fr ido-ac-wrap">
+          <label class="fl">入庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh-in" placeholder="例: 200" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh-in-list')" onfocus="idoWhOpen(this,'ido-wh-in-list')" onblur="idoWhBlur('ido-wh-in-list')">
+          <div class="hk-ac-list" id="ido-wh-in-list"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc ido-wh-pair">
+      <div class="sec-label">① 倉庫</div>
+      <div class="hk-code-row">
+        <div class="fr ido-ac-wrap">
+          <label class="fl">出庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh1-out" placeholder="例: 011" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh1-out-list')" onfocus="idoWhOpen(this,'ido-wh1-out-list')" onblur="idoWhBlur('ido-wh1-out-list')">
+          <div class="hk-ac-list" id="ido-wh1-out-list"></div>
+        </div>
+        <div class="fr ido-ac-wrap">
+          <label class="fl">入庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh1-in" placeholder="例: 200" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh1-in-list')" onfocus="idoWhOpen(this,'ido-wh1-in-list')" onblur="idoWhBlur('ido-wh1-in-list')">
+          <div class="hk-ac-list" id="ido-wh1-in-list"></div>
+        </div>
+      </div>
+      <div class="sec-label" style="margin-top:10px">② 倉庫</div>
+      <div class="hk-code-row">
+        <div class="fr ido-ac-wrap">
+          <label class="fl">出庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh2-out" placeholder="例: 013" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh2-out-list')" onfocus="idoWhOpen(this,'ido-wh2-out-list')" onblur="idoWhBlur('ido-wh2-out-list')">
+          <div class="hk-ac-list" id="ido-wh2-out-list"></div>
+        </div>
+        <div class="fr ido-ac-wrap">
+          <label class="fl">入庫倉庫</label>
+          <input type="text" class="fi" id="ido-wh2-in" placeholder="例: 011" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh2-in-list')" onfocus="idoWhOpen(this,'ido-wh2-in-list')" onblur="idoWhBlur('ido-wh2-in-list')">
+          <div class="hk-ac-list" id="ido-wh2-in-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 商品 -->
+    <div class="fc">
+      <div class="sec-label">商品</div>
+      <div id="ido-prod-list"></div>
+      <button type="button" class="hk-prod-add ido-prod-add-btn" onclick="idoAddProd()">＋ 商品を追加（最大5件）</button>
+    </div>
+
+    <!-- 返す機械の日程（返却あり／機種交換のみ） -->
+    <div class="fc ido-return-date">
+      <div class="sec-label">返す機械の日程</div>
+      <div class="fr hk-mini-field">
+        <input type="date" class="fi" id="ido-return-date">
+      </div>
+    </div>
+
+    <!-- 前回移動(指示)番号 -->
+    <div class="fc">
+      <div class="sec-label" id="ido-prevno-label">前回移動指示番号 <span style="font-weight:400;color:var(--tm);font-size:11px">（数字のみ・任意）</span></div>
+      <div class="fr">
+        <input type="text" class="fi" id="ido-prev-no" placeholder="例: 1234" inputmode="numeric">
+      </div>
+    </div>
+
+    <!-- 出力ボタン -->
+    <div style="padding:0 0 8px">
+      <button class="hk-export-btn" onclick="idoExport()" id="ido-export-btn">📊 移動書 Excel を出力</button>
+      <button class="hk-reset-btn" onclick="idoReset()">✕ フォームをリセット</button>
     </div>
   </div>
 </div>
@@ -1574,6 +1724,9 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
   </button>
   <button class="bnav-btn" id="bn-catalog" onclick="nav('catalog')" style="position:relative">
     <span class="ic">📚</span>カタログ<span class="bnav-wip">作成中</span>
+  </button>
+  <button class="bnav-btn" id="bn-ido" onclick="nav('ido')">
+    <span class="ic">📦</span>移動処理
   </button>
 </nav>
 
@@ -2708,6 +2861,9 @@ let _msgAcBlurTimer = null;
 let _msgPartNextId = 0;
 
 const MSG_DEALERS = [{"code":"61102","name":"日本クリントン㈱"},{"code":"61103","name":"東興産業㈱"},{"code":"61105","name":"伊藤産業機械㈱"},{"code":"61106","name":"MSK東急機械㈱　千葉事業所"},{"code":"61107","name":"㈱佐々木商会"},{"code":"61108","name":"杉木鉄工㈱"},{"code":"61109","name":"高野産業㈱"},{"code":"61110","name":"㈱関東甲信クボタ　南関東事業所"},{"code":"61111","name":"㈱中屋商会"},{"code":"61112","name":"㈱中村産業"},{"code":"61113","name":"㈲双葉工機"},{"code":"61114","name":"㈱茂原富国社"},{"code":"61115","name":"茨城菱農㈱"},{"code":"61116","name":"㈱関東甲信クボタ　茨城事務所"},{"code":"61117","name":"大川機械"},{"code":"61118","name":"三菱農機販売㈱　茨城支店"},{"code":"61120","name":"㈱嶋田農機"},{"code":"61121","name":"㈱クボタ　茨城県営業担当"},{"code":"61122","name":"成田加藤農機（有）"},{"code":"61123","name":"㈱クボタ　栃木県営業担当"},{"code":"61124","name":"㈲根本商会"},{"code":"61125","name":"マルテン産業機械㈱"},{"code":"61126","name":"三菱農機販売㈱　千葉支店"},{"code":"61127","name":"㈱クボタ　群馬県営業担当"},{"code":"61133","name":"㈱マキタ沼津　東日本支店"},{"code":"61134","name":"㈱クボタ建機ジャパン千葉営業所"},{"code":"61135","name":"大沢機械"},{"code":"61136","name":"㈱シバタ"},{"code":"61140","name":"㈱マキタ沼津　業務部商品課"},{"code":"61301","name":"カナエ産業㈱"},{"code":"61302","name":"吉澤原動機"},{"code":"61303","name":"㈱宮地機械（出荷停止）"},{"code":"61304","name":"八丈商事"},{"code":"61305","name":"㈱石井電気商店"},{"code":"61306","name":"㈲井合農機店"},{"code":"61307","name":"石井鉄工㈱"},{"code":"61308","name":"㈲井上農機商会"},{"code":"61309","name":"㈲大町農機"},{"code":"61310","name":"㈲木嶋商店"},{"code":"61311","name":"笹曽根農機"},{"code":"61312","name":"深沢農機商会"},{"code":"61313","name":"㈲鈴木農機"},{"code":"61314","name":"住野鉄工所"},{"code":"61315","name":"㈲高橋機械"},{"code":"61317","name":"㈲光港屋商会"},{"code":"61319","name":"宮内機工"},{"code":"61320","name":"㈲港屋農機商会"},{"code":"61321","name":"㈲山木農機店"},{"code":"61322","name":"㈲八日市場農機"},{"code":"61323","name":"㈱大竹産業"},{"code":"61324","name":"㈱竹塚機械店"},{"code":"61325","name":"㈱近藤農工舎"},{"code":"61328","name":"㈱石田機械店"},{"code":"61329","name":"㈱カマリ"},{"code":"61330","name":"平賀機工"},{"code":"61331","name":"㈲谷中農機"},{"code":"61332","name":"石塚農機具店"},{"code":"61333","name":"新菱農機㈱"},{"code":"61334","name":"㈱岡田農機具店"},{"code":"61335","name":"いなば農機サービス"},{"code":"61336","name":"㈱イバノウ"},{"code":"61337","name":"鯉渕カマリ農機"},{"code":"61338","name":"中島ホンダ㈱"},{"code":"61339","name":"㈱足立商会"},{"code":"61340","name":"㈱鹿行シバウラ"},{"code":"61341","name":"㈱川又商会"},{"code":"61342","name":"小松崎機械㈱"},{"code":"61343","name":"㈱石川商会"},{"code":"61344","name":"㈲土子機械店"},{"code":"61345","name":"岡村農機店"},{"code":"61346","name":"㈲渡辺農機商会"},{"code":"61347","name":"㈲佐久間農機店"},{"code":"61348","name":"エースキカイサービス"},{"code":"61349","name":"富田農機"},{"code":"61350","name":"㈲加藤農機商会"},{"code":"61351","name":"㈱中村発動機商会"},{"code":"61352","name":"㈲カサイ"},{"code":"61353","name":"㈱梅沢農機店"},{"code":"61354","name":"㈱安房農機"},{"code":"61355","name":"菅谷機械店"},{"code":"61356","name":"丸勝農機商会"},{"code":"61357","name":"若井㈱"},{"code":"61358","name":"スズキ商会"},{"code":"61359","name":"㈲小沼農機商会"},{"code":"61360","name":"㈲染井金物店"},{"code":"61361","name":"㈱クボタ　神奈川県営業担当"},{"code":"61362","name":"㈲秋山農機"},{"code":"61368","name":"㈲三和商会"},{"code":"61371","name":"山利産業㈱"},{"code":"61372","name":"極東機械産業㈱"},{"code":"61373","name":"㈱クボタ千葉県営業担当"},{"code":"61374","name":"㈲アダチ"},{"code":"61375","name":"㈲カツヤマ"},{"code":"61376","name":"㈲良栄社商会"},{"code":"61377","name":"千葉県農業機械商業協同組合"},{"code":"61400","name":"㈲古宮農蚕機商会"},{"code":"63102","name":"三菱農機販売㈱　関東甲信越支店"},{"code":"63103","name":"㈱関東甲信クボタ　北関東事業所　（栃木）"},{"code":"63105","name":"三菱農機販売㈱　栃木支店"},{"code":"63112","name":"高田酪農機㈱"},{"code":"63301","name":"小比企農機具店"},{"code":"63302","name":"布川農機具店"},{"code":"63303","name":"砂川農機具店"},{"code":"63304","name":"㈱鈴木屋"},{"code":"63305","name":"㈱川田"},{"code":"63306","name":"小平農機商会"},{"code":"63307","name":"㈲斉藤農機商会"},{"code":"63308","name":"㈲川又商会"},{"code":"63309","name":"小池農機"},{"code":"63315","name":"橋本農機（有）"},{"code":"63318","name":"渡辺機械サービス"},{"code":"63319","name":"㈲佐瀬農機具店"},{"code":"63320","name":"㈲植木農機商会"},{"code":"63321","name":"ファームハウスサービス"},{"code":"63322","name":"栃木県農業機械商業共同組合"},{"code":"63324","name":"㈲大坂屋農機"},{"code":"63325","name":"磯農機具店"},{"code":"699012218","name":"ファームマシンマルカツ"},{"code":"63333","name":"茨城県農機具商業協同組合"},{"code":"64101","name":"㈱群馬クボタ"},{"code":"64102","name":"三菱農機販売㈱　群馬支店"},{"code":"64103","name":"㈲美好商会"},{"code":"64104","name":"ムサシ産業機械㈱"},{"code":"64105","name":"倉林機械産業㈱"},{"code":"64106","name":"㈱小和瀬農機商会"},{"code":"64107","name":"埼玉農機㈱"},{"code":"64108","name":"㈲ベルウッド"},{"code":"64109","name":"㈲寺田商会"},{"code":"64110","name":"㈲須永商会"},{"code":"64111","name":"㈱マルナカ　東京オフィス"},{"code":"64112","name":"㈱吉川機械販売"},{"code":"64113","name":"三菱農機販売㈱　南関東支店"},{"code":"64114","name":"㈱ＩＳＥＫＩアグリ"},{"code":"64116","name":"㈱やまびこ"},{"code":"64117","name":"やまびこジャパン㈱"},{"code":"64118","name":"斉藤農機"},{"code":"64119","name":"㈲スダ農機商会"},{"code":"64120","name":"㈱関東甲信クボタ　埼玉事業所"},{"code":"64121","name":"㈱丸山製作所"},{"code":"64122","name":"㈱グラケン"},{"code":"64123","name":"㈱岡山農栄社　関東営業所"},{"code":"64125","name":"エム・エス・ケー農業機械㈱関東支店"},{"code":"64131","name":"ササクボ農機"},{"code":"64132","name":"コマツ埼玉㈱"},{"code":"64133","name":"三幸フォークリフト㈱"},{"code":"64200","name":"㈱クボタ　部品統括部　業務課"},{"code":"64201","name":"㈱中農機商会"},{"code":"64202","name":"群馬県農業機械商業共同組合"},{"code":"64303","name":"関東農機商会"},{"code":"64304","name":"㈲群馬農機商会"},{"code":"64305","name":"群馬ヰセキ販売㈱"},{"code":"64306","name":"㈲群商農機"},{"code":"64307","name":"㈲ケーオー商会"},{"code":"64308","name":"㈲館林農機パレス"},{"code":"64309","name":"㈲トーショウ機械販売"},{"code":"64310","name":"中沢商事㈱"},{"code":"64311","name":"山本農機販売㈱"},{"code":"64312","name":"吉田農機商会"},{"code":"64313","name":"太田農益社"},{"code":"64315","name":"橋本産業㈲"},{"code":"64316","name":"八木農機商会"},{"code":"64317","name":"遊馬農機"},{"code":"64319","name":"㈱秋山農機"},{"code":"64320","name":"㈱石井農機"},{"code":"64321","name":"㈲石井商事"},{"code":"64322","name":"梅沢農機㈱"},{"code":"64324","name":"大島農機商会"},{"code":"64325","name":"金井農機"},{"code":"64326","name":"㈱柿崎商店"},{"code":"64327","name":"㈱トミタモータース"},{"code":"64328","name":"細田農機㈱"},{"code":"64330","name":"益岡工舎"},{"code":"64331","name":"㈲水野機械"},{"code":"64333","name":"㈱レフア"},{"code":"64334","name":"倉林車輌工業㈱"},{"code":"64335","name":"㈱武井農機商店"},{"code":"64337","name":"テラダ商会"},{"code":"64338","name":"㈲森農機"},{"code":"64342","name":"㈲浜田農機"},{"code":"64343","name":"山本産業機械㈱"},{"code":"64345","name":"根岸農機具店"},{"code":"64349","name":"東毛農機商会"},{"code":"64354","name":"カナイ産業㈱"},{"code":"64356","name":"斉藤農機具店"},{"code":"64357","name":"㈱益岡成幸商店"},{"code":"64358","name":"鬼石農機"},{"code":"64359","name":"細田農機㈱"},{"code":"64360","name":"㈲シミズ"},{"code":"64362","name":"野口機械"},{"code":"64366","name":"アオキ種苗㈱"},{"code":"64368","name":"㈲吉田農機"},{"code":"64369","name":"㈱ホソダ"},{"code":"64370","name":"サクラ産業㈱"},{"code":"64371","name":"和光貿易㈱"},{"code":"64372","name":"たじま農機"},{"code":"64375","name":"生研機構"},{"code":"64376","name":"㈱シバタ　幸手工場"},{"code":"64377","name":"中川機工㈱"},{"code":"64379","name":"㈱広洋エンジニアリング"},{"code":"64380","name":"㈱クボタ埼玉県営業担当"},{"code":"64381","name":"㈲明升堂"},{"code":"64382","name":"佐藤農機商会"},{"code":"64383","name":"㈱IHIシバウラ"},{"code":"64384","name":"㈱シバタ　H・C事業部"},{"code":"64391","name":"㈱関東甲信クボタ　群馬事務所"},{"code":"64444","name":"三菱農機㈱　東日本部品基幹センター"},{"code":"64445","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 島根県"},{"code":"65130","name":"㈱相武機械"},{"code":"65131","name":"森長"},{"code":"65132","name":"㈱関東甲信クボタ　静神事業部"},{"code":"65137","name":"㈱エルタ"},{"code":"65323","name":"大竹農機㈱"},{"code":"65347","name":"鴨志田商会"},{"code":"65348","name":"㈱岸田農機商会"},{"code":"65350","name":"さがみ農機"},{"code":"65351","name":"㈲鈴野農機"},{"code":"65352","name":"田中農機商会"},{"code":"65353","name":"㈲三ツ起機械"},{"code":"65354","name":"㈱カーホスピタル中丸"},{"code":"65355","name":"山根賢三商店"},{"code":"65356","name":"㈱石井商会"},{"code":"65357","name":"池田農機店"},{"code":"65358","name":"神奈川県農業機械商業協同組合"},{"code":"65366","name":"㈲小室機械"},{"code":"65374","name":"高橋農機具店"},{"code":"65379","name":"渋谷農機産業"},{"code":"1022516","name":"市津産業㈱"},{"code":"2113703","name":"JA全農神奈川県本部　農機・自動車課"},{"code":"2131009","name":"JA足利サービス（株）"},{"code":"2131012","name":"JAかみつがサービス㈱　日光農機センター"},{"code":"2131068","name":"JAなすのサービス　黒磯農機センター"},{"code":"2131134","name":"JA塩野谷農協　農機センター矢板"},{"code":"2132038","name":"JA利根沼田　オートパル東部"},{"code":"2132117","name":"JA全農ぐんま　榛名ＭＣ"},{"code":"2133006","name":"JA北つくば岩瀬農機センター"},{"code":"2133021","name":"JA茨城みなみ　みなみ農機センター"},{"code":"2133054","name":"JA常陸　十王農機センター"},{"code":"2133055","name":"JA水戸農協　常北農機センター"},{"code":"2133062","name":"JA北つくば　西部農機センター"},{"code":"2133073","name":"JA水戸農協　常澄農機センター"},{"code":"2133075","name":"JAつくば市　桜農機センター"},{"code":"2133107","name":"JA常陸　みなみ農機センター"},{"code":"2133110","name":"JAマシーネ　小美玉"},{"code":"2133115","name":"JA水戸農協　水戸農機センター"},{"code":"2133147","name":"JAなめがた農機燃料㈱　南部農機センター"},{"code":"2134054","name":"JAくまがや　熊谷農機センター"},{"code":"2134057","name":"JAくまがや　江南農機センター"},{"code":"2134071","name":"JAいるま野　北部農機センター"},{"code":"2134072","name":"JAさいたま　指扇支店"},{"code":"2134091","name":"JAいるま野　所沢農機センター"},{"code":"2134092","name":"JAちちぶ農協秩父自動車センター"},{"code":"2134107","name":"JA埼玉中央　東松山農機センター"},{"code":"2135169","name":"JAきみつ　平川農機整備工場"},{"code":"2135181","name":"JA長生農協　睦沢農機センター"},{"code":"2135187","name":"JAきみつ　天羽農機整備工場"},{"code":"2135190","name":"JA市原市　農機センター"},{"code":"2135192","name":"JA安房農協　内房農機ｾﾝﾀｰ"},{"code":"2135198","name":"JA君津市農業協同組合上総農機 SS"},{"code":"2135221","name":"JA西印旛農協　生活部　機械課"},{"code":"2135223","name":"JA木更津市農業協同組合  中郷農機事業 ｾﾝﾀｰ"},{"code":"2135424","name":"JA富里市農機センター"},{"code":"2135428","name":"JA君津総合機械センター"},{"code":"2135542","name":"JAちばみどり　農機センター"},{"code":"2136069","name":"JA東京みらい　農機センター"},{"code":"2136073","name":"JA町田市農協　農機センター"},{"code":"2137003","name":"JA県央愛川経済センター"},{"code":"2137004","name":"JAさがみ農協　綾瀬営農経済"},{"code":"2137008","name":"JAさがみ農協　海老名営農センター"},{"code":"2137010","name":"JAかながわ西部農協農機センター"},{"code":"2137051","name":"JA湘南農協　事業センター農機"},{"code":"2137063","name":"JA全農神奈川県本部　東部きた　農機センター"},{"code":"69009226","name":"㈱上野"},{"code":"69009166","name":"㈲大貫機械店"},{"code":"2231079","name":"㈲岸野農機具店"},{"code":"69009192","name":"㈲木村農機具店"},{"code":"2231094","name":"㈲熊田農機商会"},{"code":"69009167","name":"㈲五味田農機具店"},{"code":"69009168","name":"㈲佐藤農機商会"},{"code":"69009196","name":"伸栄農機販売"},{"code":"69009191","name":"篠崎農機具店"},{"code":"69009195","name":"㈲末広農機"},{"code":"2231147","name":"㈲タカエ"},{"code":"2231198","name":"二光機商"},{"code":"2231203","name":"橋本農機具店"},{"code":"2231212","name":"保坂農機具店"},{"code":"69009160","name":"㈱本多商会"},{"code":"2231233","name":"㈲山口農機"},{"code":"2231304","name":"㈱愛全重車輌"},{"code":"2231432","name":"中屋久作　宇都宮店"},{"code":"69009161","name":"加藤農機㈲"},{"code":"2231652","name":"青木農機具店"},{"code":"2232014","name":"㈲阿部農機商会"},{"code":"2232020","name":"㈲信秀"},{"code":"2232034","name":"㈲カメイ"},{"code":"2232056","name":"㈲共栄"},{"code":"2232089","name":"こいけ農機商会"},{"code":"2232103","name":"㈲清水農機"},{"code":"2232104","name":"シモダ建機(有)"},{"code":"2232160","name":"㈲深町農機"},{"code":"2232175","name":"松沢モータース"},{"code":"2232177","name":"松本農機店"},{"code":"2232184","name":"三山工業㈱"},{"code":"2232454","name":"荻野農機商会"},{"code":"2233001","name":"㈱ｽｽﾞｷｱﾑﾃｯｸ 矢田 ｾﾝﾀｰ"},{"code":"2233089","name":"小瀬屋農機"},{"code":"2233094","name":"片山機械店"},{"code":"2233096","name":"㈲柿沼農機"},{"code":"2233117","name":"㈲島製作所"},{"code":"2233129","name":"㈲鈴機"},{"code":"2233143","name":"東海農工"},{"code":"2233161","name":"㈲広瀬機械店"},{"code":"2233189","name":"㈲渡辺機械店"},{"code":"2233290","name":"㈲沼田農機"},{"code":"2233295","name":"㈱伊藤農機"},{"code":"2233301","name":"栗原農機"},{"code":"2233359","name":"宮城農機"},{"code":"2233364","name":"大和田農機　整備センター"},{"code":"2233367","name":"水戸ケイキ"},{"code":"2233378","name":"飯田機械製作所"},{"code":"2233424","name":"㈲太田農機センター"},{"code":"2234026","name":"㈱ヰセキ関東　埼玉事務所　深谷営業所"},{"code":"2234037","name":"㈲浅野産業"},{"code":"2234049","name":"㈲石塚農機商会"},{"code":"2234054","name":"㈲内沼機械"},{"code":"2234063","name":"カキザキ農機㈱"},{"code":"2234082","name":"倉林農機㈱　寄居営業所"},{"code":"2234114","name":"高橋農機"},{"code":"2234118","name":"㈲武井農機具店"},{"code":"2234119","name":"㈲竹内農機"},{"code":"2234120","name":"㈲竹ノ谷農機"},{"code":"2234170","name":"㈲松本農機"},{"code":"2234173","name":"㈲峯尾農機"},{"code":"2234185","name":"㈲山岸農機"},{"code":"2234192","name":"㈱谷澤商会"},{"code":"2234266","name":"大東農機"},{"code":"2234338","name":"㈱岡田商会"},{"code":"2234648","name":"㈲本多農機"},{"code":"2234691","name":"㈱八潮　埼玉支店"},{"code":"2235002","name":"㈲秋津"},{"code":"2235075","name":"㈱カントー緑地機械"},{"code":"2235513","name":"㈱三基"},{"code":"2235556","name":"㈱タカハシ"},{"code":"69012185","name":"㈲東モータース商会"},{"code":"2235605","name":"㈲石井商会"},{"code":"2235615","name":"㈲吉田機械店"},{"code":"2235620","name":"大塚農機㈲"},{"code":"2235624","name":"㈲柳堀商会"},{"code":"2235638","name":"㈲野島農機"},{"code":"2235671","name":"㈲木村屋金物店"},{"code":"2235673","name":"㈲若梅商会"},{"code":"2235675","name":"㈲三和商会"},{"code":"2235692","name":"旭農機"},{"code":"2235701","name":"地引"},{"code":"2235726","name":"姉崎農機"},{"code":"2235730","name":"正栄産業（株）"},{"code":"2235827","name":"㈲伊勢豊商会"},{"code":"2235968","name":"㈲田川農機"},{"code":"2236078","name":"㈲青木農機具店"},{"code":"2236120","name":"㈲森農機電気商会"},{"code":"2236207","name":"ミクニ機器"},{"code":"2236219","name":"白川産業㈱"},{"code":"2236480","name":"㈲ヤグチキカイ"},{"code":"2236564","name":"建設工機㈱　東京営業所"},{"code":"2237009","name":"安藤農機店"},{"code":"2237034","name":"㈲小林機械"},{"code":"2237045","name":"㈲たちばな農機サービス店"},{"code":"2237060","name":"㈲能條農機店"},{"code":"2237083","name":"建設工機㈱　神奈川営業所"},{"code":"2237337","name":"第一生命総合サービス㈱　緑化部"},{"code":"2367090","name":"美浜建機㈱"},{"code":"2434093","name":"㈱アスク　加須営業所"},{"code":"2434245","name":"柴田機工㈲"},{"code":"2437055","name":"㈱川藤レンタル"},{"code":"4003012","name":"㈱イバジュウ新利根営業所"},{"code":"5026041","name":"㈲清水屋"},{"code":"5026042","name":"レンコーポレーション（株）"},{"code":"5026044","name":"㈲城北工機"},{"code":"29027041","name":"㈱櫛毛商会　事業本部"},{"code":"39011041","name":"カインズホーム　秩父店"},{"code":"39012040","name":"㈲オオシマ"},{"code":"39013031","name":"駿河屋商事㈱"},{"code":"61103901","name":"東興産業㈱　関東工場"},{"code":"61110001","name":"㈱関東甲信クボタ　多古流通センター事業部"},{"code":"61110002","name":"㈱関東甲信クボタ　千葉営業所"},{"code":"61110004","name":"㈱関東甲信クボタ　市原営業所"},{"code":"61110005","name":"㈱関東甲信クボタ　大網営業所"},{"code":"61110006","name":"㈱関東甲信クボタ　成東営業所"},{"code":"61110007","name":"㈱関東甲信クボタ　芝山営業所"},{"code":"61110008","name":"㈱関東甲信クボタ　松尾営業所"},{"code":"61110009","name":"㈱関東甲信クボタ　多古営業所"},{"code":"61110011","name":"㈱関東甲信クボタ　君津営業所"},{"code":"61110012","name":"㈱関東甲信クボタ　横芝光営業所"},{"code":"61110013","name":"㈱関東甲信クボタ　小櫃営業所"},{"code":"61110014","name":"㈱関東甲信クボタ　神崎営業所"},{"code":"61110015","name":"㈱関東甲信クボタ　みなみ営業所"},{"code":"61110018","name":"㈱関東甲信クボタ　印西営業所"},{"code":"61110019","name":"㈱関東甲信クボタ　小見川営業所"},{"code":"61110020","name":"㈱関東甲信クボタ　旭営業所"},{"code":"61110022","name":"㈱関東甲信クボタ　平塚営業所"},{"code":"61110024","name":"㈱関東甲信クボタ　鴻巣営業所"},{"code":"61110025","name":"㈱関東甲信クボタ　東営業所"},{"code":"61110026","name":"㈱関東甲信クボタ　大町出張所"},{"code":"61110029","name":"㈱関東甲信クボタ　稲敷営業所"},{"code":"61110031","name":"㈱関東甲信クボタ　八日市場営業所"},{"code":"61110912","name":"㈱関東甲信クボタ　成東ｻｰﾋﾞｽｾﾝﾀｰ"},{"code":"61115901","name":"茨城菱農㈱　土浦営業所"},{"code":"61115904","name":"茨城菱農㈱　下館営業所"},{"code":"61115906","name":"茨城菱農㈱　下妻営業所"},{"code":"61116001","name":"㈱関東甲信クボタ　下妻営業所"},{"code":"61116002","name":"㈱関東甲信クボタ　つくば営業所"},{"code":"61116004","name":"㈱関東甲信クボタ　境営業所"},{"code":"61116006","name":"㈱関東甲信クボタ　鉾田営業所"},{"code":"61116007","name":"㈱関東甲信クボタ　水海道営業所"},{"code":"61116008","name":"㈱関東甲信クボタ　結城営業所"},{"code":"61116898","name":"茨城近交運輸倉庫（株）　（北関東用）"},{"code":"61116907","name":"㈱関東甲信クボタ　古河営業所"},{"code":"61116005","name":"㈱関東甲信クボタ　谷田部営業所"},{"code":"61116922","name":"㈱関東甲信クボタ　取手営業所"},{"code":"61116926","name":"㈱関東甲信クボタ　茨城流通センター部品"},{"code":"61116935","name":"㈱関東甲信クボタ　新利根倉庫"},{"code":"61116939","name":"㈱関東甲信クボタ　茨城ＲＣ商品課"},{"code":"61118901","name":"ダイヤプラザ太田"},{"code":"61118903","name":"ダイヤプラザ那珂"},{"code":"61118904","name":"ダイヤプラザ茨城"},{"code":"61118907","name":"三菱農機販売㈱　茨城特販課"},{"code":"61125901","name":"マルテン産業機械㈱　天羽営業所"},{"code":"61133853","name":"大和商工㈱　神奈川営業所"},{"code":"61134001","name":"㈱クボタ建機ジャパン　茨城営業所"},{"code":"61134907","name":"㈱クボタ建機ジャパン　埼京営業所"},{"code":"61134911","name":"トーカツ建機産業"},{"code":"61301901","name":"マルマテクニカ（株）　東京事業部"},{"code":"61301909","name":"航空自衛隊　百里基地"},{"code":"61302901","name":"吉澤原動機㈱　機械文雄"},{"code":"61302902","name":"吉澤原動機㈱　埼玉支店"},{"code":"61303901","name":"㈱宮地機械　朝霞倉庫"},{"code":"61324906","name":"石塚農機具店"},{"code":"61324909","name":"㈱竹塚機械店　倉庫"},{"code":"61329901","name":"太田カマリ"},{"code":"61329902","name":"㈱カマリ　米沢営業所"},{"code":"61341901","name":"山田農機具店"},{"code":"61343901","name":"宮下農機"},{"code":"61344902","name":"㈲土子機械店　倉庫"},{"code":"61352901","name":"㈲カサイ　倉庫"},{"code":"61371901","name":"陸上自衛隊木更津駐屯地"},{"code":"61372902","name":"㈱シンコー"},{"code":"61373902","name":"JA佐原市農協農機ＭＣ"},{"code":"63102901","name":"JA宇都宮農協　北部経済センター"},{"code":"63102902","name":"JA宇都宮農協　上河内営農経済センター"},{"code":"63102903","name":"JA那須野農協　湯津上農機センター"},{"code":"63102904","name":"JAはが野農協　北部農機センター"},{"code":"63102905","name":"JA宇都宮農協　西部経済センター"},{"code":"63102906","name":"JA宇都宮農協　南部経済センター"},{"code":"63102907","name":"JA三菱農機㈱　栃木営業所"},{"code":"63102908","name":"JA下野農協　栃木農機センター"},{"code":"63102909","name":"JAいすみ農協　岬農機センター"},{"code":"63102910","name":"JA下野農協　壬生農機センター"},{"code":"63102912","name":"三菱農機㈱　千葉系統推進課"},{"code":"63102913","name":"JA埼玉ひびきの本庄農機センター"},{"code":"63102914","name":"JA越後中央巻農機車両センター"},{"code":"63102916","name":"三菱農機㈱　栃木県系推課"},{"code":"63102917","name":"JA全農栃木はが野広域　農機センター"},{"code":"63102918","name":"JA埼玉ひびきの　神川農機センター"},{"code":"63102919","name":"JA茨城みずほ　太田農機出張所"},{"code":"63102920","name":"JAちばみどり　農機センター"},{"code":"63102922","name":"JA宇都宮上三川　営農経済センター"},{"code":"63102923","name":"JA高崎市　東部農機センター"},{"code":"63102925","name":"JA塩野谷矢板　農機自動車センター"},{"code":"63102929","name":"JAうつのみや　東部経済センター"},{"code":"63102931","name":"JAつくば市　桜農機センター"},{"code":"63102932","name":"JA印西旛　配送センター"},{"code":"63102933","name":"三菱農機㈱　関東系統推進部"},{"code":"63102934","name":"JA安房　南房農機センター"},{"code":"63102935","name":"JA全農ぐんま　高崎東部MC"},{"code":"63102936","name":"JA茨城むつみ　農機車輌センター"},{"code":"63102938","name":"JA全農とちぎ　しもつけ広域農機C"},{"code":"63102939","name":"JAあわ農機センター鴨川"},{"code":"63102940","name":"JA新潟市　大江山農機センター"},{"code":"63102941","name":"JA東葛ふたば　手賀経済センター"},{"code":"63102942","name":"JAひたち野　農機センター"},{"code":"63102943","name":"JA茨城みどり　山方農機センター"},{"code":"63102944","name":"JAひたち高萩　農機センター"},{"code":"63102946","name":"JA茨城みずほ農機センター"},{"code":"63102947","name":"JA常陸　大宮農機センター"},{"code":"63102950","name":"JA全農ぐんま　富士見ＭＣ"},{"code":"63102951","name":"JA全農群馬　高崎北部MC"},{"code":"63102953","name":"JA常陸　北茨城農機センター"},{"code":"63102956","name":"JA常陸　太田農機出張所"},{"code":"63102957","name":"JA常陸　里美農機出張所"},{"code":"63102959","name":"JAうつのみや　農業機械課"},{"code":"63103001","name":"㈱関東甲信クボタ　矢板営業所"},{"code":"63103002","name":"㈱関東甲信クボタ　宇都宮営業所"},{"code":"63103004","name":"㈱関東甲信クボタ　大田原営業所"},{"code":"63103006","name":"㈱関東甲信クボタ　黒磯営業所"},{"code":"63103007","name":"㈱関東甲信クボタ　真岡営業所"},{"code":"63103008","name":"㈱関東甲信クボタ　芳賀営業所"},{"code":"63103009","name":"㈱関東甲信クボタ　西那須野営業所"},{"code":"63103905","name":"㈱関東甲信クボタ　佐野営業所"},{"code":"63103911","name":"池田農機"},{"code":"63103912","name":"㈲星野農機具店"},{"code":"63103913","name":"柴崎農機具店"},{"code":"63103914","name":"大栗自工"},{"code":"63103917","name":"㈱関東甲信クボタ　本社営業所"},{"code":"63103918","name":"吉田農機店"},{"code":"63103919","name":"渕岡農機"},{"code":"63103920","name":"日本ニューホランド㈱"},{"code":"63103921","name":"㈱関東甲信クボタ　小山営業所"},{"code":"63103922","name":"㈱関東甲信クボタ　宇都宮流通センター(部品）"},{"code":"63103923","name":"㈱関東甲信クボタ　芳賀サービスセンター"},{"code":"63103924","name":"㈱関東甲信クボタ　宇都宮流通センター(製品）"},{"code":"63103925","name":"佐藤農機商会"},{"code":"63103926","name":"寺内農機店"},{"code":"63105001","name":"三菱農機販売㈱　矢板営業所"},{"code":"63105902","name":"三菱農機販売㈱　高根沢営業所"},{"code":"63105904","name":"三菱農機販売㈱　西那須野営業所"},{"code":"63105907","name":"㈲小菅農機製作所"},{"code":"63105910","name":"三菱農機販売㈱　気付系推部"},{"code":"63105911","name":"軽部農機具店"},{"code":"63105912","name":"三菱農機販売㈱　那須野が原営業所"},{"code":"63105913","name":"山田農機具店"},{"code":"63112901","name":"高田酪農機㈱　サービスセンター"},{"code":"63112902","name":"高田酪農機㈱　栃木営業所"},{"code":"63112903","name":"高田酪農機㈱　宇都宮本社"},{"code":"63112904","name":"高田酪農機㈱　那須営業所"},{"code":"64101901","name":"㈱群馬クボタ　伊勢崎営業所"},{"code":"64101902","name":"㈱群馬クボタ　富岡営業所"},{"code":"64101905","name":"㈱群馬クボタ　大間々営業所"},{"code":"64101909","name":"㈱群馬クボタ　安中営業所"},{"code":"64101913","name":"㈱群馬クボタ　前橋営業所"},{"code":"64101924","name":"㈱群馬クボタ　児玉営業所"},{"code":"64102902","name":"三菱農機販売㈱　富岡営業所"},{"code":"64102903","name":"三菱農機販売㈱　群馬中央営業所"},{"code":"64102905","name":"三菱農機販売㈱　沼田営業所"},{"code":"64102906","name":"三菱農機販売㈱　中之条営業所"},{"code":"64102907","name":"三菱農機販売㈱　群馬支店　嬬恋営業所"},{"code":"64102908","name":"三菱農機販売㈱　西群馬営業所"},{"code":"64102911","name":"三菱農機販売㈱　藤岡営業所"},{"code":"64102916","name":"三菱農機販売㈱　群馬特販課"},{"code":"64105901","name":"倉林機械産業㈱　深谷営業所"},{"code":"64113901","name":"三菱農機販売㈱　熊谷営業所"},{"code":"64113902","name":"三菱農機販売㈱　加須営業所"},{"code":"64113903","name":"東日本三菱　関東甲信越支社　川島営業所"},{"code":"64117901","name":"やまびこジャパン㈱　東京営業所"},{"code":"64117903","name":"やまびこジャパン㈱　埼群営業所"},{"code":"64117904","name":"やまびこジャパン㈱　茨城営業所"},{"code":"64117905","name":"やまびこジャパン㈱　千葉営業所"},{"code":"64117910","name":"やまびこジャパン㈱　栃木支店"},{"code":"64120001","name":"㈱関東甲信クボタ　川越営業所"},{"code":"64120002","name":"㈱関東甲信クボタ　鴻巣営業所"},{"code":"64121902","name":"㈱丸山製作所　関東営業所"},{"code":"64121904","name":"㈱丸山製作所　栃木営業所"},{"code":"64121907","name":"㈱丸山製作所　東京営業所"},{"code":"64121908","name":"㈱丸山製作所　茨城営業所"},{"code":"64121910","name":"東北丸山㈱　東北物流センター"},{"code":"64121911","name":"東北丸山㈱　千葉物流センター"},{"code":"64122901","name":"㈱グラケン　サービスセンター"},{"code":"64123001","name":"㈱岡山農栄社　関東駐在事務所"},{"code":"64125901","name":"エム・エス・ケー農業機械㈱　東日本支店"},{"code":"64125902","name":"JA沢田農機センター"},{"code":"64125903","name":"エム・エス・ケー農業機械㈱　千葉営業所"},{"code":"64125904","name":"エム・エス・ケー農業機械㈱　栃木営業所"},{"code":"64125905","name":"エム・エス・ケー農業機械㈱　茨城営業所"},{"code":"64125906","name":"エム・エス・ケー農業機械㈱　部品部販売企画チーム"},{"code":"64132901","name":"コマツ埼玉㈱　熊谷支店"},{"code":"64201901","name":"戸口機械店"},{"code":"64305901","name":"群馬ヰセキ販売㈱　太田営業所"},{"code":"64305902","name":"群馬ヰセキ販売㈱　赤堀営業所"},{"code":"64305903","name":"群馬ヰセキ販売㈱　西部営業所"},{"code":"64305904","name":"群馬ヰセキ販売㈱　伊勢崎営業所"},{"code":"64305905","name":"群馬ヰセキ販売㈱　渋川営業所"},{"code":"64305906","name":"群馬ヰセキ販売㈱　館林営業所"},{"code":"64305908","name":"群馬ヰセキ販売㈱　高崎営業所"},{"code":"64320901","name":"㈱石井農機　川越営業所"},{"code":"64320902","name":"㈲石井アグリ"},{"code":"64322901","name":"梅沢農機㈱　深谷営業所"},{"code":"64327001","name":"㈱トミタモータース　久喜営業所"},{"code":"64327003","name":"㈱トミタモータース　北川辺SS"},{"code":"64327004","name":"㈱トミタモータース　行田営業所"},{"code":"64327902","name":"㈱トミタモータース　騎西営業所"},{"code":"64327903","name":"㈱トミタモータース　北川辺SS"},{"code":"64335001","name":"㈱武井農機商店　伊奈工場"},{"code":"64342901","name":"㈲浜田農機　サービスセンター"},{"code":"64359901","name":"細田農機㈱　深谷営業所"},{"code":"64359902","name":"細田農機㈱　菖蒲営業所"},{"code":"64359907","name":"細田農機㈱　吉見営業所"},{"code":"64359909","name":"㈱細田農機　川越営業所"},{"code":"64366901","name":"アオキ種苗㈱　前橋店"},{"code":"64368901","name":"吉田農機　サービスセンター"},{"code":"64369901","name":"㈱ホソダ　羽生営業所"},{"code":"64391001","name":"㈱関東甲信クボタ　前橋営業所"},{"code":"64391002","name":"㈱関東甲信クボタ　群馬西部営業所"},{"code":"64391003","name":"㈱関東甲信クボタ　群馬東部営業所"},{"code":"64391902","name":"㈱関東甲信クボタ　群馬流通センター"},{"code":"64391905","name":"㈱関東甲信クボタ　嬬恋営業所"},{"code":"64445001","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 茨城県"},{"code":"64445002","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 栃木県"},{"code":"64445003","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 群馬県"},{"code":"64445004","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 埼玉県"},{"code":"64445005","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 千葉県"},{"code":"64445006","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 東京都"},{"code":"64445007","name":"三菱ﾏﾋﾝﾄﾞﾗ農機㈱ 神奈川"},{"code":"65132904","name":"㈲鴨志田商会"},{"code":"65132905","name":"㈱東豊商会"},{"code":"65132906","name":"久保田商会"},{"code":"65132907","name":"水奈月商事㈱"},{"code":"65132909","name":"成川種苗農機具店"},{"code":"65132910","name":"関東興産㈱"},{"code":"65358934","name":"㈱関東甲信クボタ　神奈川支店"},{"code":"69007001","name":"いわき機械㈱"},{"code":"69008001","name":"㈲赤城商会"},{"code":"69008002","name":"あきば機械"},{"code":"69008003","name":"㈲安達農機"},{"code":"69008004","name":"阿部農機商会"},{"code":"69008005","name":"荒木農機具店"},{"code":"69008006","name":"飯島農機店"},{"code":"69008007","name":"㈱飯島興産"},{"code":"69008008","name":"飯島農機店"},{"code":"69008009","name":"池田機械店"},{"code":"69008010","name":"和泉商会"},{"code":"69008011","name":"㈱ヰセキ関東　茨城支店　阿見営業所"},{"code":"69008012","name":"㈱ヰセキ関東　茨城支店"},{"code":"69008014","name":"㈱ヰセキ関東　茨城支社　水戸支店"},{"code":"69008015","name":"㈱ヰセキ関東　茨城支店　常総つくば支店"},{"code":"69008016","name":"㈱ヰセキ関東　茨城支社　麻生支店"},{"code":"69008017","name":"㈱ヰセキ関東　茨城支社　石岡営業所"},{"code":"69008018","name":"㈱ヰセキ関東　茨城支社　稲敷営業所"},{"code":"69008019","name":"㈱ヰセキ関東　茨城支店　波崎営業所"},{"code":"69008020","name":"㈱ヰセキ関東　茨城支社　江戸崎営業所"},{"code":"69008022","name":"㈱ヰセキ関東　茨城支社　土浦SS"},{"code":"69008023","name":"㈱ヰセキ関東　茨城支社　藤代支店"},{"code":"69008024","name":"㈱ヰセキ関東　茨城支社　鉾田営業所"},{"code":"69008025","name":"㈱ヰセキ関東　本社倉庫"},{"code":"69008027","name":"㈲糸賀機械店"},{"code":"69008029","name":"茨城建機㈱　機材センター"},{"code":"69008032","name":"海野農機商会"},{"code":"69008033","name":"㈱エヌ・エイチ機工"},{"code":"69008034","name":"㈲エム・エム・サカイ"},{"code":"69008035","name":"大内農機商会"},{"code":"69008036","name":"㈲大竹農機"},{"code":"69008038","name":"大和田農機店"},{"code":"69008039","name":"岡野機械店"},{"code":"69008040","name":"㈱オセヤ"},{"code":"69008041","name":"小田部機械店"},{"code":"69008042","name":"㈲小野瀬農機店"},{"code":"69008043","name":"小野屋機販㈲"},{"code":"69008044","name":"カインズホーム　石岡玉里店"},{"code":"69008045","name":"カインズホーム　神栖店"},{"code":"69008048","name":"カインズホーム　日立店"},{"code":"69008050","name":"㈱鹿島三友鋼機"},{"code":"69008051","name":"桂農機商会"},{"code":"69008052","name":"金久保農機店"},{"code":"69008053","name":"河原井農機"},{"code":"69008054","name":"菊田農機店"},{"code":"69008055","name":"㈱菊地鉄工所"},{"code":"69008056","name":"㈱機材社"},{"code":"69008057","name":"北沢機械店"},{"code":"69008059","name":"久保田機械店"},{"code":"69008060","name":"㈲クボタ商会"},{"code":"69008061","name":"㈲熊野屋製作所"},{"code":"69008062","name":"倉持農機サービス"},{"code":"69008063","name":"倉持農機商会"},{"code":"69008064","name":"黒川農機㈱"},{"code":"69008067","name":"光栄商会"},{"code":"69008068","name":"国利農機具㈱"},{"code":"69008069","name":"小沼商会"},{"code":"69008070","name":"㈱小林農機"},{"code":"69008072","name":"コマツ茨城㈱　つくば支店"},{"code":"69008073","name":"櫻井機械店"},{"code":"69008074","name":"清水農機商会"},{"code":"69008075","name":"（資）集栄社"},{"code":"69008076","name":"ジョイフル山新"},{"code":"69008077","name":"城洋機械㈱"},{"code":"69008078","name":"㈱新萬工舎"},{"code":"69008079","name":"杉山商会"},{"code":"69008080","name":"㈱スズキアムテック"},{"code":"69008081","name":"㈱スズキアムテック　那珂営業所"},{"code":"69008085","name":"㈲大建"},{"code":"69008087","name":"高野機械店"},{"code":"69008088","name":"㈲タチハラ機販"},{"code":"69008089","name":"田所林業"},{"code":"69008090","name":"塚越農機具店"},{"code":"69008091","name":"㈲塚原農機"},{"code":"69008092","name":"㈲塚本農機具店"},{"code":"69008093","name":"㈲塚本農機商会"},{"code":"69008096","name":"㈲富永機械"},{"code":"69008097","name":"ナカ　オセヤ"},{"code":"69008098","name":"㈱中川農機具店"},{"code":"69008099","name":"長沢機械店"},{"code":"69008101","name":"長島商社　農機部"},{"code":"69008102","name":"㈲長浜農機電機商会"},{"code":"69008103","name":"長山機械店"},{"code":"69008104","name":"㈱なめがた中央農機センター"},{"code":"69008105","name":"なめがた農機燃料㈱　玉造農機センター"},{"code":"69008106","name":"なめがた農機燃料㈱　北浦農機センター"},{"code":"69008107","name":"根本農機商会"},{"code":"69008108","name":"㈲ノベキカイシステム"},{"code":"69008109","name":"㈲日向農機具店"},{"code":"69008110","name":"㈱平田建設"},{"code":"69008111","name":"文平産業㈱　土浦営業所"},{"code":"69008112","name":"㈱ベルファーム"},{"code":"69008114","name":"㈱ホソダ　岩井支店"},{"code":"69008116","name":"松沼農機"},{"code":"69008117","name":"（資）松葉農機"},{"code":"69008118","name":"マルエス工業㈱"},{"code":"69008119","name":"㈱マルマン　東サービスセンター"},{"code":"69008120","name":"水沼機械店"},{"code":"69008121","name":"水ノ口農機"},{"code":"69008122","name":"㈱みのり　協和店"},{"code":"69008124","name":"宮川機械店"},{"code":"69008125","name":"宮久保鉄工所"},{"code":"69008126","name":"宮本機械サービス"},{"code":"69008128","name":"㈱村田農機"},{"code":"69008129","name":"村田農機店"},{"code":"69008130","name":"（資）村屋農機店"},{"code":"69008131","name":"㈲明光社"},{"code":"69008133","name":"安田農機店"},{"code":"69008134","name":"谷田川農機店"},{"code":"69008135","name":"谷中商会"},{"code":"69008136","name":"㈲谷中商会本店"},{"code":"69008139","name":"山崎機械"},{"code":"69008140","name":"㈲山田農機"},{"code":"69008141","name":"山田農機具店"},{"code":"69008142","name":"山田農機具店"},{"code":"69008155","name":"横田機械店"},{"code":"69008158","name":"大山機械サービス"},{"code":"69008159","name":"飯塚商店"},{"code":"69008161","name":"㈱トキワ　土浦営業所"},{"code":"69008163","name":"東京産業㈱"},{"code":"69008167","name":"神郡農機"},{"code":"69008168","name":"本沢機械店"},{"code":"69008169","name":"大里機械店"},{"code":"69008170","name":"大沢機械店"},{"code":"69008177","name":"㈱鶴屋金物店"},{"code":"69008180","name":"㈲宮田機械店"},{"code":"69008185","name":"砂川産業㈱"},{"code":"69008186","name":"かみしろ技研"},{"code":"69008187","name":"渡辺農機"},{"code":"69008189","name":"㈱ワカマキ"},{"code":"69008192","name":"クサマ産業㈱"},{"code":"69008195","name":"鈴木農機店"},{"code":"69008199","name":"（合）小野瀬金物店"},{"code":"69008203","name":"㈱ヰセキ関東甲信越　茨城事務所　県西営業所"},{"code":"69008204","name":"須藤重機株"},{"code":"69008209","name":"㈱北畠農機商会"},{"code":"69008211","name":"岩倉農機"},{"code":"69008232","name":"大和田農機　整備センター"},{"code":"69009001","name":"アイコク"},{"code":"69009002","name":"愛農舎"},{"code":"69009005","name":"阿部農機"},{"code":"69009008","name":"㈲安藤農機"},{"code":"69009009","name":"飯野農機具店"},{"code":"69009010","name":"㈲石川"},{"code":"69009011","name":"石塚農機"},{"code":"69009012","name":"㈲石橋農機具店"},{"code":"69009013","name":"㈱ヰセキ関東　栃木支社　宇都宮東営業所"},{"code":"69009014","name":"㈱ヰセキ関東　栃木支社　鹿沼営業所"},{"code":"69009015","name":"㈱ヰセキ関東　栃木支社　黒磯営業所"},{"code":"69009016","name":"㈱ヰセキ関東　栃木支社　宇都宮営業所"},{"code":"69009017","name":"㈱ヰセキ関東　栃木支社　大田原営業所"},{"code":"69009018","name":"㈱ヰセキ関東　栃木支社　小川営業所"},{"code":"69009019","name":"㈱ヰセキ関東　栃木支社"},{"code":"69009020","name":"㈱ヰセキ関東　栃木支社　宇都宮営業所"},{"code":"69009021","name":"㈱ヰセキ関東　栃木支社　真岡営業所"},{"code":"69009022","name":"㈱ヰセキ関東　栃木支社　西那須野営業所"},{"code":"69009023","name":"㈲市村農機店"},{"code":"69009024","name":"岩崎農機店"},{"code":"69009025","name":"㈲海野農機"},{"code":"69009026","name":"梅田農機具店"},{"code":"69009027","name":"㈲大坂屋農機"},{"code":"69009028","name":"㈲大塚機械店"},{"code":"69009030","name":"大山農機具店"},{"code":"69009031","name":"㈱岡本農機"},{"code":"69009032","name":"カインズホーム　足利店"},{"code":"69009034","name":"カインズホーム　宇都宮平出店"},{"code":"69009036","name":"カインズホーム　大平店"},{"code":"69009037","name":"カインズホーム　佐野店"},{"code":"69009038","name":"㈲影山整備"},{"code":"69009039","name":"片柳農機具店"},{"code":"69009040","name":"㈲加藤農機具店"},{"code":"69009041","name":"加藤農機商会"},{"code":"69009043","name":"川島機械店"},{"code":"69009044","name":"㈲川田農機具店"},{"code":"69009045","name":"キジガオ農機具店"},{"code":"69009046","name":"㈲吉新機械店"},{"code":"69009047","name":"㈱黒須商事"},{"code":"69009049","name":"小池機械"},{"code":"69009050","name":"㈲小平農機商会"},{"code":"69009052","name":"後藤農機商会"},{"code":"69009053","name":"コベルコ建機関東㈱　栃南営業所"},{"code":"69009056","name":"嶋崎工機"},{"code":"69009058","name":"㈲しもつけ建機"},{"code":"69009059","name":"上伸ホンダ㈱"},{"code":"69009060","name":"鈴木農機具店"},{"code":"69009061","name":"㈲須藤農機具店"},{"code":"69009062","name":"㈲砂川農機"},{"code":"69009063","name":"㈲関口金物"},{"code":"69009065","name":"ソウトメ機工"},{"code":"69009066","name":"㈲ダイフク"},{"code":"69009067","name":"タカエンジニアリング"},{"code":"69009068","name":"㈲高橋機械"},{"code":"69009069","name":"高橋農機具店"},{"code":"69009070","name":"㈲竹井農機商会"},{"code":"69009071","name":"田辺機材"},{"code":"69009074","name":"鴇崎農機"},{"code":"69009076","name":"栃木農機"},{"code":"69009077","name":"㈲直井農機店"},{"code":"69009078","name":"ナカジマ農機"},{"code":"69009079","name":"㈲長島農機"},{"code":"69009080","name":"㈲仲田農機商会"},{"code":"69009081","name":"㈲中発産業機械"},{"code":"69009082","name":"中村農機具店"},{"code":"69009085","name":"日本ニューホランド㈱　栃木営業所"},{"code":"69009086","name":"野部商事㈱"},{"code":"69009087","name":"㈲菱沼農機商会"},{"code":"69009088","name":"日向野機械"},{"code":"69009089","name":"平山農機"},{"code":"69009090","name":"㈱福田機械店"},{"code":"69009092","name":"防木農機具店"},{"code":"69009093","name":"ブラザーモータース"},{"code":"69009094","name":"増尾サービス"},{"code":"69009095","name":"㈲松本農機"},{"code":"69009097","name":"㈲丸越商会"},{"code":"69009098","name":"㈱瑞穂商会"},{"code":"69009100","name":"㈱みのり　氏家店"},{"code":"69009102","name":"村田重機"},{"code":"69009103","name":"㈲室井農機具店"},{"code":"69009104","name":"柳田農機"},{"code":"69009105","name":"ヤナギ農機店"},{"code":"69009107","name":"山本機械店"},{"code":"69009108","name":"㈱山本農機具店"},{"code":"69009109","name":"山本農機販売㈱"},{"code":"69009115","name":"陽南自動車㈱"},{"code":"69009116","name":"陽南自動車㈱　上三川工場"},{"code":"69009117","name":"㈲横田農機商会"},{"code":"69009118","name":"横山農機(有)南那須センター"},{"code":"69009120","name":"ワークショップ　タナヤ"},{"code":"69009121","name":"石塚農機具店"},{"code":"69009122","name":"三光建機"},{"code":"69009124","name":"㈱足利建機産業"},{"code":"69009126","name":"青島農機具店"},{"code":"69009127","name":"㈲ダイソウ"},{"code":"69009128","name":"㈱ヰセキ関東　栃木支社　小山営業所"},{"code":"69009129","name":"渋井機械店"},{"code":"69009136","name":"大和重機"},{"code":"69009137","name":"ゴーウェル"},{"code":"69009139","name":"㈲三協機材"},{"code":"69009142","name":"㈲嶋田農機具店"},{"code":"69009146","name":"光産業㈱"},{"code":"69009147","name":"豊和産業㈱"},{"code":"69009158","name":"金沢農機具店"},{"code":"69009169","name":"横山農機㈲"},{"code":"69009182","name":"佐取農機"},{"code":"69009220","name":"㈲宇賀神農機"},{"code":"69009223","name":"今市ヤンマー㈲"},{"code":"69009230","name":"㈲金澤農機商会"},{"code":"69009231","name":"栃農機作業所"},{"code":"69009233","name":"島田商会"},{"code":"69009235","name":"㈲せききかいや"},{"code":"69009236","name":"㈱シバタ宇都宮支店"},{"code":"69010001","name":"㈱アオキ"},{"code":"69010004","name":"阿部農機店"},{"code":"69010005","name":"新井商会"},{"code":"69010006","name":"飯島農機店"},{"code":"69010007","name":"飯塚農機"},{"code":"69010008","name":"石井農園㈱"},{"code":"69010009","name":"石川農機サービス"},{"code":"69010010","name":"㈲板倉機械"},{"code":"69010011","name":"㈲井出商事"},{"code":"69010012","name":"いなほ農機サービス"},{"code":"69010013","name":"乾農機二輪"},{"code":"69010015","name":"㈲ウエダキコー"},{"code":"69010016","name":"宇田川農機具店"},{"code":"69010017","name":"㈲エスケイコーポレーション"},{"code":"69010018","name":"遠藤農機"},{"code":"69010019","name":"大島農機"},{"code":"69010020","name":"大槻農機"},{"code":"69010021","name":"大野農機具店"},{"code":"69010022","name":"㈱岡田農蚕機商店"},{"code":"69010023","name":"岡村機工"},{"code":"69010024","name":"萩野農機商会"},{"code":"69010026","name":"小野田農機"},{"code":"69010027","name":"改生商会"},{"code":"69010028","name":"カインズホーム　伊勢崎店"},{"code":"69010029","name":"カインズホーム　大泉店"}];
+
+/* 実演機移動書「移動処理」用 倉庫マスタ（テンプレ内「倉庫」シートより抽出・配送業者行は除外） */
+const IDO_WAREHOUSES = [["001","業務(本社"],["002","OEM 倉庫"],["003","再販品倉庫"],["004","出戻品倉庫"],["005","開発倉庫"],["006","本社サービス倉庫"],["007","本社計画注文"],["008","第二ＯＥＭ"],["009","関物計画注文"],["EG","エンジン倉庫（本社）"],["EGK","エンジン倉庫（本社）"],["Ｈ","引当確定倉庫"],["031","業務(関東物流"],["040","札幌広川"],["042","弘前広川"],["010","仙台広川"],["019","長野広川"],["011","関東広川"],["012","名古屋広川"],["013","岡山広川"],["014","福岡広川"],["015","鹿児島広川"],["016","貿易　広川倉庫"],["017","第一ＯＥＭ　広川倉庫"],["018","第二ＯＥＭ　広川倉庫"],["026","貿易　北米倉庫"],["027","第一ＯＥＭ　城島倉庫"],["028","第二ＯＥＭ　城島倉庫"],["036","貿易 ﾍﾞﾄﾅﾑ"],["041","札幌関東物流"],["043","弘前関東物流"],["032","仙台関東物流"],["034","長野関東物流"],["033","関東関東物流"],["035","名古屋関東物流"],["037","岡山関東物流"],["038","福岡関東物流"],["039","鹿児島関東物流"],["050","輸入部品倉庫"],["060","商品企画倉庫"],["080","花粉事業倉庫"],["090","健康事業倉庫"],["091","グリーンラボ福岡"],["092","ブランディング"],["101","札幌営業所"],["102","弘前営業所"],["100","仙台営業所"],["700","長野営業所"],["200","関東営業所"],["300","名古屋営業所"],["400","岡山営業所"],["030","福岡営業所"],["500","鹿児島営業所"],["1011","札幌営業所（実演機）"],["1021","弘前営業所（実演機）"],["1001","仙台営業所（実演機）"],["7001","長野営業所（実演機）"],["2001","関東営業所（実演機）"],["3001","名古屋営業所（実演機）"],["4001","岡山営業所（実演機）"],["0301","福岡営業所（実演機）"],["5001","鹿児島営業所（実演機）"],["0161","貿易　展示機実演機"],["0171","第一ＯＥＭ　展示機実演機"],["0181","第二ＯＥＭ　展示機実演機"]];
 
 const MSG_EC2 = 'https://dkl5pcrrq8gba.cloudfront.net';
 
@@ -4633,6 +4789,545 @@ function hkReset() {
   var el = document.getElementById('hk-order-date');
   if (el && !el.value) el.value = _hkTodayYmd();
 })();
+
+/* ==============================
+   実演機移動書「移動処理」フォーム (ido*)
+   入力ルール:
+   種類=移動指示入力: K20/C4=納入先NO(空欄→kt) / R20=出庫倉庫 / X20=入庫倉庫 / I22=前回移動指示番号(数字のみ) /
+                     C9-C13・Q9-Q13・S9-S13=商品(最大5件) / D20=8191固定 / U4=作成日時(15時カットオフ)
+   種類=移動入力（返却なし）: C4=納入先NO(直接入力) / F37=出庫倉庫 / L37=入庫倉庫 / C9・C11(Q9・Q11/S9・S11)=商品(2件)
+   種類=移動入力（返却あり）: K20=納入先NO(C4は数式のため触らない) / C9/Q9/S9=①貰う機械 / C11/Q11/S11=②返す機械 /
+                     F48/L48=①倉庫 / F56/L56=②倉庫 / E53=返す機械の日程
+   種類=移動入力（機種交換分）: K20=納入先NO / C9/Q9/S9=もらう機械 / C11/Q11/S11=あげる機械 /
+                     F48/L48=①貸し出し倉庫 / F56/L56=②返却倉庫 / E53=返す日程
+   ============================== */
+const IDO_TEMPLATE_URL = 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/main/assets/ido_template.xlsx?v=20260702';
+
+var IDO_SHEET_NAMES = {
+  instruction: '移動指示入力',
+  no_return: '移動入力（返却なし）',
+  with_return: '移動入力（返却あり）',
+  swap: '移動入力（機種交換分)'
+};
+var IDO_ALL_MOVE_SHEET_NAMES = ['移動指示入力', '移動入力（返却なし）', '移動入力（返却あり）', '移動入力（機種交換分)', '移動入力 ', '移動入力（返却あり） (2)'];
+
+function _idoNormSheetName(s) {
+  return String(s || '').replace(/\s+/g, '').replace(/[)）]/g, ')').replace(/[(（]/g, '(');
+}
+
+var _idoProdNextId = 0;
+var _idoProdMatchesById = {};
+var _idoAcBlurTimers = {};
+
+function idoSetStatus(msg, color) {
+  var el = document.getElementById('ido-ai-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--bk)';
+  el.classList.add('visible');
+}
+
+/* ---- 種類切替 ---- */
+function idoGetType() {
+  var checked = document.querySelector('input[name="ido-type"]:checked');
+  return checked ? checked.value : 'instruction';
+}
+
+function idoProdRoleLabel(type, idx) {
+  if (type === 'with_return') return idx === 0 ? '① 貰う機械' : '② 返す機械';
+  if (type === 'swap') return idx === 0 ? '① もらう機械' : '② あげる機械';
+  return '商品 ' + (idx + 1);
+}
+
+function idoUpdateType() {
+  var type = idoGetType();
+  var screen = document.getElementById('s-ido');
+  if (screen) screen.className = 'screen ido-type-' + type;
+  var btn = document.getElementById('ido-export-btn');
+  if (btn && !btn.disabled) btn.textContent = '📊 ' + IDO_SHEET_NAMES[type] + ' Excel を出力';
+  var label = document.getElementById('ido-prevno-label');
+  if (label) {
+    label.innerHTML = (type === 'instruction' ? '前回移動指示番号' : '前回移動番号') +
+      ' <span style="font-weight:400;color:var(--tm);font-size:11px">（数字のみ・任意）</span>';
+  }
+  idoRebuildProdsForType(type);
+}
+
+function idoRebuildProdsForType(type) {
+  var list = document.getElementById('ido-prod-list');
+  if (!list) return;
+  if (type === 'instruction') {
+    if (!list.querySelector('.ido-prod-card')) idoAddProd();
+    idoUpdateProdLabels();
+    return;
+  }
+  list.innerHTML = '';
+  _idoProdNextId = 0;
+  idoAddProd(); idoAddProd();
+  idoUpdateProdLabels();
+}
+
+function idoUpdateProdLabels() {
+  var type = idoGetType();
+  var cards = document.querySelectorAll('.ido-prod-card');
+  cards.forEach(function(card, i) {
+    var numEl = card.querySelector('.hk-prod-num');
+    if (numEl) numEl.textContent = idoProdRoleLabel(type, i);
+    var del = card.querySelector('.hk-prod-del');
+    if (del) del.style.display = (type === 'instruction' && cards.length > 1) ? '' : 'none';
+  });
+}
+
+/* ---- 商品カード ---- */
+function idoMakeProdCard(id) {
+  return '<div class="hk-prod-card ido-prod-card" data-pid="' + id + '">' +
+    '<div class="hk-prod-head"><span class="hk-prod-num">商品</span>' +
+    '<button type="button" class="hk-prod-del" onclick="idoRemoveProd(' + id + ')">× 削除</button></div>' +
+    '<div class="hk-code-row" style="margin-bottom:10px">' +
+    '<div class="fr" style="position:relative"><label class="fl">商品名（型式）</label>' +
+    '<input type="text" class="fi ido-pr-name" placeholder="例: RM832A" autocomplete="off"' +
+    ' oninput="idoProdSearch(' + id + ',this.value)" onfocus="idoProdSearch(' + id + ',this.value)" onblur="idoProdBlur(' + id + ')">' +
+    '<div class="hk-prod-dd" id="ido-prod-dd-' + id + '"></div></div>' +
+    '<div class="fr hk-code-side"><label class="fl">商品コード</label>' +
+    '<input type="text" class="fi ido-pr-code" placeholder="自動" autocomplete="off" onblur="idoProdCodeLookup(' + id + ',this.value)"></div></div>' +
+    '<div class="hk-compact-row">' +
+    '<div class="fr hk-mini-field"><label class="fl">数量</label>' +
+    '<input type="number" class="fi ido-pr-qty" value="1" min="1" inputmode="numeric"></div>' +
+    '<div class="fr hk-mini-field"><label class="fl">備考／オーダーNo</label>' +
+    '<input type="text" class="fi ido-pr-remark" placeholder="例: クボタ印西"></div>' +
+    '</div></div>';
+}
+
+function idoInitProds() {
+  _idoProdNextId = 0;
+  _idoProdMatchesById = {};
+  var list = document.getElementById('ido-prod-list');
+  if (list) list.innerHTML = '';
+  idoAddProd();
+}
+
+function idoAddProd() {
+  var list = document.getElementById('ido-prod-list');
+  if (!list) return;
+  var type = idoGetType();
+  var count = list.querySelectorAll('.ido-prod-card').length;
+  if (type === 'instruction' && count >= 5) return;
+  if (type !== 'instruction' && count >= 2) return;
+  var id = _idoProdNextId++;
+  var tmp = document.createElement('div');
+  tmp.innerHTML = idoMakeProdCard(id);
+  list.appendChild(tmp.firstElementChild);
+  idoUpdateProdLabels();
+}
+
+function idoRemoveProd(id) {
+  var card = document.querySelector('.ido-prod-card[data-pid="' + id + '"]');
+  if (card) card.remove();
+  if (!document.querySelector('.ido-prod-card')) idoAddProd();
+  idoUpdateProdLabels();
+}
+
+function idoProdSearch(id, val) {
+  var dd = document.getElementById('ido-prod-dd-' + id); if (!dd) return;
+  var matches = hkResolveProducts(val, 25);
+  _idoProdMatchesById[id] = matches;
+  if (!matches.length) { dd.classList.remove('open'); dd.innerHTML = ''; return; }
+  dd.innerHTML = matches.map(function(m, i) {
+    var pr = (m.p != null) ? '¥' + Number(m.p).toLocaleString() : '—';
+    return '<div class="hk-prod-item" onmousedown="idoProdPick(' + id + ',' + i + ')">' +
+      '<span><span class="nm">' + _hkEsc(m.n) + '</span><span class="cd">' + _hkEsc(m.c) + '</span></span>' +
+      '<span class="pr">' + pr + '</span></div>';
+  }).join('');
+  dd.classList.add('open');
+}
+
+function idoProdPick(id, i) {
+  var m = (_idoProdMatchesById[id] || [])[i]; if (!m) return;
+  var card = document.querySelector('.ido-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.ido-pr-name');
+  var codeEl = card.querySelector('.ido-pr-code');
+  if (nameEl) nameEl.value = m.n;
+  if (codeEl) codeEl.value = m.c;
+  var dd = document.getElementById('ido-prod-dd-' + id); if (dd) dd.classList.remove('open');
+}
+
+function idoProdNameNormalize(id) {
+  var card = document.querySelector('.ido-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var nameEl = card.querySelector('.ido-pr-name');
+  var codeEl = card.querySelector('.ido-pr-code');
+  var raw = nameEl ? nameEl.value : '';
+  if (!raw) return;
+  var product = hkResolveAiProduct('', raw);
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+}
+
+function idoProdBlur(id) {
+  setTimeout(function() {
+    var dd = document.getElementById('ido-prod-dd-' + id); if (dd) dd.classList.remove('open');
+    idoProdNameNormalize(id);
+  }, 180);
+}
+
+function idoProdCodeLookup(id, value) {
+  var card = document.querySelector('.ido-prod-card[data-pid="' + id + '"]');
+  if (!card) return;
+  var codeEl = card.querySelector('.ido-pr-code');
+  var nameEl = card.querySelector('.ido-pr-name');
+  var product = hkResolveAiProduct(value, value || (nameEl ? nameEl.value : ''));
+  if (product.c && codeEl) codeEl.value = product.c;
+  if (product.n && nameEl) nameEl.value = hkNormalizeModelName(product.n) || product.n;
+}
+
+function idoGetProducts() {
+  return Array.from(document.querySelectorAll('.ido-prod-card')).map(function(card) {
+    return {
+      pCode: (card.querySelector('.ido-pr-code') || {value:''}).value.trim(),
+      pName: (card.querySelector('.ido-pr-name') || {value:''}).value.trim(),
+      qty: parseInt((card.querySelector('.ido-pr-qty') || {}).value) || 1,
+      remark: (card.querySelector('.ido-pr-remark') || {value:''}).value.trim()
+    };
+  });
+}
+
+/* ---- 倉庫サジェスト ---- */
+function idoWhOpen(inp, listId) { if (inp.value.trim()) idoWhSuggest(inp.value, listId); }
+function idoWhSearch(inp, listId) { idoWhSuggest(inp.value, listId); }
+function idoWhBlur(listId) {
+  _idoAcBlurTimers[listId] = setTimeout(function() {
+    var l = document.getElementById(listId);
+    if (l) { l.classList.remove('open'); l.innerHTML = ''; }
+  }, 200);
+}
+function idoWhSelect(listId, code) {
+  clearTimeout(_idoAcBlurTimers[listId]);
+  var inputId = listId.replace(/-list$/, '');
+  var el = document.getElementById(inputId);
+  if (el) el.value = code;
+  var l = document.getElementById(listId);
+  if (l) { l.classList.remove('open'); l.innerHTML = ''; }
+}
+function idoWhSuggest(q, listId) {
+  q = String(q || '').trim();
+  var list = document.getElementById(listId);
+  if (!list) return;
+  if (!q) { list.classList.remove('open'); list.innerHTML = ''; return; }
+  var qUp = q.toUpperCase();
+  var qn = _hkNorm(q);
+  var results = IDO_WAREHOUSES.filter(function(w) {
+    return w[0].toUpperCase().indexOf(qUp) === 0 || _hkNorm(w[1]).indexOf(qn) >= 0;
+  }).slice(0, 12);
+  if (!results.length) { list.classList.remove('open'); list.innerHTML = ''; return; }
+  list.innerHTML = results.map(function(w) {
+    return '<div class="msg-ac-item two-line" onmousedown="idoWhSelect(\'' + listId + '\',\'' + _msgEscJs(w[0]) + '\')">' +
+      '<span class="msg-ac-name">' + _hkEsc(w[1]) + '</span><span class="msg-ac-code">' + _hkEsc(w[0]) + '</span></div>';
+  }).join('');
+  list.classList.add('open');
+}
+function idoResolveWarehouse(raw) {
+  var s = String(raw || '').trim();
+  if (!s) return '';
+  var exact = IDO_WAREHOUSES.find(function(w) { return w[0].toUpperCase() === s.toUpperCase(); });
+  if (exact) return exact[0];
+  var qn = _hkNorm(s);
+  var byName = IDO_WAREHOUSES.find(function(w) { return _hkNorm(w[1]) === qn; });
+  if (byName) return byName[0];
+  var partial = IDO_WAREHOUSES.find(function(w) { return _hkNorm(w[1]).indexOf(qn) >= 0; });
+  if (partial) return partial[0];
+  return s;
+}
+
+/* ---- 15時カットオフ（作成日時 U4） ---- */
+function _idoU4Serial() {
+  var now = new Date();
+  var ymd = _hkTodayYmd();
+  if (now.getHours() >= 15) {
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    ymd = d.getFullYear() + '-' + _hkPad2(d.getMonth() + 1) + '-' + _hkPad2(d.getDate());
+  }
+  return _hkDateSerial(ymd);
+}
+
+/* ---- 音声・テキスト入力（Gemini） ---- */
+function idoVoiceToggle() {
+  var panel = document.getElementById('ido-voice-panel');
+  var btn = document.getElementById('ido-voice-btn');
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open'); btn.classList.remove('active');
+  } else {
+    panel.classList.add('open'); btn.classList.add('active');
+    setTimeout(function() { document.getElementById('ido-voice-text').focus(); }, 80);
+  }
+}
+function idoVoiceAreaClose() {
+  document.getElementById('ido-voice-panel').classList.remove('open');
+  document.getElementById('ido-voice-btn').classList.remove('active');
+}
+
+function idoBuildTextPrompt(text, type) {
+  var whHint = (type === 'with_return' || type === 'swap')
+    ? '倉庫は①・②の2組(それぞれ出庫倉庫→入庫倉庫)を warehouse1_out/warehouse1_in/warehouse2_out/warehouse2_in に入れてください。'
+    : '倉庫は出庫倉庫→入庫倉庫の1組を warehouse_out/warehouse_in に入れてください。';
+  var prodHint = (type === 'instruction')
+    ? '商品は最大5件、products配列に入れてください。'
+    : '商品は最大2件、products配列に入れてください（①/②の順）。';
+  return '以下のテキストから倉庫間移動書（実演機移動）の情報を抽出してください。JSONのみ返してください（説明不要）。\n\n' +
+    'ルール:\n- 納入先未指定→null（社内移動）\n- 数量未指定→1\n- ' + whHint + '\n- ' + prodHint + '\n' +
+    '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260）\n- prod_name は型式だけ。英数字と / のみ（例: RM832A）\n\n' +
+    'テキスト:「' + text + '」\n\n' +
+    '{\n  "dest_name": "納入先名またはnull",\n  "dest_code": "納入先コードまたはnull",\n' +
+    '  "warehouse_out": "出庫倉庫コードまたはnull",\n  "warehouse_in": "入庫倉庫コードまたはnull",\n' +
+    '  "warehouse1_out": "①出庫倉庫コードまたはnull",\n  "warehouse1_in": "①入庫倉庫コードまたはnull",\n' +
+    '  "warehouse2_out": "②出庫倉庫コードまたはnull",\n  "warehouse2_in": "②入庫倉庫コードまたはnull",\n' +
+    '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "型式またはnull", "qty": 数量, "remark": "備考またはnull"}],\n' +
+    '  "prev_no": "前回移動(指示)番号(数字のみ)またはnull",\n  "return_date": "YYYY-MM-DDまたはnull"\n}';
+}
+
+function idoFillFromAI(json) {
+  var type = idoGetType();
+  if (json.dest_code) {
+    document.getElementById('ido-dest-code').value = json.dest_code;
+    if (json.dest_name) document.getElementById('ido-dest-name').value = json.dest_name;
+  } else if (json.dest_name) {
+    hkFindDealer(json.dest_name, 'ido-dest-name', 'ido-dest-code', null);
+  }
+  if (type === 'with_return' || type === 'swap') {
+    if (json.warehouse1_out) document.getElementById('ido-wh1-out').value = idoResolveWarehouse(json.warehouse1_out) || json.warehouse1_out;
+    if (json.warehouse1_in) document.getElementById('ido-wh1-in').value = idoResolveWarehouse(json.warehouse1_in) || json.warehouse1_in;
+    if (json.warehouse2_out) document.getElementById('ido-wh2-out').value = idoResolveWarehouse(json.warehouse2_out) || json.warehouse2_out;
+    if (json.warehouse2_in) document.getElementById('ido-wh2-in').value = idoResolveWarehouse(json.warehouse2_in) || json.warehouse2_in;
+    if (json.return_date) document.getElementById('ido-return-date').value = json.return_date;
+  } else {
+    if (json.warehouse_out) document.getElementById('ido-wh-out').value = idoResolveWarehouse(json.warehouse_out) || json.warehouse_out;
+    if (json.warehouse_in) document.getElementById('ido-wh-in').value = idoResolveWarehouse(json.warehouse_in) || json.warehouse_in;
+  }
+  if (json.prev_no) document.getElementById('ido-prev-no').value = String(json.prev_no).replace(/\D/g, '');
+  var items = Array.isArray(json.products) && json.products.length ? json.products : [];
+  if (items.length) {
+    var cards = document.querySelectorAll('.ido-prod-card');
+    items.forEach(function(item, i) {
+      if (!cards[i]) { idoAddProd(); cards = document.querySelectorAll('.ido-prod-card'); }
+      var card = cards[i]; if (!card) return;
+      var nameEl = card.querySelector('.ido-pr-name'), codeEl = card.querySelector('.ido-pr-code'),
+          qtyEl = card.querySelector('.ido-pr-qty'), remEl = card.querySelector('.ido-pr-remark');
+      if (item.prod_code || item.prod_name) {
+        var product = hkResolveAiProduct(item.prod_code || '', item.prod_name || '');
+        if (product.c && codeEl) codeEl.value = product.c;
+        if (nameEl) nameEl.value = hkNormalizeModelName(product.n) || item.prod_name || '';
+      }
+      if (qtyEl && item.qty) qtyEl.value = item.qty;
+      if (remEl && item.remark) remEl.value = item.remark;
+    });
+  }
+}
+
+async function idoVoiceSubmit() {
+  var text = document.getElementById('ido-voice-text').value.trim();
+  if (!text) { idoSetStatus('⚠️ テキストを入力してください', '#CC0000'); return; }
+  idoSetStatus('⏳ Geminiで解析中...', '#2563EB');
+  try {
+    var json = await hkCallGemini(idoBuildTextPrompt(text, idoGetType()), null, null);
+    idoFillFromAI(json);
+    idoSetStatus('✅ フォームに反映しました', 'var(--g)');
+    document.getElementById('ido-voice-text').value = '';
+    idoVoiceAreaClose();
+  } catch (ex) { idoSetStatus('❌ ' + ex.message, '#CC0000'); }
+}
+
+/* ---- リセット ---- */
+function idoReset() {
+  ['ido-dest-name','ido-dest-code','ido-wh-out','ido-wh-in','ido-wh1-out','ido-wh1-in','ido-wh2-out','ido-wh2-in','ido-return-date','ido-prev-no'].forEach(function(id) {
+    var el = document.getElementById(id); if (el) el.value = '';
+  });
+  var t = document.querySelector('input[name="ido-type"][value="instruction"]'); if (t) t.checked = true;
+  idoInitProds();
+  idoUpdateType();
+  var status = document.getElementById('ido-ai-status'); if (status) status.classList.remove('visible');
+}
+
+/* ---- Excel出力（テンプレZIP直接上書き方式。引合書hkExport()と同方式） ---- */
+async function idoExport() {
+  var btn = document.getElementById('ido-export-btn');
+  btn.textContent = '📊 出力中...';
+  btn.disabled = true;
+  try {
+    try { hkAcAutofill('ido-dest-name', 'ido-dest-code'); } catch(e) {}
+    var type = idoGetType();
+    var destCode = (document.getElementById('ido-dest-code').value || '').trim() || 'kt';
+    var destName = (document.getElementById('ido-dest-name').value || '').trim();
+    var products = idoGetProducts().filter(function(p) { return p.pCode || p.pName; });
+    if (!products.length) throw new Error('商品を1件以上入力してください');
+    var missingCode = products.find(function(p) { return !p.pCode; });
+    if (missingCode) throw new Error('商品コードが必要です。商品名の候補を選択して、右横のコードが入っているか確認してください。');
+    var prevNo = (document.getElementById('ido-prev-no').value || '').replace(/\D/g, '');
+
+    btn.textContent = '📊 テンプレート取得中...';
+    var resp = await fetch(IDO_TEMPLATE_URL);
+    if (!resp.ok) throw new Error('テンプレート取得失敗: ' + resp.status);
+    var buf = await resp.arrayBuffer();
+    var zip = await JSZip.loadAsync(buf);
+
+    var wbXml = await zip.file('xl/workbook.xml').async('string');
+    var wbRels = await zip.file('xl/_rels/workbook.xml.rels').async('string');
+    var tags = wbXml.match(/<sheet\b[^>]*>/g) || [];
+    var targetNorm = _idoNormSheetName(IDO_SHEET_NAMES[type]);
+    var moveNamesNorm = IDO_ALL_MOVE_SHEET_NAMES.map(_idoNormSheetName);
+    var rid = null, sheetTag = null, sheetIndex = 0;
+    for (var i = 0; i < tags.length; i++) {
+      var nm = tags[i].match(/name="([^"]*)"/);
+      if (!nm) continue;
+      var nameNorm = _idoNormSheetName(nm[1]);
+      if (nameNorm === targetNorm) {
+        var ridM = tags[i].match(/r:id="(rId\d+)"/);
+        if (ridM) { rid = ridM[1]; sheetTag = tags[i]; sheetIndex = i; }
+      }
+    }
+    if (!rid) throw new Error('シート「' + IDO_SHEET_NAMES[type] + '」が見つかりません');
+    if (/state="hidden"/.test(sheetTag)) wbXml = wbXml.replace(sheetTag, sheetTag.replace(/\sstate="hidden"/, ''));
+    for (var hi = 0; hi < tags.length; hi++) {
+      if (tags[hi] === sheetTag) continue;
+      var nm2 = tags[hi].match(/name="([^"]*)"/);
+      if (!nm2) continue;
+      var nameNorm2 = _idoNormSheetName(nm2[1]);
+      if (moveNamesNorm.indexOf(nameNorm2) >= 0 && !/state="hidden"/.test(tags[hi])) {
+        wbXml = wbXml.replace(tags[hi], tags[hi].replace('<sheet ', '<sheet state="hidden" '));
+      }
+    }
+    var tm = wbRels.match(new RegExp('Id="' + rid + '"[^>]*Target="([^"]+)"'))
+          || wbRels.match(new RegExp('Target="([^"]+)"[^>]*Id="' + rid + '"'));
+    if (!tm) throw new Error('シート参照の解決に失敗');
+    var sheetPath = 'xl/' + tm[1].replace(/^\/?xl\//, '').replace(/^\//, '');
+    var sx = await zip.file(sheetPath).async('string');
+
+    function setWbViewAttr(attrs, name, value) {
+      var re = new RegExp('\\s' + name + '="[^"]*"');
+      attrs = attrs.replace(re, '');
+      return attrs + ' ' + name + '="' + value + '"';
+    }
+    wbXml = wbXml.replace(/<workbookView\b([^>]*?)\/>/, function(m, attrs) {
+      attrs = setWbViewAttr(attrs, 'activeTab', sheetIndex);
+      attrs = setWbViewAttr(attrs, 'firstSheet', sheetIndex);
+      return '<workbookView' + attrs + '/>';
+    });
+    var worksheetFiles = zip.file(/^xl\/worksheets\/sheet\d+\.xml$/) || [];
+    for (var wf = 0; wf < worksheetFiles.length; wf++) {
+      if (worksheetFiles[wf].name === sheetPath) continue;
+      var wx = await worksheetFiles[wf].async('string');
+      if (wx.indexOf('tabSelected="1"') >= 0) zip.file(worksheetFiles[wf].name, wx.replace(/\stabSelected="1"/g, ''));
+    }
+    sx = sx.replace(/\stabSelected="1"/g, '');
+    sx = sx.replace(/<sheetView\b([^>]*)>/, function(m, attrs) {
+      var selfClosing = /\/\s*$/.test(attrs);
+      var cleanAttrs = attrs.replace(/\/\s*$/, '');
+      return '<sheetView' + cleanAttrs + ' tabSelected="1"' + (selfClosing ? '/>' : '>');
+    });
+
+    var ssXml = await zip.file('xl/sharedStrings.xml').async('string');
+    var siAdd = [];
+    var nextSi = parseInt((ssXml.match(/uniqueCount="(\d+)"/) || [0, 0])[1], 10);
+    function _find(ref) { var re = new RegExp('<c r="' + ref + '"([^>]*?)(?:/>|>[\\s\\S]*?</c>)'); var m = sx.match(re); return m ? { re: re, attrs: m[1] } : null; }
+    function _sa(attrs) { var sm = attrs.match(/\ss="\d+"/); return sm ? sm[0] : ''; }
+    function setNum(ref, num) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '><v>' + num + '</v></c>'); }
+    function setStr(ref, str) { var c = _find(ref); if (!c) return; var idx = nextSi++; siAdd.push('<si><t xml:space="preserve">' + _hkXmlEsc(str) + '</t></si>'); sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + ' t="s"><v>' + idx + '</v></c>'); }
+    function clearCell(ref) { var c = _find(ref); if (!c) return; sx = sx.replace(c.re, '<c r="' + ref + '"' + _sa(c.attrs) + '/>'); }
+    function setCode(ref, code) { if (/^\d+$/.test(code)) setNum(ref, parseInt(code, 10)); else setStr(ref, code); }
+
+    setNum('D20', 8191);
+    setNum('U4', _idoU4Serial());
+
+    function writeProdRow(row, p) {
+      if (p && p.pCode) {
+        setStr('C' + row, p.pCode);
+        setNum('Q' + row, p.qty || 1);
+        if (p.remark) setStr('S' + row, p.remark); else clearCell('S' + row);
+      } else {
+        clearCell('C' + row); clearCell('Q' + row); clearCell('S' + row);
+      }
+    }
+
+    if (type === 'instruction') {
+      setCode('K20', destCode);
+      setCode('C4', destCode);
+      var whOut = idoResolveWarehouse(document.getElementById('ido-wh-out').value);
+      var whIn = idoResolveWarehouse(document.getElementById('ido-wh-in').value);
+      if (whOut) setStr('R20', whOut); else clearCell('R20');
+      if (whIn) setStr('X20', whIn); else clearCell('X20');
+      if (prevNo) setStr('I22', prevNo); else clearCell('I22');
+      for (var r = 9; r <= 13; r++) writeProdRow(r, products[r - 9]);
+    } else if (type === 'no_return') {
+      setCode('C4', destCode);
+      var nwOut = idoResolveWarehouse(document.getElementById('ido-wh-out').value);
+      var nwIn = idoResolveWarehouse(document.getElementById('ido-wh-in').value);
+      if (nwOut) setStr('F37', nwOut); else clearCell('F37');
+      if (nwIn) setStr('L37', nwIn); else clearCell('L37');
+      writeProdRow(9, products[0]);
+      writeProdRow(11, products[1]);
+    } else {
+      // with_return / swap
+      setCode('K20', destCode);
+      var w1Out = idoResolveWarehouse(document.getElementById('ido-wh1-out').value);
+      var w1In = idoResolveWarehouse(document.getElementById('ido-wh1-in').value);
+      var w2Out = idoResolveWarehouse(document.getElementById('ido-wh2-out').value);
+      var w2In = idoResolveWarehouse(document.getElementById('ido-wh2-in').value);
+      if (w1Out) setStr('F48', w1Out); else clearCell('F48');
+      if (w1In) setStr('L48', w1In); else clearCell('L48');
+      if (w2Out) setStr('F56', w2Out); else clearCell('F56');
+      if (w2In) setStr('L56', w2In); else clearCell('L56');
+      var returnDate = document.getElementById('ido-return-date').value;
+      if (returnDate) setNum('E53', _hkDateSerial(returnDate)); else clearCell('E53');
+      writeProdRow(9, products[0]);
+      writeProdRow(11, products[1]);
+    }
+
+    // ※数式セル・22行目以降・印刷設定・罫線・図形は一切触らない
+    zip.file(sheetPath, sx);
+
+    if (siAdd.length) {
+      ssXml = ssXml.replace('</sst>', siAdd.join('') + '</sst>');
+      ssXml = ssXml.replace(/uniqueCount="\d+"/, 'uniqueCount="' + nextSi + '"');
+      var cm = ssXml.match(/<sst[^>]*?\scount="(\d+)"/);
+      if (cm) ssXml = ssXml.replace(/(<sst[^>]*?\s)count="\d+"/, '$1count="' + (parseInt(cm[1], 10) + siAdd.length) + '"');
+      zip.file('xl/sharedStrings.xml', ssXml);
+    }
+
+    if (/<calcPr\b/.test(wbXml)) {
+      if (!/fullCalcOnLoad/.test(wbXml)) wbXml = wbXml.replace(/<calcPr\b([^>]*?)\/>/, '<calcPr$1 fullCalcOnLoad="1"/>');
+    } else {
+      wbXml = wbXml.replace('</workbook>', '<calcPr fullCalcOnLoad="1"/></workbook>');
+    }
+    zip.file('xl/workbook.xml', wbXml);
+
+    if (zip.file('xl/calcChain.xml')) {
+      zip.remove('xl/calcChain.xml');
+      var ct = await zip.file('[Content_Types].xml').async('string');
+      ct = ct.replace(/<Override PartName="\/xl\/calcChain\.xml"[^>]*\/>/, '');
+      zip.file('[Content_Types].xml', ct);
+      var wr = await zip.file('xl/_rels/workbook.xml.rels').async('string');
+      wr = wr.replace(/<Relationship[^>]*Target="calcChain\.xml"[^>]*\/>/, '');
+      zip.file('xl/_rels/workbook.xml.rels', wr);
+    }
+
+    var fileDate = _hkTodayMmdd();
+    var fileDestName = _hkFilePart(destName);
+    var fileName = '移動書_' + IDO_SHEET_NAMES[type].replace(/[()（）]/g, '') + '_' + fileDate + (fileDestName ? '_' + fileDestName : '') + '.xlsx';
+    var out = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(out);
+    a.download = fileName;
+    document.body.appendChild(a); a.click();
+    setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+    btn.textContent = '✅ ダウンロード完了！';
+    setTimeout(function() { btn.disabled = false; idoUpdateType(); }, 2500);
+  } catch (e) {
+    btn.textContent = '❌ エラー: ' + e.message;
+    idoSetStatus('❌ ' + e.message, '#CC0000');
+    setTimeout(function() { btn.disabled = false; idoUpdateType(); }, 3500);
+  }
+}
+
+(function() { idoInitProds(); })();
 
 /* ==============================
    見積書フォーム (est*)
