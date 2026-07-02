@@ -483,8 +483,14 @@ input.msg-autofilled{border-color:var(--g);background:var(--gl)}
 /* 移動処理タブ */
 .ido-ac-wrap{position:relative}
 .ido-wh-pair{display:none}
-#s-ido.ido-type-with_return .ido-wh-pair,#s-ido.ido-type-swap .ido-wh-pair{display:block}
-#s-ido.ido-type-with_return .ido-wh-single,#s-ido.ido-type-swap .ido-wh-single{display:none}
+#s-ido.ido-type-no_return .ido-wh-pair,#s-ido.ido-type-with_return .ido-wh-pair,#s-ido.ido-type-swap .ido-wh-pair{display:block}
+#s-ido.ido-type-no_return .ido-wh-single,#s-ido.ido-type-with_return .ido-wh-single,#s-ido.ido-type-swap .ido-wh-single{display:none}
+.ido-wh-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ido-wh-row-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ido-wh1-in2{display:none}
+#s-ido.ido-type-swap .ido-wh1-in2{display:block}
+#s-ido.ido-type-swap .ido-wh-row-1{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ido-wh-note{font-size:10px;color:var(--tm);margin-top:4px}
 .ido-return-date{display:none}
 #s-ido.ido-type-with_return .ido-return-date,#s-ido.ido-type-swap .ido-return-date{display:block}
 #s-ido:not(.ido-type-instruction) .ido-prod-add-btn{display:none}
@@ -1529,9 +1535,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     </div>
 
     <!-- 倉庫（種類で構成が変わる） -->
+    <!-- 移動指示入力: 出庫 → 入庫① → 入庫②（②は控え用・移動書には①まで記入） -->
     <div class="fc ido-wh-single">
       <div class="sec-label">倉庫</div>
-      <div class="hk-code-row">
+      <div class="ido-wh-row ido-wh-row-3">
         <div class="fr ido-ac-wrap">
           <label class="fl">出庫倉庫</label>
           <input type="text" class="fi" id="ido-wh-out" placeholder="例: 011" autocomplete="off"
@@ -1539,16 +1546,24 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <div class="hk-ac-list" id="ido-wh-out-list"></div>
         </div>
         <div class="fr ido-ac-wrap">
-          <label class="fl">入庫倉庫</label>
+          <label class="fl">入庫倉庫①</label>
           <input type="text" class="fi" id="ido-wh-in" placeholder="例: 200" autocomplete="off"
                  oninput="idoWhSearch(this,'ido-wh-in-list')" onfocus="idoWhOpen(this,'ido-wh-in-list')" onblur="idoWhBlur('ido-wh-in-list')">
           <div class="hk-ac-list" id="ido-wh-in-list"></div>
         </div>
+        <div class="fr ido-ac-wrap">
+          <label class="fl">入庫倉庫②</label>
+          <input type="text" class="fi" id="ido-wh-in2" placeholder="例: 2001" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh-in2-list')" onfocus="idoWhOpen(this,'ido-wh-in2-list')" onblur="idoWhBlur('ido-wh-in2-list')">
+          <div class="hk-ac-list" id="ido-wh-in2-list"></div>
+        </div>
       </div>
+      <div class="ido-wh-note">※移動書には出庫倉庫と入庫倉庫①が記入されます（入庫倉庫②は控え用）</div>
     </div>
+    <!-- 返却なし・返却あり・機種交換: 機械ごとに出庫→入庫のペア（ラベルはJSで種類別に設定） -->
     <div class="fc ido-wh-pair">
-      <div class="sec-label">① 倉庫</div>
-      <div class="hk-code-row">
+      <div class="sec-label" id="ido-wh1-label">① 倉庫</div>
+      <div class="ido-wh-row ido-wh-row-1">
         <div class="fr ido-ac-wrap">
           <label class="fl">出庫倉庫</label>
           <input type="text" class="fi" id="ido-wh1-out" placeholder="例: 011" autocomplete="off"
@@ -1561,9 +1576,16 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
                  oninput="idoWhSearch(this,'ido-wh1-in-list')" onfocus="idoWhOpen(this,'ido-wh1-in-list')" onblur="idoWhBlur('ido-wh1-in-list')">
           <div class="hk-ac-list" id="ido-wh1-in-list"></div>
         </div>
+        <div class="fr ido-ac-wrap ido-wh1-in2">
+          <label class="fl">入庫倉庫②</label>
+          <input type="text" class="fi" id="ido-wh1-in2" placeholder="例: 2001" autocomplete="off"
+                 oninput="idoWhSearch(this,'ido-wh1-in2-list')" onfocus="idoWhOpen(this,'ido-wh1-in2-list')" onblur="idoWhBlur('ido-wh1-in2-list')">
+          <div class="hk-ac-list" id="ido-wh1-in2-list"></div>
+        </div>
       </div>
-      <div class="sec-label" style="margin-top:10px">② 倉庫</div>
-      <div class="hk-code-row">
+      <div class="ido-wh-note ido-wh1-in2">※移動書には入庫倉庫①までが記入されます（入庫倉庫②は控え用）</div>
+      <div class="sec-label" id="ido-wh2-label" style="margin-top:10px">② 倉庫</div>
+      <div class="ido-wh-row">
         <div class="fr ido-ac-wrap">
           <label class="fl">出庫倉庫</label>
           <input type="text" class="fi" id="ido-wh2-out" placeholder="例: 013" autocomplete="off"
@@ -5125,6 +5147,21 @@ function idoUpdateType() {
     label.innerHTML = (type === 'instruction' ? '前回移動指示番号' : '前回移動番号') +
       ' <span style="font-weight:400;color:var(--tm);font-size:11px">（数字のみ・任意）</span>';
   }
+  /* 倉庫ペアのラベル: どの機械の移動か明示（あげる=当方出庫→先方入庫 / もらう=先方出庫→当方入庫） */
+  var wl1 = document.getElementById('ido-wh1-label');
+  var wl2 = document.getElementById('ido-wh2-label');
+  if (wl1 && wl2) {
+    if (type === 'no_return') {
+      wl1.textContent = '① あげる機械の倉庫（当方 出庫 → 先方 入庫）';
+      wl2.textContent = '② もらう機械の倉庫（先方 出庫 → 当方 入庫）';
+    } else if (type === 'with_return') {
+      wl1.textContent = '① もらう機械の倉庫（先方 出庫 → 当方 入庫）';
+      wl2.textContent = '② 返す機械の倉庫（当方 出庫 → 先方 入庫）';
+    } else if (type === 'swap') {
+      wl1.textContent = '① もらう機械の倉庫（先方 出庫 → 当方 入庫）';
+      wl2.textContent = '② あげる機械の倉庫（当方 出庫 → 先方 入庫）';
+    }
+  }
   idoRebuildProdsForType(type);
 }
 
@@ -5370,9 +5407,16 @@ function idoVoiceAreaClose() {
 }
 
 function idoBuildTextPrompt(text, type) {
-  var whHint = (type === 'with_return' || type === 'swap')
-    ? '倉庫は①・②の2組(それぞれ出庫倉庫→入庫倉庫)を warehouse1_out/warehouse1_in/warehouse2_out/warehouse2_in に入れてください。'
-    : '倉庫は出庫倉庫→入庫倉庫の1組を warehouse_out/warehouse_in に入れてください。';
+  var whHint;
+  if (type === 'instruction') {
+    whHint = '倉庫は出庫倉庫→入庫倉庫①→入庫倉庫②(任意)を warehouse_out/warehouse_in/warehouse_in2 に入れてください。';
+  } else if (type === 'no_return') {
+    whHint = '倉庫は①あげる機械(当方出庫→先方入庫)を warehouse1_out/warehouse1_in、②もらう機械(先方出庫→当方入庫)を warehouse2_out/warehouse2_in に入れてください。片方だけの場合は該当する組のみ。';
+  } else if (type === 'with_return') {
+    whHint = '倉庫は①もらう機械(先方出庫→当方入庫)を warehouse1_out/warehouse1_in、②返す機械(当方出庫→先方入庫)を warehouse2_out/warehouse2_in に入れてください。';
+  } else {
+    whHint = '倉庫は①もらう機械(先方出庫→当方入庫)を warehouse1_out/warehouse1_in(最終入庫先があれば warehouse1_in2)、②あげる機械(当方出庫→先方入庫)を warehouse2_out/warehouse2_in に入れてください。';
+  }
   var prodHint = (type === 'instruction')
     ? '商品は最大5件、products配列に入れてください。'
     : '商品は最大2件、products配列に入れてください（①/②の順）。';
@@ -5381,8 +5425,8 @@ function idoBuildTextPrompt(text, type) {
     '- prod_code は商品コードだけ。数字とハイフンのみ（例: 0353-0260）\n- prod_name は型式だけ。英数字と / のみ（例: RM832A）\n\n' +
     'テキスト:「' + text + '」\n\n' +
     '{\n  "dest_name": "納入先名またはnull",\n  "dest_code": "納入先コードまたはnull",\n' +
-    '  "warehouse_out": "出庫倉庫コードまたはnull",\n  "warehouse_in": "入庫倉庫コードまたはnull",\n' +
-    '  "warehouse1_out": "①出庫倉庫コードまたはnull",\n  "warehouse1_in": "①入庫倉庫コードまたはnull",\n' +
+    '  "warehouse_out": "出庫倉庫コードまたはnull",\n  "warehouse_in": "入庫倉庫①コードまたはnull",\n  "warehouse_in2": "入庫倉庫②コードまたはnull",\n' +
+    '  "warehouse1_out": "①出庫倉庫コードまたはnull",\n  "warehouse1_in": "①入庫倉庫コードまたはnull",\n  "warehouse1_in2": "①最終入庫倉庫コードまたはnull",\n' +
     '  "warehouse2_out": "②出庫倉庫コードまたはnull",\n  "warehouse2_in": "②入庫倉庫コードまたはnull",\n' +
     '  "products": [{"prod_code": "商品コードまたはnull", "prod_name": "型式またはnull", "qty": 数量, "remark": "備考またはnull"}],\n' +
     '  "prev_no": "前回移動(指示)番号(数字のみ)またはnull",\n  "return_date": "YYYY-MM-DDまたはnull"\n}';
@@ -5396,15 +5440,17 @@ function idoFillFromAI(json) {
   } else if (json.dest_name) {
     hkFindDealer(json.dest_name, 'ido-dest-name', 'ido-dest-code', null);
   }
-  if (type === 'with_return' || type === 'swap') {
+  if (type === 'with_return' || type === 'swap' || type === 'no_return') {
     if (json.warehouse1_out) document.getElementById('ido-wh1-out').value = idoResolveWarehouse(json.warehouse1_out) || json.warehouse1_out;
     if (json.warehouse1_in) document.getElementById('ido-wh1-in').value = idoResolveWarehouse(json.warehouse1_in) || json.warehouse1_in;
+    if (type === 'swap' && json.warehouse1_in2) document.getElementById('ido-wh1-in2').value = idoResolveWarehouse(json.warehouse1_in2) || json.warehouse1_in2;
     if (json.warehouse2_out) document.getElementById('ido-wh2-out').value = idoResolveWarehouse(json.warehouse2_out) || json.warehouse2_out;
     if (json.warehouse2_in) document.getElementById('ido-wh2-in').value = idoResolveWarehouse(json.warehouse2_in) || json.warehouse2_in;
-    if (json.return_date) document.getElementById('ido-return-date').value = json.return_date;
+    if (json.return_date && type !== 'no_return') document.getElementById('ido-return-date').value = json.return_date;
   } else {
     if (json.warehouse_out) document.getElementById('ido-wh-out').value = idoResolveWarehouse(json.warehouse_out) || json.warehouse_out;
     if (json.warehouse_in) document.getElementById('ido-wh-in').value = idoResolveWarehouse(json.warehouse_in) || json.warehouse_in;
+    if (json.warehouse_in2) document.getElementById('ido-wh-in2').value = idoResolveWarehouse(json.warehouse_in2) || json.warehouse_in2;
   }
   if (json.prev_no) document.getElementById('ido-prev-no').value = String(json.prev_no).replace(/\D/g, '');
   var items = Array.isArray(json.products) && json.products.length ? json.products : [];
@@ -5441,7 +5487,7 @@ async function idoVoiceSubmit() {
 
 /* ---- リセット ---- */
 function idoReset() {
-  ['ido-dest-name','ido-dest-code','ido-wh-out','ido-wh-in','ido-wh1-out','ido-wh1-in','ido-wh2-out','ido-wh2-in','ido-return-date','ido-prev-no'].forEach(function(id) {
+  ['ido-dest-name','ido-dest-code','ido-wh-out','ido-wh-in','ido-wh-in2','ido-wh1-out','ido-wh1-in','ido-wh1-in2','ido-wh2-out','ido-wh2-in','ido-return-date','ido-prev-no'].forEach(function(id) {
     var el = document.getElementById(id); if (el) el.value = '';
   });
   var t = document.querySelector('input[name="ido-type"][value="instruction"]'); if (t) t.checked = true;
@@ -5561,10 +5607,16 @@ async function idoExport() {
       for (var r = 9; r <= 13; r++) writeProdRow(r, products[r - 9]);
     } else if (type === 'no_return') {
       setCode('C4', destCode);
-      var nwOut = idoResolveWarehouse(document.getElementById('ido-wh-out').value);
-      var nwIn = idoResolveWarehouse(document.getElementById('ido-wh-in').value);
-      if (nwOut) setStr('F37', nwOut); else clearCell('F37');
-      if (nwIn) setStr('L37', nwIn); else clearCell('L37');
+      /* ①あげる機械（当方出庫→先方入庫）＝振替欄 F37/L37 */
+      var g1Out = idoResolveWarehouse(document.getElementById('ido-wh1-out').value);
+      var g1In = idoResolveWarehouse(document.getElementById('ido-wh1-in').value);
+      /* ②もらう機械（先方出庫→当方入庫）＝《返却あり》①欄 F48/L48 */
+      var g2Out = idoResolveWarehouse(document.getElementById('ido-wh2-out').value);
+      var g2In = idoResolveWarehouse(document.getElementById('ido-wh2-in').value);
+      if (g1Out) setStr('F37', g1Out); else clearCell('F37');
+      if (g1In) setStr('L37', g1In); else clearCell('L37');
+      if (g2Out) setStr('F48', g2Out); else clearCell('F48');
+      if (g2In) setStr('L48', g2In); else clearCell('L48');
       writeProdRow(9, products[0]);
       writeProdRow(11, products[1]);
     } else {
