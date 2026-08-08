@@ -20,6 +20,31 @@
       "sourceIds": ["src-official"]
     }
   ],
+  "productPrPoints": [
+    {
+      "title": "自走式草刈機を止めない準備",
+      "customerValue": "販売店が点検案内と実演提案を一緒に行えます。",
+      "evidence": "公式資料の始業前点検項目を案内に活用します。",
+      "sourceIds": ["src-official"]
+    }
+  ],
+  "competitiveInsights": [
+    {
+      "brand": "マキタ",
+      "topic": "バッテリー草刈機の訴求",
+      "observedFact": "公式製品情報でバッテリー式の選択肢が案内されています。",
+      "orecOpportunity": "営業仮説として、作業面積と現場条件を先に聞き、自走式を含む選定相談につなげます。",
+      "confidence": "high",
+      "sourceIds": ["src-official"]
+    }
+  ],
+  "unconventionalAngle": {
+    "title": "猛暑対策を機械選定の質問に変える",
+    "insight": "連続作業時間だけでなく、休憩を含めた一日の作業設計から提案します。",
+    "whyItMatters": "販売店が安全と作業効率の両方を相談できる窓口になります。",
+    "dealerExperiment": "来店時に作業時間帯と休憩場所を聞く質問を1週間試します。",
+    "sourceIds": ["src-official"]
+  },
   "repairInfo": [
     {
       "brand": "OREC",

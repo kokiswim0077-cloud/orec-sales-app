@@ -1897,12 +1897,24 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           <div class="intel-section-hd"><span class="intel-section-no">01</span><h2 class="intel-section-title">関東市場・季節の動き</h2></div>
           <div class="intel-section-body" id="intel-market"></div>
         </section>
+        <section class="intel-section" id="intel-pr-section" style="display:none">
+          <div class="intel-section-hd"><span class="intel-section-no">02</span><h2 class="intel-section-title">オーレックのPRポイント</h2></div>
+          <div class="intel-section-body" id="intel-pr-points"></div>
+        </section>
+        <section class="intel-section" id="intel-competitive-section" style="display:none">
+          <div class="intel-section-hd"><span class="intel-section-no">03</span><h2 class="intel-section-title">他社動向から見る営業機会</h2></div>
+          <div class="intel-section-body" id="intel-competitive"></div>
+        </section>
+        <section class="intel-section" id="intel-unconventional-section" style="display:none">
+          <div class="intel-section-hd"><span class="intel-section-no">04</span><h2 class="intel-section-title">斜め上からの視点</h2></div>
+          <div class="intel-section-body" id="intel-unconventional"></div>
+        </section>
         <section class="intel-section" id="intel-repair-section">
-          <div class="intel-section-hd"><span class="intel-section-no">02</span><h2 class="intel-section-title">修理・点検情報</h2></div>
+          <div class="intel-section-hd"><span class="intel-section-no">05</span><h2 class="intel-section-title">修理・点検情報</h2></div>
           <div class="intel-section-body" id="intel-repair"></div>
         </section>
         <section class="intel-section">
-          <div class="intel-section-hd"><span class="intel-section-no">03</span><h2 class="intel-section-title">販売店で使える営業プレイブック</h2></div>
+          <div class="intel-section-hd"><span class="intel-section-no">06</span><h2 class="intel-section-title">販売店で使える営業プレイブック</h2></div>
           <div class="intel-section-body">
             <div class="intel-item"><div class="intel-item-title">販売店に届ける価値</div><div class="intel-item-text" id="intel-dealer-value"></div></div>
             <div class="intel-item"><div class="intel-item-title">会話を始める質問</div><ul class="intel-actions" id="intel-questions"></ul></div>
@@ -1912,7 +1924,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
           </div>
         </section>
         <section class="intel-section" id="intel-makita-section" style="display:none">
-          <div class="intel-section-hd"><span class="intel-section-no">04</span><h2 class="intel-section-title">マキタ関連情報</h2></div>
+          <div class="intel-section-hd"><span class="intel-section-no">07</span><h2 class="intel-section-title">マキタ関連情報</h2></div>
           <div class="intel-section-body"><div class="intel-item-text" id="intel-makita"></div></div>
         </section>
         <section class="intel-section" id="intel-warning-section" style="display:none">
@@ -6739,6 +6751,42 @@ function intelRenderReport(report, fromCache) {
     wrap.appendChild(badge); market.appendChild(wrap);
   });
   document.getElementById('intel-market-section').style.display = market.childElementCount ? '' : 'none';
+
+  var prPoints = intelClear('intel-pr-points');
+  (report.productPrPoints || []).forEach(function(item) {
+    var wrap = intelEl('article', 'intel-item');
+    wrap.appendChild(intelEl('h3', 'intel-item-title', item.title || 'オーレックのPRポイント'));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `お客様・販売店の価値：${item.customerValue || ''}`));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `公式情報の根拠：${item.evidence || ''}`));
+    wrap.appendChild(intelEl('span', 'intel-confidence', intelSourceLabel(item.sourceIds)));
+    prPoints.appendChild(wrap);
+  });
+  document.getElementById('intel-pr-section').style.display = prPoints.childElementCount ? '' : 'none';
+
+  var competitive = intelClear('intel-competitive');
+  (report.competitiveInsights || []).forEach(function(item) {
+    var wrap = intelEl('article', 'intel-item');
+    wrap.appendChild(intelEl('h3', 'intel-item-title', `${item.brand || '他社'}｜${item.topic || '市場動向'}`));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `確認できた事実：${item.observedFact || ''}`));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `オーレックの営業仮説：${item.orecOpportunity || ''}`));
+    var confidence = item.confidence === 'high' ? '確認度 高' : item.confidence === 'medium' ? '確認度 中' : '参考情報';
+    wrap.appendChild(intelEl('span', 'intel-confidence', `${confidence} ・ ${intelSourceLabel(item.sourceIds)}`));
+    competitive.appendChild(wrap);
+  });
+  document.getElementById('intel-competitive-section').style.display = competitive.childElementCount ? '' : 'none';
+
+  var unconventional = intelClear('intel-unconventional');
+  if (report.unconventionalAngle) {
+    var angle = report.unconventionalAngle;
+    var angleWrap = intelEl('article', 'intel-item');
+    angleWrap.appendChild(intelEl('h3', 'intel-item-title', angle.title || '斜め上からの視点'));
+    angleWrap.appendChild(intelEl('div', 'intel-item-text', `仮説：${angle.insight || ''}`));
+    angleWrap.appendChild(intelEl('div', 'intel-item-text', `なぜ重要か：${angle.whyItMatters || ''}`));
+    angleWrap.appendChild(intelEl('div', 'intel-repair-safety', `販売店と試すこと：${angle.dealerExperiment || ''}`));
+    angleWrap.appendChild(intelEl('span', 'intel-confidence', intelSourceLabel(angle.sourceIds)));
+    unconventional.appendChild(angleWrap);
+  }
+  document.getElementById('intel-unconventional-section').style.display = unconventional.childElementCount ? '' : 'none';
 
   var repair = intelClear('intel-repair');
   (report.repairInfo || []).forEach(function(item) {

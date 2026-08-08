@@ -74,6 +74,9 @@ JSONだけを返してください。形は次の通りです。
   "theme": {"headline":"短い見出し"},
   "summary": ["3行以内の要点"],
   "marketSignals": [{"title":"", "detail":"", "confidence":"high|medium|reference", "sourceIds":[""]}],
+  "productPrPoints": [{"title":"オーレックのPRポイント", "customerValue":"販売店・利用者にとっての価値", "evidence":"公式情報で確認できる根拠", "sourceIds":[""]}],
+  "competitiveInsights": [{"brand":"他社名", "topic":"確認できた動き", "observedFact":"公式情報で確認できた事実", "orecOpportunity":"オーレック営業としての提案機会（推測と明記）", "confidence":"high|medium|reference", "sourceIds":[""]}],
+  "unconventionalAngle": {"title":"斜め上からの視点", "insight":"隣接分野から得た仮説", "whyItMatters":"販売店や利用者に関係する理由", "dealerExperiment":"販売店と小さく試す具体策", "sourceIds":[""]},
   "repairInfo": [{"brand":"OREC|Makita|共通", "modelScope":"具体的な対象機種または公式資料の範囲", "symptom":"", "checks":[""], "safeAction":"", "stopConditions":["エンジン停止・電源遮断等"], "escalation":"販売店・サービス部門へ渡す条件", "sourceIds":[""]}],
   "salesPlaybook": {"dealerValue":"", "questions":[""], "talkTrack":"30秒程度", "objectionHandling":[{"objection":"", "response":""}], "nextActions":["必ず3件"]},
   "makitaRelevance": null または {"summary":"", "sourceIds":[""]},
@@ -83,6 +86,10 @@ JSONだけを返してください。形は次の通りです。
 ルール:
 - sourceIdsは上記の利用可能な出典IDだけを使用する
 - 事実には必ずsourceIdsを付け、出典のない断定はしない
+- productPrPoints、competitiveInsights、unconventionalAngleを毎日それぞれ1件以上作る
+- オーレックのPRは機能名だけで終わらせず、販売店と利用者にとっての価値、裏付けとなる公式情報を示す
+- 他社情報は公式発表で確認できる事実に限定し、orecOpportunityは事実ではなく営業上の仮説・提案だと分かる表現にする
+- 斜め上からの視点は隣接分野の変化と草刈り需要の関係を説明し、販売店と低コストで試せる具体策まで示す
 - 修理情報は対象範囲、安全停止条件、専門部門への引継条件が揃わなければ含めない
 - 安全装置解除、稼働中の点検、対象不明の分解手順は禁止
 - マキタは関連性が明確な場合だけ。競合への否定的な断定は禁止
@@ -101,6 +108,28 @@ const marketSignals = (Array.isArray(raw.marketSignals) ? raw.marketSignals : []
   ...item,
   sourceIds: validSourceIds(item.sourceIds)
 })).filter(item => item.sourceIds.length > 0);
+const productPrPoints = (Array.isArray(raw.productPrPoints) ? raw.productPrPoints : []).map(item => ({
+  title: String(item?.title || ""),
+  customerValue: String(item?.customerValue || ""),
+  evidence: String(item?.evidence || ""),
+  sourceIds: validSourceIds(item?.sourceIds)
+})).filter(item => item.title && item.customerValue && item.evidence && item.sourceIds.length > 0).slice(0, 3);
+const competitiveInsights = (Array.isArray(raw.competitiveInsights) ? raw.competitiveInsights : []).map(item => ({
+  brand: String(item?.brand || ""),
+  topic: String(item?.topic || ""),
+  observedFact: String(item?.observedFact || ""),
+  orecOpportunity: String(item?.orecOpportunity || ""),
+  confidence: ["high", "medium", "reference"].includes(item?.confidence) ? item.confidence : "reference",
+  sourceIds: validSourceIds(item?.sourceIds)
+})).filter(item => item.brand && item.observedFact && item.orecOpportunity && item.sourceIds.length > 0).slice(0, 3);
+const unconventionalRaw = raw.unconventionalAngle || null;
+const unconventionalAngle = unconventionalRaw ? {
+  title: String(unconventionalRaw.title || ""),
+  insight: String(unconventionalRaw.insight || ""),
+  whyItMatters: String(unconventionalRaw.whyItMatters || ""),
+  dealerExperiment: String(unconventionalRaw.dealerExperiment || ""),
+  sourceIds: validSourceIds(unconventionalRaw.sourceIds)
+} : null;
 for (const item of repairInfo) item.sourceIds = validSourceIds(item.sourceIds);
 const safeRepairInfo = repairInfo.filter(item => item.sourceIds.length > 0);
 let makitaRelevance = raw.makitaRelevance || null;
@@ -116,6 +145,9 @@ const report = {
   theme: { key: theme.key, label: theme.label, headline: String(raw.theme?.headline || theme.label).slice(0, 100) },
   summary: (Array.isArray(raw.summary) ? raw.summary : []).map(String).filter(Boolean).slice(0, 3),
   marketSignals,
+  productPrPoints,
+  competitiveInsights,
+  unconventionalAngle,
   repairInfo: safeRepairInfo,
   salesPlaybook: {
     dealerValue: String(raw.salesPlaybook?.dealerValue || ""),
@@ -130,6 +162,9 @@ const report = {
   generator: { provider: "gemini", model, observationCount: observations.length }
 };
 const errors = validateReport(report);
+if (report.productPrPoints.length < 1) errors.push("productPrPoints must contain at least one sourced item");
+if (report.competitiveInsights.length < 1) errors.push("competitiveInsights must contain at least one sourced item");
+if (!report.unconventionalAngle?.title || !report.unconventionalAngle?.insight || !report.unconventionalAngle?.whyItMatters || !report.unconventionalAngle?.dealerExperiment || !report.unconventionalAngle?.sourceIds.length) errors.push("unconventionalAngle must be complete and sourced");
 if (report.salesPlaybook.nextActions.length !== 3) errors.push("salesPlaybook.nextActions must contain exactly 3 items");
 if (errors.length) throw new Error(`Report validation failed: ${errors.join("; ")}`);
 
