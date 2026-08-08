@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
+import { generateWithGemini } from "../scripts/lib/gemini.mjs";
 import {
   dedupeFindings,
   dedupeSources,
@@ -61,4 +62,20 @@ test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {
   const key = notificationIdempotencyKey("2026-08-08");
   assert.equal(key, notificationIdempotencyKey("2026-08-08"));
   assert.match(key, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+});
+
+test("Gemini 2.5の思考予算をJSON生成リクエストへ設定できる", async () => {
+  const originalFetch = globalThis.fetch;
+  let requestBody;
+  globalThis.fetch = async (_url, options) => {
+    requestBody = JSON.parse(options.body);
+    return { ok: true, json: async () => ({ candidates: [] }) };
+  };
+  try {
+    await generateWithGemini({ prompt: "test", apiKey: "test-key", json: true, thinkingBudget: 1024 });
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+  assert.equal(requestBody.generationConfig.responseMimeType, "application/json");
+  assert.equal(requestBody.generationConfig.thinkingConfig.thinkingBudget, 1024);
 });
