@@ -6843,7 +6843,8 @@ function intelGetOneSignal() {
       try {
         var workerUrl = new URL('push/onesignal/OneSignalSDKWorker.js', document.baseURI);
         var scopeUrl = new URL('push/onesignal/', document.baseURI);
-        await OneSignal.init({ appId: appId, serviceWorkerPath: workerUrl.pathname, serviceWorkerParam: { scope: scopeUrl.pathname }, allowLocalhostAsSecureOrigin: true });
+        var workerPath = workerUrl.pathname.replace(/^\/+/, '');
+        await OneSignal.init({ appId: appId, serviceWorkerPath: workerPath, serviceWorkerParam: { scope: scopeUrl.pathname }, allowLocalhostAsSecureOrigin: true });
         _intelOneSignal = OneSignal; resolve(OneSignal);
       } catch (error) { reject(error); }
     });

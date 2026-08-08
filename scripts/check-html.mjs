@@ -9,6 +9,9 @@ if (oneSignalQueueIndex < 0 || oneSignalSdkIndex < 0 || oneSignalQueueIndex > on
 if (!html.includes("intelGetOneSignal().catch(function(error)")) {
   throw new Error("OneSignal initialization must be queued during page parsing");
 }
+if (!html.includes("serviceWorkerPath: workerPath") || !html.includes("workerUrl.pathname.replace(/^\\/+/, '')")) {
+  throw new Error("OneSignal service worker path must be relative to the site root without a leading slash");
+}
 let inlineCount = 0;
 for (const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
   if (!match[1].trim()) continue;
