@@ -6,11 +6,15 @@ const oneSignalSdkIndex = html.indexOf("https://cdn.onesignal.com/sdks/web/v16/O
 if (oneSignalQueueIndex < 0 || oneSignalSdkIndex < 0 || oneSignalQueueIndex > oneSignalSdkIndex) {
   throw new Error("OneSignal deferred queue must be created before the SDK script loads");
 }
-if (!html.includes("intelGetOneSignal().catch(function(error)")) {
-  throw new Error("OneSignal initialization must be queued during page parsing");
+const oneSignalInitIndex = html.indexOf("window.OneSignalDeferred.push(async function(OneSignal)");
+if (oneSignalInitIndex < 0 || oneSignalInitIndex > oneSignalSdkIndex) {
+  throw new Error("OneSignal initialization must be queued in the document head before the SDK executes");
 }
-if (!html.includes("serviceWorkerPath: workerPath") || !html.includes("workerUrl.pathname.replace(/^\\/+/, '')")) {
+if (!html.includes("serviceWorkerPath: 'sales/push/onesignal/OneSignalSDKWorker.js'")) {
   throw new Error("OneSignal service worker path must be relative to the site root without a leading slash");
+}
+if (!html.includes("intelReloadOneSignalSdk") || !html.includes("OneSignal CDNへ接続できませんでした。")) {
+  throw new Error("OneSignal SDK retry handling is missing");
 }
 let inlineCount = 0;
 for (const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) {
