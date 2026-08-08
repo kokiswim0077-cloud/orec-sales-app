@@ -14,6 +14,7 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
 <script src="app-config.js"></script>
+<script>window.OneSignalDeferred = window.OneSignalDeferred || [];</script>
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha384-/1qUCSGwTur9vjf/z9lmu/eCUYbpOTgSjmpbMQZ1/CtX2v/WcAIKqRv+U1DUCG6e" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
@@ -6837,18 +6838,28 @@ function intelGetOneSignal() {
   _intelOneSignalPromise = new Promise(function(resolve, reject) {
     var appId = _intelConfig.oneSignalAppId || '';
     if (!appId) { reject(new Error('OneSignal App IDが未設定です。管理者がRepository Variableを設定後、アプリを再配布してください。')); return; }
-    var timer = setTimeout(function() { reject(new Error('通知SDKの読み込みがタイムアウトしました。')); }, 15000);
     window.OneSignalDeferred = window.OneSignalDeferred || [];
     window.OneSignalDeferred.push(async function(OneSignal) {
       try {
         var workerUrl = new URL('push/onesignal/OneSignalSDKWorker.js', document.baseURI);
         var scopeUrl = new URL('push/onesignal/', document.baseURI);
         await OneSignal.init({ appId: appId, serviceWorkerPath: workerUrl.pathname, serviceWorkerParam: { scope: scopeUrl.pathname }, allowLocalhostAsSecureOrigin: true });
-        clearTimeout(timer); _intelOneSignal = OneSignal; resolve(OneSignal);
-      } catch (error) { clearTimeout(timer); reject(error); }
+        _intelOneSignal = OneSignal; resolve(OneSignal);
+      } catch (error) { reject(error); }
     });
   });
   return _intelOneSignalPromise;
+}
+
+function intelWaitForOneSignal() {
+  return Promise.race([
+    intelGetOneSignal(),
+    new Promise(function(resolve, reject) {
+      setTimeout(function() {
+        reject(new Error('通知SDKを読み込めませんでした。通信状態を確認してアプリを開き直してください。'));
+      }, 30000);
+    })
+  ]);
 }
 
 function intelIsIosWithoutHomeScreen() {
@@ -6863,7 +6874,7 @@ async function intelEnableNotifications() {
     return;
   }
   try {
-    var OneSignal = await intelGetOneSignal();
+    var OneSignal = await intelWaitForOneSignal();
     await OneSignal.Notifications.requestPermission();
     await OneSignal.User.PushSubscription.optIn();
     var id = OneSignal.User.PushSubscription.id;
@@ -6879,7 +6890,7 @@ async function intelEnableNotifications() {
 
 async function intelDisableNotifications() {
   try {
-    var OneSignal = await intelGetOneSignal();
+    var OneSignal = await intelWaitForOneSignal();
     await OneSignal.User.PushSubscription.optOut();
     document.getElementById('intel-notify-btn').textContent = '通知 OFF';
     document.getElementById('intel-device').classList.remove('show');
@@ -6895,6 +6906,9 @@ async function intelCopySubscriptionId() {
 }
 
 (function intelInit() {
+  // Queue initialization before the deferred OneSignal SDK executes.
+  // This does not request notification permission; that remains user-triggered.
+  intelGetOneSignal().catch(function(error) { console.warn('通知SDKを初期化できませんでした', error); });
   if ('serviceWorker' in navigator && location.protocol === 'https:') {
     window.addEventListener('load', function() { navigator.serviceWorker.register(new URL('sw.js', document.baseURI).pathname, { scope: new URL('./', document.baseURI).pathname }).catch(console.warn); });
   }
