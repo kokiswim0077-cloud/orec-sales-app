@@ -14,6 +14,7 @@
 | 🔩 部品価格検索 | 42,467件の部品価格をオフラインで瞬時検索 |
 | 📄 価格表 | kakakuhyou2026.pdf をアプリ内で閲覧 |
 | 📚 カタログ | 11シリーズのPDFカタログ + YouTube動画 |
+| 🛰️ 営業インテリジェンス | 6時間ごとに公開情報を収集し、毎日18時台に営業テーマを配信 |
 
 ## 使い方
 
@@ -35,8 +36,12 @@ https://dkl5pcrrq8gba.cloudfront.net/sales/
 
 ```
 orec-sales-app/
-├── index.html          # アプリ本体（これ1つでOK）
-└── README.md
+├── index.html                # アプリ本体
+├── manifest.webmanifest      # PWA設定
+├── sw.js                     # オフライン用Service Worker
+├── scripts/                  # 情報収集・日次生成・通知
+├── schemas/                  # 公開JSONスキーマ
+└── .github/workflows/        # 定期収集・発行・配布
 ```
 
 > **Note:** 価格表PDF（`kakakuhyou2026.pdf`）やカタログPDFは別途配置が必要です。  
@@ -73,6 +78,44 @@ git push origin main
 
 # 2. S3に反映（CloudFront経由で即時公開）
 aws s3 cp index.html s3://orec-parts-chatbot/sales/index.html --region ap-northeast-1
+```
+
+## 営業情報の自動収集・スマホ通知
+
+### 実行時刻（日本時間）
+
+- 情報収集: 23:47 / 5:47 / 11:47 / 17:47
+- 日次レポート・プッシュ通知: 18:05
+- Actions画面の `workflow_dispatch` から収集、発行、通知だけの手動実行も可能
+
+### GitHub設定
+
+`reports` ブランチを作り、Actionsの「Workflow permissions」を `Read and write permissions` にします。
+
+Repository Secrets:
+
+- `GEMINI_API_KEY`
+- `ONESIGNAL_API_KEY`
+- `ONESIGNAL_SUBSCRIPTION_IDS` — 例: `["端末のSubscription ID"]`
+
+Repository Variables:
+
+- `ONESIGNAL_APP_ID`
+- `PUBLIC_BASE_URL` — 既定値: `https://dkl5pcrrq8gba.cloudfront.net/sales/`
+- `GEMINI_MODEL` — 既定値: `gemini-2.5-flash`
+- 配布を自動化する場合: `AWS_ROLE_ARN`, `AWS_REGION`, `S3_BUCKET`, `CLOUDFRONT_DISTRIBUTION_ID`
+
+OneSignalではWeb Pushの対象オリジンを `https://dkl5pcrrq8gba.cloudfront.net` に設定します。iPhoneはSafariからホーム画面に追加後、営業情報画面の「通知を受け取る」を押してください。表示されたSubscription IDをJSON配列としてSecretへ登録すると、その端末だけが通知対象になります。
+
+### 公開データ
+
+収集結果は `reports` ブランチに保存されます。リポジトリが公開されているため、顧客名、販売店個別情報、社内価格、社内修理資料は絶対に含めません。社内資料連携は認証付きの非公開保管先を用意する第2段階で実施します。
+
+### ローカル検証
+
+```bash
+npm test
+npm run validate:reports -- path/to/report-store
 ```
 
 ## 連絡先

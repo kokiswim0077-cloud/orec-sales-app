@@ -1,0 +1,18 @@
+{
+  "id": "/sales/",
+  "name": "OREC 営業ツール",
+  "short_name": "OREC営業",
+  "description": "オーレック関東営業所向け営業支援・日次フィールドブリーフ",
+  "lang": "ja",
+  "start_url": "/sales/",
+  "scope": "/sales/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f2efe7",
+  "theme_color": "#007a59",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

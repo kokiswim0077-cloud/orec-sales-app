@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dkl5pcrrq8gba.cloudfront.net/sales/schemas/observation.schema.json",
+  "title": "OREC sales research observation",
+  "type": "object",
+  "required": ["schemaVersion", "id", "collectedAt", "theme", "findings", "sources", "warnings"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "minLength": 8 },
+    "collectedAt": { "type": "string", "format": "date-time" },
+    "theme": { "type": "string", "minLength": 1 },
+    "findings": { "type": "array" },
+    "sources": { "type": "array" },
+    "warnings": { "type": "array" }
+  },
+  "additionalProperties": true
+}
