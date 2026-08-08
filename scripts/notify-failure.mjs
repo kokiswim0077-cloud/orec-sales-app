@@ -1,3 +1,5 @@
+import { buildFailureNotificationPayload } from "./lib/onesignal.mjs";
+
 const appId = process.env.ONESIGNAL_APP_ID;
 const apiKey = process.env.ONESIGNAL_API_KEY;
 let subscriptionIds = [];
@@ -13,15 +15,7 @@ const runUrl = process.env.GITHUB_SERVER_URL && process.env.GITHUB_REPOSITORY &&
 const response = await fetch("https://api.onesignal.com/notifications", {
   method: "POST",
   headers: { "Content-Type": "application/json", Authorization: `Key ${apiKey}` },
-  body: JSON.stringify({
-    app_id: appId,
-    include_subscription_ids: subscriptionIds,
-    target_channel: "push",
-    headings: { ja: "OREC営業情報｜更新エラー" },
-    contents: { ja: `${workflow}に失敗しました。前回の正常レポートは保持されています。` },
-    url: runUrl,
-    web_url: runUrl
-  }),
+  body: JSON.stringify(buildFailureNotificationPayload({ appId, subscriptionIds, workflow, runUrl })),
   signal: AbortSignal.timeout(30_000)
 });
 if (!response.ok) throw new Error(`OneSignal failure notification failed: ${response.status} ${(await response.text()).slice(0, 300)}`);
