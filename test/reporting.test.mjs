@@ -49,6 +49,14 @@ test("サンプルレポートが公開スキーマを満たす", async () => {
   assert.ok(report.unconventionalAngle.dealerExperiment);
 });
 
+test("拡張前の過去レポートも引き続き検証できる", async () => {
+  const report = JSON.parse(await fs.readFile(new URL("./fixtures/report.json", import.meta.url), "utf8"));
+  delete report.productPrPoints;
+  delete report.competitiveInsights;
+  delete report.unconventionalAngle;
+  assert.deepEqual(validateReport(report), []);
+});
+
 test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {
   const key = notificationIdempotencyKey("2026-08-08");
   assert.equal(key, notificationIdempotencyKey("2026-08-08"));
