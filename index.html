@@ -658,6 +658,11 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 .intel-source{display:block;padding:10px 0;border-bottom:1px solid #ECE8DE;color:#1D4F91;text-decoration:none;font-size:11px;line-height:1.6}
 .intel-source:last-child{border-bottom:none}
 .intel-source small{display:block;color:#7A807D;margin-top:2px}
+.intel-sources-details>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;list-style:none;padding:4px 0;font-size:12px;font-weight:800;color:#1D4F91}
+.intel-sources-details>summary::-webkit-details-marker{display:none}
+.intel-sources-details>summary::after{content:"＋";flex:none;font-size:18px;line-height:1;color:#007A59}
+.intel-sources-details[open]>summary::after{content:"−"}
+.intel-sources-details[open]>summary{padding-bottom:8px;border-bottom:1px solid #ECE8DE}
 .intel-history{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
 .intel-history::-webkit-scrollbar{display:none}
 .intel-history-btn{flex:0 0 132px;border:1px solid #D8D2C4;background:#FCFBF7;border-radius:9px;padding:9px;text-align:left;font-family:"Noto Sans JP",sans-serif;cursor:pointer}
@@ -1933,7 +1938,12 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
         </section>
         <section class="intel-section">
           <div class="intel-section-hd"><span class="intel-section-no">SRC</span><h2 class="intel-section-title">出典</h2></div>
-          <div class="intel-section-body" id="intel-sources"></div>
+          <div class="intel-section-body">
+            <details class="intel-sources-details" id="intel-sources-details">
+              <summary id="intel-sources-summary">出典を表示（0件）</summary>
+              <div id="intel-sources"></div>
+            </details>
+          </div>
         </section>
         <section class="intel-section">
           <div class="intel-section-hd"><span class="intel-section-no">LOG</span><h2 class="intel-section-title">過去のレポート</h2></div>
@@ -6832,11 +6842,15 @@ function intelRenderReport(report, fromCache) {
   var sources = intelClear('intel-sources');
   (report.sources || []).forEach(function(item) {
     if (!item.url || !String(item.url).startsWith('https://')) return;
-    var link = intelEl('a', 'intel-source', item.title || item.publisher || item.url);
+    var sourceTitle = String(item.title || item.publisher || item.url);
+    if (sourceTitle.length > 90) sourceTitle = `${sourceTitle.slice(0, 89)}…`;
+    var link = intelEl('a', 'intel-source', sourceTitle);
     link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
     link.appendChild(intelEl('small', '', `${item.publisher || new URL(item.url).hostname} ・ ${item.accessedAt ? intelFormatDate(item.accessedAt, false) + '確認' : '公開情報'}`));
     sources.appendChild(link);
   });
+  document.getElementById('intel-sources-summary').textContent = `出典を表示（${sources.childElementCount}件）`;
+  document.getElementById('intel-sources-details').open = false;
 
   localStorage.setItem('orec_intel_read', report.id);
   document.getElementById('intel-home-unread').classList.remove('show');

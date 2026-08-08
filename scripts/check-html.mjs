@@ -33,7 +33,7 @@ for (const match of html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/g)) 
 const ids = [...html.matchAll(/\bid="([A-Za-z][A-Za-z0-9_:.-]*)"/g)].map(match => match[1]);
 const duplicateIds = [...new Set(ids.filter((value, index) => ids.indexOf(value) !== index))];
 if (duplicateIds.length) throw new Error(`Duplicate HTML IDs: ${duplicateIds.join(", ")}`);
-for (const required of ["s-home", "s-intel", "intel-home-card", "intel-report", "intel-pr-points", "intel-competitive", "intel-unconventional", "intel-notify-btn"]) {
+for (const required of ["s-home", "s-intel", "intel-home-card", "intel-report", "intel-pr-points", "intel-competitive", "intel-unconventional", "intel-sources-details", "intel-sources-summary", "intel-notify-btn"]) {
   if (!ids.includes(required)) throw new Error(`Required UI element is missing: ${required}`);
 }
 Function(fs.readFileSync("sw.js", "utf8"));
