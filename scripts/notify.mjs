@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { jstDateId, notificationIdempotencyKey } from "./lib/reporting.mjs";
+import { buildReportNotificationPayload } from "./lib/onesignal.mjs";
 
 const getArg = name => {
   const index = process.argv.indexOf(name);
@@ -29,17 +30,14 @@ if (!appId || !apiKey || !Array.isArray(subscriptionIds) || !subscriptionIds.len
 const response = await fetch("https://api.onesignal.com/notifications", {
   method: "POST",
   headers: { "Content-Type": "application/json", Authorization: `Key ${apiKey}` },
-  body: JSON.stringify({
-    app_id: appId,
-    include_subscription_ids: subscriptionIds,
-    target_channel: "push",
-    headings: { ja: `OREC営業｜${report.theme.label}` },
-    contents: { ja: report.summary[0].slice(0, 120) },
-    url: `${baseUrl}?report=${encodeURIComponent(dateId)}`,
-    web_url: `${baseUrl}?report=${encodeURIComponent(dateId)}`,
-    chrome_web_icon: `${baseUrl}icons/icon-192.png`,
-    idempotency_key: notificationIdempotencyKey(dateId)
-  }),
+  body: JSON.stringify(buildReportNotificationPayload({
+    appId,
+    subscriptionIds,
+    report,
+    baseUrl,
+    dateId,
+    idempotencyKey: notificationIdempotencyKey(dateId)
+  })),
   signal: AbortSignal.timeout(30_000)
 });
 const body = await response.text();

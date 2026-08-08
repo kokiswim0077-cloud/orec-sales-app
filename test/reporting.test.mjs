@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { generateWithGemini } from "../scripts/lib/gemini.mjs";
+import { buildFailureNotificationPayload, buildReportNotificationPayload } from "../scripts/lib/onesignal.mjs";
 import {
   dedupeFindings,
   dedupeSources,
@@ -78,4 +79,22 @@ test("Gemini 2.5の思考予算をJSON生成リクエストへ設定できる", 
   }
   assert.equal(requestBody.generationConfig.responseMimeType, "application/json");
   assert.equal(requestBody.generationConfig.thinkingConfig.thinkingBudget, 1024);
+});
+
+test("OneSignal通知は英語フォールバックと単一のWebリンクを持つ", () => {
+  const common = { appId: "app", subscriptionIds: ["device"] };
+  const reportPayload = buildReportNotificationPayload({
+    ...common,
+    report: { theme: { label: "営業テーマ" }, summary: ["本日の要点"] },
+    baseUrl: "https://example.com/sales/",
+    dateId: "2026-08-09",
+    idempotencyKey: "key"
+  });
+  const failurePayload = buildFailureNotificationPayload({ ...common, workflow: "日次処理", runUrl: "https://example.com/run" });
+  for (const payload of [reportPayload, failurePayload]) {
+    assert.ok(payload.headings.en);
+    assert.ok(payload.contents.en);
+    assert.ok(payload.web_url);
+    assert.equal("url" in payload, false);
+  }
 });
