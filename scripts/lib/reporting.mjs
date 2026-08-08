@@ -142,6 +142,9 @@ export function validateReport(value) {
   if (!value.theme?.key || !value.theme?.label || !value.theme?.headline) errors.push("theme is incomplete");
   if (!Array.isArray(value.summary) || value.summary.length < 1 || value.summary.length > 3) errors.push("summary must contain 1-3 items");
   if (!Array.isArray(value.marketSignals)) errors.push("marketSignals must be an array");
+  if (!Array.isArray(value.productPrPoints)) errors.push("productPrPoints must be an array");
+  if (!Array.isArray(value.competitiveInsights)) errors.push("competitiveInsights must be an array");
+  if (!value.unconventionalAngle || typeof value.unconventionalAngle !== "object") errors.push("unconventionalAngle is required");
   if (!Array.isArray(value.repairInfo)) errors.push("repairInfo must be an array");
   if (!value.salesPlaybook || typeof value.salesPlaybook !== "object") errors.push("salesPlaybook is required");
   if (!Array.isArray(value.sources) || value.sources.length < 1) errors.push("at least one source is required");

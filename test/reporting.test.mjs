@@ -44,6 +44,9 @@ test("サンプルレポートが公開スキーマを満たす", async () => {
   const report = JSON.parse(await fs.readFile(new URL("./fixtures/report.json", import.meta.url), "utf8"));
   assert.deepEqual(validateReport(report), []);
   assert.equal(report.salesPlaybook.nextActions.length, 3);
+  assert.ok(report.productPrPoints.length >= 1);
+  assert.ok(report.competitiveInsights.length >= 1);
+  assert.ok(report.unconventionalAngle.dealerExperiment);
 });
 
 test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {
