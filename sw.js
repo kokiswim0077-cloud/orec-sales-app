@@ -1,4 +1,4 @@
-const CACHE_NAME = "orec-sales-shell-v3";
+const CACHE_NAME = "orec-sales-shell-v4";
 const SHELL = [
   "/sales/",
   "/sales/index.html",
