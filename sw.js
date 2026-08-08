@@ -1,4 +1,4 @@
-const CACHE_NAME = "orec-sales-shell-v1";
+const CACHE_NAME = "orec-sales-shell-v2";
 const SHELL = [
   "/sales/",
   "/sales/index.html",
@@ -21,7 +21,15 @@ self.addEventListener("activate", event => {
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
   const url = new URL(event.request.url);
+  const isNavigation = event.request.mode === "navigate" || url.pathname === "/sales/" || url.pathname.endsWith("/sales/index.html");
   const isLiveData = url.hostname === "raw.githubusercontent.com" || url.pathname.endsWith("/app-config.js");
+  if (isNavigation) {
+    event.respondWith(fetch(event.request).then(response => {
+      if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put("/sales/index.html", response.clone()));
+      return response;
+    }).catch(() => caches.match("/sales/index.html").then(cached => cached || caches.match("/sales/"))));
+    return;
+  }
   if (isLiveData) {
     event.respondWith(fetch(event.request).then(response => {
       if (response.ok) caches.open(CACHE_NAME).then(cache => cache.put(event.request, response.clone()));
