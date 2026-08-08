@@ -2,11 +2,19 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.onesignal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://api.onesignal.com https://onesignal.com https://*.onesignal.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com https://cdn.onesignal.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>OREC 営業ツール</title>
+<meta name="theme-color" content="#007A59">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OREC営業">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet">
+<script src="app-config.js"></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha384-/1qUCSGwTur9vjf/z9lmu/eCUYbpOTgSjmpbMQZ1/CtX2v/WcAIKqRv+U1DUCG6e" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" integrity="sha384-vtjasyidUo0kW94K5MXDXntzOJpQgBKXmE7e2Ga4LG0skTTLeBi97eFAXsqewJjw" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG" crossorigin="anonymous"></script>
@@ -573,6 +581,74 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 .lock-cancel-btn{width:100%;padding:11px;background:var(--g2);color:var(--tm);border:1.5px solid var(--bd);border-radius:10px;font-size:13px;cursor:pointer;font-family:'Noto Sans JP',sans-serif}
 @keyframes lockShake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 #lock-modal.shake .lock-card{animation:lockShake .4s ease}
+/* ── SALES INTELLIGENCE / FIELD BRIEF ─────────── */
+.intel-home{position:relative;overflow:hidden;margin:0 0 16px;padding:17px;background:#0B1D19;color:#fff;border-radius:16px;border:1px solid rgba(189,224,63,.45);cursor:pointer;box-shadow:0 12px 28px rgba(11,29,25,.18)}
+.intel-home::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(118deg,transparent 0 26px,rgba(189,224,63,.055) 26px 28px);pointer-events:none}
+.intel-home-top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.intel-home-kicker{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:900;letter-spacing:2.2px;color:#BDE03F}
+.intel-live{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:800;color:#D8F29A;background:rgba(189,224,63,.1);border:1px solid rgba(189,224,63,.32);border-radius:999px;padding:5px 8px}
+.intel-live::before{content:"";width:6px;height:6px;border-radius:50%;background:#BDE03F;box-shadow:0 0 0 4px rgba(189,224,63,.12)}
+.intel-live.stale{color:#FFD1D1;border-color:rgba(255,90,90,.45);background:rgba(255,90,90,.12)}
+.intel-live.stale::before{background:#FF6767;box-shadow:0 0 0 4px rgba(255,103,103,.12)}
+.intel-home-title{position:relative;font-size:18px;line-height:1.45;font-weight:900;letter-spacing:.02em;margin-bottom:8px;max-width:92%}
+.intel-home-meta{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;color:rgba(255,255,255,.62);font-size:10px}
+.intel-home-open{color:#BDE03F;font-weight:900;white-space:nowrap}
+.intel-unread{display:none;position:absolute;top:12px;right:12px;width:10px;height:10px;border-radius:50%;background:#FF5B45;border:2px solid #0B1D19;box-shadow:0 0 0 3px rgba(255,91,69,.18)}
+.intel-unread.show{display:block}
+.intel-scroll{flex:1;overflow-y:auto;background:#F2EFE7;padding:0 0 calc(var(--nh) + 24px);-webkit-overflow-scrolling:touch}
+.intel-mast{position:relative;overflow:hidden;background:#0B1D19;color:#fff;padding:24px 18px 22px;border-bottom:5px solid #BDE03F}
+.intel-mast::after{content:"FIELD / 01";position:absolute;right:-10px;bottom:-22px;font-family:"Barlow Condensed",sans-serif;font-size:78px;font-weight:900;color:rgba(255,255,255,.035);letter-spacing:-2px;white-space:nowrap}
+.intel-date{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:2px;color:#BDE03F;font-weight:900;text-transform:uppercase;margin-bottom:9px}
+.intel-theme{font-size:11px;font-weight:800;color:rgba(255,255,255,.58);margin-bottom:7px}
+.intel-headline{position:relative;z-index:1;font-size:24px;line-height:1.4;font-weight:900;letter-spacing:.01em;max-width:620px}
+.intel-statusline{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:10px;color:rgba(255,255,255,.55)}
+.intel-statusline span{display:inline-flex;align-items:center;gap:5px}
+.intel-body{padding:14px 10px 28px;max-width:760px;margin:0 auto}
+.intel-alert{display:none;margin:12px 10px 0;padding:11px 13px;border-radius:10px;background:#FEE2E2;border:1px solid #FCA5A5;color:#991B1B;font-size:12px;font-weight:700;line-height:1.6}
+.intel-alert.show{display:block}
+.intel-summary{counter-reset:brief;background:#fff;border:1px solid #D8D2C4;border-radius:14px;padding:4px 15px;margin-bottom:12px;box-shadow:0 3px 10px rgba(45,40,30,.05)}
+.intel-summary-item{counter-increment:brief;display:grid;grid-template-columns:26px 1fr;gap:9px;padding:12px 0;border-bottom:1px solid #ECE8DE;font-size:13px;font-weight:700;line-height:1.7}
+.intel-summary-item:last-child{border-bottom:none}
+.intel-summary-item::before{content:"0" counter(brief);font-family:"Barlow Condensed",sans-serif;font-size:13px;font-weight:900;color:#007A59;padding-top:2px}
+.intel-section{background:#fff;border:1px solid #D8D2C4;border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 3px 10px rgba(45,40,30,.045)}
+.intel-section-hd{display:flex;align-items:center;gap:9px;padding:12px 14px;border-bottom:1px solid #ECE8DE;background:#FCFBF7}
+.intel-section-no{font-family:"Barlow Condensed",sans-serif;font-size:11px;font-weight:900;color:#fff;background:#007A59;border-radius:4px;padding:3px 6px;letter-spacing:1px}
+.intel-section-title{font-size:13px;font-weight:900;letter-spacing:.04em;flex:1}
+.intel-section-body{padding:13px 14px}
+.intel-item{padding:0 0 13px;margin-bottom:13px;border-bottom:1px dashed #D8D2C4}
+.intel-item:last-child{padding-bottom:0;margin-bottom:0;border-bottom:none}
+.intel-item-title{font-size:13px;font-weight:900;line-height:1.55;color:#10251F;margin-bottom:5px}
+.intel-item-text{font-size:12px;line-height:1.8;color:#44504C;white-space:pre-wrap}
+.intel-confidence{display:inline-block;margin-top:6px;padding:3px 7px;border-radius:4px;background:#E8F5F0;color:#006A4D;font-size:9px;font-weight:900;letter-spacing:.05em}
+.intel-repair{border-left:4px solid #E9A23B;padding-left:11px}
+.intel-repair-safety{margin-top:8px;padding:8px 10px;background:#FFF7E8;border-radius:8px;color:#7C4A05;font-size:11px;line-height:1.65}
+.intel-talk{position:relative;background:#0B1D19;color:#F7F4EC;border-radius:11px;padding:15px 16px 15px 18px;font-size:13px;line-height:1.85;margin:10px 0}
+.intel-talk::before{content:"30 SEC";display:block;color:#BDE03F;font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:2px;font-weight:900;margin-bottom:5px}
+.intel-actions{list-style:none;display:grid;gap:8px}
+.intel-actions li{display:grid;grid-template-columns:24px 1fr;gap:8px;background:#E8F5F0;border-radius:9px;padding:10px 11px;font-size:12px;font-weight:700;line-height:1.65;color:#163E31}
+.intel-actions li::before{content:"→";font-weight:900;color:#007A59}
+.intel-source{display:block;padding:10px 0;border-bottom:1px solid #ECE8DE;color:#1D4F91;text-decoration:none;font-size:11px;line-height:1.6}
+.intel-source:last-child{border-bottom:none}
+.intel-source small{display:block;color:#7A807D;margin-top:2px}
+.intel-history{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;scrollbar-width:none}
+.intel-history::-webkit-scrollbar{display:none}
+.intel-history-btn{flex:0 0 132px;border:1px solid #D8D2C4;background:#FCFBF7;border-radius:9px;padding:9px;text-align:left;font-family:"Noto Sans JP",sans-serif;cursor:pointer}
+.intel-history-btn.on{border-color:#007A59;background:#E8F5F0}
+.intel-history-date{font-family:"Barlow Condensed",sans-serif;font-size:12px;font-weight:900;color:#007A59}
+.intel-history-name{font-size:9px;color:#535D59;line-height:1.45;margin-top:3px}
+.intel-empty{padding:56px 24px;text-align:center;color:#64706C}
+.intel-empty-mark{font-family:"Barlow Condensed",sans-serif;font-size:42px;font-weight:900;color:#007A59;letter-spacing:2px;margin-bottom:12px}
+.intel-empty h3{font-size:16px;color:#152B24;margin-bottom:8px}
+.intel-empty p{font-size:12px;line-height:1.8}
+.intel-notify-btn{height:30px;padding:0 10px;border:1px solid rgba(189,224,63,.6);border-radius:7px;background:rgba(189,224,63,.08);color:#DDF59A;font-family:"Noto Sans JP",sans-serif;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap}
+.intel-device{margin-top:10px;padding:10px;background:#F3F4F6;border-radius:8px;font-size:10px;color:#4B5563;word-break:break-all;display:none}
+.intel-device.show{display:block}
+.intel-copy{margin-top:7px;padding:7px 9px;border:1px solid #CBD5E1;border-radius:6px;background:#fff;font:700 10px "Noto Sans JP",sans-serif;color:#334155;cursor:pointer}
+.intel-loading{padding:64px 20px;text-align:center;color:#5A6662;font-size:12px}
+.intel-loading::before{content:"";display:block;width:30px;height:30px;border:3px solid #D2D8D5;border-top-color:#007A59;border-radius:50%;margin:0 auto 14px;animation:spin .8s linear infinite}
+.intel-section :focus-visible,.intel-notify-btn:focus-visible,.intel-history-btn:focus-visible,.intel-home:focus-visible{outline:3px solid #BDE03F;outline-offset:2px}
+@media (min-width:700px){.intel-body{padding:20px 18px 40px}.intel-headline{font-size:30px}.intel-mast{padding:30px max(24px,calc((100vw - 760px)/2)) 28px}}
+@media (prefers-reduced-motion:reduce){.intel-loading::before{animation:none}}
 </style>
 </head>
 <body>
@@ -604,6 +680,18 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <div class="home-act-btn" onclick="nav('est')">
         <span class="home-act-ic app-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3h10v18l-2-1-2 1-2-1-2 1-2-1z"/><path d="M10 8h4M10 12h4M10 16h2"/></svg></span>
         <span class="home-act-lbl">見積書<br>作成</span>
+      </div>
+    </div>
+    <div class="intel-home" id="intel-home-card" role="button" tabindex="0" onclick="nav('intel')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();nav('intel')}" aria-label="最新の営業情報を開く">
+      <span class="intel-unread" id="intel-home-unread" aria-label="未読あり"></span>
+      <div class="intel-home-top">
+        <div class="intel-home-kicker">FIELD INTELLIGENCE / DAILY</div>
+        <div class="intel-live" id="intel-home-status">準備中</div>
+      </div>
+      <div class="intel-home-title" id="intel-home-headline">関東の営業情報を6時間ごとに収集中</div>
+      <div class="intel-home-meta">
+        <span id="intel-home-meta">毎日18時台に更新</span>
+        <span class="intel-home-open">読む&nbsp; →</span>
       </div>
     </div>
     <div class="sec-label">クイックアクセス</div>
@@ -1753,6 +1841,78 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
   </div>
 </div>
 
+<!-- SALES INTELLIGENCE -->
+<div id="s-intel" class="screen">
+  <div class="hd">
+    <button class="back-btn" onclick="nav('home')" aria-label="ホームへ戻る">‹ ホーム</button>
+    <div class="hd-title">FIELD BRIEF</div>
+    <button class="intel-notify-btn" id="intel-notify-btn" onclick="intelEnableNotifications()">通知を受け取る</button>
+  </div>
+  <div class="intel-scroll" id="intel-scroll">
+    <div class="intel-alert" id="intel-stale-alert" role="status"></div>
+    <div id="intel-loading" class="intel-loading">最新の営業情報を確認しています</div>
+    <div id="intel-empty" class="intel-empty" style="display:none">
+      <div class="intel-empty-mark">FIELD / 00</div>
+      <h3>最初のレポートを準備中です</h3>
+      <p>GitHub Actionsの初回収集・発行が完了すると、ここに毎日の営業テーマが表示されます。</p>
+    </div>
+    <div id="intel-report" style="display:none">
+      <section class="intel-mast" aria-labelledby="intel-headline">
+        <div class="intel-date" id="intel-date"></div>
+        <div class="intel-theme" id="intel-theme"></div>
+        <h1 class="intel-headline" id="intel-headline"></h1>
+        <div class="intel-statusline"><span id="intel-published"></span><span id="intel-source-count"></span></div>
+      </section>
+      <div class="intel-body">
+        <div class="intel-summary" id="intel-summary"></div>
+        <section class="intel-section" id="intel-market-section">
+          <div class="intel-section-hd"><span class="intel-section-no">01</span><h2 class="intel-section-title">関東市場・季節の動き</h2></div>
+          <div class="intel-section-body" id="intel-market"></div>
+        </section>
+        <section class="intel-section" id="intel-repair-section">
+          <div class="intel-section-hd"><span class="intel-section-no">02</span><h2 class="intel-section-title">修理・点検情報</h2></div>
+          <div class="intel-section-body" id="intel-repair"></div>
+        </section>
+        <section class="intel-section">
+          <div class="intel-section-hd"><span class="intel-section-no">03</span><h2 class="intel-section-title">販売店で使える営業プレイブック</h2></div>
+          <div class="intel-section-body">
+            <div class="intel-item"><div class="intel-item-title">販売店に届ける価値</div><div class="intel-item-text" id="intel-dealer-value"></div></div>
+            <div class="intel-item"><div class="intel-item-title">会話を始める質問</div><ul class="intel-actions" id="intel-questions"></ul></div>
+            <div class="intel-talk" id="intel-talk"></div>
+            <div class="intel-item" id="intel-objections-wrap"><div class="intel-item-title">よくある反応への返し方</div><div id="intel-objections"></div></div>
+            <div class="intel-item-title">今日／明日の営業アクション</div><ol class="intel-actions" id="intel-actions"></ol>
+          </div>
+        </section>
+        <section class="intel-section" id="intel-makita-section" style="display:none">
+          <div class="intel-section-hd"><span class="intel-section-no">04</span><h2 class="intel-section-title">マキタ関連情報</h2></div>
+          <div class="intel-section-body"><div class="intel-item-text" id="intel-makita"></div></div>
+        </section>
+        <section class="intel-section" id="intel-warning-section" style="display:none">
+          <div class="intel-section-hd"><span class="intel-section-no">!</span><h2 class="intel-section-title">確認事項</h2></div>
+          <div class="intel-section-body" id="intel-warnings"></div>
+        </section>
+        <section class="intel-section">
+          <div class="intel-section-hd"><span class="intel-section-no">SRC</span><h2 class="intel-section-title">出典</h2></div>
+          <div class="intel-section-body" id="intel-sources"></div>
+        </section>
+        <section class="intel-section">
+          <div class="intel-section-hd"><span class="intel-section-no">LOG</span><h2 class="intel-section-title">過去のレポート</h2></div>
+          <div class="intel-section-body"><div class="intel-history" id="intel-history"></div></div>
+        </section>
+        <section class="intel-section">
+          <div class="intel-section-hd"><span class="intel-section-no">PUSH</span><h2 class="intel-section-title">スマホ通知設定</h2></div>
+          <div class="intel-section-body">
+            <div class="intel-item-text" id="intel-notify-help">通知を有効にすると、毎日18時台に新しい営業テーマを受け取れます。iPhoneはホーム画面へ追加してから許可してください。</div>
+            <button class="intel-copy" type="button" onclick="intelEnableNotifications()">この端末で通知を有効にする</button>
+            <button class="intel-copy" type="button" onclick="intelDisableNotifications()">通知を解除する</button>
+            <div class="intel-device" id="intel-device"><strong>この端末のSubscription ID</strong><br><span id="intel-device-id"></span><br><button class="intel-copy" type="button" onclick="intelCopySubscriptionId()">IDをコピー</button></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- BOTTOM NAV -->
 <nav class="bnav">
   <button class="bnav-btn on" id="bn-home" onclick="nav('home')">
@@ -1913,6 +2073,7 @@ function nav(p) {
     if (p === "mitsu") { renderEstimate(); }
     if (p === "est") { estInitProds(); estSyncFromInquiry(); }
     if (p === "ido") { setTimeout(function() { try { idoLoadParts().catch(function() {}); } catch (e) {} }, 300); }
+    if (p === "intel") { intelOpen(); }
     // 見積バーの表示制御
     const showBar = (p === "parts") && ESTIMATE.length > 0;
     document.getElementById("mitsu-bar").classList.toggle("show", showBar);
@@ -6449,6 +6610,298 @@ function estReset() {
   var el = document.getElementById('est-date');
   if (el && !el.value) el.value = new Date().toISOString().slice(0,10);
   if (document.getElementById('est-prod-list')) estInitProds();
+})();
+
+// ===== SALES INTELLIGENCE =====
+var _intelConfig = window.OREC_SALES_CONFIG || {};
+var _intelIndex = null;
+var _intelCurrentId = '';
+var _intelOneSignal = null;
+var _intelOneSignalPromise = null;
+var _intelIndexUrl = _intelConfig.reportIndexUrl || 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/reports/index.json';
+var _intelBaseUrl = _intelConfig.reportBaseUrl || 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/reports/';
+
+function intelEl(tag, className, text) {
+  var el = document.createElement(tag);
+  if (className) el.className = className;
+  if (text !== undefined && text !== null) el.textContent = String(text);
+  return el;
+}
+
+function intelClear(id) {
+  var el = document.getElementById(id);
+  if (el) while (el.firstChild) el.removeChild(el.firstChild);
+  return el;
+}
+
+function intelFormatDate(value, includeTime) {
+  var date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value || '');
+  return new Intl.DateTimeFormat('ja-JP', {
+    timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric',
+    weekday: 'short', ...(includeTime ? { hour: '2-digit', minute: '2-digit' } : {})
+  }).format(date);
+}
+
+function intelSetStale(publishedAt, message) {
+  var alertEl = document.getElementById('intel-stale-alert');
+  var status = document.getElementById('intel-home-status');
+  var stale = !publishedAt || Date.now() - Date.parse(publishedAt) > 30 * 60 * 60 * 1000;
+  if (message || stale) {
+    alertEl.textContent = message || '最新レポートの更新から30時間以上経過しています。GitHub Actionsの実行状況を確認してください。';
+    alertEl.classList.add('show');
+  } else {
+    alertEl.textContent = '';
+    alertEl.classList.remove('show');
+  }
+  status.textContent = stale ? '更新遅延' : 'LIVE';
+  status.classList.toggle('stale', stale);
+}
+
+function intelUpdateHome(index) {
+  var latest = index && Array.isArray(index.reports) ? index.reports[0] : null;
+  if (!latest) return;
+  document.getElementById('intel-home-headline').textContent = latest.headline || latest.theme || '今日の営業ブリーフ';
+  document.getElementById('intel-home-meta').textContent = `${intelFormatDate(latest.publishedAt, true)} 更新`;
+  var readId = localStorage.getItem('orec_intel_read') || '';
+  document.getElementById('intel-home-unread').classList.toggle('show', readId !== latest.id);
+  intelSetStale(latest.publishedAt);
+}
+
+async function intelFetchJson(url, cacheKey) {
+  try {
+    var response = await fetch(`${url}${url.includes('?') ? '&' : '?'}t=${Date.now()}`, { cache: 'no-store', headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    var value = await response.json();
+    localStorage.setItem(cacheKey, JSON.stringify(value));
+    return { value: value, cached: false };
+  } catch (error) {
+    var cached = localStorage.getItem(cacheKey);
+    if (!cached) throw error;
+    return { value: JSON.parse(cached), cached: true };
+  }
+}
+
+function intelSourceLabel(sourceIds) {
+  if (!Array.isArray(sourceIds) || !sourceIds.length) return '';
+  return `出典 ${sourceIds.length}件`;
+}
+
+function intelRenderReport(report, fromCache) {
+  _intelCurrentId = report.id;
+  document.getElementById('intel-loading').style.display = 'none';
+  document.getElementById('intel-empty').style.display = 'none';
+  document.getElementById('intel-report').style.display = 'block';
+  document.getElementById('intel-date').textContent = `${report.id.replaceAll('-', '.')} / DAILY BRIEF`;
+  document.getElementById('intel-theme').textContent = report.theme && report.theme.label ? report.theme.label : '本日の営業テーマ';
+  document.getElementById('intel-headline').textContent = report.theme && report.theme.headline ? report.theme.headline : report.theme.label;
+  document.getElementById('intel-published').textContent = `${intelFormatDate(report.publishedAt, true)} 発行${fromCache ? '・端末保存版' : ''}`;
+  document.getElementById('intel-source-count').textContent = `出典 ${(report.sources || []).length}件`;
+
+  var summary = intelClear('intel-summary');
+  (report.summary || []).forEach(function(item) { summary.appendChild(intelEl('div', 'intel-summary-item', item)); });
+
+  var market = intelClear('intel-market');
+  (report.marketSignals || []).forEach(function(item) {
+    var wrap = intelEl('article', 'intel-item');
+    wrap.appendChild(intelEl('h3', 'intel-item-title', item.title || '市場情報'));
+    wrap.appendChild(intelEl('div', 'intel-item-text', item.detail || ''));
+    var confidence = item.confidence === 'high' ? '確認度 高' : item.confidence === 'medium' ? '確認度 中' : '参考情報';
+    var badge = intelEl('span', 'intel-confidence', `${confidence} ・ ${intelSourceLabel(item.sourceIds)}`);
+    wrap.appendChild(badge); market.appendChild(wrap);
+  });
+  document.getElementById('intel-market-section').style.display = market.childElementCount ? '' : 'none';
+
+  var repair = intelClear('intel-repair');
+  (report.repairInfo || []).forEach(function(item) {
+    var wrap = intelEl('article', 'intel-item intel-repair');
+    wrap.appendChild(intelEl('h3', 'intel-item-title', `${item.brand || 'OREC'}｜${item.modelScope || ''}`));
+    if (item.symptom) wrap.appendChild(intelEl('div', 'intel-item-text', `症状：${item.symptom}`));
+    if (Array.isArray(item.checks) && item.checks.length) wrap.appendChild(intelEl('div', 'intel-item-text', `確認順序：${item.checks.join(' → ')}`));
+    if (item.safeAction) wrap.appendChild(intelEl('div', 'intel-item-text', `安全な初動：${item.safeAction}`));
+    var safety = intelEl('div', 'intel-repair-safety');
+    safety.textContent = `停止条件：${(item.stopConditions || []).join('・')}\n引継ぎ：${item.escalation || '販売店・サービス部門へ確認'}`;
+    wrap.appendChild(safety);
+    wrap.appendChild(intelEl('span', 'intel-confidence', intelSourceLabel(item.sourceIds)));
+    repair.appendChild(wrap);
+  });
+  document.getElementById('intel-repair-section').style.display = repair.childElementCount ? '' : 'none';
+
+  var playbook = report.salesPlaybook || {};
+  document.getElementById('intel-dealer-value').textContent = playbook.dealerValue || 'レポート内の確認済み情報をもとに提案してください。';
+  var questions = intelClear('intel-questions');
+  (playbook.questions || []).forEach(function(item) { questions.appendChild(intelEl('li', '', item)); });
+  document.getElementById('intel-talk').textContent = playbook.talkTrack || '販売店の状況を確認し、用途に合う実演・点検提案へつなげます。';
+  var objections = intelClear('intel-objections');
+  (playbook.objectionHandling || []).forEach(function(item) {
+    var wrap = intelEl('div', 'intel-item');
+    wrap.appendChild(intelEl('div', 'intel-item-title', item.objection || '販売店からの質問'));
+    wrap.appendChild(intelEl('div', 'intel-item-text', item.response || ''));
+    objections.appendChild(wrap);
+  });
+  document.getElementById('intel-objections-wrap').style.display = objections.childElementCount ? '' : 'none';
+  var actions = intelClear('intel-actions');
+  (playbook.nextActions || []).forEach(function(item) { actions.appendChild(intelEl('li', '', item)); });
+
+  var makitaSection = document.getElementById('intel-makita-section');
+  if (report.makitaRelevance && report.makitaRelevance.summary) {
+    document.getElementById('intel-makita').textContent = report.makitaRelevance.summary;
+    makitaSection.style.display = '';
+  } else makitaSection.style.display = 'none';
+
+  var warnings = intelClear('intel-warnings');
+  (report.warnings || []).forEach(function(item) { warnings.appendChild(intelEl('div', 'intel-item-text', `・${item}`)); });
+  document.getElementById('intel-warning-section').style.display = warnings.childElementCount ? '' : 'none';
+
+  var sources = intelClear('intel-sources');
+  (report.sources || []).forEach(function(item) {
+    if (!item.url || !String(item.url).startsWith('https://')) return;
+    var link = intelEl('a', 'intel-source', item.title || item.publisher || item.url);
+    link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.appendChild(intelEl('small', '', `${item.publisher || new URL(item.url).hostname} ・ ${item.accessedAt ? intelFormatDate(item.accessedAt, false) + '確認' : '公開情報'}`));
+    sources.appendChild(link);
+  });
+
+  localStorage.setItem('orec_intel_read', report.id);
+  document.getElementById('intel-home-unread').classList.remove('show');
+  intelSetStale(report.publishedAt, fromCache ? '通信できないため、端末に保存された直近のレポートを表示しています。' : '');
+  intelRenderHistory();
+  document.getElementById('intel-scroll').scrollTop = 0;
+}
+
+function intelRenderHistory() {
+  var history = intelClear('intel-history');
+  if (!_intelIndex || !Array.isArray(_intelIndex.reports)) return;
+  _intelIndex.reports.slice(0, 30).forEach(function(item) {
+    var button = intelEl('button', `intel-history-btn${item.id === _intelCurrentId ? ' on' : ''}`);
+    button.type = 'button';
+    button.appendChild(intelEl('div', 'intel-history-date', item.id.replaceAll('-', '.')));
+    button.appendChild(intelEl('div', 'intel-history-name', item.theme || item.headline || '営業ブリーフ'));
+    button.addEventListener('click', function() { intelLoadReport(item.id, true); });
+    history.appendChild(button);
+  });
+}
+
+async function intelLoadReport(id, updateUrl) {
+  if (!_intelIndex || !Array.isArray(_intelIndex.reports)) return;
+  var entry = _intelIndex.reports.find(function(item) { return item.id === id; }) || _intelIndex.reports[0];
+  if (!entry) return;
+  document.getElementById('intel-loading').style.display = 'block';
+  document.getElementById('intel-empty').style.display = 'none';
+  document.getElementById('intel-report').style.display = 'none';
+  try {
+    var url = new URL(entry.path, _intelBaseUrl).toString();
+    var result = await intelFetchJson(url, `orec_intel_report_${entry.id}`);
+    if (!result.value || result.value.schemaVersion !== 1 || result.value.id !== entry.id) throw new Error('レポート形式が正しくありません');
+    intelRenderReport(result.value, result.cached);
+    if (updateUrl && history.replaceState) {
+      var current = new URL(location.href); current.searchParams.set('report', entry.id); history.replaceState({}, '', current);
+    }
+  } catch (error) {
+    document.getElementById('intel-loading').style.display = 'none';
+    document.getElementById('intel-empty').style.display = 'block';
+    intelSetStale(null, `営業情報を読み込めませんでした：${error.message}`);
+  }
+}
+
+async function intelLoadIndex() {
+  try {
+    var result = await intelFetchJson(_intelIndexUrl, 'orec_intel_index');
+    var index = result.value;
+    if (!index || index.schemaVersion !== 1 || !Array.isArray(index.reports)) throw new Error('一覧データの形式が正しくありません');
+    _intelIndex = index;
+    intelUpdateHome(index);
+    if (result.cached) intelSetStale(index.reports[0] && index.reports[0].publishedAt, '通信できないため、端末に保存された記事一覧を使用しています。');
+    return index;
+  } catch (error) {
+    intelSetStale(null, `営業情報の初回収集を待っています：${error.message}`);
+    return null;
+  }
+}
+
+async function intelOpen() {
+  document.getElementById('intel-loading').style.display = 'block';
+  var index = _intelIndex || await intelLoadIndex();
+  if (!index || !index.reports.length) {
+    document.getElementById('intel-loading').style.display = 'none';
+    document.getElementById('intel-empty').style.display = 'block';
+    return;
+  }
+  var requested = new URL(location.href).searchParams.get('report');
+  await intelLoadReport(requested || index.latestId || index.reports[0].id, false);
+}
+
+function intelGetOneSignal() {
+  if (_intelOneSignal) return Promise.resolve(_intelOneSignal);
+  if (_intelOneSignalPromise) return _intelOneSignalPromise;
+  _intelOneSignalPromise = new Promise(function(resolve, reject) {
+    var appId = _intelConfig.oneSignalAppId || '';
+    if (!appId) { reject(new Error('OneSignal App IDが未設定です。管理者がRepository Variableを設定後、アプリを再配布してください。')); return; }
+    var timer = setTimeout(function() { reject(new Error('通知SDKの読み込みがタイムアウトしました。')); }, 15000);
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    window.OneSignalDeferred.push(async function(OneSignal) {
+      try {
+        var workerUrl = new URL('push/onesignal/OneSignalSDKWorker.js', document.baseURI);
+        var scopeUrl = new URL('push/onesignal/', document.baseURI);
+        await OneSignal.init({ appId: appId, serviceWorkerPath: workerUrl.pathname, serviceWorkerParam: { scope: scopeUrl.pathname }, allowLocalhostAsSecureOrigin: true });
+        clearTimeout(timer); _intelOneSignal = OneSignal; resolve(OneSignal);
+      } catch (error) { clearTimeout(timer); reject(error); }
+    });
+  });
+  return _intelOneSignalPromise;
+}
+
+function intelIsIosWithoutHomeScreen() {
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  return ios && !standalone;
+}
+
+async function intelEnableNotifications() {
+  if (intelIsIosWithoutHomeScreen()) {
+    alert('iPhoneでは、Safariの共有ボタンから「ホーム画面に追加」し、追加したOREC営業アプリを開いてから通知を許可してください。');
+    return;
+  }
+  try {
+    var OneSignal = await intelGetOneSignal();
+    await OneSignal.Notifications.requestPermission();
+    await OneSignal.User.PushSubscription.optIn();
+    var id = OneSignal.User.PushSubscription.id;
+    document.getElementById('intel-notify-btn').textContent = id ? '通知 ON' : '通知を確認';
+    if (id) {
+      document.getElementById('intel-device-id').textContent = id;
+      document.getElementById('intel-device').classList.add('show');
+      document.getElementById('intel-notify-help').textContent = '通知を有効にしました。下のIDをGitHub Secret「ONESIGNAL_SUBSCRIPTION_IDS」にJSON配列で登録すると、本人の端末だけへ配信されます。';
+      toast('通知を有効にしました');
+    }
+  } catch (error) { alert(`通知を有効にできませんでした。\n${error.message}`); }
+}
+
+async function intelDisableNotifications() {
+  try {
+    var OneSignal = await intelGetOneSignal();
+    await OneSignal.User.PushSubscription.optOut();
+    document.getElementById('intel-notify-btn').textContent = '通知 OFF';
+    document.getElementById('intel-device').classList.remove('show');
+    toast('この端末の通知を解除しました');
+  } catch (error) { alert(`通知を解除できませんでした。\n${error.message}`); }
+}
+
+async function intelCopySubscriptionId() {
+  var id = document.getElementById('intel-device-id').textContent;
+  if (!id) return;
+  try { await navigator.clipboard.writeText(`["${id}"]`); toast('Subscription IDをJSON形式でコピーしました'); }
+  catch { alert(`["${id}"]`); }
+}
+
+(function intelInit() {
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', function() { navigator.serviceWorker.register(new URL('sw.js', document.baseURI).pathname, { scope: new URL('./', document.baseURI).pathname }).catch(console.warn); });
+  }
+  intelLoadIndex().then(function(index) {
+    var requested = new URL(location.href).searchParams.get('report');
+    if (requested && index) nav('intel');
+  });
 })();
 
 </script>

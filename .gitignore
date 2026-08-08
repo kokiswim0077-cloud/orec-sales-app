@@ -19,3 +19,9 @@ Thumbs.db
 *.pfx
 secrets/
 credentials/
+
+# 自動生成・ローカル検証
+dist/
+report-store/
+test-results/
+playwright-report/

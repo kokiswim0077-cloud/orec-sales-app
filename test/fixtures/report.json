@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-08-08",
+  "publishedAt": "2026-08-08T09:05:00.000Z",
+  "theme": {
+    "key": "safety-care",
+    "label": "安全、保守、繁忙期準備",
+    "headline": "刈り込み前の10分点検を販売店の信頼づくりに"
+  },
+  "summary": [
+    "高温期は始業前点検と冷却部の清掃確認を会話の入口にします。",
+    "修理相談では型式と症状を確認し、運転を止めてから安全に切り分けます。",
+    "販売店には点検案内と実演予定の確認をセットで提案します。"
+  ],
+  "marketSignals": [
+    {
+      "title": "繁忙期前の点検需要",
+      "detail": "関東の販売店訪問では、作業前点検と消耗品確認を早めに案内する機会です。",
+      "confidence": "high",
+      "sourceIds": ["src-official"]
+    }
+  ],
+  "repairInfo": [
+    {
+      "brand": "OREC",
+      "modelScope": "公式取扱説明書で確認できる対象機種",
+      "symptom": "始動前点検で異常が見つかった場合",
+      "checks": ["型式を確認", "取扱説明書の点検項目を照合"],
+      "safeAction": "エンジンを停止し、刃の回転が完全に止まってから外観を確認します。",
+      "stopConditions": ["エンジン停止", "高温部が冷えるまで待機"],
+      "escalation": "異音、燃料漏れ、刃部の損傷がある場合は販売店・サービス部門へ引き継ぎます。",
+      "sourceIds": ["src-official"]
+    }
+  ],
+  "salesPlaybook": {
+    "dealerValue": "繁忙期の停止時間を減らすため、早めの点検案内を共同で行います。",
+    "questions": ["今週、修理相談が増えている機種はありますか？", "実演予定の前に確認したい消耗品はありますか？"],
+    "talkTrack": "繁忙期に入る前の10分点検を一緒に案内しませんか。型式ごとの確認項目を整理し、実演機も止まらない準備につなげます。",
+    "objectionHandling": [{"objection": "今は忙しくて案内する時間がない", "response": "受付時に型式と症状だけ確認できる短いチェック表から始められます。"}],
+    "nextActions": ["重点販売店3店へ修理相談の傾向を確認", "実演機の点検予定を確認", "翌週訪問用の安全点検資料を準備"]
+  },
+  "makitaRelevance": null,
+  "sources": [
+    {
+      "id": "src-official",
+      "title": "オーレック公式サイト",
+      "url": "https://www.orec-jp.com/",
+      "publisher": "株式会社オーレック",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T08:47:00.000Z",
+      "type": "web"
+    }
+  ],
+  "warnings": []
+}

@@ -1,0 +1,19 @@
+{
+  "name": "orec-sales-intelligence",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "check": "npm test && node scripts/check-html.mjs",
+    "collect": "node scripts/collect.mjs",
+    "publish": "node scripts/publish.mjs",
+    "notify": "node scripts/notify.mjs",
+    "validate:reports": "node scripts/validate.mjs",
+    "build:config": "node scripts/build-app-config.mjs",
+    "generate:icons": "node scripts/generate-icons.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
