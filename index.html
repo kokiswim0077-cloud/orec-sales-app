@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.onesignal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://api.onesignal.com https://onesignal.com https://*.onesignal.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com https://cdn.onesignal.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; form-action 'none'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.onesignal.com https://api.onesignal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://dkl5pcrrq8gba.cloudfront.net https://generativelanguage.googleapis.com https://raw.githubusercontent.com https://api.onesignal.com https://onesignal.com https://*.onesignal.com; frame-src https://www.youtube.com https://www.youtube-nocookie.com; worker-src 'self' blob: https://cdnjs.cloudflare.com https://cdn.onesignal.com">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>OREC 営業ツール</title>
@@ -23,6 +23,7 @@ window.__orecOneSignalReady = new Promise(function(resolve, reject) {
   window.OneSignalDeferred.push(async function(OneSignal) {
     if (window.__orecOneSignalInitStarted) return;
     window.__orecOneSignalInitStarted = true;
+    document.documentElement.setAttribute('data-onesignal-ready', 'starting');
     try {
       var config = window.OREC_SALES_CONFIG || {};
       if (!config.oneSignalAppId) throw new Error('OneSignal App IDが未設定です。');
@@ -32,8 +33,10 @@ window.__orecOneSignalReady = new Promise(function(resolve, reject) {
         serviceWorkerParam: { scope: '/sales/push/onesignal/' }
       });
       window.__orecOneSignalInstance = OneSignal;
+      document.documentElement.setAttribute('data-onesignal-ready', 'true');
       resolve(OneSignal);
     } catch (error) {
+      document.documentElement.setAttribute('data-onesignal-ready', 'error');
       reject(error);
     }
   });

@@ -13,6 +13,14 @@ if (oneSignalInitIndex < 0 || oneSignalInitIndex > oneSignalSdkIndex) {
 if (!html.includes("serviceWorkerPath: 'sales/push/onesignal/OneSignalSDKWorker.js'")) {
   throw new Error("OneSignal service worker path must be relative to the site root without a leading slash");
 }
+const csp = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)?.[1] || "";
+const scriptSrc = csp.match(/(?:^|;\s*)script-src\s+([^;]+)/)?.[1] || "";
+if (!scriptSrc.split(/\s+/).includes("https://api.onesignal.com")) {
+  throw new Error("CSP script-src must allow the OneSignal JSONP configuration endpoint");
+}
+if (!html.includes("data-onesignal-ready', 'true'") || !html.includes("data-onesignal-ready', 'error'")) {
+  throw new Error("OneSignal initialization status marker is missing");
+}
 if (!html.includes("intelReloadOneSignalSdk") || !html.includes("OneSignal CDNへ接続できませんでした。")) {
   throw new Error("OneSignal SDK retry handling is missing");
 }
