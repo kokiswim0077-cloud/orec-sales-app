@@ -90,14 +90,37 @@ JSONだけを返してください。形は次の通りです。
 - オーレックのPRは機能名だけで終わらせず、販売店と利用者にとっての価値、裏付けとなる公式情報を示す
 - 他社情報は公式発表で確認できる事実に限定し、orecOpportunityは事実ではなく営業上の仮説・提案だと分かる表現にする
 - 斜め上からの視点は隣接分野の変化と草刈り需要の関係を説明し、販売店と低コストで試せる具体策まで示す
+- marketSignalsは最大3件、productPrPointsとcompetitiveInsightsは最大2件、repairInfoは最大2件に絞る
+- 各文字列は日本語で200文字以内を目安にし、全体を3分で読める量にする
 - 修理情報は対象範囲、安全停止条件、専門部門への引継条件が揃わなければ含めない
 - 安全装置解除、稼働中の点検、対象不明の分解手順は禁止
 - マキタは関連性が明確な場合だけ。競合への否定的な断定は禁止
 - 営業提案と確認済み事実を混同しない
 `;
 
-const response = await generateWithGemini({ prompt, apiKey: process.env.GEMINI_API_KEY, model, json: true });
-const raw = parseJsonText(response?.candidates?.[0]?.content?.parts?.map(part => part.text || "").join("\n"));
+async function generateReportJson() {
+  let lastError;
+  for (let attempt = 1; attempt <= 3; attempt += 1) {
+    const response = await generateWithGemini({
+      prompt,
+      apiKey: process.env.GEMINI_API_KEY,
+      model,
+      json: true,
+      thinkingBudget: model.startsWith("gemini-2.5-") ? 1024 : undefined
+    });
+    const candidate = response?.candidates?.[0];
+    const text = candidate?.content?.parts?.map(part => part.text || "").join("\n");
+    try {
+      if (candidate?.finishReason && candidate.finishReason !== "STOP") throw new Error(`Gemini finish reason: ${candidate.finishReason}`);
+      return parseJsonText(text);
+    } catch (error) {
+      lastError = new Error(`Gemini returned incomplete report JSON (attempt ${attempt}/3): ${error.message}`);
+    }
+  }
+  throw lastError;
+}
+
+const raw = await generateReportJson();
 const warnings = Array.isArray(raw.warnings) ? raw.warnings.map(String) : [];
 const repairInfo = sanitizeRepairInfo(Array.isArray(raw.repairInfo) ? raw.repairInfo : [], warnings);
 
