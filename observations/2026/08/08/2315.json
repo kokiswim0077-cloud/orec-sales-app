@@ -1,0 +1,418 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-08-08T2315+09:00",
+  "collectedAt": "2026-08-08T14:15:12.524Z",
+  "theme": "安全、保守、繁忙期準備",
+  "researchText": "株式会社オーレックに関する調査メモ（2026年8月8日）\n\n**1. 公式サイトおよび公式ニュース**\n株式会社オーレックの公式サイトは「株式会社オーレック [OREC CO.,LTD.]」と、持株会社体制移行後の「株式会社オーレックホールディングス [OREC HORLDINGS CO.,LTD.]」が存在します。\n公式ニュースは、両サイトの「NEWS & TOPICS」または「お知らせ」セクションで確認できます。最近のニュース（2026年7月～8月）としては、新CMの公開、地震被災者へのお見舞い、AWS公式ブログへの生成AI活用事例掲載などがあります。\n\n**2. 公開取扱説明書およびメンテナンス情報**\n公式サイトの「SUPPORT」セクション内に「取扱説明書/パーツリスト」の項目があり、公開されています。また、専用の「メンテナンス」ページも設けられており、お客様自身で実践できる点検やメンテナンス方法が案内されています。2024年10月には、取扱説明書/パーツリストのシステム復旧がアナウンスされています。\nメンテナンスページでは、乗用草刈機、斜面草刈機、あぜ草刈機、雑草刈機、水田除草機、除雪機など、製品カテゴリーごとのメンテナンス方法が提供されています。特にスパイダーモアーのメンテナンスページでは、ミッションオイル交換、ナイフ交換、エアクリーナー清掃、長期保管前のメンテナンス方法などが具体的に示されています。\n\n**3. 安全および繁忙期準備に関する情報**\nオーレックは「安全推進宣言」を掲げ、安全で快適な作業を推進しています。\n安全に関する一次情報として、「安全作業チェックリスト」が公開されており、乗用草刈機ラビットモアーやHRシリーズ向けに、作業前の確認、定期的なメンテナンス、作業中の注意事項がまとめられています。これには、火災事故防止のためのエンジンおよびその周辺の清掃、飛散事故防止、転落事故防止、積込み・積下ろし時の注意点、駐車ブレーキの確認などが含まれます。\n繁忙期準備としては、特定の「繁忙期準備」というタイトルの資料は見当たりませんが、上記の「メンテナンス」および「安全作業チェックリスト」が直接的に関連します。機械の点検・清掃・保管を適切に行うことで、トラブルを未然に防ぐことができると明記されています。特に、エアクリーナーの清掃は排ガス温度の上昇による火災の原因を防ぐためにも重要とされています。\n\n**調査メモのまとめ**\n現在の時期（8月）は、草刈り作業の繁忙期、または秋の作業に向けた準備期間と考えられます。オーレックの公式サイトでは、製品を安全に長く使用するための詳細なメンテナンス情報と安全作業チェックリストが提供されています。これらを活用し、定期的な点検と清掃を行うことで、機械のトラブルを未然に防ぎ、安全かつ効率的な作業に繋げることが重要です。特に、エアクリーナーの清掃や駐車ブレーキの確認など、基本的な点検項目を徹底することが推奨されます。\n\n---\n\n## 関東地域の草刈り・農業・緑地管理に関する直近情報（2026年8月）調査メモ\n\n### 1. 安全対策\n\n*   **農業機械の安全対策強化**:\n    *   農林水産省は、2026年3月27日に「農業機械の自動走行に関する安全性確保ガイドライン」を一部改正し、遠隔監視型ロボット農機（コンバイン）や公道走行に関する規定を追加しました。\n    *   農林水産省は、農作業中の死亡事故が年間約250件前後で推移し、その約8割が農業機械に関連する事故であると報告しており、特に公道での追突事故防止のため、灯火器類の設置による視認性向上が極めて重要であると強調しています。\n    *   2026年4月1日施行の改正労働安全衛生法により、農業・林業の個人事業者にも安全衛生教育の受講義務が課せられます。\n    *   農林水産省は、安全フレームの装着率向上やシートベルト着用率向上を重点項目とする「農業機械の安全装備推進」を進めています。\n    *   日本農業機械工業会は、農作業安全に関する情報提供や「令和8年秋の農作業安全啓発用ポスター」の案内を行っています。\n    *   日本農業機械化協会は、ロボット農機等のスマート農業技術の安全性確保の検討を推進し、農業機械使用に係る安全対策の強化に協力しています。\n    *   JA共済は、農作業事故の未然防止対策として、安全性の高い農機の紹介や農作業安全対策に関する情報を提供しています。\n*   **熱中症対策の義務化と強化**:\n    *   2025年6月からの労働安全衛生規則改正により、農作業現場での熱中症対策が義務化されました。\n    *   農林水産省の2026年2月公表統計によると、夏の高温期における農作業中の死亡事故が急増しており、熱中症がその一因とされています。\n    *   農林水産省は、熱中症対策の啓発資料作成や普及、研修資料作成への支援を行う民間団体等を公募しています。\n    *   日本農業機械化協会は、2026年7月から9月までを「夏の熱中症等対策声かけ期間」と設定し、農機販売店等に協力を呼びかけています。\n    *   厚生労働省は、2026年3月18日に「職場における熱中症防止のためのガイドライン」を制定しました。\n    *   東京都豊島区など一部自治体では、熱中症警戒アラートを発令し注意喚起を行っています。\n*   **草刈り・緑地管理の安全**:\n    *   株式会社ササキコーポレーションは、2026年5月の展示会で、エアコンの効いた車内から操作できる「車載式草刈機ブームマスターZ」を提案し、炎天下での熱中症リスクや飛散物によるケガ、クマ出没対策としての作業者の安全確保をアピールしました。\n    *   一般社団法人日本造園建設業協会は、「造園安全衛生管理の手引き」（2025年第13版）や「造園安全作業のしおり」（2026年第2版）などの発行図書を通じて、安全管理活動を推進しています。\n    *   マキタの公式サイトでは、刈払機・草刈機の安全上のご注意として、刈刃の点検、飛散防護カバーの装着、肩掛けバンドの正しい装着方法などを案内しています。\n\n### 2. 保守・点検\n\n*   **農業機械の保守**:\n    *   農業機械は厳しい作業環境で使用されるため、定期的な点検や修理が故障防止と作業効率維持に不可欠です。\n    *   日本農業機械工業会は、コンバイン、乾燥機、運搬車などの農業機械について、平坦な場所でのエンジン停止・駐車ブレーキ、タイヤの空気圧、ブレーキの効き、ベルトの張りなどの点検項目を挙げています。\n    *   農林水産省が2026年3月に策定した「農業支援サービスにおける標準ガイドライン」では、無人航空機防除、草刈り、稲作収穫といった主要な作業受託について、作業前準備から作業後報告までの標準的な工程や安全対策、関係法令が体系化されています。\n*   **草刈り・緑地管理の保守**:\n    *   マキタの取扱説明書には、充電式草刈機のお手入れ、金属刃（刈刃）のお手入れ、保管場所に関する保守・点検の項目が記載されています。\n    *   東京都世田谷区の等々力渓谷公園では、2026年5月に倒木による利用中止が解除され、危険樹木の伐採や枯れ枝の除去、斜面保護作業が行われ、今後も渓谷樹林地の適正な管理と土中環境の改善を継続するとしています。\n\n### 3. 繁忙期準備\n\n*   **農業分野**:\n    *   農林水産省の令和8年度予算では、新規就農者への交付金引き上げや、農業用機械・施設の導入支援として「新規就農者チャレンジ事業」が新設されるなど、スマート農業の導入支援や農業のDX化が柱となっています。\n    *   スマート農業機械や電動農業機械の導入には、農林水産省のスマート農業関連事業や各都道府県の補助金が活用できる場合があります。\n    *   農林水産省は、2026年2月26日に「農作業安全対策全国推進会議」を開催し、令和8年度の農作業安全推進方針について情報交換を行いました。\n*   **緑地管理分野**:\n    *   株式会社オーレックは、2026年7月に「自治体様向け草刈り対策支援」窓口を開設し、草刈り対策の実演・体験会などを実施しており、自治体の緑地管理の効率化を支援しています。\n    *   一般社団法人日本公園緑地協会は、2026年7月に「2026年度公園管理運営士更新講習」や「令和8年度公園緑地総合講習会」の開催日程を発表しており、緑地管理に関わる専門人材の育成・更新を継続しています。\n\n### マキタ草刈機に関する補足\n\nマキタの公式サイトでは、刈払機・草刈機を安全に使用するための基本的な注意事項として、使用前の刈刃やナイロンコードカッタの異常確認、飛散防護カバーの装着、肩掛けバンドの正しい装着方法、作業時の服装、周囲の確認などを呼びかけています。また、取扱説明書には、製品のお手入れ、金属刃（刈刃）のお手入れ、適切な保管方法といった保守に関する情報が掲載されています。",
+  "findings": [
+    "株式会社オーレックに関する調査メモ（2026年8月8日）",
+    "株式会社オーレックの公式サイトは「株式会社オーレック [OREC CO.,LTD.]」と、持株会社体制移行後の「株式会社オーレックホールディングス [OREC HORLDINGS CO.,LTD.]」が存在します。",
+    "公式ニュースは、両サイトの「NEWS & TOPICS」または「お知らせ」セクションで確認できます。最近のニュース（2026年7月～8月）としては、新CMの公開、地震被災者へのお見舞い、AWS公式ブログへの生成AI活用事例掲載などがあります。",
+    "2. 公開取扱説明書およびメンテナンス情報**",
+    "公式サイトの「SUPPORT」セクション内に「取扱説明書/パーツリスト」の項目があり、公開されています。また、専用の「メンテナンス」ページも設けられており、お客様自身で実践できる点検やメンテナンス方法が案内されています。2024年10月には、取扱説明書/パーツリストのシステム復旧がアナウンスされています。",
+    "メンテナンスページでは、乗用草刈機、斜面草刈機、あぜ草刈機、雑草刈機、水田除草機、除雪機など、製品カテゴリーごとのメンテナンス方法が提供されています。特にスパイダーモアーのメンテナンスページでは、ミッションオイル交換、ナイフ交換、エアクリーナー清掃、長期保管前のメンテナンス方法などが具体的に示されています。",
+    "3. 安全および繁忙期準備に関する情報**",
+    "オーレックは「安全推進宣言」を掲げ、安全で快適な作業を推進しています。",
+    "安全に関する一次情報として、「安全作業チェックリスト」が公開されており、乗用草刈機ラビットモアーやHRシリーズ向けに、作業前の確認、定期的なメンテナンス、作業中の注意事項がまとめられています。これには、火災事故防止のためのエンジンおよびその周辺の清掃、飛散事故防止、転落事故防止、積込み・積下ろし時の注意点、駐車ブレーキの確認などが含まれます。",
+    "繁忙期準備としては、特定の「繁忙期準備」というタイトルの資料は見当たりませんが、上記の「メンテナンス」および「安全作業チェックリスト」が直接的に関連します。機械の点検・清掃・保管を適切に行うことで、トラブルを未然に防ぐことができると明記されています。特に、エアクリーナーの清掃は排ガス温度の上昇による火災の原因を防ぐためにも重要とされています。",
+    "現在の時期（8月）は、草刈り作業の繁忙期、または秋の作業に向けた準備期間と考えられます。オーレックの公式サイトでは、製品を安全に長く使用するための詳細なメンテナンス情報と安全作業チェックリストが提供されています。これらを活用し、定期的な点検と清掃を行うことで、機械のトラブルを未然に防ぎ、安全かつ効率的な作業に繋げることが重要です。特に、エアクリーナーの清掃や駐車ブレーキの確認など、基本的な点検項目を徹底することが推奨されます。",
+    "関東地域の草刈り・農業・緑地管理に関する直近情報（2026年8月）調査メモ",
+    "農林水産省は、2026年3月27日に「農業機械の自動走行に関する安全性確保ガイドライン」を一部改正し、遠隔監視型ロボット農機（コンバイン）や公道走行に関する規定を追加しました。",
+    "農林水産省は、農作業中の死亡事故が年間約250件前後で推移し、その約8割が農業機械に関連する事故であると報告しており、特に公道での追突事故防止のため、灯火器類の設置による視認性向上が極めて重要であると強調しています。",
+    "2026年4月1日施行の改正労働安全衛生法により、農業・林業の個人事業者にも安全衛生教育の受講義務が課せられます。",
+    "農林水産省は、安全フレームの装着率向上やシートベルト着用率向上を重点項目とする「農業機械の安全装備推進」を進めています。",
+    "日本農業機械工業会は、農作業安全に関する情報提供や「令和8年秋の農作業安全啓発用ポスター」の案内を行っています。",
+    "日本農業機械化協会は、ロボット農機等のスマート農業技術の安全性確保の検討を推進し、農業機械使用に係る安全対策の強化に協力しています。",
+    "JA共済は、農作業事故の未然防止対策として、安全性の高い農機の紹介や農作業安全対策に関する情報を提供しています。",
+    "2025年6月からの労働安全衛生規則改正により、農作業現場での熱中症対策が義務化されました。",
+    "農林水産省の2026年2月公表統計によると、夏の高温期における農作業中の死亡事故が急増しており、熱中症がその一因とされています。",
+    "農林水産省は、熱中症対策の啓発資料作成や普及、研修資料作成への支援を行う民間団体等を公募しています。",
+    "日本農業機械化協会は、2026年7月から9月までを「夏の熱中症等対策声かけ期間」と設定し、農機販売店等に協力を呼びかけています。",
+    "厚生労働省は、2026年3月18日に「職場における熱中症防止のためのガイドライン」を制定しました。",
+    "東京都豊島区など一部自治体では、熱中症警戒アラートを発令し注意喚起を行っています。",
+    "株式会社ササキコーポレーションは、2026年5月の展示会で、エアコンの効いた車内から操作できる「車載式草刈機ブームマスターZ」を提案し、炎天下での熱中症リスクや飛散物によるケガ、クマ出没対策としての作業者の安全確保をアピールしました。",
+    "一般社団法人日本造園建設業協会は、「造園安全衛生管理の手引き」（2025年第13版）や「造園安全作業のしおり」（2026年第2版）などの発行図書を通じて、安全管理活動を推進しています。",
+    "マキタの公式サイトでは、刈払機・草刈機の安全上のご注意として、刈刃の点検、飛散防護カバーの装着、肩掛けバンドの正しい装着方法などを案内しています。",
+    "農業機械は厳しい作業環境で使用されるため、定期的な点検や修理が故障防止と作業効率維持に不可欠です。",
+    "日本農業機械工業会は、コンバイン、乾燥機、運搬車などの農業機械について、平坦な場所でのエンジン停止・駐車ブレーキ、タイヤの空気圧、ブレーキの効き、ベルトの張りなどの点検項目を挙げています。"
+  ],
+  "sources": [
+    {
+      "id": "src-f5b73d04dbab",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEqwAMPFOhHsNzzK-iTo-mo1D2BaGM1Zqrkx0lsVvCqx-IrAHTReWmOFGZOeKlCFZHFVHfKZsk6KmEDhfsUARuhcuSM2dsg6qpI7IBzxENGdVW-",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-bb2b0e610146",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYEXGMEKDityfJWUq8wy6ybWAbdq4TOzFWQobVUvaDiiEtSnZn_6pFQlnas8M-sfF4W4mv4xGob7rncHbq1_KG_bNvnSEBsN113P3thxiS1LGSPmvCThbeR6FZQRjISM4OmEUxFKGATA==",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-24b14474deac",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAugM3Pr8X8OPYnRvwiVY20fUej6vavchm0UTJaEX0mh8WFC1wnXXDZ-0-R2-YMTWfSQ-LlqfZ9JddLWFYSCtdOzjUjLNfpEJs6O4vjL2SGx38ike4nUiI7L0=",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0dc593da611c",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSuiNmuNcPRoBbCRhV8l6WTplZF7CuZ7_my9IJBV-mlvbRIYNzztIZMRbc9KhCAaoFSYwGKAUHxcygJQCFfOqE4ei76tmPIkLHOOL1rY5_PiGoP_8R",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7b49a473f473",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0sKXHXPJI_dzFWx4ub1MEW-Tbq4WGzHs-sHrpzxX4RL2xb5weus3ibk3TF3Nw2ZXngtBGQUuvvVreGMq7UkpU_VGc7Ivzw1P7T4Thn71UDyTN-S-GCgI=",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-06d392242c51",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE2rKRKvxM4eAtsEset_Ae-a8yHcVM9KS3RCR8LPfKiAXVskyUCauk2lR4y4KK-WypZiaALvkZ5I5GidUhIuxCVxp88cXRtdOdqOclV5g8y-KpXn1HsCKxBGvbZqnGZx5EwoJgYHg==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-9cfc36ab015d",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGsGUPH9-2mKDTZlcPpww0lXVknt4N7aSBPs4Q0PiLi5UCeUSqFHQmD6jmyLQfrh9iCmWM_v7Ei_FIKmgJCE9E9lgC_vaqRXiGwg61IGUzaRjCri57QmmuWflEV8npC",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e7d06b739ffe",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvErVVUDpBcC058oyiouoJjqMZn2WSsA814gwBAzo2HBm-Nl4HPU__Py9kjjvWhZapoAdB49WE1-cuo2Xx-8aHzLCrqks6FQy-sSP6-PMU5mW8NIT-EbJ78EHxng==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e5ee111a89e5",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGawJaR3eVut7GPU1OmMY31pfkRbiJ1diOyM1PPBZGT_1CvrshWOLjDrIQASeBImFJHcunB5NO_TKGLcCWTU0YDGEPddpb8EceE-uznuBpo_ZSwadCmHWXUvuDb8qF5oMDaRkJS2TqW6sVqgw==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6089ed117435",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGoK3P0sCAKwkYVywIyK5PMv9nL2-fGq2KMs1aVd0Dhm7lLqpMK8CxL3Mu-9u3VsP1wOT1h6aKrItqTvIQNXM7VGdr2tpGli1_T7HmTQJweWy7WAw79sez4Cn59",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6dc35e5f3e6a",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE0onRez-CJ-Tmb_nIrkGBlUCYDkra0iQnpIDs9DKbAQpN68cryYu5dv__VA6psKLuVJm3qKlKx_IKwA5AnrdRlZyR418lAw79ViFbS9J6oQL9MtvmHhSsxUMyyvUQNCHQr3YYIMa0sHRKzxUt3Dp7eMe6XouY1gzzRqSb97ubTU7kRBRZrei4mLLMmxuM9yLi8x1EY9SGaQg==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-27c83a8579d2",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGrTBxwv4YZoB0TRBw2j_P9x26HC-NPGrZKSD-SFkJG8V8p8nc1fSoZ0YDWb34t3r4luMBF78YbSZFZOM5ywhB4P3_u0EhMQ1iHDVv_JWjJXo9VGUEMgh2r0q0FZq8wbiCgKlf9wFbBOs52YsChg2gQalzDNhH1jvL1Ohls-NOLxmM8pvofoDp7mBEirMTL35HCkWQeZ8eY7r13S1Tiy7QxHFNu60J8lkA3y315fo4mCxjpQex89XpbG5hpfqyFMNYIGLZuHy_ty6diLc7SKimhO7NQLlsOlFwLSg==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0f9ddba2cab4",
+      "title": "impress.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOvFf6tLG91dVqTx8k98SXtLceUf-Amj-Xc3Ke6a8jA2JFwYALzc8g4sbLl0kWAD7B0e4QoMNC8WNt1AMg7f09ND3U6711sXc7r1SX4HeEh082TqDm00eweuOmzJ5xkMEwQtOCuU1USEj7H_yVXK5frHnaH_w=",
+      "publisher": "impress.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c021991458c0",
+      "title": "archelis.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBYCR66_J3hRqyFYg-NX5UyJDUKLcFh-H6IWJE6tzYs-Wdm9DqKPyVApPqN2e3AEJSf29Szwi7iIY579WtpGls1K88UcICpnOgmpeAYk_oiLBg7tlzbJshf4Inef1JgCEi_DuGCoXhB4vHgZyGG0OE_YMGdNo4pJEZXy1mGvpkrF8LJyMj0l-QArj9uPNnM8IzTnda",
+      "publisher": "archelis.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-262592449e60",
+      "title": "hojin.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_jKZzihg1VRV97M3FMaj1CtddflPU2_qTNQBtwg9_sn9C5O0R_MNt9NLB7HQZSekNI7WM0jbXaGvE3GbIPMDi_Hy0f39FZ_zgD7DnkD5z242IMZTw8_A0_4MvzhTYk6aufRJikN5B9E3vbSqRHClKQtcuKWo8LW6AQ4RkYpa2u-M41fblwf6_u1bSXejBMtzr5R_ZXAzSL2TfStABkR-vvOQlSnpnJRJ8h5GlQfw6yiJ3_pdcP2mC_dXPEj3aWQOpFRe04WAyATbbYeu5Sc1KC00nZe51S5kSF7e4ZhF64ujQ1x363w8OMFwj_c28qzmFv-T7hkomGBIn85BMnv7Isz_fcbZhEruXbK55pzvjQ_-eyjF9aoY9PGoTV8kR3yRSBro=",
+      "publisher": "hojin.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-84f96961177c",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOrL_d1SuRIDA_hyOQ3RujVxmh8A_ZOY0ibch9b6KEFVOUEtQlvm9GuangmUCaEGC89H-N6E803LnIF2jOD-_kcXGzBSp9GZ6tThSBTGTNsJ3afeohgAXyoiy5mt78uAHDakjtxAruLw5k1V-F43Z73NxK5n7huJBOACucNNhB1w==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ae498bf78974",
+      "title": "jfmma.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEoUSNTTPBtRd4E_lflYXon5AwUys5SzRGgbTYvvYvEWlmK39TfcPG_f6xz59vqDvTJL4Q7oYGvD6LnhSRUTMpuX4yoamzbBvTlP-OB9T23j6jGgthLANyYpwE2yQ==",
+      "publisher": "jfmma.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8602c3531fb2",
+      "title": "nitinoki.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjeSqVuzQ1Vdg9bkrc-tpiwiDG0HqLoA6kq_hd27bDcE7rKfyd9iv1kRf6PNE1t1eRmo5VP1b9A3fR8Ny_MR7TguXGTdQ53K_9lB9EPD55t7vQ",
+      "publisher": "nitinoki.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-faad0d16e7c3",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEhN0PaLDhk9_p_y4s_2AnoxWlYUf8mQzVusKGDcBHRyFOruP1DFRToquYP6jKED--buqsYo2A3JUdQWLSTZxwf-rwQRoSNl3fnrBsq3qgM458Fl5sdBI3cRwp4ArSdF8r21oFmleYM-JBe",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6155f5e5e949",
+      "title": "ja-kyosai.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGqF948egdUrRv_MOfGdyVBVK1Edmbe-8hdWj8lZ4G3QpAsJz4Ic7STWgvvqDBxsO75tzqylp-CB2k8bqiH_tJvTU_LDsqC5bunokxjjLvGBMgBItcVCq2D_QYyUAaDPhWN3iFwTAC2FmRtYorrrEPK",
+      "publisher": "ja-kyosai.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-57b6f0a7a8ae",
+      "title": "air-bosai.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsqNs-99krSyihZGiOX-qO5_LICIDJLnMAnC6iKIOH32vP8-DJX5gh96shFaDVkrav52oFsppW125_t_Zui91sf7JqfmbNXsqBn6NGnVnCyXCbVSMagX_olymRR2IY0a5RwBw1pd2N2cYvLfzCyE42ucXFEVEh",
+      "publisher": "air-bosai.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-fdf342e6d984",
+      "title": "sogyotecho.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdYOOO01vHpmi9Kg4JdmV--nLXZT8UTifwMCeNwbMFJZd1at5SHiW4L3xjbZv-VwQIOeqwa3mGKBpkk2uu3EVdFIt5fzzDlLbEapvukoqdJvGDaMY9IHBJBaCFQaCsqIdglYRI",
+      "publisher": "sogyotecho.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f4475d04e02d",
+      "title": "toshima.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG96mHlKdxgJViUjynlTWmt9NstssEkJynjooOclWRVI_e9JYlp6YaVGTsNhXY1-kCvLgP1fOw5hYdDkvxsWnQFOVgTBk3oDomD9pOPLch6ehd18fbB4RN2Qqa1k4IC43COZG8VckGamEqJabygvA5TG8NwgIwz0IP-ybsteQuQztcFOCT9k2iXyMlz",
+      "publisher": "toshima.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-cb51b1ca880d",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE1KDivgqJr2d8RmSi0uFzVy-ijAo9a6puEJTHfSuarqo0uE4j0-H4CHlGWLgSTWI-oMuzURxSgXjJVbRCl71usd62GC3r64nDRvIgEX8S4dWCkxkiRRCQ8gYJ51ychfcUUw1FeFv7uxa1F",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-bcff5eb13e43",
+      "title": "jflc.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHNDfQYBg9gVvw1-78JkvxNXmFAtjgXrTQIoSl6OyFsuS92qD-KbNs3YeLXBc1RgY6Q2WbmZkGd2m0AUyNBJOOMQhOIzjdaXdijp5kXYsA2Jl4RtztpFdoYAJI26sT6BtqNIRZ11A==",
+      "publisher": "jflc.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-05bd80eb34c8",
+      "title": "jalc.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEGR6NC-5eGk5m725JlO1Fb2SmLjjvjjruakYwRoSJ0EWtKWK89I-tO4vZVXUqFOSzIsPM8JcMQpwdHQIfS2gjyUtCJaQi5t6so4xsnt3_NU8cuR7hpcibem_w=",
+      "publisher": "jalc.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-691506c800bf",
+      "title": "makita.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE_2MLNHW_d5kuJb89cXAITDlD4KmYfh_eX28yKAuOPjI5ZM0UZ5HKZpzQRc_z65mBzti6C6WZMPPrseaynK9a8NfB2e0_HGqVuB4OWR9pxBK5XG7d3WCK7CXCo6nKZpZjzE-K4zQ==",
+      "publisher": "makita.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0e74744b7708",
+      "title": "makita.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFZtAd0N3y6C2E9L5em6MGQBJY1oS-Lj__wDeY4q4s-ru-YbiLORRAXY-eyINAk4gtVVAA6PQGxQeAqKYxS2ctABkYaqTEvW1pKoVSz9qcCvZvmTWscwSlUjg7sVBLr98thUmGJf0p4_OeMd6hBkNPPtgZrmw==",
+      "publisher": "makita.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7a03eb3f7c6b",
+      "title": "atpress.ne.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEq264pc-a4EFx2DRyatnqd-0-UTRVPMN41rWUopQO1NEV5ff0ofhwl9N-qm-RGoeAjDyl9W4MCVL-AWFoB-v_6o7BUnwKK0-fuuQdMcjN2omWp__UjNfU7Cvw3GU9RE21O",
+      "publisher": "atpress.ne.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f2674093e8e4",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGXTOQFy23ITGIIjvb9chYX6rn7m39risDUFsO5oyLeB5ols9Rl7l3PP1zM9dPQhkidiX-r3TUEmbSfnOQrnkeM2c_4oGNpMTNKbd0svwLdY5RJr_-_knyXlaNsgD2KG7PdkSa4BuichxT03TNYAB0w3RA=",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-12faa78c6f82",
+      "title": "setagaya.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGSkDgpdwAkfEcOFmh0Fa8ncn0CocDqE3ars-T2h_vUBDz-tc65NY-m5HT1IYmiOEoQoXChXr6uxTMC6Bl3PddOdvrd67PAnngUqlVgHWRe-hSz5OVhxUxhjFtKgVE7yNZOHZi3B5cxW4cm",
+      "publisher": "setagaya.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-553492c3243b",
+      "title": "hojyokin-portal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQET8NB1gMjbX8n-kM44nb6Lt3QuM2esfESoAVN9npr64J0FsvRjf6sKtgYG9z17X5WFCnr7dWjC0KEYwEE8JZLJjbIrpbPPr3CWs70lcMxHzUOzkmpOst_VbWNDqyk5mvoTfU5k0ft-HhWhxYlzPMe6Z0k=",
+      "publisher": "hojyokin-portal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-915129c38663",
+      "title": "agrijob.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6g6c6hF91ABShB4PJbYMmPfB-4SPAj-NaNUKmEixFmL6syOweQ2Y-XhRxi11QOW_q21R3zBPpcO4CIa4Dt5NojKa6KcXDOyKHGMu5w0t7aQfBW84N6f55cT-9JtGeUFc=",
+      "publisher": "agrijob.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a9334f9f32fc",
+      "title": "hojokin-agent.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHVfzRSUT6PxAfkDoRmCnsDGKmnNBCxua27iUlEajqsomNkC1E_eLwCiqJydsliFsD1zaVnq9gU7TxgSwmwuQ7Y6mlRXwk_UFZuCiI7pUOGxmdHjjGIwkXlQZDiX1NBrHKFaqmnVbfHU50HUA6M7vVy6y5aOfoFhI-va2LPq8E=",
+      "publisher": "hojokin-agent.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-26c1c0427dd0",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGP9y1LmwoeciCGsCnDZsVqkB-03bADAcMhFuqmBN5xG2_xd3BRji5qRiZr88l-6ueR3i9ej92G7O2255ylmvzXFd2btOAtUqz2P1Hgmfuqdci5XPIN-zoAfq4BmHpiI8YAPhOQrOALyNeS0ihFte5GLQPmsZwapGy5NbmlExQjeFR7MA==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3712389a6086",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6DLI3rzXKm0kGsqeYVSUX32leJRlBhj2AeyVWVJUJwn-ozOBNpBz9tVnAj6zErDzWp6H1EsWQrlSao9IAXVEXRdE9AAZ4ku4OQZFHjanHCwsPWQGKDdDCA2bDPQ==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ce6702737637",
+      "title": "posa.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwImPxJy06yi9iezqABCtZXScdAftYHwcfc7B5XmgYj_rCdfaS7iHAnt_pOnsrtN4F2MVl5e0DZThe-sZE5KpdrPBagWq-88DjpYcaBjvQ1y1uDJ1IXGNSAJmmi3h5",
+      "publisher": "posa.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-08T14:15:12.524Z",
+      "type": "google-search"
+    }
+  ],
+  "freshSourceIds": [
+    "src-f5b73d04dbab",
+    "src-bb2b0e610146",
+    "src-24b14474deac",
+    "src-0dc593da611c",
+    "src-7b49a473f473",
+    "src-06d392242c51",
+    "src-9cfc36ab015d",
+    "src-e7d06b739ffe",
+    "src-e5ee111a89e5",
+    "src-6089ed117435",
+    "src-6dc35e5f3e6a",
+    "src-27c83a8579d2",
+    "src-0f9ddba2cab4",
+    "src-c021991458c0",
+    "src-262592449e60",
+    "src-84f96961177c",
+    "src-ae498bf78974",
+    "src-8602c3531fb2",
+    "src-faad0d16e7c3",
+    "src-6155f5e5e949",
+    "src-57b6f0a7a8ae",
+    "src-fdf342e6d984",
+    "src-f4475d04e02d",
+    "src-cb51b1ca880d",
+    "src-bcff5eb13e43",
+    "src-05bd80eb34c8",
+    "src-691506c800bf",
+    "src-0e74744b7708",
+    "src-7a03eb3f7c6b",
+    "src-f2674093e8e4",
+    "src-12faa78c6f82",
+    "src-553492c3243b",
+    "src-915129c38663",
+    "src-a9334f9f32fc",
+    "src-26c1c0427dd0",
+    "src-3712389a6086",
+    "src-ce6702737637"
+  ],
+  "warnings": [],
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-2.5-flash"
+  }
+}
