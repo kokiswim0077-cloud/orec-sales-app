@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "check": "npm test && node scripts/check-html.mjs",
     "collect": "node scripts/collect.mjs",
     "publish": "node scripts/publish.mjs",
     "notify": "node scripts/notify.mjs",
