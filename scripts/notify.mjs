@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { jstDateId, notificationIdempotencyKey } from "./lib/reporting.mjs";
-import { buildReportNotificationPayload } from "./lib/onesignal.mjs";
+import { buildReportNotificationPayload, wasReportNotificationSent } from "./lib/onesignal.mjs";
 
 const getArg = name => {
   const index = process.argv.indexOf(name);
@@ -14,8 +14,8 @@ const report = JSON.parse(await fs.readFile(path.join(dataDir, "reports", year, 
 const statePath = path.join(dataDir, "state", "notified.json");
 let state = { schemaVersion: 1, dates: {} };
 try { state = JSON.parse(await fs.readFile(statePath, "utf8")); } catch {}
-if (state.dates?.[dateId]?.status === "sent") {
-  console.log(`Notification for ${dateId} already sent; skipping.`);
+if (wasReportNotificationSent(state.dates?.[dateId], report.publishedAt)) {
+  console.log(`Notification for ${dateId} report ${report.publishedAt} already sent; skipping.`);
   process.exit(0);
 }
 
@@ -36,7 +36,7 @@ const response = await fetch("https://api.onesignal.com/notifications", {
     report,
     baseUrl,
     dateId,
-    idempotencyKey: notificationIdempotencyKey(dateId)
+    idempotencyKey: notificationIdempotencyKey(`${dateId}:${report.publishedAt}`)
   })),
   signal: AbortSignal.timeout(30_000)
 });
@@ -44,7 +44,7 @@ const body = await response.text();
 if (!response.ok) throw new Error(`OneSignal API ${response.status}: ${body.slice(0, 500)}`);
 const result = JSON.parse(body);
 state.dates ||= {};
-state.dates[dateId] = { status: "sent", sentAt: new Date().toISOString(), notificationId: result.id || null };
+state.dates[dateId] = { status: "sent", reportPublishedAt: report.publishedAt, sentAt: new Date().toISOString(), notificationId: result.id || null };
 const cutoff = Date.now() - 365 * 24 * 60 * 60 * 1000;
 state.dates = Object.fromEntries(Object.entries(state.dates).filter(([date]) => Date.parse(`${date}T00:00:00Z`) >= cutoff));
 await fs.mkdir(path.dirname(statePath), { recursive: true });
