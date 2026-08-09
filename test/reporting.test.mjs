@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { generateWithGemini } from "../scripts/lib/gemini.mjs";
-import { buildFailureNotificationPayload, buildReportNotificationPayload } from "../scripts/lib/onesignal.mjs";
+import { buildFailureNotificationPayload, buildReportNotificationPayload, wasReportNotificationSent } from "../scripts/lib/onesignal.mjs";
 import {
   dedupeFindings,
   dedupeSources,
@@ -63,6 +63,14 @@ test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {
   const key = notificationIdempotencyKey("2026-08-08");
   assert.equal(key, notificationIdempotencyKey("2026-08-08"));
   assert.match(key, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+  assert.notEqual(notificationIdempotencyKey("2026-08-08:first"), notificationIdempotencyKey("2026-08-08:second"));
+});
+
+test("同じ日の再発行は新しい記事だけ通知する", () => {
+  const entry = { status: "sent", reportPublishedAt: "2026-08-08T09:00:00.000Z" };
+  assert.equal(wasReportNotificationSent(entry, "2026-08-08T09:00:00.000Z"), true);
+  assert.equal(wasReportNotificationSent(entry, "2026-08-08T10:00:00.000Z"), false);
+  assert.equal(wasReportNotificationSent({ status: "sent" }, "2026-08-08T10:00:00.000Z"), false);
 });
 
 test("Gemini 2.5の思考予算をJSON生成リクエストへ設定できる", async () => {

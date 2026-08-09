@@ -3,6 +3,10 @@ function localizedJapanese(value) {
   return { en: text, ja: text };
 }
 
+export function wasReportNotificationSent(entry, reportPublishedAt) {
+  return entry?.status === "sent" && entry.reportPublishedAt === reportPublishedAt;
+}
+
 export function buildReportNotificationPayload({ appId, subscriptionIds, report, baseUrl, dateId, idempotencyKey }) {
   const reportUrl = `${baseUrl}?report=${encodeURIComponent(dateId)}`;
   return {
