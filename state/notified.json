@@ -6,6 +6,12 @@
       "reportPublishedAt": "2026-08-09T12:53:16.939Z",
       "sentAt": "2026-08-09T12:53:44.697Z",
       "notificationId": "8713d7b8-e26e-4d3a-92ff-2d07f0fcd0d7"
+    },
+    "2026-08-10": {
+      "status": "sent",
+      "reportPublishedAt": "2026-08-10T10:15:46.896Z",
+      "sentAt": "2026-08-10T10:16:18.650Z",
+      "notificationId": "807810db-e1de-483c-a91e-a8548970d751"
     }
   }
 }
