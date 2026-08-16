@@ -1,8 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-13T10:04:26.832Z",
-  "latestId": "2026-08-13",
+  "generatedAt": "2026-08-16T09:25:14.148Z",
+  "latestId": "2026-08-16",
   "reports": [
+    {
+      "id": "2026-08-16",
+      "publishedAt": "2026-08-16T09:25:14.148Z",
+      "theme": "週間まとめと翌週の訪問計画",
+      "headline": "週間まとめと翌週の訪問計画",
+      "path": "reports/2026/08/16.json"
+    },
     {
       "id": "2026-08-13",
       "publishedAt": "2026-08-13T10:04:26.832Z",
