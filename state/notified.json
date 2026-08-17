@@ -30,6 +30,12 @@
       "reportPublishedAt": "2026-08-16T09:25:14.148Z",
       "sentAt": "2026-08-16T09:25:42.704Z",
       "notificationId": "74808a16-8dac-444e-a49b-f9b5975fd46f"
+    },
+    "2026-08-17": {
+      "status": "sent",
+      "reportPublishedAt": "2026-08-17T09:40:00.508Z",
+      "sentAt": "2026-08-17T09:40:28.477Z",
+      "notificationId": "98ae9df7-e967-416d-a390-f4abb9a555d9"
     }
   }
 }
