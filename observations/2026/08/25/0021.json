@@ -1,0 +1,266 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-08-25T0021+09:00",
+  "collectedAt": "2026-08-24T15:21:42.293Z",
+  "theme": "修理初動と故障切り分け",
+  "researchText": "## 関東地域の草刈り・農業・緑地管理に関する調査メモ：修理初動と故障切り分け（2026年8月時点）\n\n### 1. 全体的な動向\n\n関東地域を含む日本の農業分野では、人手不足や高齢化を背景に、スマート農業機械やロボット農機の導入が加速しています。これに伴い、農林水産省や各自治体は、スマート農業機械の導入を支援する補助金制度を拡充しています。また、農作業安全対策も引き続き重視されており、特に農業機械に関連する事故防止が課題となっています。\n\n### 2. 修理初動と故障切り分けに関する直近情報\n\n#### (1) メンテナンスの重要性と体制\n\n*   **点検・メンテナンスの意識向上**: 農業従事者の間では、「農機の点検・メンテナンス」が最も意識され、実施されている農作業安全対策として挙げられています。これは、農作業の安全確保だけでなく、機械の長寿命化にも繋がると認識されています。\n*   **プロによる点検の推奨**: シーズン中のトラブル抑制や重大な故障の未然防止のため、日々のセルフメンテナンスに加え、シーズンオフにはプロのスタッフによる点検整備が推奨されています。\n*   **JAグループのサポート体制**: 全国農業協同組合連合会（JA全農）は、農機の迅速な修理対応を可能にするため、広域部品センターの整備や担当者の技能講習による人材育成など、アフターメンテナンス体制の構築を進めています。 JA西東京でも農業機械の修理およびメンテナンス（オイル交換・点検作業）を提供しており、故障時には農機具を預かる形で対応しています。\n*   **補修用部品の供給**: 一般社団法人日本農業機械工業会は、補修用部品の供給年限に関するガイドラインを定めており、メーカーが製造を打ち切った製品についても一定期間の部品供給を促しています。\n\n#### (2) スマート農業機械の普及と修理への影響\n\n*   **ロボット農機・ドローンの導入**: 農林水産省は、ロボット技術を組み込んだ自動走行農機（ロボット農機）の安全性確保ガイドラインを2026年3月に一部改正し、遠隔監視によるコンバインや公道走行に関する規定を追加しました。 また、業務用自動草刈機やドローンによる草刈り事業も開始されており、遠隔操作可能なラジコン草刈機も普及しています。\n*   **故障診断の変化**: スマート農業機械の普及は、従来の機械とは異なる故障診断や修理技術を必要とする可能性があります。遠隔監視システムやAIを活用した診断の導入が今後の課題となるでしょう。\n\n#### (3) 補助制度と機械更新\n\n*   **多様な補助金**: 農林水産省や関東地域の各自治体（茨城県、栃木県、群馬県、埼玉県、千葉県、東京都、神奈川県など）は、スマート農業機械の導入や省力化投資、環境負荷低減に資する機械（草刈機を含む）の購入に対し、様々な補助金・交付金制度を設けています。\n*   **「みどりの食料システム戦略」**: 除草剤使用量の削減に繋がる草刈機の購入には、「みどりの食料システム戦略」に基づく交付金が活用できる場合があります。\n*   **機械更新の促進**: これらの補助金は、老朽化した機械の更新を促進し、結果として故障頻度の低い新しい機械への移行を促す可能性があります。\n\n### 3. 訪問先で質問に使える変化\n\n*   **需要の時期**:\n    *   夏季は草刈り作業の需要が高まる時期であり、機械の稼働率も高まります。 また、春先は農機具の買い替えや点検整備の時期と重なります。\n    *   質問例：「今年の夏は特に暑かったですが、草刈り機の故障は例年と比べて増えましたか？」「農繁期前の点検整備の依頼状況はいかがでしたか？」\n*   **作業者不足**:\n    *   農業分野での人手不足は深刻であり、スマート農業機械の導入を後押ししています。\n    *   質問例：「人手不足が続く中で、お客様はご自身での修理・メンテナンスから外部委託へシフトする傾向にありますか？」「スマート農機の導入によって、修理依頼の内容に変化はありましたか？」\n*   **気象**:\n    *   2026年8月には、猛暑や大雨・洪水に関する注意喚起がされており、農業機械への影響が懸念されます。\n    *   質問例：「最近の大雨や猛暑で、特に故障が増えた機械の種類や部位はありますか？」「熱中症対策として、作業環境改善のための機械導入の相談は増えていますか？」\n*   **安全**:\n    *   農作業中の死亡事故の約8割が農業機械に関連しており、安全対策が強化されています。 2027年1月1日からは、座席を有するトラクターのシートベルト着用が義務化されます。\n    *   質問例：「安全装置の不具合や、安全に関する部品の交換依頼は増えていますか？」「シートベルト着用義務化に向けて、トラクターの点検時に何か特別な確認事項はありますか？」\n*   **補助制度**:\n    *   スマート農業機械導入や省力化、環境配慮型農業への転換を支援する補助金が多数存在します。\n    *   質問例：「補助金を利用して新しい機械を導入されたお客様から、初期不良や操作に関する問い合わせはありますか？」「補助金制度が、お客様の修理・買い替えの判断にどのような影響を与えていますか？」\n*   **施設管理**:\n    *   緑地管理分野でも、人手不足や危険作業の軽減のため、電動ラジコン草刈機などの導入が進んでいます。\n    *   質問例：「緑地管理の現場で、ラジコン草刈機などの導入が進む中で、修理やメンテナンスに関する新たなニーズはありますか？」\n\n### 4. その他\n\n*   **中古農機市場**: 中古農機の流通も活発であり、中古農機査定士の養成を通じて適正な流通が促進されています。 中古機械の修理需要も引き続き存在すると考えられます。\n*   **情報提供**: 農林水産省や業界団体は、農作業安全に関するポスターや動画、ガイドラインなどを積極的に公開し、情報提供に努めています。\n\nこの調査メモは、関東地域の草刈り・農業・緑地管理における「修理初動と故障切り分け」に関する直近の公開情報をまとめたものです。訪問時の情報収集や提案の検討にご活用ください。",
+  "findings": [
+    "関東地域の草刈り・農業・緑地管理に関する調査メモ：修理初動と故障切り分け（2026年8月時点）",
+    "関東地域を含む日本の農業分野では、人手不足や高齢化を背景に、スマート農業機械やロボット農機の導入が加速しています。これに伴い、農林水産省や各自治体は、スマート農業機械の導入を支援する補助金制度を拡充しています。また、農作業安全対策も引き続き重視されており、特に農業機械に関連する事故防止が課題となっています。",
+    "2. 修理初動と故障切り分けに関する直近情報",
+    "点検・メンテナンスの意識向上**: 農業従事者の間では、「農機の点検・メンテナンス」が最も意識され、実施されている農作業安全対策として挙げられています。これは、農作業の安全確保だけでなく、機械の長寿命化にも繋がると認識されています。",
+    "プロによる点検の推奨**: シーズン中のトラブル抑制や重大な故障の未然防止のため、日々のセルフメンテナンスに加え、シーズンオフにはプロのスタッフによる点検整備が推奨されています。",
+    "JAグループのサポート体制**: 全国農業協同組合連合会（JA全農）は、農機の迅速な修理対応を可能にするため、広域部品センターの整備や担当者の技能講習による人材育成など、アフターメンテナンス体制の構築を進めています。 JA西東京でも農業機械の修理およびメンテナンス（オイル交換・点検作業）を提供しており、故障時には農機具を預かる形で対応しています。",
+    "補修用部品の供給**: 一般社団法人日本農業機械工業会は、補修用部品の供給年限に関するガイドラインを定めており、メーカーが製造を打ち切った製品についても一定期間の部品供給を促しています。",
+    "(2) スマート農業機械の普及と修理への影響",
+    "ロボット農機・ドローンの導入**: 農林水産省は、ロボット技術を組み込んだ自動走行農機（ロボット農機）の安全性確保ガイドラインを2026年3月に一部改正し、遠隔監視によるコンバインや公道走行に関する規定を追加しました。 また、業務用自動草刈機やドローンによる草刈り事業も開始されており、遠隔操作可能なラジコン草刈機も普及しています。",
+    "故障診断の変化**: スマート農業機械の普及は、従来の機械とは異なる故障診断や修理技術を必要とする可能性があります。遠隔監視システムやAIを活用した診断の導入が今後の課題となるでしょう。",
+    "多様な補助金**: 農林水産省や関東地域の各自治体（茨城県、栃木県、群馬県、埼玉県、千葉県、東京都、神奈川県など）は、スマート農業機械の導入や省力化投資、環境負荷低減に資する機械（草刈機を含む）の購入に対し、様々な補助金・交付金制度を設けています。",
+    "「みどりの食料システム戦略」**: 除草剤使用量の削減に繋がる草刈機の購入には、「みどりの食料システム戦略」に基づく交付金が活用できる場合があります。",
+    "機械更新の促進**: これらの補助金は、老朽化した機械の更新を促進し、結果として故障頻度の低い新しい機械への移行を促す可能性があります。",
+    "夏季は草刈り作業の需要が高まる時期であり、機械の稼働率も高まります。 また、春先は農機具の買い替えや点検整備の時期と重なります。",
+    "質問例：「今年の夏は特に暑かったですが、草刈り機の故障は例年と比べて増えましたか？」「農繁期前の点検整備の依頼状況はいかがでしたか？」",
+    "農業分野での人手不足は深刻であり、スマート農業機械の導入を後押ししています。",
+    "質問例：「人手不足が続く中で、お客様はご自身での修理・メンテナンスから外部委託へシフトする傾向にありますか？」「スマート農機の導入によって、修理依頼の内容に変化はありましたか？」",
+    "2026年8月には、猛暑や大雨・洪水に関する注意喚起がされており、農業機械への影響が懸念されます。",
+    "質問例：「最近の大雨や猛暑で、特に故障が増えた機械の種類や部位はありますか？」「熱中症対策として、作業環境改善のための機械導入の相談は増えていますか？」",
+    "農作業中の死亡事故の約8割が農業機械に関連しており、安全対策が強化されています。 2027年1月1日からは、座席を有するトラクターのシートベルト着用が義務化されます。",
+    "質問例：「安全装置の不具合や、安全に関する部品の交換依頼は増えていますか？」「シートベルト着用義務化に向けて、トラクターの点検時に何か特別な確認事項はありますか？」",
+    "スマート農業機械導入や省力化、環境配慮型農業への転換を支援する補助金が多数存在します。",
+    "質問例：「補助金を利用して新しい機械を導入されたお客様から、初期不良や操作に関する問い合わせはありますか？」「補助金制度が、お客様の修理・買い替えの判断にどのような影響を与えていますか？」",
+    "緑地管理分野でも、人手不足や危険作業の軽減のため、電動ラジコン草刈機などの導入が進んでいます。",
+    "質問例：「緑地管理の現場で、ラジコン草刈機などの導入が進む中で、修理やメンテナンスに関する新たなニーズはありますか？」",
+    "中古農機市場**: 中古農機の流通も活発であり、中古農機査定士の養成を通じて適正な流通が促進されています。 中古機械の修理需要も引き続き存在すると考えられます。",
+    "情報提供**: 農林水産省や業界団体は、農作業安全に関するポスターや動画、ガイドラインなどを積極的に公開し、情報提供に努めています。",
+    "この調査メモは、関東地域の草刈り・農業・緑地管理における「修理初動と故障切り分け」に関する直近の公開情報をまとめたものです。訪問時の情報収集や提案の検討にご活用ください。"
+  ],
+  "sources": [
+    {
+      "id": "src-b1aa6cc07ea9",
+      "title": "kubota.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHz795SlTVZo_X-x_55rh3s4ZsC1tp1cDBV1B3Gu56Gs8AnJz89tv5L0slcfp-j0EwUwTbU2gAu-qVdPxaXDqvzXVWvLD7DaenCWh12wRq8bFdJ4g5N4oGwgUMVKTluLIp1SAhtUO_v9J9-1ype7Ix0DaMwsNsmwnm-",
+      "publisher": "kubota.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7c4df9111a8d",
+      "title": "kubota.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtDA-USeO73YiIRPM09naiC4xxO6K3wBZzZHiNoxE_rNFwYhi69jLIZrBuieNZ-lH9KoXAV6ulZxEaGpqze_sLpHEC7a7gcI1LeaXcYGEe98geuZJqOaE1Q3Sr768LEOIANdCIHt73qHiTv7_7TpQmkPuELUjxmg==",
+      "publisher": "kubota.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-31a8232fc9cf",
+      "title": "zennoh.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEFMkGlySlL2MVloEVEN5F3ST2X82ACpW1H7QrllVf2m1R30GCAznEyTGDu69q9zyLkdBOFeOMmKa2XapU4dGBqIkZK1Z1v3l0mnoF3OO8JSdiUd_vnxVo1NOU36moysa8_8hsx",
+      "publisher": "zennoh.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0e0def65ea48",
+      "title": "ja-nishitokyo.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFpHKomt0jC_J1GSajO5FhwTxsZoxNbBQD1Yq1m9F0_BYLixzvb0KrZNjBbbBtwMaIRU7tjN1VJZMtyEtb8OWYsoqxOcShFlcQxXIXmJurCItWGq3QML6KZNC3FnN4R1-xY-TsDSRw=",
+      "publisher": "ja-nishitokyo.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a8773edbe9e2",
+      "title": "jfmma.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH8QRSbPYIcA4ugqfxZCFCUJYbMZ9bSVBuF2kdR4Z5853ju9OxMXPaJRsfefyR8KY7HTw_tEP6htUae9-Zs3_VVRhY6G7d-Tscilrw71TJ9IEe1XayK1roSETRFVTU3N2o=",
+      "publisher": "jfmma.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-fa90b679e388",
+      "title": "impress.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSa12zwfCfNNcTa6DcgNlUKr4XGnpgsp3x1Ny98e5M9IQnGcnO3KHEkRjKcvamFPVGCCkd1vuaOmdisBo6JVK_cT8LYil1YgGlflmjq0zeJvH5oJ1INsxaH53OP-yeviAZNJ9touf3Q4qjNW3-Hlq9WuDR_Ek=",
+      "publisher": "impress.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6316e259adfa",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3AP7PToC1gjjPtcQNzNe5y9Bxev2UP6Au3soVqZ2HcMsRKKU_itfRFOuPI6gGRLuIt0RVMkxi577MgyWcrTKsK00BhLmMPRC5Ud7Z18BsW8lsok9bLTS__EK6pXBbvkKiTk5cYHsGd87XxrAw1kywK5w6qA==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7a6fe84d3730",
+      "title": "nitinoki.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEz_oLCiZLd2gq7lm0elDvB83vvElKkK_W8yxBdAdaHshnjzetMhhbDLoX1DHyaX3ICeSvrgxz5qf_JBbjSy6Y0mkUvNPqblmaM-BMWj0gx7Zv_",
+      "publisher": "nitinoki.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8c5889403bc5",
+      "title": "nbkbooks.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvmxWKxKxrXs2CI_ooXJwT66DeLWt_8t7JiQetlvpsGZQGWLzf1HeusLthlRudcSMPf6BEDRIchrNs4smxLGQo4NLS_Nist_ZJEhSkB35gkIG6nzVjv80KFQb-",
+      "publisher": "nbkbooks.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-59ed2fed7ae5",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8Zl6zY35JMLJuIJnv3S_scYvJHIti5aFk0Ac1Mp_ufVAFTXp4Nj4CvaxUVAJfIAKMwn3LXCXUuIRKxvseIjxTaM8PI9RO7YXJFLWopuu4Wz40749q5OE=",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a4e883c88e65",
+      "title": "green-support-japan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHz2zcVqsmz8fFIHqDr2x4SJ9Q74LR7H4WWzASzI5JJfPLaAUWCJWHj_keKFIYilPtV98T1rd-2tvNBfmV3CAdDqS26n874LaxNuMi_IvNoR5ZLFQXxZ6yK8AxH",
+      "publisher": "green-support-japan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e915705d8bc1",
+      "title": "agrijournal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGznMjiDFJIktrQZWg7h__1epF62Z03vdTLsDewgeKOo-zulVLVcYcQDcE2pKBmOQUXcGQTegs1GecFCO5nMfZjq3J1NvuDMjy9Sungbmn65y-iHmHl7tejwcyJmPg0KsafbQ==",
+      "publisher": "agrijournal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-1808f681813c",
+      "title": "hojyokin-portal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtB7DcaNe6L2a_xwZy1syXdLJzf96azvTDHTsEIiUI-ajIZxZRBled5yrsMJcBIxeEjN3qlpp2sgEQHWfkhB8W5CtvnXBMC6mxsSBh7ytYrNuK67W_McRFJjXYojQkbi1t6-S6pkMvTG0_A1HnhoYZf28=",
+      "publisher": "hojyokin-portal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-9fd33b75aa05",
+      "title": "tokyo.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGkwFlOLhDNZDLxO1yvgkc17JlsPnzy2vJbfVPKVUtbHvMERayQfaR22LoC9wnxu95V_3hKjR5VcBTD7rlZf6vy4lMODcvWU-L3DmbdSFzW9lJTE0lxcB5qcPoTerOK4Wa1b7ngoJ8yYPoaV_vakI9VQxq_vTGCV5YB9tyIztR1nQ==",
+      "publisher": "tokyo.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-424882c65a2c",
+      "title": "hojokin-agent.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0NM4H7vnMcFxiSwDrOZ-ykLg-RB_46gVyHW1IHRyg0oqLdAk0_Z7E0P4rOmpS0mIA9FcVt9Bil8KlD1SiaLJtcoTDAR5Km3jPnX77VQq9Je3SWjFjBzfEoFrHPPvsucQ9S_Una59oJ5AfC1Ug-yGzcdUu0aosIwbTnlduyDQ=",
+      "publisher": "hojokin-agent.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8db390b1607f",
+      "title": "mono-support.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdzqWFUcDzBcN4Z1psg3yIP3EdkN0rmPGN9EeLLez2lqpa-8fSlePuKgczKkNG9nTheAa7ooXWnIh_LvAuskNeXHRdPoBCH5HiRoxkMtWodGR3nTOXTAKCPCsnRShb_7PdiaNX3k4B3ovicdtb1Ds4ZcwU",
+      "publisher": "mono-support.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f779738c5387",
+      "title": "nouki-satei.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkpGelgamyfr3FK4NNV0xev62I4StSVpR0D9JI4ezevO6zYrtZa9TWRKDqwDjlYXunvFScUU-RcG-GblUvA8at1HOHWRA_dGoPlwa5Y76wGGcl61Rn1YoEZj3KMEc49ZlLc8Ef5ypRMA==",
+      "publisher": "nouki-satei.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-923550781856",
+      "title": "noukinavi.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHcLXHcyOt6-TIbFezoy_J9kgxv5bcYDawbUSAWr2GrbRfnukDz1Kg7Z17yi6bhG2-TRkAU5UFcMxDKCO2zOIdjNscqdp03V9T9iK-IUUU-Q6CbiQk4XbYoGUmkSorCmmW29Q==",
+      "publisher": "noukinavi.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-eadfbc747672",
+      "title": "noukiguou.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGBsRZpa0uL1O4I_YFe6zbFaG5z0OgMlYgPMs-9PG4m0yIMhGxwCLwDkvdZNw6A9cTeGzzHb9BXYCoHFfYO6J4hcGcYer0ANE3Xvg7f39SYiHl9_G1wLV8rNA==",
+      "publisher": "noukiguou.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b5fee3425e0c",
+      "title": "agrimedia.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEcUpsCuXdtRXFFnP_Icyjn9ifM82rmJgtn-zSLxk4bBgJ5dwkEWDdUPSMZjEe0-Zqh2R_ePUgeethTqnG8xw07A6HrHf7Jp0D-srTpVEFW4JRe0_3EY0YYbV0EaBS_EyFT693gedGp",
+      "publisher": "agrimedia.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-bf9c1433929b",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFabZVTL_b9GhjKvQJxrsxd9snyNzIUtFX8pKTifFBASt-l-IZw6oCi9mMXlZshZ3Ziif5OR8zISLCG3YB_POvyXyYjhvX4IBq3PQ0mBscgaWXaSl7QgsBtbJNH48e89dHyNGqnJ2k3e3bxr9m33Dc8op_t2ikeMovNxZrxM5Rq1Q==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-00a8cf31334c",
+      "title": "archelis.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGd4v0WQ1-Op-oSu809sKTaEvgaoQzm1vI2DkV4TYZ-xjvDK4wGKBb7Vm2AK8B1wVc9U31omS5EiDkqz6l2RUuNwUqv8ARza-gYjrkXyOAkZWghMMTU1Qr5FLK048QjqGYufoO6RynGZZ849MkrnftoVYV9vfe9byHMVEjjxty_bb14tyqPyXsri0NN5Zu-Der9mhRj",
+      "publisher": "archelis.com",
+      "publishedAt": null,
+      "accessedAt": "2026-08-24T15:21:42.293Z",
+      "type": "google-search"
+    }
+  ],
+  "freshSourceIds": [
+    "src-b1aa6cc07ea9",
+    "src-7c4df9111a8d",
+    "src-31a8232fc9cf",
+    "src-0e0def65ea48",
+    "src-a8773edbe9e2",
+    "src-fa90b679e388",
+    "src-6316e259adfa",
+    "src-7a6fe84d3730",
+    "src-8c5889403bc5",
+    "src-59ed2fed7ae5",
+    "src-a4e883c88e65",
+    "src-e915705d8bc1",
+    "src-1808f681813c",
+    "src-9fd33b75aa05",
+    "src-424882c65a2c",
+    "src-8db390b1607f",
+    "src-f779738c5387",
+    "src-923550781856",
+    "src-eadfbc747672",
+    "src-b5fee3425e0c",
+    "src-bf9c1433929b",
+    "src-00a8cf31334c"
+  ],
+  "warnings": [],
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-2.5-flash"
+  }
+}
