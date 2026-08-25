@@ -1,8 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-23T09:26:17.309Z",
-  "latestId": "2026-08-23",
+  "generatedAt": "2026-08-25T09:33:48.880Z",
+  "latestId": "2026-08-25",
   "reports": [
+    {
+      "id": "2026-08-25",
+      "publishedAt": "2026-08-25T09:33:48.880Z",
+      "theme": "修理初動と故障切り分け",
+      "headline": "修理初動と故障切り分け：スマート化と猛暑への対応",
+      "path": "reports/2026/08/25.json"
+    },
     {
       "id": "2026-08-23",
       "publishedAt": "2026-08-23T09:26:17.309Z",
