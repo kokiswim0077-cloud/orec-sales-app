@@ -83,12 +83,12 @@ JSONだけを返してください。形は次の通りです。
   "businessAiReport": {
     "headline":"谷尾の経営に効く短い見出し", "summary":["要点を3件以内"],
     "opportunities":[{"title":"", "fact":"公開情報で確認できた事実", "implication":"谷尾に関係する理由", "proposal":"経営上の提案（仮説）", "firstStep":"低コストで試す最初の一歩", "sourceIds":[""]}],
-    "actionPlan":["今週実行できる行動を3件"]
+    "actionPlan":[{"owner":"タニオコウキ|株式会社谷尾|共同", "action":"今週実行する具体的な行動", "deliverable":"完了時に残る成果物・確認結果"}]
   },
   "cultureCommunityReport": {
     "headline":"祭り・伝統・地域経営の短い見出し", "summary":["要点を3件以内"],
     "opportunities":[{"title":"", "fact":"公開情報で確認できた事実", "implication":"谷尾に関係する理由", "proposal":"経営上の提案（仮説）", "firstStep":"低コストで試す最初の一歩", "sourceIds":[""]}],
-    "actionPlan":["今週実行できる行動を3件"]
+    "actionPlan":[{"owner":"タニオコウキ|株式会社谷尾|共同", "action":"今週実行する具体的な行動", "deliverable":"完了時に残る成果物・確認結果"}]
   },
   "warnings": [""]
 }
@@ -110,6 +110,8 @@ JSONだけを返してください。形は次の通りです。
 - cultureCommunityReportは祭り、伝統芸能、文化継承、観光、地域連携、催事運営から株式会社谷尾に有効な内容を最大3件に絞る
 - 2つの谷尾向けレポートは同社の未公開情報を断定せず、fact（確認済み事実）とproposal（提案・仮説）を明確に分ける
 - 2つの谷尾向けレポートは各opportunityに有効なsourceIdsを付け、actionPlanを必ず3件にする
+- actionPlanは会社施策だけにせず、タニオコウキ本人が検索、比較、連絡、試作、現地確認、ヒアリングなど実際に手を動かす行動を各レポートに1件以上含める
+- actionPlanのownerは「タニオコウキ」「株式会社谷尾」「共同」のいずれか。actionは具体的な動詞で始め、deliverableには完了を判断できる成果物や確認結果を書く
 `;
 
 async function generateReportJson() {
@@ -188,7 +190,14 @@ function normalizeStrategicReport(value) {
     headline: String(value?.headline || "").slice(0, 100),
     summary: (Array.isArray(value?.summary) ? value.summary : []).map(String).filter(Boolean).slice(0, 3),
     opportunities,
-    actionPlan: (Array.isArray(value?.actionPlan) ? value.actionPlan : []).map(String).filter(Boolean).slice(0, 3)
+    actionPlan: (Array.isArray(value?.actionPlan) ? value.actionPlan : []).map(item => {
+      if (typeof item === "string") return { owner: "タニオコウキ", action: item, deliverable: "実行結果をメモに残す" };
+      return {
+        owner: ["タニオコウキ", "株式会社谷尾", "共同"].includes(item?.owner) ? item.owner : "タニオコウキ",
+        action: String(item?.action || ""),
+        deliverable: String(item?.deliverable || "")
+      };
+    }).filter(item => item.action && item.deliverable).slice(0, 3)
   };
 }
 
@@ -228,6 +237,7 @@ if (report.salesPlaybook.nextActions.length !== 3) errors.push("salesPlaybook.ne
 for (const [key, strategic] of [["businessAiReport", report.businessAiReport], ["cultureCommunityReport", report.cultureCommunityReport]]) {
   if (!strategic.headline || strategic.summary.length < 1 || strategic.opportunities.length < 1) errors.push(`${key} must contain a headline, summary and sourced opportunity`);
   if (strategic.actionPlan.length !== 3) errors.push(`${key}.actionPlan must contain exactly 3 items`);
+  if (!strategic.actionPlan.some(item => item.owner === "タニオコウキ")) errors.push(`${key}.actionPlan must contain at least one action owned by タニオコウキ`);
 }
 if (errors.length) throw new Error(`Report validation failed: ${errors.join("; ")}`);
 

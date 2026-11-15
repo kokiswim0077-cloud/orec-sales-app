@@ -704,6 +704,10 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 .intel-strategy .intel-actions li::before{color:var(--strategy)}
 .intel-proposal{margin-top:9px;padding:10px 11px;border-left:4px solid var(--strategy);border-radius:3px 9px 9px 3px;background:var(--strategy-light);color:var(--strategy-ink);font-size:12px;line-height:1.75}
 .intel-first-step{margin-top:8px;font-size:11px;font-weight:800;color:var(--strategy-ink)}
+.intel-action-content{min-width:0}
+.intel-action-owner{display:inline-flex;margin-bottom:5px;padding:3px 7px;border-radius:999px;background:var(--strategy);color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:900;letter-spacing:.05em}
+.intel-action-text{display:block;font-size:12px;font-weight:800;line-height:1.65}
+.intel-action-result{display:block;margin-top:4px;font-size:10px;font-weight:500;line-height:1.55;opacity:.78}
 .intel-section :focus-visible,.intel-notify-btn:focus-visible,.intel-history-btn:focus-visible,.intel-home:focus-visible{outline:3px solid #BDE03F;outline-offset:2px}
 @media (min-width:700px){.intel-body{padding:20px 18px 40px}.intel-headline{font-size:30px}.intel-mast{padding:30px max(24px,calc((100vw - 760px)/2)) 28px}}
 @media (prefers-reduced-motion:reduce){.intel-loading::before{animation:none}}
@@ -6828,7 +6832,15 @@ function intelRenderStrategicReport(channel) {
   if (!opportunities.childElementCount) opportunities.appendChild(intelEl('div', 'intel-item-text', 'この日付では提案データが未生成です。最新レポートをご確認ください。'));
 
   var actions = intelClear('intel-strategy-actions');
-  (strategic?.actionPlan || []).forEach(function(item) { actions.appendChild(intelEl('li', '', item)); });
+  (strategic?.actionPlan || []).forEach(function(item) {
+    if (typeof item === 'string') { actions.appendChild(intelEl('li', '', item)); return; }
+    var li = intelEl('li', 'intel-owned-action');
+    var content = intelEl('div', 'intel-action-content');
+    content.appendChild(intelEl('span', 'intel-action-owner', item.owner || 'タニオコウキ'));
+    content.appendChild(intelEl('span', 'intel-action-text', item.action || ''));
+    content.appendChild(intelEl('span', 'intel-action-result', `完了の目印：${item.deliverable || '実行結果を記録する'}`));
+    li.appendChild(content); actions.appendChild(li);
+  });
   if (!actions.childElementCount) actions.appendChild(intelEl('li', '', '次回のレポート発行後に、今週実行できる3つの行動を表示します。'));
 
   var sources = intelClear('intel-strategy-sources');

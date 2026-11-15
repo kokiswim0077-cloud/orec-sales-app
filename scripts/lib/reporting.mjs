@@ -157,6 +157,10 @@ export function validateReport(value) {
     if (!Array.isArray(strategic.summary) || strategic.summary.length < 1 || strategic.summary.length > 3) errors.push(`${key}.summary must contain 1-3 items`);
     if (!Array.isArray(strategic.opportunities)) errors.push(`${key}.opportunities must be an array`);
     if (!Array.isArray(strategic.actionPlan) || strategic.actionPlan.length !== 3) errors.push(`${key}.actionPlan must contain exactly 3 items`);
+    else strategic.actionPlan.forEach((item, index) => {
+      if (typeof item === "string") return;
+      if (!item || !["タニオコウキ", "株式会社谷尾", "共同"].includes(item.owner) || !item.action || !item.deliverable) errors.push(`${key}.actionPlan[${index}] is incomplete`);
+    });
   }
   return errors;
 }

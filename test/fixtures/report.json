@@ -76,7 +76,11 @@
       "firstStep": "対象業務の所要時間を1週間記録します。",
       "sourceIds": ["src-official"]
     }],
-    "actionPlan": ["定型業務を3件挙げる", "現在の所要時間を測る", "1業務だけ試行する"]
+    "actionPlan": [
+      {"owner": "タニオコウキ", "action": "定型業務を3件挙げる", "deliverable": "業務候補リスト3件"},
+      {"owner": "株式会社谷尾", "action": "現在の所要時間を測る", "deliverable": "所要時間の記録"},
+      {"owner": "共同", "action": "1業務だけ試行する", "deliverable": "試行結果と次の判断"}
+    ]
   },
   "cultureCommunityReport": {
     "headline": "地域文化との接点を小さな協働に変える",
@@ -89,7 +93,11 @@
       "firstStep": "地域の年間行事と公式窓口を一覧化します。",
       "sourceIds": ["src-official"]
     }],
-    "actionPlan": ["地域行事を3件調べる", "公式窓口を確認する", "無理のない支援案を1件作る"]
+    "actionPlan": [
+      {"owner": "タニオコウキ", "action": "地域行事を3件調べる", "deliverable": "行事候補リスト3件"},
+      {"owner": "株式会社谷尾", "action": "公式窓口を確認する", "deliverable": "連絡先一覧"},
+      {"owner": "共同", "action": "無理のない支援案を1件作る", "deliverable": "支援案1枚"}
+    ]
   },
   "sources": [
     {

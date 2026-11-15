@@ -51,6 +51,7 @@ test("サンプルレポートが公開スキーマを満たす", async () => {
   assert.ok(report.unconventionalAngle.dealerExperiment);
   assert.equal(report.businessAiReport.actionPlan.length, 3);
   assert.equal(report.cultureCommunityReport.actionPlan.length, 3);
+  assert.ok(report.businessAiReport.actionPlan.some(item => item.owner === "タニオコウキ"));
 });
 
 test("拡張前の過去レポートも引き続き検証できる", async () => {
@@ -67,6 +68,12 @@ test("谷尾向け戦略レポートは見出し・提案・3件の行動を検�
   const report = JSON.parse(await fs.readFile(new URL("./fixtures/report.json", import.meta.url), "utf8"));
   report.businessAiReport.actionPlan = ["1件だけ"];
   assert.ok(validateReport(report).some(error => error.includes("businessAiReport.actionPlan")));
+});
+
+test("戦略レポートの実行者と完了成果を検証する", async () => {
+  const report = JSON.parse(await fs.readFile(new URL("./fixtures/report.json", import.meta.url), "utf8"));
+  delete report.cultureCommunityReport.actionPlan[0].deliverable;
+  assert.ok(validateReport(report).some(error => error.includes("cultureCommunityReport.actionPlan[0]")));
 });
 
 test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {
