@@ -39,13 +39,24 @@ const results = await Promise.allSettled(prompts.map(item => generateWithGemini(
   model,
   googleSearch: true
 })));
+const diagnostics = results.map((item, index) => {
+  if (item.status === "rejected") {
+    return `prompt ${index + 1}: rejected: ${item.reason?.message || String(item.reason)}`;
+  }
+  const candidate = item.value?.candidates?.[0];
+  const responseText = extractText(item.value);
+  const responseSources = extractGroundingSources(item.value, collectedAt);
+  return `prompt ${index + 1}: finish=${candidate?.finishReason || "none"}, text=${responseText.length}, sources=${responseSources.length}, block=${item.value?.promptFeedback?.blockReason || "none"}`;
+});
 const grounded = results.filter(item => item.status === "fulfilled").map(item => ({
   text: extractText(item.value),
   sources: extractGroundingSources(item.value, collectedAt)
 })).filter(item => item.text && item.sources.length > 0);
 let text = grounded.map(item => item.text).join("\n\n---\n\n");
 let sources = dedupeSources(grounded.flatMap(item => item.sources));
-if (!text || sources.length === 0) throw new Error("Grounded research returned no usable text or sources");
+if (!text || sources.length === 0) {
+  throw new Error(`Grounded research returned no usable text or sources. ${diagnostics.join(" | ")}`);
+}
 
 const sourceHashesPath = path.join(dataDir, "state", "source-hashes.json");
 let sourceState = { schemaVersion: 1, hashes: {} };
