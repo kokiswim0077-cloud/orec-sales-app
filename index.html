@@ -619,11 +619,24 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 .intel-live.stale{color:#FFD1D1;border-color:rgba(255,90,90,.45);background:rgba(255,90,90,.12)}
 .intel-live.stale::before{background:#FF6767;box-shadow:0 0 0 4px rgba(255,103,103,.12)}
 .intel-home-title{position:relative;font-size:18px;line-height:1.45;font-weight:900;letter-spacing:.02em;margin-bottom:8px;max-width:92%}
+.intel-home-rails{position:relative;display:flex;gap:5px;flex-wrap:wrap;margin:0 0 10px}
+.intel-home-rail{padding:4px 7px;border:1px solid rgba(255,255,255,.16);border-radius:999px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);font-size:9px;font-weight:800}
 .intel-home-meta{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;color:rgba(255,255,255,.62);font-size:10px}
 .intel-home-open{color:#BDE03F;font-weight:900;white-space:nowrap}
 .intel-unread{display:none;position:absolute;top:12px;right:12px;width:10px;height:10px;border-radius:50%;background:#FF5B45;border:2px solid #0B1D19;box-shadow:0 0 0 3px rgba(255,91,69,.18)}
 .intel-unread.show{display:block}
 .intel-scroll{flex:1;overflow-y:auto;background:#F2EFE7;padding:0 0 calc(var(--nh) + 24px);-webkit-overflow-scrolling:touch}
+.intel-channels{position:sticky;top:0;z-index:12;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:9px 10px;background:rgba(242,239,231,.94);border-bottom:1px solid #D8D2C4;backdrop-filter:blur(12px)}
+.intel-channel{min-width:0;min-height:52px;padding:7px 6px;border:1px solid #CEC8BA;border-radius:10px;background:#fff;color:#4F5754;font-family:"Noto Sans JP",sans-serif;text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease}
+.intel-channel:active{transform:translateY(1px)}
+.intel-channel-no{display:block;font-family:"Barlow Condensed",sans-serif;font-size:10px;font-weight:900;letter-spacing:1px;color:#7C8581}
+.intel-channel-name{display:block;margin-top:2px;font-size:10px;font-weight:900;line-height:1.35;white-space:normal}
+.intel-channel.on[data-channel="orec"]{border-color:#007A59;background:#E8F5F0;color:#005C42;box-shadow:inset 0 -3px 0 #007A59}
+.intel-channel.on[data-channel="ai"]{border-color:#176B87;background:#E9F6FA;color:#0D526A;box-shadow:inset 0 -3px 0 #176B87}
+.intel-channel.on[data-channel="culture"]{border-color:#A94E24;background:#FFF3E8;color:#853914;box-shadow:inset 0 -3px 0 #A94E24}
+.intel-channel-panel{display:none}
+.intel-channel-panel.active{display:block;animation:intelReveal .28s ease both}
+@keyframes intelReveal{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
 .intel-mast{position:relative;overflow:hidden;background:#0B1D19;color:#fff;padding:24px 18px 22px;border-bottom:5px solid #BDE03F}
 .intel-mast::after{content:"FIELD / 01";position:absolute;right:-10px;bottom:-22px;font-family:"Barlow Condensed",sans-serif;font-size:78px;font-weight:900;color:rgba(255,255,255,.035);letter-spacing:-2px;white-space:nowrap}
 .intel-date{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:2px;color:#BDE03F;font-weight:900;text-transform:uppercase;margin-bottom:9px}
@@ -679,6 +692,18 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 .intel-copy{margin-top:7px;padding:7px 9px;border:1px solid #CBD5E1;border-radius:6px;background:#fff;font:700 10px "Noto Sans JP",sans-serif;color:#334155;cursor:pointer}
 .intel-loading{padding:64px 20px;text-align:center;color:#5A6662;font-size:12px}
 .intel-loading::before{content:"";display:block;width:30px;height:30px;border:3px solid #D2D8D5;border-top-color:#007A59;border-radius:50%;margin:0 auto 14px;animation:spin .8s linear infinite}
+.intel-strategy.ai{--strategy:#176B87;--strategy-light:#E9F6FA;--strategy-ink:#0D526A}
+.intel-strategy.culture{--strategy:#A94E24;--strategy-light:#FFF3E8;--strategy-ink:#853914}
+.intel-strategy .intel-mast{background:#132126;border-bottom-color:var(--strategy)}
+.intel-strategy .intel-mast::after{content:attr(data-mark)}
+.intel-strategy .intel-date{color:#A8DCEA}
+.intel-strategy.culture .intel-date{color:#FFD0AE}
+.intel-strategy .intel-section-no{background:var(--strategy)}
+.intel-strategy .intel-summary-item::before{color:var(--strategy)}
+.intel-strategy .intel-actions li{background:var(--strategy-light);color:var(--strategy-ink)}
+.intel-strategy .intel-actions li::before{color:var(--strategy)}
+.intel-proposal{margin-top:9px;padding:10px 11px;border-left:4px solid var(--strategy);border-radius:3px 9px 9px 3px;background:var(--strategy-light);color:var(--strategy-ink);font-size:12px;line-height:1.75}
+.intel-first-step{margin-top:8px;font-size:11px;font-weight:800;color:var(--strategy-ink)}
 .intel-section :focus-visible,.intel-notify-btn:focus-visible,.intel-history-btn:focus-visible,.intel-home:focus-visible{outline:3px solid #BDE03F;outline-offset:2px}
 @media (min-width:700px){.intel-body{padding:20px 18px 40px}.intel-headline{font-size:30px}.intel-mast{padding:30px max(24px,calc((100vw - 760px)/2)) 28px}}
 @media (prefers-reduced-motion:reduce){.intel-loading::before{animation:none}}
@@ -718,10 +743,11 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
     <div class="intel-home" id="intel-home-card" role="button" tabindex="0" onclick="nav('intel')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();nav('intel')}" aria-label="最新の営業情報を開く">
       <span class="intel-unread" id="intel-home-unread" aria-label="未読あり"></span>
       <div class="intel-home-top">
-        <div class="intel-home-kicker">FIELD INTELLIGENCE / DAILY</div>
+        <div class="intel-home-kicker">TANIO INTELLIGENCE / 3 REPORTS</div>
         <div class="intel-live" id="intel-home-status">準備中</div>
       </div>
-      <div class="intel-home-title" id="intel-home-headline">関東の営業情報を6時間ごとに収集中</div>
+      <div class="intel-home-title" id="intel-home-headline">営業・DX/AI・地域文化を毎日ひとつに</div>
+      <div class="intel-home-rails" aria-hidden="true"><span class="intel-home-rail">OREC営業</span><span class="intel-home-rail">谷尾 DX・AI</span><span class="intel-home-rail">祭り・伝統・地域</span></div>
       <div class="intel-home-meta">
         <span id="intel-home-meta">毎日18:00に更新</span>
         <span class="intel-home-open">読む&nbsp; →</span>
@@ -1878,7 +1904,7 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
 <div id="s-intel" class="screen">
   <div class="hd">
     <button class="back-btn" onclick="nav('home')" aria-label="ホームへ戻る">‹ ホーム</button>
-    <div class="hd-title">FIELD BRIEF</div>
+    <div class="hd-title">TANIO DAILY BRIEF</div>
     <button class="intel-notify-btn" id="intel-notify-btn" onclick="intelEnableNotifications()">通知を受け取る</button>
   </div>
   <div class="intel-scroll" id="intel-scroll">
@@ -1890,6 +1916,12 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
       <p>GitHub Actionsの初回収集・発行が完了すると、ここに毎日の営業テーマが表示されます。</p>
     </div>
     <div id="intel-report" style="display:none">
+      <nav class="intel-channels" aria-label="レポートの種類">
+        <button class="intel-channel on" type="button" data-channel="orec" onclick="intelSelectChannel('orec')"><span class="intel-channel-no">REPORT 01</span><span class="intel-channel-name">OREC営業</span></button>
+        <button class="intel-channel" type="button" data-channel="ai" onclick="intelSelectChannel('ai')"><span class="intel-channel-no">REPORT 02</span><span class="intel-channel-name">谷尾 DX・AI</span></button>
+        <button class="intel-channel" type="button" data-channel="culture" onclick="intelSelectChannel('culture')"><span class="intel-channel-no">REPORT 03</span><span class="intel-channel-name">祭り・伝統・地域</span></button>
+      </nav>
+      <div id="intel-panel-orec" class="intel-channel-panel active">
       <section class="intel-mast" aria-labelledby="intel-headline">
         <div class="intel-date" id="intel-date"></div>
         <div class="intel-theme" id="intel-theme"></div>
@@ -1958,6 +1990,30 @@ select.fi{appearance:none;-webkit-appearance:none;background-image:url("data:ima
             <div class="intel-device" id="intel-device"><strong>この端末のSubscription ID</strong><br><span id="intel-device-id"></span><br><button class="intel-copy" type="button" onclick="intelCopySubscriptionId()">IDをコピー</button></div>
           </div>
         </section>
+      </div>
+      </div>
+      <div id="intel-panel-strategy" class="intel-channel-panel intel-strategy">
+        <section class="intel-mast" id="intel-strategy-mast" data-mark="REPORT / 02" aria-labelledby="intel-strategy-headline">
+          <div class="intel-date" id="intel-strategy-date"></div>
+          <div class="intel-theme" id="intel-strategy-theme"></div>
+          <h1 class="intel-headline" id="intel-strategy-headline"></h1>
+          <div class="intel-statusline"><span id="intel-strategy-published"></span><span id="intel-strategy-source-count"></span></div>
+        </section>
+        <div class="intel-body">
+          <div class="intel-summary" id="intel-strategy-summary"></div>
+          <section class="intel-section">
+            <div class="intel-section-hd"><span class="intel-section-no">01</span><h2 class="intel-section-title" id="intel-strategy-opportunities-title">注目情報と経営提案</h2></div>
+            <div class="intel-section-body" id="intel-strategy-opportunities"></div>
+          </section>
+          <section class="intel-section">
+            <div class="intel-section-hd"><span class="intel-section-no">02</span><h2 class="intel-section-title">今週の小さな実行</h2></div>
+            <div class="intel-section-body"><ol class="intel-actions" id="intel-strategy-actions"></ol></div>
+          </section>
+          <section class="intel-section">
+            <div class="intel-section-hd"><span class="intel-section-no">SRC</span><h2 class="intel-section-title">このレポートの出典</h2></div>
+            <div class="intel-section-body"><div id="intel-strategy-sources"></div></div>
+          </section>
+        </div>
       </div>
     </div>
   </div>
@@ -6666,6 +6722,7 @@ function estReset() {
 var _intelConfig = window.OREC_SALES_CONFIG || {};
 var _intelIndex = null;
 var _intelCurrentId = '';
+var _intelCurrentReport = null;
 var _intelOneSignal = window.__orecOneSignalInstance || null;
 var _intelOneSignalPromise = window.__orecOneSignalReady || null;
 var _intelIndexUrl = _intelConfig.reportIndexUrl || 'https://raw.githubusercontent.com/kokiswim0077-cloud/orec-sales-app/reports/index.json';
@@ -6711,7 +6768,7 @@ function intelSetStale(publishedAt, message) {
 function intelUpdateHome(index) {
   var latest = index && Array.isArray(index.reports) ? index.reports[0] : null;
   if (!latest) return;
-  document.getElementById('intel-home-headline').textContent = latest.headline || latest.theme || '今日の営業ブリーフ';
+  document.getElementById('intel-home-headline').textContent = `今日の3レポート｜${latest.headline || latest.theme || '営業・経営・地域の要点'}`;
   document.getElementById('intel-home-meta').textContent = `${intelFormatDate(latest.publishedAt, true)} 更新`;
   var readId = localStorage.getItem('orec_intel_read') || '';
   document.getElementById('intel-home-unread').classList.toggle('show', readId !== latest.id);
@@ -6737,7 +6794,77 @@ function intelSourceLabel(sourceIds) {
   return `出典 ${sourceIds.length}件`;
 }
 
+function intelRenderStrategicReport(channel) {
+  var report = _intelCurrentReport || {};
+  var isAi = channel === 'ai';
+  var strategic = isAi ? report.businessAiReport : report.cultureCommunityReport;
+  var panel = document.getElementById('intel-panel-strategy');
+  panel.classList.toggle('ai', isAi);
+  panel.classList.toggle('culture', !isAi);
+  document.getElementById('intel-strategy-mast').setAttribute('data-mark', isAi ? 'REPORT / 02' : 'REPORT / 03');
+  document.getElementById('intel-strategy-date').textContent = `${String(report.id || '').replaceAll('-', '.')} / ${isAi ? 'DIGITAL & AI' : 'CULTURE & COMMUNITY'}`;
+  document.getElementById('intel-strategy-theme').textContent = isAi ? '株式会社谷尾｜デジタル化・AIエージェント・経営改善' : '株式会社谷尾｜祭り・伝統芸能・地域経営';
+  document.getElementById('intel-strategy-headline').textContent = strategic?.headline || 'この日付のレポートには、この欄の情報がまだありません';
+  document.getElementById('intel-strategy-published').textContent = report.publishedAt ? `${intelFormatDate(report.publishedAt, true)} 発行` : '';
+  document.getElementById('intel-strategy-opportunities-title').textContent = isAi ? 'DX・AIの注目情報と谷尾への提案' : '祭り・伝統・地域の注目情報と谷尾への提案';
+
+  var summary = intelClear('intel-strategy-summary');
+  var summaryItems = strategic?.summary || ['新しい3レポート形式で次回発行すると、ここに提案が表示されます。'];
+  summaryItems.forEach(function(item) { summary.appendChild(intelEl('div', 'intel-summary-item', item)); });
+
+  var usedSourceIds = new Set();
+  var opportunities = intelClear('intel-strategy-opportunities');
+  (strategic?.opportunities || []).forEach(function(item) {
+    (item.sourceIds || []).forEach(function(id) { usedSourceIds.add(id); });
+    var wrap = intelEl('article', 'intel-item');
+    wrap.appendChild(intelEl('h3', 'intel-item-title', item.title || '注目情報'));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `確認済みの事実：${item.fact || ''}`));
+    wrap.appendChild(intelEl('div', 'intel-item-text', `谷尾に関係する理由：${item.implication || ''}`));
+    wrap.appendChild(intelEl('div', 'intel-proposal', `経営への提案（仮説）：${item.proposal || ''}`));
+    wrap.appendChild(intelEl('div', 'intel-first-step', `最初の一歩 → ${item.firstStep || ''}`));
+    wrap.appendChild(intelEl('span', 'intel-confidence', intelSourceLabel(item.sourceIds)));
+    opportunities.appendChild(wrap);
+  });
+  if (!opportunities.childElementCount) opportunities.appendChild(intelEl('div', 'intel-item-text', 'この日付では提案データが未生成です。最新レポートをご確認ください。'));
+
+  var actions = intelClear('intel-strategy-actions');
+  (strategic?.actionPlan || []).forEach(function(item) { actions.appendChild(intelEl('li', '', item)); });
+  if (!actions.childElementCount) actions.appendChild(intelEl('li', '', '次回のレポート発行後に、今週実行できる3つの行動を表示します。'));
+
+  var sources = intelClear('intel-strategy-sources');
+  (report.sources || []).filter(function(item) { return usedSourceIds.has(item.id); }).forEach(function(item) {
+    if (!item.url || !String(item.url).startsWith('https://')) return;
+    var link = intelEl('a', 'intel-source', String(item.title || item.publisher || item.url).slice(0, 90));
+    link.href = item.url; link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.appendChild(intelEl('small', '', `${item.publisher || new URL(item.url).hostname} ・ 公開情報`));
+    sources.appendChild(link);
+  });
+  if (!sources.childElementCount) sources.appendChild(intelEl('div', 'intel-item-text', '出典は新形式のレポート発行後に表示されます。'));
+  document.getElementById('intel-strategy-source-count').textContent = `出典 ${usedSourceIds.size}件`;
+}
+
+function intelSelectChannel(channel) {
+  if (!['orec', 'ai', 'culture'].includes(channel)) channel = 'orec';
+  document.querySelectorAll('.intel-channel').forEach(function(button) {
+    var active = button.dataset.channel === channel;
+    button.classList.toggle('on', active);
+    button.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  document.getElementById('intel-panel-orec').classList.toggle('active', channel === 'orec');
+  document.getElementById('intel-panel-strategy').classList.toggle('active', channel !== 'orec');
+  if (channel !== 'orec') intelRenderStrategicReport(channel);
+  localStorage.setItem('orec_intel_channel', channel);
+  if (history.replaceState) {
+    var current = new URL(location.href);
+    if (channel === 'orec') current.searchParams.delete('channel');
+    else current.searchParams.set('channel', channel);
+    history.replaceState({}, '', current);
+  }
+  document.getElementById('intel-scroll').scrollTop = 0;
+}
+
 function intelRenderReport(report, fromCache) {
+  _intelCurrentReport = report;
   _intelCurrentId = report.id;
   document.getElementById('intel-loading').style.display = 'none';
   document.getElementById('intel-empty').style.display = 'none';
@@ -6856,7 +6983,8 @@ function intelRenderReport(report, fromCache) {
   document.getElementById('intel-home-unread').classList.remove('show');
   intelSetStale(report.publishedAt, fromCache ? '通信できないため、端末に保存された直近のレポートを表示しています。' : '');
   intelRenderHistory();
-  document.getElementById('intel-scroll').scrollTop = 0;
+  var requestedChannel = new URL(location.href).searchParams.get('channel') || localStorage.getItem('orec_intel_channel') || 'orec';
+  intelSelectChannel(requestedChannel);
 }
 
 function intelRenderHistory() {

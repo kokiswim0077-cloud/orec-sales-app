@@ -65,6 +65,32 @@
     "nextActions": ["重点販売店3店へ修理相談の傾向を確認", "実演機の点検予定を確認", "翌週訪問用の安全点検資料を準備"]
   },
   "makitaRelevance": null,
+  "businessAiReport": {
+    "headline": "小さな業務からAIエージェントを試す",
+    "summary": ["定型作業を棚卸しし、効果を測れる1業務から検証します。"],
+    "opportunities": [{
+      "title": "反復業務の自動化",
+      "fact": "公的機関が中小企業向けのデジタル化情報を公開しています。",
+      "implication": "谷尾の業務時間と転記ミスを減らせる可能性があります。",
+      "proposal": "提案として、毎週繰り返す情報整理をAI支援の候補にします。",
+      "firstStep": "対象業務の所要時間を1週間記録します。",
+      "sourceIds": ["src-official"]
+    }],
+    "actionPlan": ["定型業務を3件挙げる", "現在の所要時間を測る", "1業務だけ試行する"]
+  },
+  "cultureCommunityReport": {
+    "headline": "地域文化との接点を小さな協働に変える",
+    "summary": ["公開情報を確認し、地域団体と無理のない連携から始めます。"],
+    "opportunities": [{
+      "title": "祭りの担い手と運営支援",
+      "fact": "公的機関が文化継承と地域催事の支援情報を公開しています。",
+      "implication": "谷尾が地域との信頼関係を深める入口になります。",
+      "proposal": "提案として、物品や広報など本業に近い支援から検討します。",
+      "firstStep": "地域の年間行事と公式窓口を一覧化します。",
+      "sourceIds": ["src-official"]
+    }],
+    "actionPlan": ["地域行事を3件調べる", "公式窓口を確認する", "無理のない支援案を1件作る"]
+  },
   "sources": [
     {
       "id": "src-official",

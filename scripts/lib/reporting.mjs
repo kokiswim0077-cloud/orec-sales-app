@@ -149,6 +149,15 @@ export function validateReport(value) {
   if (!value.salesPlaybook || typeof value.salesPlaybook !== "object") errors.push("salesPlaybook is required");
   if (!Array.isArray(value.sources) || value.sources.length < 1) errors.push("at least one source is required");
   if (!Array.isArray(value.warnings)) errors.push("warnings must be an array");
+  for (const key of ["businessAiReport", "cultureCommunityReport"]) {
+    const strategic = value[key];
+    if (strategic === undefined) continue;
+    if (!strategic || typeof strategic !== "object") { errors.push(`${key} must be an object`); continue; }
+    if (!strategic.headline) errors.push(`${key}.headline is required`);
+    if (!Array.isArray(strategic.summary) || strategic.summary.length < 1 || strategic.summary.length > 3) errors.push(`${key}.summary must contain 1-3 items`);
+    if (!Array.isArray(strategic.opportunities)) errors.push(`${key}.opportunities must be an array`);
+    if (!Array.isArray(strategic.actionPlan) || strategic.actionPlan.length !== 3) errors.push(`${key}.actionPlan must contain exactly 3 items`);
+  }
   return errors;
 }
 

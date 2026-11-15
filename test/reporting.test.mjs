@@ -49,6 +49,8 @@ test("サンプルレポートが公開スキーマを満たす", async () => {
   assert.ok(report.productPrPoints.length >= 1);
   assert.ok(report.competitiveInsights.length >= 1);
   assert.ok(report.unconventionalAngle.dealerExperiment);
+  assert.equal(report.businessAiReport.actionPlan.length, 3);
+  assert.equal(report.cultureCommunityReport.actionPlan.length, 3);
 });
 
 test("拡張前の過去レポートも引き続き検証できる", async () => {
@@ -56,7 +58,15 @@ test("拡張前の過去レポートも引き続き検証できる", async () =>
   delete report.productPrPoints;
   delete report.competitiveInsights;
   delete report.unconventionalAngle;
+  delete report.businessAiReport;
+  delete report.cultureCommunityReport;
   assert.deepEqual(validateReport(report), []);
+});
+
+test("谷尾向け戦略レポートは見出し・提案・3件の行動を検証する", async () => {
+  const report = JSON.parse(await fs.readFile(new URL("./fixtures/report.json", import.meta.url), "utf8"));
+  report.businessAiReport.actionPlan = ["1件だけ"];
+  assert.ok(validateReport(report).some(error => error.includes("businessAiReport.actionPlan")));
 });
 
 test("通知の冪等キーは日付ごとに安定したUUIDになる", () => {

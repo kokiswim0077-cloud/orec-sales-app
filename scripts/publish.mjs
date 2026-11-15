@@ -80,6 +80,16 @@ JSONだけを返してください。形は次の通りです。
   "repairInfo": [{"brand":"OREC|Makita|共通", "modelScope":"具体的な対象機種または公式資料の範囲", "symptom":"", "checks":[""], "safeAction":"", "stopConditions":["エンジン停止・電源遮断等"], "escalation":"販売店・サービス部門へ渡す条件", "sourceIds":[""]}],
   "salesPlaybook": {"dealerValue":"", "questions":[""], "talkTrack":"30秒程度", "objectionHandling":[{"objection":"", "response":""}], "nextActions":["必ず3件"]},
   "makitaRelevance": null または {"summary":"", "sourceIds":[""]},
+  "businessAiReport": {
+    "headline":"谷尾の経営に効く短い見出し", "summary":["要点を3件以内"],
+    "opportunities":[{"title":"", "fact":"公開情報で確認できた事実", "implication":"谷尾に関係する理由", "proposal":"経営上の提案（仮説）", "firstStep":"低コストで試す最初の一歩", "sourceIds":[""]}],
+    "actionPlan":["今週実行できる行動を3件"]
+  },
+  "cultureCommunityReport": {
+    "headline":"祭り・伝統・地域経営の短い見出し", "summary":["要点を3件以内"],
+    "opportunities":[{"title":"", "fact":"公開情報で確認できた事実", "implication":"谷尾に関係する理由", "proposal":"経営上の提案（仮説）", "firstStep":"低コストで試す最初の一歩", "sourceIds":[""]}],
+    "actionPlan":["今週実行できる行動を3件"]
+  },
   "warnings": [""]
 }
 
@@ -96,6 +106,10 @@ JSONだけを返してください。形は次の通りです。
 - 安全装置解除、稼働中の点検、対象不明の分解手順は禁止
 - マキタは関連性が明確な場合だけ。競合への否定的な断定は禁止
 - 営業提案と確認済み事実を混同しない
+- businessAiReportはデジタル化、AIエージェント、業務改善、セキュリティ、制度から株式会社谷尾に有効な内容を最大3件に絞る
+- cultureCommunityReportは祭り、伝統芸能、文化継承、観光、地域連携、催事運営から株式会社谷尾に有効な内容を最大3件に絞る
+- 2つの谷尾向けレポートは同社の未公開情報を断定せず、fact（確認済み事実）とproposal（提案・仮説）を明確に分ける
+- 2つの谷尾向けレポートは各opportunityに有効なsourceIdsを付け、actionPlanを必ず3件にする
 `;
 
 async function generateReportJson() {
@@ -161,6 +175,26 @@ if (makitaRelevance) {
   if (!makitaRelevance.sourceIds.length) makitaRelevance = null;
 }
 
+function normalizeStrategicReport(value) {
+  const opportunities = (Array.isArray(value?.opportunities) ? value.opportunities : []).map(item => ({
+    title: String(item?.title || ""),
+    fact: String(item?.fact || ""),
+    implication: String(item?.implication || ""),
+    proposal: String(item?.proposal || ""),
+    firstStep: String(item?.firstStep || ""),
+    sourceIds: validSourceIds(item?.sourceIds)
+  })).filter(item => item.title && item.fact && item.implication && item.proposal && item.firstStep && item.sourceIds.length > 0).slice(0, 3);
+  return {
+    headline: String(value?.headline || "").slice(0, 100),
+    summary: (Array.isArray(value?.summary) ? value.summary : []).map(String).filter(Boolean).slice(0, 3),
+    opportunities,
+    actionPlan: (Array.isArray(value?.actionPlan) ? value.actionPlan : []).map(String).filter(Boolean).slice(0, 3)
+  };
+}
+
+const businessAiReport = normalizeStrategicReport(raw.businessAiReport);
+const cultureCommunityReport = normalizeStrategicReport(raw.cultureCommunityReport);
+
 const report = {
   schemaVersion: 1,
   id: dateId,
@@ -180,6 +214,8 @@ const report = {
     nextActions: (raw.salesPlaybook?.nextActions || []).map(String).filter(Boolean).slice(0, 3)
   },
   makitaRelevance,
+  businessAiReport,
+  cultureCommunityReport,
   sources,
   warnings: [...new Set(warnings)],
   generator: { provider: "gemini", model, observationCount: observations.length }
@@ -189,6 +225,10 @@ if (report.productPrPoints.length < 1) errors.push("productPrPoints must contain
 if (report.competitiveInsights.length < 1) errors.push("competitiveInsights must contain at least one sourced item");
 if (!report.unconventionalAngle?.title || !report.unconventionalAngle?.insight || !report.unconventionalAngle?.whyItMatters || !report.unconventionalAngle?.dealerExperiment || !report.unconventionalAngle?.sourceIds.length) errors.push("unconventionalAngle must be complete and sourced");
 if (report.salesPlaybook.nextActions.length !== 3) errors.push("salesPlaybook.nextActions must contain exactly 3 items");
+for (const [key, strategic] of [["businessAiReport", report.businessAiReport], ["cultureCommunityReport", report.cultureCommunityReport]]) {
+  if (!strategic.headline || strategic.summary.length < 1 || strategic.opportunities.length < 1) errors.push(`${key} must contain a headline, summary and sourced opportunity`);
+  if (strategic.actionPlan.length !== 3) errors.push(`${key}.actionPlan must contain exactly 3 items`);
+}
 if (errors.length) throw new Error(`Report validation failed: ${errors.join("; ")}`);
 
 const [year, month, day] = dateId.split("-");
