@@ -1,12 +1,12 @@
 const API_ROOT = "https://generativelanguage.googleapis.com/v1beta/models";
 
-export async function generateWithGemini({ prompt, apiKey, model = "gemini-2.5-flash", googleSearch = false, json = false, retries = 3, thinkingBudget }) {
+export async function generateWithGemini({ prompt, apiKey, model = "gemini-2.5-flash", googleSearch = false, json = false, retries = 3, thinkingBudget, maxOutputTokens = 8192 }) {
   if (!apiKey) throw new Error("GEMINI_API_KEY is not configured");
   const body = {
     contents: [{ role: "user", parts: [{ text: prompt }] }],
     generationConfig: {
       temperature: googleSearch ? 0.2 : 0.1,
-      maxOutputTokens: 8192,
+      maxOutputTokens,
       ...(json ? { responseMimeType: "application/json" } : {}),
       ...(Number.isInteger(thinkingBudget) ? { thinkingConfig: { thinkingBudget } } : {})
     },

@@ -85,6 +85,6 @@ jobs:
           git push origin HEAD:reports
 
       - name: Notify publication failure
-        if: ${{ failure() }}
+        if: ${{ failure() && env.RUN_MODE != 'publish-only' }}
         continue-on-error: true
         run: node app/scripts/notify-failure.mjs

@@ -98,12 +98,13 @@ test("Gemini 2.5の思考予算をJSON生成リクエストへ設定できる", 
     return { ok: true, json: async () => ({ candidates: [] }) };
   };
   try {
-    await generateWithGemini({ prompt: "test", apiKey: "test-key", json: true, thinkingBudget: 1024 });
+    await generateWithGemini({ prompt: "test", apiKey: "test-key", json: true, thinkingBudget: 1024, maxOutputTokens: 16384 });
   } finally {
     globalThis.fetch = originalFetch;
   }
   assert.equal(requestBody.generationConfig.responseMimeType, "application/json");
   assert.equal(requestBody.generationConfig.thinkingConfig.thinkingBudget, 1024);
+  assert.equal(requestBody.generationConfig.maxOutputTokens, 16384);
 });
 
 test("OneSignal通知は英語フォールバックと単一のWebリンクを持つ", () => {

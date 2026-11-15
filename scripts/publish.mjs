@@ -122,7 +122,8 @@ async function generateReportJson() {
       apiKey: process.env.GEMINI_API_KEY,
       model,
       json: true,
-      thinkingBudget: model.startsWith("gemini-2.5-") ? 1024 : undefined
+      thinkingBudget: model.startsWith("gemini-2.5-") ? 1024 : undefined,
+      maxOutputTokens: 16384
     });
     const candidate = response?.candidates?.[0];
     const text = candidate?.content?.parts?.map(part => part.text || "").join("\n");
