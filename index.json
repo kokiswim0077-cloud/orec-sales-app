@@ -1,8 +1,15 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-18T17:48:04.082Z",
-  "latestId": "2026-11-19",
+  "generatedAt": "2026-11-19T17:58:36.739Z",
+  "latestId": "2026-11-20",
   "reports": [
+    {
+      "id": "2026-11-20",
+      "publishedAt": "2026-11-19T17:58:36.739Z",
+      "theme": "商談トーク、反論対応、追加提案",
+      "headline": "商談力強化！最新動向と効果的な提案術",
+      "path": "reports/2026/11/20.json"
+    },
     {
       "id": "2026-11-19",
       "publishedAt": "2026-11-18T17:48:04.082Z",
