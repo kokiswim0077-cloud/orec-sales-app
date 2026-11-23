@@ -1,0 +1,2296 @@
+{
+  "schemaVersion": 1,
+  "id": "2026-11-24",
+  "publishedAt": "2026-11-23T20:53:27.990Z",
+  "theme": {
+    "key": "repair-triage",
+    "label": "修理初動と故障切り分け",
+    "headline": "修理初動と故障切り分け：冬季メンテと安全確保の重要性"
+  },
+  "summary": [
+    "冬季は来季に向けた農機メンテナンスの好機です。取扱説明書に基づいた点検・整備が故障予防と安全稼働に不可欠です。",
+    "他社も安全機能やバッテリー製品を強化しており、オーレックは「楽・効率・安全」な製品で差別化を図れます。",
+    "太陽光発電所の草刈りでは、法改正により刈り草の回収・処理が必須となり、新たな修理・メンテナンス需要が生まれています。"
+  ],
+  "marketSignals": [
+    {
+      "title": "草刈り作業の長期分散化とメンテナンス需要",
+      "detail": "気候変動により草刈り作業は春先から晩秋、さらには冬場へと長期分散化しており、年間を通じた機械の稼働が増加。これにより、定期的なメンテナンスや故障時の迅速な修理対応の重要性が高まっています。",
+      "confidence": "high",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    },
+    {
+      "title": "労働力不足と安全性重視の傾向",
+      "detail": "農業従事者の高齢化と減少により、農作業の「楽さ、効率性、安全性」が現場の至上命題となっています。特に、機械の故障は作業中断に直結するため、迅速な修理初動と故障切り分けが求められます。",
+      "confidence": "high",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    },
+    {
+      "title": "太陽光発電所の法改正と草刈り需要",
+      "detail": "経済産業省の「太技省令」改正により、太陽光発電所での発火リスク低減のため、パワーコンディショナー周辺の枯れた草木の除去が義務化。刈り草の放置が法令違反となる可能性があり、回収・処理の需要が高まっています。",
+      "confidence": "high",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    }
+  ],
+  "productPrPoints": [
+    {
+      "title": "冬季メンテナンスによる来季への備え",
+      "customerValue": "冬季の適切なメンテナンスは、機械の寿命を延ばし、来季の故障リスクを低減します。これにより、お客様は安心して作業を開始でき、予期せぬ修理費用や作業中断を防げます。",
+      "evidence": "オーレック公式サイトでは「取扱説明書/パーツリスト」や「メンテナンス」に関する情報を提供しており、冬季の長期保管前や来季使用前の点検・整備の重要性を伝えています。",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    },
+    {
+      "title": "遠隔操作草刈機「RC MOWER」による安全性向上",
+      "customerValue": "危険な場所での作業を遠隔操作で行うことで、作業者の事故リスクを大幅に低減します。これにより、お客様は安全に効率的な草刈り作業を継続でき、人手不足の現場でも安心して導入できます。",
+      "evidence": "オーレックの遠隔操作草刈機「RC MOWER」シリーズは、危険な場所での作業の安全性向上に貢献すると明記されています。",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    }
+  ],
+  "competitiveInsights": [
+    {
+      "brand": "やまびこ（共立）",
+      "topic": "安全機能の強化と税制優遇",
+      "observedFact": "肩掛式刈払機に転倒時の刈刃停止機能「スマートブレーキ」を搭載し、安全性を強調。ラジコン草刈機が「みどり投資促進税制」の対象機械に認定されています。",
+      "orecOpportunity": "オーレックも安全機能のさらなるアピールや、税制優遇対象となる製品の拡充を検討することで、販売店が顧客に提案する際の強力な後押しとなる可能性があります。",
+      "confidence": "high",
+      "sourceIds": [
+        "src-db75dbf4c999",
+        "src-943405619abb"
+      ]
+    },
+    {
+      "brand": "イセキアグリ",
+      "topic": "新型ラジコン草刈機とバッテリー製品の展開",
+      "observedFact": "2026年10月に新型ラジコン草刈機「RCSP700」を発売し、EGOバッテリー商品も展開しています。",
+      "orecOpportunity": "オーレックは、ラジコン草刈機の性能優位性を再確認し、バッテリー製品のラインナップ強化やプロモーションを強化することで、市場の電動化・自動化トレンドに対応し、販売機会を拡大できると推測されます。",
+      "confidence": "high",
+      "sourceIds": [
+        "src-29c0b28d9008",
+        "src-f26546a8a0ae"
+      ]
+    }
+  ],
+  "unconventionalAngle": {
+    "title": "太陽光発電所の「刈り草クリーンアップ」需要",
+    "insight": "経済産業省の「太技省令」改正により、太陽光発電所での刈り草放置が火災リスクや法令違反となる可能性が高まりました。これにより、単に草を刈るだけでなく、刈り草を効率的に集め、運搬・処理するまでの一連の作業に対応できる機械へのニーズが急増すると考えられます。",
+    "whyItMatters": "従来の「刈り倒し」が主流だった太陽光発電所のメンテナンスにおいて、新たな作業プロセスとそれに伴う機械・サービスの需要が生まれます。これは、販売店にとって新たな市場開拓と製品提案の機会となります。",
+    "dealerExperiment": "【提案名: 太陽光発電所向け「刈り草クリーンアップ・ソリューション」】\n1.  **ターゲット顧客の絞り込み:** 既存顧客で太陽光発電所を所有・管理する業者に限定し、情報提供とヒアリングを実施。\n2.  **情報提供と啓発:** 「太技省令」改正内容とリスクをまとめたリーフレットを作成し、小規模セミナー（オンライン可）で説明。\n3.  **製品・サービス提案:** 刈り草集草機能付き草刈機や集草アタッチメント、小型クローラー運搬車をセットで提案。地域の造園・廃棄物処理業者と提携し、回収・処理サービスも提供。\n4.  **実演会の実施:** 協力発電所で集草機能付き草刈機や運搬車のデモンストレーションを実施し、効率性と安全性を体感してもらう。",
+    "sourceIds": [
+      "src-06ed69cff8ba",
+      "src-fe9345535538",
+      "src-7a41e5a727c8",
+      "src-3db06578b8ed",
+      "src-5079fa2def63",
+      "src-e2112e851a37",
+      "src-0a7e692d01a2",
+      "src-93738147ec09",
+      "src-8afde899e321",
+      "src-2e959571a41f",
+      "src-06ed69cff8ba"
+    ]
+  },
+  "repairInfo": [
+    {
+      "brand": "OREC",
+      "modelScope": "オーレック製農業機械全般（取扱説明書記載範囲）",
+      "symptom": "エンジンがかからない、異音、異常振動、煙が出る、焦げ臭い匂い、操作不能など",
+      "checks": [
+        "燃料・オイルの量と種類を確認",
+        "エアクリーナーの詰まりを確認",
+        "スパークプラグの状態を確認（エンジン機）",
+        "バッテリー残量と接続を確認（バッテリー機）",
+        "各部の緩みや破損がないか目視で確認",
+        "取扱説明書に記載のトラブルシューティングを確認"
+      ],
+      "safeAction": "直ちにエンジンを停止するか、電源を遮断してください。周囲の安全を確保し、機械から離れてください。",
+      "stopConditions": [
+        "エンジン停止",
+        "電源遮断",
+        "バッテリー取り外し"
+      ],
+      "escalation": "取扱説明書に記載のトラブルシューティングで解決しない場合、または危険を伴う症状の場合は、お客様に最寄りの販売店またはオーレックサービス部門への連絡を促してください。お客様自身での分解・修理は推奨しません。",
+      "sourceIds": [
+        "src-06ed69cff8ba",
+        "src-fe9345535538",
+        "src-7a41e5a727c8",
+        "src-3db06578b8ed",
+        "src-5079fa2def63",
+        "src-e2112e851a37",
+        "src-0a7e692d01a2",
+        "src-93738147ec09",
+        "src-8afde899e321",
+        "src-2e959571a41f",
+        "src-06ed69cff8ba"
+      ]
+    }
+  ],
+  "salesPlaybook": {
+    "dealerValue": "冬季は来季のトラブルを未然に防ぐ絶好の機会です。適切なメンテナンス提案と、故障時の迅速な初動対応の重要性を伝えることで、お客様の信頼を獲得し、長期的な関係を築けます。",
+    "questions": [
+      "「お客様の機械は、来季に向けてどのようなメンテナンスを計画されていますか？」",
+      "「もし作業中に機械の異変を感じたら、まずどのような対応をされていますか？」",
+      "「太陽光発電所の草刈りでは、刈り草の処理について何かお困りごとはありませんか？」"
+    ],
+    "talkTrack": "「〇〇様、11月下旬は来季の作業をスムーズに進めるための大切な準備期間です。オーレックの機械は頑丈ですが、取扱説明書に沿った冬季メンテナンスで、故障リスクを大幅に減らせます。万が一のトラブル時も、適切な初動対応が重要です。また、太陽光発電所の草刈りでは、法改正で刈り草の回収・処理が必須になりました。オーレックは、お客様の『楽で、効率的で、安全』な作業をサポートするソリューションをご提案できます。」",
+    "objectionHandling": [
+      {
+        "objection": "「メンテナンスは自分でやっているから大丈夫だよ。」",
+        "response": "「素晴らしいですね！定期的なメンテナンスは機械の寿命を延ばす上で非常に重要です。もし何かご不明な点があれば、いつでも取扱説明書や弊社のサービス部門をご活用ください。特に、冬季の長期保管前には、専門家による点検もご検討いただくと、より安心して来季を迎えられます。」"
+      },
+      {
+        "objection": "「故障したらその時に考えればいい。」",
+        "response": "「お気持ちはよく分かります。しかし、作業中の突然の故障は、大切な作業を中断させ、大きな損失につながることもあります。特に、安全に関わる異変は、早めの対応が事故防止に繋がります。取扱説明書には簡単な故障切り分けのヒントもございますので、ぜひ一度ご確認ください。未然に防げるトラブルは、ぜひ防ぎたいですよね。」"
+      }
+    ],
+    "nextActions": [
+      "既存顧客に対し、冬季メンテナンスの重要性を伝えるリーフレットを配布する。",
+      "太陽光発電所を所有する顧客リストを作成し、刈り草処理に関するニーズをヒアリングするアポイントを設定する。",
+      "販売店向けに、オーレック製品の主要な安全機能と、簡単な故障切り分けのポイントに関する勉強会を企画する。"
+    ]
+  },
+  "makitaRelevance": null,
+  "businessAiReport": {
+    "headline": "谷尾の経営に効く：AI・デジタル化で業務効率とセキュリティを強化",
+    "summary": [
+      "中小企業向けデジタル化・AI導入補助金2026は、AIツール導入の大きな後押しとなります。",
+      "生成AIやRPAは定型業務を自動化し、人手不足解消と生産性向上に貢献します。",
+      "情報セキュリティ対策は補助金要件でもあり、事業継続と信頼性向上に不可欠です。"
+    ],
+    "opportunities": [
+      {
+        "title": "補助金活用によるAI・ITツール導入",
+        "fact": "経済産業省・中小企業庁の「デジタル化・AI導入補助金2026」は、AIを含むITツールの導入を支援し、クラウドサービス利用料やサポート費用も対象となる場合があります。",
+        "implication": "初期投資の負担を軽減し、業務効率化や生産性向上に繋がるAIツールを導入する絶好の機会です。これにより、限られたリソースで競争力を高めることができます。",
+        "proposal": "業務課題を解決するAIツール（例：問い合わせ対応、資料作成補助）の導入を検討し、本補助金の申請を目指す。",
+        "firstStep": "中小企業庁の公式サイトで「デジタル化・AI導入補助金2026」の公募要領を確認し、自社が対象となるか、導入したいツールが補助対象かを確認する。",
+        "sourceIds": [
+          "src-147cb093e041",
+          "src-5c914de3aca3",
+          "src-7cf7eb5cafb2",
+          "src-17fcf437e5a6",
+          "src-020f966f70f8",
+          "src-48f87e4fcf1c",
+          "src-d633e2aab603",
+          "src-0f1526d0bac9",
+          "src-2b6d35057bca",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-3a30ba1cd843",
+          "src-9d1893a732ba",
+          "src-16e534311a58",
+          "src-e4f77dd98b6a"
+        ]
+      },
+      {
+        "title": "生成AI・AIエージェントによる業務効率化",
+        "fact": "生成AIサービスやAIエージェントツールは、文章作成、要約、議事録作成、社内情報検索、問い合わせ対応など多岐にわたる業務を自動化できます。",
+        "implication": "定型業務の自動化により、従業員はより創造的で付加価値の高い業務に集中でき、人手不足の解消と生産性向上に直結します。",
+        "proposal": "特定の業務（例：顧客からのFAQ対応、社内文書の要約）に生成AIを試験的に導入し、効果を検証する。",
+        "firstStep": "無料または低価格で利用できる生成AIサービス（例：ChatGPT Business, Claude Team）を、特定の部署や少人数のチームで試用し、具体的なユースケースを一つに絞って検証する。",
+        "sourceIds": [
+          "src-06827dc8a50c",
+          "src-43a4df1de982",
+          "src-722b3c9c7cfc",
+          "src-c8012481505f",
+          "src-30dd1168ce9b",
+          "src-022dca63a717",
+          "src-78384c56a8c8",
+          "src-df3959879188",
+          "src-91a77eeb4ed9",
+          "src-74f9b7c632ff",
+          "src-c71ca9fcaa43",
+          "src-78eef3a316f5",
+          "src-0729bdbddd28",
+          "src-60a95e4fa8d0",
+          "src-d55ce0096605",
+          "src-751ba92adc90",
+          "src-cbb93f377395",
+          "src-0165aebff0f7"
+        ]
+      },
+      {
+        "title": "情報セキュリティ対策の基礎固め",
+        "fact": "デジタル化・AI導入補助金2026の申請には「SECURITY ACTION」の自己宣言が必須であり、経済産業省は中小企業向けに「サイバーセキュリティお助け隊サービス」を創設しています。",
+        "implication": "セキュリティ対策は補助金活用の前提であり、事業継続リスクの低減と取引先からの信頼向上に繋がります。AI利用のリスクも考慮し、社内ルール整備が重要です。",
+        "proposal": "「SECURITY ACTION」の宣言を行い、多要素認証（MFA）導入など、基本的な情報セキュリティ対策を強化する。",
+        "firstStep": "IPAのウェブサイトで「SECURITY ACTION」の自己宣言（一つ星または二つ星）を行い、IPAの「5分でできる！情報セキュリティ自社診断」を活用して自社の状況を把握する。",
+        "sourceIds": [
+          "src-0165aebff0f7",
+          "src-64853891890e",
+          "src-3073816d0b39",
+          "src-df3959879188",
+          "src-91a77eeb4ed9",
+          "src-74f9b7c632ff",
+          "src-c71ca9fcaa43",
+          "src-78eef3a316f5",
+          "src-0729bdbddd28",
+          "src-06827dc8a50c",
+          "src-60a95e4fa8d0",
+          "src-d55ce0096605",
+          "src-43a4df1de982",
+          "src-722b3c9c7cfc",
+          "src-c8012481505f",
+          "src-16e534311a58",
+          "src-77a1e75a7710",
+          "src-d633e2aab603",
+          "src-30dd1168ce9b",
+          "src-022dca63a717",
+          "src-78384c56a8c8",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-48f87e4fcf1c",
+          "src-cbb93f377395",
+          "src-751ba92adc90",
+          "src-2b6d35057bca",
+          "src-e4f77dd98b6a"
+        ]
+      }
+    ],
+    "actionPlan": [
+      {
+        "owner": "タニオコウキ",
+        "action": "「デジタル化・AI導入補助金2026」の公式サイトで公募要領を読み込み、自社の事業内容と合致する申請枠や対象ツールを特定する。",
+        "deliverable": "補助金公募要領の要点まとめと、自社で導入検討可能なAI・ITツール候補リスト"
+      },
+      {
+        "owner": "株式会社谷尾",
+        "action": "社内での生成AI利用に関する簡易的なガイドライン（例：機密情報を入力しない、事実確認を徹底する）を策定し、従業員に周知する。",
+        "deliverable": "生成AI利用ガイドライン（A4一枚程度）"
+      },
+      {
+        "owner": "タニオコウキ",
+        "action": "IPAのウェブサイトで「SECURITY ACTION」の自己宣言を行い、一つ星または二つ星を取得する。",
+        "deliverable": "SECURITY ACTION自己宣言完了の証跡（ロゴ表示など）"
+      }
+    ]
+  },
+  "cultureCommunityReport": {
+    "headline": "祭り・伝統・地域経営：体験型観光とデジタル活用で地域を活性化",
+    "summary": [
+      "関東では、高付加価値な体験型観光や歴史文化を深く味わえるコンテンツへの需要が高まっています。",
+      "訪日外国人旅行者は回復基調にあり、地方への分散と「質の高い食体験」に投資意欲があります。",
+      "デジタル技術の活用は、伝統文化の新たな鑑賞体験を創出し、文化継承と地域活性化に貢献します。"
+    ],
+    "opportunities": [
+      {
+        "title": "高付加価値な体験型観光コンテンツの開発",
+        "fact": "関東地方は国内旅行先として最も選ばれており、五感で味わう体験型イベントや、歴史文化を深く味わえるプレミアムな空間が再注目されています。",
+        "implication": "単なる観光消費に留まらない、地域固有の文化や歴史、自然を深く体験できるコンテンツは、国内・インバウンド双方で高い需要が見込めます。",
+        "proposal": "株式会社谷尾の事業と関連性の高い関東の伝統文化や地域資源を活用した、小規模な体験型コンテンツ（例：ワークショップ、地域巡りツアー）を開発する。",
+        "firstStep": "地域の観光協会やDMOと連携し、地域イベントや文化財活用に関する情報交換を行い、潜在的な連携パートナーやコンテンツのアイデアを収集する。",
+        "sourceIds": [
+          "src-5e51d4d40301",
+          "src-e825f60585db",
+          "src-ae65c381b092",
+          "src-673226d11a81",
+          "src-d8e9e57e61c3",
+          "src-658f0ed97f6c",
+          "src-4b21d0843a27",
+          "src-4d7b9a851d13",
+          "src-854ad37504e3",
+          "src-20ba56689a84",
+          "src-c10f85db08a7",
+          "src-b1e3c73ebacc",
+          "src-d3baab14989a",
+          "src-92372fa50b81",
+          "src-f105e9a2cd47",
+          "src-941a58e4d487",
+          "src-25218996dcef",
+          "src-010803dc7ef6",
+          "src-b10b56ab5f92",
+          "src-a71f4a93324d",
+          "src-ff3afc627f13",
+          "src-01dc89003f23",
+          "src-22c9aef68a11",
+          "src-a3f182d67c70",
+          "src-584502099210",
+          "src-0cd432781b33",
+          "src-dbc7a642e41e",
+          "src-b53761884923",
+          "src-e8340954629a",
+          "src-93c408bda92a",
+          "src-365fbec7f3b7",
+          "src-5706febb7c8b",
+          "src-a3e94b7d9b66",
+          "src-ac6497c1b65d",
+          "src-1e8c88a66536",
+          "src-ddd70d9c5a8a",
+          "src-32e5d8ea42f5",
+          "src-bb3147dd6555",
+          "src-01ee3f048e34",
+          "src-1a50e40547a7",
+          "src-44cb02150575",
+          "src-79ad7b6bc3d2",
+          "src-44c523237bd4",
+          "src-fed41356f0e7",
+          "src-6ba8a1000f08",
+          "src-b7949786c33f",
+          "src-158ef798b17d",
+          "src-26e8dec193de",
+          "src-01ef860ddc2e",
+          "src-fbea637c9a81",
+          "src-71092a0fa0c6",
+          "src-0f1e117f7661",
+          "src-3adab7b28bb4",
+          "src-c5cfe584286c",
+          "src-54aecb62a138",
+          "src-1ec891996dc2",
+          "src-666da0d84540",
+          "src-b1856fe1e8f3",
+          "src-a4a085ae38dd",
+          "src-e1228e8757f2",
+          "src-6dee0ac57f2c",
+          "src-dbf5a7d2c0a9",
+          "src-a563807505e8",
+          "src-a7105fc1077e",
+          "src-c2d440bc2d1a",
+          "src-3a30ba1cd843",
+          "src-9d1893a732ba",
+          "src-7080e0192d88",
+          "src-8deb3ef9aeed",
+          "src-ef95bfff859d",
+          "src-020f966f70f8",
+          "src-4a061158d02f",
+          "src-d88761353848",
+          "src-72925285c561",
+          "src-0165aebff0f7",
+          "src-64853891890e",
+          "src-3073816d0b39",
+          "src-df3959879188",
+          "src-91a77eeb4ed9",
+          "src-74f9b7c632ff",
+          "src-c71ca9fcaa43",
+          "src-78eef3a316f5",
+          "src-0729bdbddd28",
+          "src-06827dc8a50c",
+          "src-60a95e4fa8d0",
+          "src-d55ce0096605",
+          "src-43a4df1de982",
+          "src-722b3c9c7cfc",
+          "src-c8012481505f",
+          "src-16e534311a58",
+          "src-77a1e75a7710",
+          "src-d633e2aab603",
+          "src-30dd1168ce9b",
+          "src-022dca63a717",
+          "src-78384c56a8c8",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-48f87e4fcf1c",
+          "src-cbb93f377395",
+          "src-751ba92adc90",
+          "src-2b6d35057bca",
+          "src-5e51d4d40301",
+          "src-e825f60585db",
+          "src-ae65c381b092",
+          "src-673226d11a81",
+          "src-d8e9e57e61c3",
+          "src-658f0ed97f6c",
+          "src-4b21d0843a27",
+          "src-4d7b9a851d13",
+          "src-854ad37504e3",
+          "src-20ba56689a84",
+          "src-c10f85db08a7",
+          "src-b1e3c73ebacc",
+          "src-d3baab14989a",
+          "src-92372fa50b81",
+          "src-f105e9a2cd47",
+          "src-941a58e4d487",
+          "src-25218996dcef",
+          "src-0f1526d0bac9",
+          "src-573bb4af5957",
+          "src-17fcf437e5a6",
+          "src-5c914de3aca3",
+          "src-7cf7eb5cafb2",
+          "src-3fe0ba3d40b0",
+          "src-ffbca69c98bf",
+          "src-14c7acd07a2f",
+          "src-e56336a615a4",
+          "src-95876d40920f"
+        ]
+      },
+      {
+        "title": "デジタル技術を活用した文化体験の創出",
+        "fact": "NTT東日本はAR/VR/サイネージ/3D/プロジェクションマッピングなどの先進技術で、地域の文化芸術のデジタル化と活用を通じた新しい鑑賞体験を提供しています。",
+        "implication": "デジタル技術を伝統文化の体験に融合させることで、若年層や外国人観光客の新たな関心を引き出し、文化継承の現代的なアプローチとして非常に有効です。",
+        "proposal": "開発する体験コンテンツに、AR/VRやプロジェクションマッピングなどのデジタル技術を試験的に導入し、魅力的な「新しい鑑賞体験」を創出する可能性を探る。",
+        "firstStep": "オンラインで受講可能なAR/VR技術やプロジェクションマッピングに関する基礎セミナーに参加し、技術の概要と導入事例を学ぶ。",
+        "sourceIds": [
+          "src-f105e9a2cd47",
+          "src-941a58e4d487",
+          "src-25218996dcef",
+          "src-010803dc7ef6",
+          "src-b10b56ab5f92",
+          "src-a71f4a93324d",
+          "src-ff3afc627f13",
+          "src-01dc89003f23",
+          "src-22c9aef68a11",
+          "src-a3f182d67c70",
+          "src-584502099210",
+          "src-0cd432781b33",
+          "src-dbc7a642e41e",
+          "src-b53761884923",
+          "src-e8340954629a",
+          "src-93c408bda92a",
+          "src-365fbec7f3b7",
+          "src-5706febb7c8b",
+          "src-a3e94b7d9b66",
+          "src-ac6497c1b65d",
+          "src-1e8c88a66536",
+          "src-ddd70d9c5a8a",
+          "src-32e5d8ea42f5",
+          "src-bb3147dd6555",
+          "src-01ee3f048e34",
+          "src-1a50e40547a7",
+          "src-44cb02150575",
+          "src-79ad7b6bc3d2",
+          "src-44c523237bd4",
+          "src-fed41356f0e7",
+          "src-6ba8a1000f08",
+          "src-b7949786c33f",
+          "src-158ef798b17d",
+          "src-26e8dec193de",
+          "src-01ef860ddc2e",
+          "src-fbea637c9a81",
+          "src-71092a0fa0c6",
+          "src-0f1e117f7661",
+          "src-3adab7b28bb4",
+          "src-c5cfe584286c",
+          "src-54aecb62a138",
+          "src-1ec891996dc2",
+          "src-666da0d84540",
+          "src-b1856fe1e8f3",
+          "src-a4a085ae38dd",
+          "src-e1228e8757f2",
+          "src-6dee0ac57f2c",
+          "src-dbf5a7d2c0a9",
+          "src-a563807505e8",
+          "src-a7105fc1077e",
+          "src-c2d440bc2d1a",
+          "src-3a30ba1cd843",
+          "src-9d1893a732ba",
+          "src-7080e0192d88",
+          "src-8deb3ef9aeed",
+          "src-ef95bfff859d",
+          "src-020f966f70f8",
+          "src-4a061158d02f",
+          "src-d88761353848",
+          "src-72925285c561",
+          "src-0165aebff0f7",
+          "src-64853891890e",
+          "src-3073816d0b39",
+          "src-df3959879188",
+          "src-91a77eeb4ed9",
+          "src-74f9b7c632ff",
+          "src-c71ca9fcaa43",
+          "src-78eef3a316f5",
+          "src-0729bdbddd28",
+          "src-06827dc8a50c",
+          "src-60a95e4fa8d0",
+          "src-d55ce0096605",
+          "src-43a4df1de982",
+          "src-722b3c9c7cfc",
+          "src-c8012481505f",
+          "src-16e534311a58",
+          "src-77a1e75a7710",
+          "src-d633e2aab603",
+          "src-30dd1168ce9b",
+          "src-022dca63a717",
+          "src-78384c56a8c8",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-48f87e4fcf1c",
+          "src-cbb93f377395",
+          "src-751ba92adc90",
+          "src-2b6d35057bca",
+          "src-5e51d4d40301",
+          "src-e825f60585db",
+          "src-ae65c381b092",
+          "src-673226d11a81",
+          "src-d8e9e57e61c3",
+          "src-658f0ed97f6c",
+          "src-4b21d0843a27",
+          "src-4d7b9a851d13",
+          "src-854ad37504e3",
+          "src-20ba56689a84",
+          "src-c10f85db08a7",
+          "src-b1e3c73ebacc",
+          "src-d3baab14989a",
+          "src-92372fa50b81",
+          "src-f105e9a2cd47",
+          "src-941a58e4d487",
+          "src-25218996dcef",
+          "src-0f1526d0bac9",
+          "src-573bb4af5957",
+          "src-17fcf437e5a6",
+          "src-5c914de3aca3",
+          "src-7cf7eb5cafb2",
+          "src-3fe0ba3d40b0",
+          "src-ffbca69c98bf",
+          "src-14c7acd07a2f",
+          "src-e56336a615a4",
+          "src-95876d40920f"
+        ]
+      },
+      {
+        "title": "国・自治体の助成制度活用による事業展開",
+        "fact": "文化庁の「文化資源活用事業費補助金」や東京都の「伝統文化を活用した観光事業を支援する助成金」など、国や自治体は文化・観光関連の多岐にわたる助成制度を設けています。",
+        "implication": "これらの助成制度を戦略的に活用することで、新たな事業展開や文化継承への取り組みを進める上での資金面での大きな後押しとなり、事業成長の鍵を握ります。",
+        "proposal": "文化・観光関連の助成金・補助金情報を定期的に収集し、自社の事業計画に合致する制度への申請を検討する。",
+        "firstStep": "文化庁、観光庁、東京都、および事業展開を検討する各自治体のウェブサイトを定期的に確認し、2026年度以降の助成金・補助金情報を収集する。",
+        "sourceIds": [
+          "src-147cb093e041",
+          "src-5c914de3aca3",
+          "src-7cf7eb5cafb2",
+          "src-17fcf437e5a6",
+          "src-020f966f70f8",
+          "src-48f87e4fcf1c",
+          "src-d633e2aab603",
+          "src-0f1526d0bac9",
+          "src-2b6d35057bca",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-3a30ba1cd843",
+          "src-9d1893a732ba",
+          "src-16e534311a58",
+          "src-e4f77dd98b6a",
+          "src-010803dc7ef6",
+          "src-b10b56ab5f92",
+          "src-a71f4a93324d",
+          "src-ff3afc627f13",
+          "src-01dc89003f23",
+          "src-22c9aef68a11",
+          "src-a3f182d67c70",
+          "src-584502099210",
+          "src-0cd432781b33",
+          "src-dbc7a642e41e",
+          "src-b53761884923",
+          "src-e8340954629a",
+          "src-93c408bda92a",
+          "src-365fbec7f3b7",
+          "src-5706febb7c8b",
+          "src-a3e94b7d9b66",
+          "src-ac6497c1b65d",
+          "src-1e8c88a66536",
+          "src-ddd70d9c5a8a",
+          "src-32e5d8ea42f5",
+          "src-bb3147dd6555",
+          "src-01ee3f048e34",
+          "src-1a50e40547a7",
+          "src-44cb02150575",
+          "src-79ad7b6bc3d2",
+          "src-44c523237bd4",
+          "src-fed41356f0e7",
+          "src-6ba8a1000f08",
+          "src-b7949786c33f",
+          "src-158ef798b17d",
+          "src-26e8dec193de",
+          "src-01ef860ddc2e",
+          "src-fbea637c9a81",
+          "src-71092a0fa0c6",
+          "src-0f1e117f7661",
+          "src-3adab7b28bb4",
+          "src-c5cfe584286c",
+          "src-54aecb62a138",
+          "src-1ec891996dc2",
+          "src-666da0d84540",
+          "src-b1856fe1e8f3",
+          "src-a4a085ae38dd",
+          "src-e1228e8757f2",
+          "src-6dee0ac57f2c",
+          "src-dbf5a7d2c0a9",
+          "src-a563807505e8",
+          "src-a7105fc1077e",
+          "src-c2d440bc2d1a",
+          "src-3a30ba1cd843",
+          "src-9d1893a732ba",
+          "src-7080e0192d88",
+          "src-8deb3ef9aeed",
+          "src-ef95bfff859d",
+          "src-020f966f70f8",
+          "src-4a061158d02f",
+          "src-d88761353848",
+          "src-72925285c561",
+          "src-0165aebff0f7",
+          "src-64853891890e",
+          "src-3073816d0b39",
+          "src-df3959879188",
+          "src-91a77eeb4ed9",
+          "src-74f9b7c632ff",
+          "src-c71ca9fcaa43",
+          "src-78eef3a316f5",
+          "src-0729bdbddd28",
+          "src-06827dc8a50c",
+          "src-60a95e4fa8d0",
+          "src-d55ce0096605",
+          "src-43a4df1de982",
+          "src-722b3c9c7cfc",
+          "src-c8012481505f",
+          "src-16e534311a58",
+          "src-77a1e75a7710",
+          "src-d633e2aab603",
+          "src-30dd1168ce9b",
+          "src-022dca63a717",
+          "src-78384c56a8c8",
+          "src-9f8f67c5b4d7",
+          "src-75c6a7a7a7f8",
+          "src-48f87e4fcf1c",
+          "src-cbb93f377395",
+          "src-751ba92adc90",
+          "src-2b6d35057bca",
+          "src-5e51d4d40301",
+          "src-e825f60585db",
+          "src-ae65c381b092",
+          "src-673226d11a81",
+          "src-d8e9e57e61c3",
+          "src-658f0ed97f6c",
+          "src-4b21d0843a27",
+          "src-4d7b9a851d13",
+          "src-854ad37504e3",
+          "src-20ba56689a84",
+          "src-c10f85db08a7",
+          "src-b1e3c73ebacc",
+          "src-d3baab14989a",
+          "src-92372fa50b81",
+          "src-f105e9a2cd47",
+          "src-941a58e4d487",
+          "src-25218996dcef",
+          "src-0f1526d0bac9",
+          "src-573bb4af5957",
+          "src-17fcf437e5a6",
+          "src-5c914de3aca3",
+          "src-7cf7eb5cafb2",
+          "src-3fe0ba3d40b0",
+          "src-ffbca69c98bf",
+          "src-14c7acd07a2f",
+          "src-e56336a615a4",
+          "src-95876d40920f"
+        ]
+      }
+    ],
+    "actionPlan": [
+      {
+        "owner": "タニオコウキ",
+        "action": "地域の観光協会やDMOのウェブサイトを確認し、直近で開催された、または今後開催予定の地域イベントや文化財公開イベントの情報を収集する。",
+        "deliverable": "地域イベント・文化財公開イベントリスト（5件以上）"
+      },
+      {
+        "owner": "共同",
+        "action": "収集したイベント情報の中から、株式会社谷尾の事業と連携できそうな体験型コンテンツのアイデアを3つ考案し、実現可能性を簡易的に検討する。",
+        "deliverable": "体験型コンテンツアイデアシート（3案）"
+      },
+      {
+        "owner": "タニオコウキ",
+        "action": "文化庁または東京都の文化・観光関連助成金のウェブサイトを閲覧し、申請要件やスケジュール、過去の採択事例を調査する。",
+        "deliverable": "助成金制度の概要と申請に向けたチェックリスト"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "id": "src-06ed69cff8ba",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGh0RrbjZhs38ST25hGawf7a_uB5jLdqaaxvQAIkH2nGLk_4mDDV18GTgAMY_WfnYsSeMitFi1ja3raU3J3U9zCeuHNNiYDWmxdSXD7f5bqGqOnXN4rLKuZTqhWWo3eg2eXdmuaPPL4",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-2e959571a41f",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAMu9uQdFppKfPD_WnnrbmlliMapXTO7EeKB89KEVATt-R9072vZkLRJ0UzdGuAYtpYgYqvuDI6R9ywTkhr7S8KkyLgqUbddkIZcZ5uzASG88RdidB2VRqeQ==",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b10b56ab5f92",
+      "title": "prtimes.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHYxdHc2G11iH5Nvt2SXkymVIgSIJjZGzMdd4w-zqQ4AW6VlbYygxE2hMP0m9JyJptdpjoqi6F8w1l91TVKaPS5x01d0VmXIBv_can341EHbQgz2O1OzEvqSy9GC9XoCctiaMKcn-QMmB4k459kMGtD2g==",
+      "publisher": "prtimes.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8afde899e321",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELYok3LRfoLU1LON5z6Or3305IivYj2B7LAU93__k8Gl6ZhuyY27EjhzP5jPC_xPEwq49DB74UZxdbDjqTPXDn0pwUyU2exZgk9fCcAA-PCprxKQTgmQ==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-93738147ec09",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFooo9DJBcPbiaa0mdkzfxSVrf12aALCvyQAcH5H_HI_V_wp4fCrxfXYUmiw9-cOjqNHBLGBpaXOoXk2SZrFfMBWRUJKx8epAlbLQBq1HV2zX8DYwXAs-mvW216Ijsmdy5odAl_",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e2112e851a37",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzU-JhmFTwjzt_0ocXXildkGfm1wV6Xgk5gAa-UCOr09ZSbzs8RttTx_hUOOmMplUzbHsBk36W-u93MTdPXRwcHMXkkooKDxEVTtet-uf7daU=",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0a7e692d01a2",
+      "title": "orec.holdings",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgz05ariKAVzWB2IYqieN7YJq7qPSPrlNnHpt3QyTAdJu9rHxv6SWUeBsLc-3WERRLMd2Hyiwli-yzD4x6X4I8KwlSAMCaTkrsj9mhrjG6sXUKztg=",
+      "publisher": "orec.holdings",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-fe9345535538",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFxytU_q8XgkWv4QfDiOul_E0e1XjHnEV8hd8kDFSvFknvdC-GJi4nJka9LYlb9zvSWylZp9RTSTpt4od0lJLrB8kD-ONEUhinIspQHVc-8-ILfibsIq5ep3bnkJxCESOzdbYAgOSXrnVON916luMtwHGgQcgXr_CTxPn9sUsEWM53byaM_b3cQoTUeONg8-ys15AYmaWNz4GNuNvaZal9WqpSsVNE6SBqfdib9CDhK4LgPNOCA2FPKGiZpmt5GNBJPC6c8ZypuUJFB2DK5iUUs9lrNX-MYDlUAhMoKXPKcDRn3wCy1amlfN4BkVPh4oggq",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7a41e5a727c8",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGud5LhtThoTRTw0mjybpitNs5L3MrbsUoJY5rboQGIITkhp1S9aUgDGH7iqbKM_Bqwv_NobIU7QA6GG21TInyqlt_dFQDH0uZRHlswyWvtB-3BMiyBFEjVIlOU",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3db06578b8ed",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFEiHnppdorEo2qr7w6t3Ogc3Q7Mrj6LKUDVwmDKgSOCW0KZmYqU6dxYgW6_ks430WEGJGdA9yBHqlmh4jw5pjny0me40YzEPdboFYTr1QpSORhy1wVhhH3SUdZ-q95a_T5JcO-AUFk_8bOPXedbQaxXtGHh1_ytg8mAwrXlQuJmZ5ZhaUQeMnk1KxgwU1tfmIoXrLnzXOgC5bdoKl5JVlzYdFISlErR4Hn8ymcGo3rbn82jshxEmaMWT1f",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3200d5156f65",
+      "title": "kuroco-img.app",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF0EpWu6X6K9X-kDi_6WdDfBZ_zRmwuXFGn6N-YC5R6IaI7wEEVfgApIeKTZ0Bl2Uaou7wF8OXK-W2F_vt-eyPa7GFU01BlM8J2e32hnyGONfE9U3JLidk0Jeg3AQk8THpZGZsOxzV0oUH4giFYqspN5XO4nNI0IPJ4",
+      "publisher": "kuroco-img.app",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0a87980e248c",
+      "title": "toyokeizai.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFHKahuiAPCegdbwqGhM94A2-FyIKCPHPXMTJmfrRNEpmpDCPHTj4YQjquiOUn1cvqSK0-_D1GgfStwXwtBtMj_Ivznp5Je1XBGnBJBPJ-y-8PFptFz1Y3eldfb4NwTs483H6w6exswtkov5MQ=",
+      "publisher": "toyokeizai.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ad68c4855abf",
+      "title": "yomiuri.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQER_6PwW-iV1B-mbTXF_jTrd9pS6y6dVSdbRxWKY-qCVVET2piJ_L0vVKRV6FUxFUd3fYL8joALCEC-E5yKpLoO_LlKZ4tvwy2xrnCS1gdcLTgwmPuh8emN9aTderCcQ0NauVxdUUbNAhkoLPK2Y_7ptBcOOrN9uFpHsQ==",
+      "publisher": "yomiuri.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5079fa2def63",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4OXSBiPbUjI9pyFNbHcEi30dAAJXimm6CPNXpqkA-uoJVKgE6YkDBZaqor3P083ITrS5w-_I6aC1yd4_fj7WO7m7TGWiWY_QZUCcRsf2Y3FoCKPV9QATkhQ==",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e4f77dd98b6a",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIk_UlgJbTiPfBlNiNxDc9fNCF9pJfP5UJn6q_RWQHw7Xu4rnb79Vvhy2QSj9SZWGQc-1C7N6LaRDUvTGvju77_OGgGHwLkYX9n4vbVGjLUBPaf6vcE1FpRuD9dD0V4MGvYQ==",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-2c1d48eb6951",
+      "title": "doda.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGaKzZpiF348HVJ238LLS4XTtgXT6TLfo-ztpysweVNg0DRhmWaDt1iWHjfMdESqs0BAD3N61kpw4jOyMCweRcUh2O5Pa7O5ByBV1DQx_4eFXpIqArU4hNYT6mZQOYJKDOdORtimMPTMGwI9YuUbvCInBt7KGSzRPH5Rhs=",
+      "publisher": "doda.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-323d429254f6",
+      "title": "note.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVR28yapICBF71gNOl7TDCroaRrAzGuTPRAncrwdWaKW-PMxO7LY4-ozk1ZeKX2mPmK-9mDFhF1R5zoRe2aMPc2_C0URoORUAh0NTcxxMhOjKD38Qd0YFALetYaj3GYKGrpac=",
+      "publisher": "note.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8a7ca6d8dad6",
+      "title": "qualities.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHW7OORQ5iwZjtNdP5dpoHZaKDitRN6b0eiLBuc8NbZiJDL_z_s-v3-dRoqrPsmWyXQV-18QFsBtyAMdnxwhDfy4Eoj-EZFeUiiueXlfNMKrsCCmgYBsDJy55Z2VnOQgGhpoEl63A==",
+      "publisher": "qualities.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3eb3a34848d2",
+      "title": "fukuoka.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHaOyB-MeafL6Nd5EVo4NjF55zvQqUA_f71lQZ62rXDo9sFPTPtsgfV_3uJtO9cg2_OOtxNh2tylQlXailFJH3kyWpQbREPSzhJK_4jxE-3xisqnoWF6lLh0dDXGNRiTx_4xUN0mFtHW6EArlHFfLFSKJmRlsvBlI19BUVUZ8MiOAoy91VBmWuGnaAZTEB2WcOqBm0HTCrHhOKqbwNpNCtoyjGkbo_M0L3W-wq2i0ot_Xw0w6Hj7ZvzrUtfKy3ECzXQDWLkbaeWWzYLHfsAAiLJBtb2Yoql43AtPc8vSh3F_9v6lUh655T3wzPxlzdKqasKXzUQJ5AaEz2IwzYCyFdyNDHkC3TY7p9RJvVcHqVKwfBxGmVDHF-kSgNQOhfhlAUyqblC_nzMJQhR8w==",
+      "publisher": "fukuoka.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-685137f0dfe4",
+      "title": "orec.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEAsSSUcOUD6PbAmXxPE-790wZI9ja-9voGZO1McXh9RvG0643nSicUXdQPjG-dmhx15LVHq6hzszYX1vjGyAEkQI5WKS1yB9hEnj27k3OcJiEtfBGJ0s7kXIWG0-qQ3WcTt0Cyu1ChxQoP4qY4UBYAwHTtA3ZE",
+      "publisher": "orec.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5ef067b6a130",
+      "title": "alwadanioptical.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFglHgoaj1U20ufjIA1PW4Ksddl-821uuoQsCh-6wYvwSgDgm-X0zDo48WhjIx2uLpZwlfxRSkIm4Js1iBrlDUx6jQQL-8GgjX9bMdkCThM7Q4RcFZhe2TroHXQAHXglgM9BoGfBXo0x6s_F8HobfcznGuICnyLmZzm",
+      "publisher": "alwadanioptical.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c87bc972c918",
+      "title": "mynavi.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEHaOs8pSoY3UPNR1HScmYpGMmS7-A3DFFqqdHFYP-hI4QXgz1yI_BgDwNEsCEi9n0T5xS_rYVmYY2qneQ34hc0yRG3tCJvcjM6rKuBLUX4NMduAPrmOrz1MKFk5cJdOeobd5I=",
+      "publisher": "mynavi.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-90f98d2fcbc1",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQENmq4t2y1Mp3AP_Uof-a2wEJn_WKqkSUa_O0-16mRAtsyU7dJ_2_Ji-ERjlLzc8D4HMaPldnutzbzU_9uXggdhGg9BeuDqsF_WUpQCp-5MfKMAihcuzwiQGo7toFIbghToKqzTI2ya7Bsy",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ff3afc627f13",
+      "title": "dreamnews.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG2uoFqUHdnlQCH3mVArAgP1WjMFt9G7x82WhXvEUb4Q10ykWN9KgXfvtynpV_ktVHuzyuimSqymPMBAu6mukcJu8_CSScG5mN_DqaXWIGgKJDIAaIS2jGCUWo9j2H_Ct7et892",
+      "publisher": "dreamnews.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a71f4a93324d",
+      "title": "newscast.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHubkENpSk5j4VXuu_KX0fMw0zNCO94lJUzp132EEPJm3caZx_kV8gJHocZFeEapwmbMew8aqlhIkKBtA5NhuaT4wq3RDrcc6gD3qtQpawzMuI1MkiXLJeYBtc0",
+      "publisher": "newscast.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-edb497b9c53b",
+      "title": "yano.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvGf5BJ9R4VOA00SwXFyZ2xa79prZ88tqdmehJzC1Los0vwNUa3yVlUhYSozkQ-47dVP-nuS3WcxgMrAcOB2d3_k6vAiTrIX1Iz-nshAcS_Ge7XtzEcJcYl5OBlPRgWTLGacaob38MOxeDkqewc9ldgQ==",
+      "publisher": "yano.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-532bc686ffa7",
+      "title": "gaas.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGNjkGXf56KvzpGpYbJo9bHobHD2e_-FNIzsdRyVY7Et08k7PdA5xRoaYi83Ay-g_iKUGTruKisIQuCvR4PYutw_1c2CRASbt3fV4t11zz0AHCh",
+      "publisher": "gaas.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6b406569ce19",
+      "title": "gaas.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl_qWpHCL0Grun5Xn9MbidNLyYNjf87Ehzj2xEFrOYx4U4F6-2k494aR-iudbgGVfBqqSoPPCjNoKxLz2W4VdC17zwPYKrSMu_Ifpx-ISctAkf01wWZsUnZ5dyY8n-",
+      "publisher": "gaas.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ec4dca8a88c6",
+      "title": "makita-engei.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE4TzYNV7shmAg6tSzK1dlWkzNMeiXcm3Mk22blJjHUA1BoGC0SeHG4p8PYLq5qRDWDRaPiSW7Sf_JVtnDmm2tdIlxNRUwIp1XBSi3LFHh68VfWsgk=",
+      "publisher": "makita-engei.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7ac83380a921",
+      "title": "makita.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGLsyABhn14EuS-W2Ts-bNMpI3o5U4jMfNFnpALr8OzhRj1KUwhLV5GItwN0vXbDCtLefK4ZfhnK0j8Z9ADqvOyX2mdvi1irF-JE8R-FjeZBiLRWwN6NWxAI-StdrXA7POsAHk0zbxIFtR8tjaBupEtheq2GB7T3fKuNZxYIcRc8N6x75YonJGoi2l-GpxOJdz0YZI7taZ4PxmpMkTYebrUHBnRtN2AxWXdbOuimDM6T7q3zpujQ5BqtxqizUrCSYNB-hQY",
+      "publisher": "makita.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-db338883321b",
+      "title": "rakuten.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHXtmcwGIZ5uZkZO3xbB0BaVeyIL_QO2zVWkZDuOUsqpW1H8AT7-ypt9rLC_QdfeIPjC4MkzDVnlTnuqoRt8AZtcV__cdlZ1Aey-_ID7JoPLeOffEM_DSt1ktdYQSuxlwVWtxdsseOT",
+      "publisher": "rakuten.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-db75dbf4c999",
+      "title": "yamabiko-corp.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxely9CYjHodkNTpG4Uhu7uOPcNzqvefdPi3eTK-IcHW6eEPynmyF6xQg-Md9TPVoDeVkjyCyM27UkEexbObGqsyVeyxIvWns1eYy0piar-Yb-dFP6JGyEqW4ZbSaNm79tIQk56xoDIFta2w9UJ2tbBibSrre1qlh6ycK5T09ddDD0eiN6BA==",
+      "publisher": "yamabiko-corp.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-943405619abb",
+      "title": "yamabiko-corp.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQExGWq2mioWtRNKcDD4GqbcIB6lNEXdnWQ2NuHYjfCIIDY3yIAhdBl1X5cFjFbqTRQHdwPOkuGCGY-JsIUFJTGuv--CjIiUe4nt51mOE4nmIXV8sPF2QyYdB1FbYU7RU-VdyxU=",
+      "publisher": "yamabiko-corp.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f5dbfb1050d7",
+      "title": "noukaweb.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBWRRvzxC4AjKprdUDkcPcK6dqVqKsDEwlG0btuBeOBWoGsfzLoNHytgVmGuQ17SRQqZyswimiBRb-dcGqEm8osYgLJAAb62PUMoOOnFrgtfVplrLbgvk5FFowPqQPdgfuCQ==",
+      "publisher": "noukaweb.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d5de1c2983a3",
+      "title": "noukaweb.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjokBGK4xy0lCfk4oh8xPpV_LCfBCbxeOkoq93cgMCnxGr9Gw9nDQay5VtxtTVi8bzjBjxt3TYI-_ORPifzqv3jw26iWYmBgPmmxOCdB_YyRNUA4tjZ4d2RHfAEHX-Y9UWaIizkpf5R2BvCXVwZ7jE8if1TTLnxaqIXLAkr_kc6dPvxg==",
+      "publisher": "noukaweb.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-97cb3506f3a9",
+      "title": "plow-power.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGHtxieH6q_epdXhlH9FidWUYD6UdytEe_4-Q4XaYMlUqLLUO5m6Qf8lGnKh6T-S42166-01Q6rt0MphTj4fbmPS8-nDRTmhitJuLcJ2A9bVsrI_EGxf8oAinBVRyiCf4j4NYNu8oQ=",
+      "publisher": "plow-power.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-540d6e91f9fb",
+      "title": "kubota.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVYvJnxxcvfULBAB3lmbe-55srS2IxS6cz93mwd5_aBw2qpknE_BxQdyFep-e1OviSu0iRE7MtYZSSfWPf2Dsu2IYQnN-fS0zuK33h1cVVf6SRGYMRuwAaqxqvDvni8MC3V7Wxepfvlk100S8WoSUNneMKCaOOVwdO",
+      "publisher": "kubota.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b6d060b2751f",
+      "title": "kubota.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3OisuC6h8Wk90WRZzZo9vnfIckkpqJqeYXrPOmh_F5AHpcAmJhpVV4_9WwOcyjg7r6pxXwZ3YDdfoZvALNNCq-pD1pvfLCOos0w255Xxsie45Bic9X3Vy8TDoeNqOquCL9PnSdqtm39hlWbE9HA80cdA=",
+      "publisher": "kubota.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7aea2a0341d9",
+      "title": "noukaweb.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFw5b7sjBT5ALuVCzXLno54Cw1KmdNzhpbazqeRlUdUyd3JrzFDBqa3TfBjqUZ_yZXWDW9QxYBtTuG6PNHmcjGhy6KWOYr4L209iCdUUUcUje93gRNI3SomD49i2Jwcx5x8Ftro6IPN-lu4SMKtEc8=",
+      "publisher": "noukaweb.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-29c0b28d9008",
+      "title": "iseki-agri.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH7BEOm1ps_BkjyBN6Ssfop931XeyMxxGNT-mUzyiKm7MDT4lWmraphlHNLRr9mO45DydxTElN9_QVauSk0AII69n4x8-JxHKfQU6p962Gmfrjeoug1lfNH8Q==",
+      "publisher": "iseki-agri.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f26546a8a0ae",
+      "title": "iseki-agri.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGEyIpqIi-4g3olgXRLwMHjnQcgW1t4YNSOUVzaxbPRynrhyFUNtDu-KbNpwZZSfZTnBdF5FZSX1Obq01W5sP5KQQXrMTFRWKnOu1ZtSoDRqOzVQoE=",
+      "publisher": "iseki-agri.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3eab68028ae8",
+      "title": "mynavi.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFUIoI6MZ-E4xUIRXG0jwR1Q7FEdz0XgNoLyqRBH77mgmcNt0s0g_BBKIzw6XDE08Ca98PljFYYd4DJ4YEES8mBAqW4GmdL4GJ892sYcTor9Hy5W4hoO5r7tBKgn19sMAI2pK0w",
+      "publisher": "mynavi.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-524781e255bb",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsaUo-SJKrOp5e2-f0NaX5rKJKwvtShJKVHxeSmmzeg7nQ7FazXLYPNnzBoJ_LGQcyhZFTEun7VrSSlq_3IhUyM0Du0BmqOJc-MY7oLFDuyURigpO40RIb-66kW7zDQjUS820r5YMkLpPS",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c43437680770",
+      "title": "stihl.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFWpLZf8k2T3Ebl8fwJ18rtBqpp76NQflY7xoDoixX0T695hx36Q5-YKuWxz6RR9-i0XPNkdWxvjMp5tV5WfzX-P26cVU04aL1EByy_x0hepgqWYJ_D",
+      "publisher": "stihl.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7da0bc2df9ee",
+      "title": "stihl.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHiV4jglGO4Da8zEPaiJcpRfZb-ayMOm1DX4NuIarAdkesXEisnWe5qNU_1lyD24KJt3wT6pYT6bSYDTaL2JZxE7OWpvTkp8CP2xHS8ssxejYfn8R_xJDaUy6la1SPhLdbNQy03-9hBW2qd-ARVBDwo",
+      "publisher": "stihl.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-25a1bc40d55b",
+      "title": "agrijournal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGO16edlQ7ahna8qV2bV0TF8_BsGQivjezpS2AN3yIJfgvoOdQCpnkqukPh5k1XlK6MmVUISOOLVlKtFicGGw59rPc9XG2qeEAMrktgt7VG38NFro3-dPcqRuBMpRUtFcuZ5A==",
+      "publisher": "agrijournal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c78b21b2b0e5",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFDAKsT6lBwHNDfwvpiKvblu-3kDpY8OsZ8LpEix1OY0xuTXocahAhcpD5OdlJnoUFZ8__Cw6aeKjaKEQUK264TyNpQyjsdPAn7L3KrzCzC3-vCCXLWBE-Ly7ZCgU0OHzHUDln6xYxsmGdr",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-010803dc7ef6",
+      "title": "atpress.ne.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHMPYwKAf2QNkNyYaA8ey_gt3jFLFjCmDXX8pkn2UL0c4tmbN6YYqi9sdXIc_sJLw9FFr6unShVfj1QoBnZDOJQEVXk0iLBsoddbFLhKiUoelAcbTp3lNtPPzjX_18fEq3V",
+      "publisher": "atpress.ne.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-585a1cd202df",
+      "title": "karasawanouki.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGN_eSKKYgmBvEN2hcnGwexX3Qu7atw8oVoemceKeQZw9vN3UaEBp1OGPvACwzMaas1Df24Q9l64xIMpp1gBFbC1Vy313wMBEVq0aEJ_dNbcqB7UZMGHsHOeP-5t8w8aot6euNMcPiS65JGMS_DhRyY3Q==",
+      "publisher": "karasawanouki.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-345a0061e05a",
+      "title": "tochigi-sakura.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQELx2hSo_K_UKDlS1wcMAj-Lrx63kjNLNK35SKMMXLX7dCv5CFA6pz20xvUf7aEyqRm-06qqdc_jJGq_r71RZh52K60aWHwqrg2h_26l9VDD7BSr30Zr2dYuCHXxkzFtcIqFOBsNDAr7ByNtwT3XBToxu96wp0kEbYdiEEbjTLnAwipcU0wTpBTrZJ0",
+      "publisher": "tochigi-sakura.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-455fa064bd7d",
+      "title": "tochigi.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTz41AZ3RcIxiUpV90cNAPhpBMLDl_8XaCuqU0e3-ZnDzkMjCEMmzEJ8Zhcm5F7VOo59YocxkNCHahvzzrRsTYGOXV6EdUpS86UypiXyoYYntHZjvbZmkMfyjFiYN1Z9U2F_l9IpQElcvFneOIwNe3rA==",
+      "publisher": "tochigi.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d19ef6f62e0c",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_8qupDyR-vnX7gqSn_-ArM1VJKN-YH1FgIPBuQ44C8Yi0iYjXW7SiexOlNeWoV2OmgBC2694gTCJO2JNm1uh8tApbpfsPZByim-HhUYcRIEZNJER8gcEdWWvgbeKW8PLzLt6xJjBFqSEL9kEw7Bngp2w3qQ==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-2ea82f26d17f",
+      "title": "mynavi.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH2R8RqIXT4x4U0sTMbodz-2fFAPvaPv-8rOWlmhFCMvO1odvdfqPDBWYo4mIhBzOffGM9u5yRxVjAzv-70GsmtL6_7Owd80fOzWQWN57luioO3z1hP0LQsJvCivKkr8_q2FYhh",
+      "publisher": "mynavi.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-81cf6eb90f5a",
+      "title": "zennoh-weekly.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4YPaJ_tojl-kOu8zOs_oWlwbKpymzNVldZGZtf5ysmjoGoPkZTDnN3Qjg9toobtWnlTfroLx90GZ4WLUiFx2aiC3r7lnBl4iUkojPmLRgPYGgjSuLeWpiIz-cdlGxbfhTpjLXxy9tTHw=",
+      "publisher": "zennoh-weekly.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5d967c73326e",
+      "title": "tomohata.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG14zab42LJudsN72NV2NyQOeN8NC6N8c04krrxv1t2Xj0PXld9IfS5TI_TdW1fyxT2cKHbzECFBI77QkxkbKq96JzfGPyoni91uiTPLCM0dQOA0qe8piWciOXrLBG34RY6eSSoJyc-",
+      "publisher": "tomohata.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-243c0e139d91",
+      "title": "livedoor.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHOyXUP6kkIYcB1MWQPIbV10I_poGjL3uK5uI_qienhi3yWMSrDSoXrtaxuuKUDa-8a2AJgMCJzsaukrimZy5ao0mt-UhxlQ68QST0b5kSbiFN2KJyALxPnEEchRrj83-oljNT2vsSa-27yU4Wf2w57PQM=",
+      "publisher": "livedoor.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e446830ee78d",
+      "title": "informat.ro",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFXR6PsuQnPstxzG9D7miNF3jJtizsh79Cew3uPZBs9zow3-Q-1gM6GEb4GrfWuaIJJHRHChmceaWgsj2dnSGXvCW5ePS8UAZXE1aLZXNPH8ElbmyeyjyaO7zgEwNtjJVmHs52Wmzi9XoOShuu0hFyQQ3_RuV9KO-dHiqOMLHqFd4aCoSLpDTMgp_UbR0KyhSV1Qvy8RxM5bjheAPpBobXgT2OjodhSflJTCZo=",
+      "publisher": "informat.ro",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-021a4abad87b",
+      "title": "yahoo.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8IcmxCkRiZ7xh4f1sybKEMsqkMjwrVTHzJxngBqC2FHT1rFyi8Z0-d-9dTmP9spXKvdNJSSMENBD7zlNeR39qxhpNe9nxjYyjLRlaV1xjuYaiKNCsWGIgmiDl0m-jn960foL4Cr0YOj7JJKDA3DI2z2KOfVr-dMB7-wsEKilZ_w==",
+      "publisher": "yahoo.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a62e28ffd03c",
+      "title": "noukinavi.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvaG5SYw02sWKmVrWLhMGcFS8dRcPjX4c7PYV4Yo8YM5B3xVjEFjaaViJkc6A_CPG8mGSJ59e_Bfqk5CMIKzBnI1-FWVKKu7KOdUTk125Wy-El6YMHyygXxpVNn_I8yUWU7Q==",
+      "publisher": "noukinavi.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-4affc574b4c4",
+      "title": "weathernews.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGIofzMarqGwTREvNhWKVmKLddV8ARb504Oz4895PRLnibmMf08DVyoB-xnQNbwpxRO1A-G-ST6FHI-w69-jnohDzkcYT7RlNgz3c65rVTR4RA_7CD2l3SCnz1HASC5RQWLXv2-LwLv_BsLwUiW",
+      "publisher": "weathernews.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-2a3aef9d0a34",
+      "title": "archelis.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM4gtBbX3b66jrLR3iNb_W_8evyVCkWDtiB2n4Nks-DIm_9FWZD0IUHEv6XqeFfuUFX6PeuwGwqeVXEtV8MYdxUK7BGf8GYKXU4VGK9Dc4hIjcZ-WaZjQ2XHwwVd24o9vNnmHiKPM0rcJTf3hIhLzdkG3B3dB9DVSg1a9sa8p8JF8WSVQWljWtOy4eDhz6lcfWDmyx",
+      "publisher": "archelis.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7ce572c20500",
+      "title": "air-bosai.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHw8p3_UrVb0oG_I5eF7OFSsYlugGqPPEBcgcG6B-dbMFSNwdSe-d-5dJ0C97b54IWC1ubu6WMuS6RyBAOidjhqTjgu-nb2GIwGrgfcKJkuE9WMIgIOf_HQfxR_7KJMOYFjBgN2gxKJ3a6wiqnsu2BjmNBoiy9y",
+      "publisher": "air-bosai.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f702ec695ec9",
+      "title": "conshift.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3bNMDXi3cD912dP_fiKywceCjnKeHCDPhy8sGlDTcAsoBOCXUKz-a-QdYs42ecIbj1VX1kq8lQ1QA_ieoVaitfvMD0unSqeW41Ks6hUXgyF4Z0qBZiGn0XLz1CYuQroQDjVvk",
+      "publisher": "conshift.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-01dc89003f23",
+      "title": "agrijob.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGh6qKTjG_o-rzLDheFQOzts2SCOFvvz1MnogLmATj3YoKUoPGsiKNQnokvh-D9qCaJnZ13JIhGYNS2rszHdzMyU75PQwEZOCnynSJ18HEvjc7TIf09NZhD3Cyk83bCrCZ1u5-tfBtr71vlwGUXm5oA",
+      "publisher": "agrijob.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-147cb093e041",
+      "title": "hojyokin-portal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJyWJousJCcT__mg_w1l16z5I4ODbgsXoIO1cC9seUHl9T_7l7Nw2TVQ71O9sVL6XI_-0Ai37G30JTQMjeNZ-pemrTC6coJtEGpxxdjgqE1gLqRoaIjZ7kGvEiByGvTUI9t5Lf3xhDM8xv-ivS9pSgVM8=",
+      "publisher": "hojyokin-portal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-22c9aef68a11",
+      "title": "sanchi.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBjuvJWJfICYBm5m7giD-NgBNJRQxXAhtfINBaI8Yog20d_Codu3F0_JR1mp04gQQ0A4jD1138dTMrVCnKbfyR4KzelzOSfcizsEwoMfKlXBlwdyI7xh0IkoCz7J0P2QQxCw_ez6Lz",
+      "publisher": "sanchi.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a3f182d67c70",
+      "title": "note.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4IBxCgsm-DxpmxwDH9Yv7fN8LWcbVS8-sJlUlFLW77WKPSC_QOAkVqyxI6dExiDRtK3dRQA3XTLRntRpNtBUyWp9O331vwbYbOli787bGKoCKGpaMeU1jR1Js2dztt6Mv2Yla",
+      "publisher": "note.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-584502099210",
+      "title": "food-hojo.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH1NLAqow00QzwXJpREqUbmA0CjAuTU2XW62Cp33CpSJwohAFoWMcPlMl8W0Ko7z5X0k1-IgkhRp2nATo3G8RfbqFFKxGcGbs4CctW2OUjcQLFJURjPbMNSPKEY81eiZEf76MBV3CCPlmOA5xMojqPHTxeIkbw3_g==",
+      "publisher": "food-hojo.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0cd432781b33",
+      "title": "tokyo.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEmbp-Rc7HI0zmePirSdt6_qnIIeA_4RFg3ysBoVhxIskpDRp9N6WbKhwlTDXyt9kGMCq-DytoJbyKI8QimQdi9-E3okUVNDScCGPyRuAaDN_9Yt3vCPqmvjwzaiSaUqXVJ7BmkDdhN076mbPYmGR5uzAncqMLx9G9QXD4QkLfVOSNOlfTY9zcbxfFP6TI=",
+      "publisher": "tokyo.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-dbc7a642e41e",
+      "title": "tokyo.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEXoXkf0AEsto86BM0LLrYGpnKqj0bvqqmALnFaBjXXPAk5yg52iUuO0OJqosHsZcPznyuaZNmvf-DNQEoQoxvayaznzwELxGsgVaUw8F7b8Mdi2_EfJ5Lyc5S3FshH8O2C74hABwQNczcZPmWakkQeTZyOHrXYxQBzXpZ55IY-S15CnecRGeTh0W9ZsGe2bMZ7if1o",
+      "publisher": "tokyo.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b53761884923",
+      "title": "kensetsunews.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQER5_y1TIztpHTQlEDvsF_VwpmsyrQsmsKkwoXJKg2oMXaf4jOSF6hhXyLZ2rJqmaIvXobC62fiPZcWBHoCSwu-4qwmSoznjOptC5S7OKwQ3GIRCV-Z6yGY1qQDIlBPUsDDeu4-sqTizg==",
+      "publisher": "kensetsunews.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e8340954629a",
+      "title": "kensenren.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZe4HVSegj8mbU2bP4-j6pdAlUTg0ak8FQJVfyBtnxMDHz6O8WLCvtnLUtAtTJ6sL01ug8m4V-Rj-X_iBijC7YZX0d891M6NsJtQfxB9mHZzKuKXLxI4ME3irQ9Tk2iWE=",
+      "publisher": "kensenren.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-93c408bda92a",
+      "title": "jalc.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF5gyIFRIKdFSoMWO4KBUwPYJoI_xAheFvrq2dZ95rF4EwOH9oc4_K7JoySSnZFo5vHvs5RdkBTEUK2W9n0j2wnETb86jVDBGuHMDdRWq9NrK8l",
+      "publisher": "jalc.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-365fbec7f3b7",
+      "title": "jalc.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEj4q_XfsQtjZjq1QBfAFvu6I24VRrBLb9VgbnAr8g9C6CkElh3wYfcjCWdAr7tnYw80phdXt7R2mayzxOfCzDxOT-5B3PogsDd3TXwIjoBMw_9eVGpowlAvM1_ow==",
+      "publisher": "jalc.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5706febb7c8b",
+      "title": "nouson-n.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIx9Qo8Yqix560gBL7zdyDmzGuB0eMTd3HNTlWas9LnXeH_ORjgTqXERO7VV5knJqWKXqUasIAeXNXoK7TTvPaAHwDIOIZZoxgwtKQWrBdbXE9__VdcPpwx6lCa-LrmJtKvszGvebX2Eo=",
+      "publisher": "nouson-n.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a3e94b7d9b66",
+      "title": "smile243.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGuajRxSGBpdSzkSOVKLZB-jOd7foL6bwiA0TTviw5Z88Jg9ta2dkNeAfA7Mv58mJXt6iMJc034dZGrDv-Cdg0ePEizd5FxnVdW_VMu_d2pGGLJ1XgEdFve8P5X3-yJ9w==",
+      "publisher": "smile243.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ac6497c1b65d",
+      "title": "green-designers.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6LdwI46a2Od4hFeqslLrCXnQ0KAOvdu5hnqRCH1dJNY1Ks6Doo4gAEpWK9LEo9hdlCVauwgoJbA-uDIFZzUdi-jDlBaToj_xDoVA8b0zNQ4caFQ9y1WtSs3ItTNNFzvexTIR7BSDT4w8rawghBg==",
+      "publisher": "green-designers.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-1e8c88a66536",
+      "title": "totikan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF9ZXOVq_o2KP6W5NZ7XeR_YU-OWM-IvwZoDiM30exe7dz9Nja-h0YPA6RtC4OIheuhxuFguSSCo6JMBcAf747GGBqZSApU1g6BPLs8OSgKsXEDHB7I6gPBVpT7vN4UMRB4",
+      "publisher": "totikan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ddd70d9c5a8a",
+      "title": "diamondv.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4I9TziVCuWYwjVzddgMNpQQWjvwc4LZ4Fc1Yw4CC4D7jXe_t68VOAZZCrN4AqyNECdq7OObZcxWoTgSNHY5NPz0i7qmQfXgojiTBaYhlhMD2aAxrpHNP-FY4bGYVKATQyk0iyQTbkxjh-Mn5xHLRy",
+      "publisher": "diamondv.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-32e5d8ea42f5",
+      "title": "ueki-dr.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHZK-M26RCuzeiHHgIlPos5dLCun3ER1JLHWJKLWIEU_MWWea1VEmt3MpdXCI11B43BYj-7jKZ3FZouVYynvjO0PqzffVS5lNKrNlM87eaZbWNqZFVPIiCbVl1OfAkmc-eUjzEJA0hDrBrCzD5dBKTIE90uTw==",
+      "publisher": "ueki-dr.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-bb3147dd6555",
+      "title": "niwako-bou.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHxIc0fy9aQ5ZABnHbBTgqZiQvEcVoXC_XDrGK-BEYwfd5Ja3mHGgcjk3PFi0Tx-awDE91zRlaaSRr9psgarDzJS5c_KbmWpqVmolyWQhnJPWFkR_Y5YlggKTFz02k=",
+      "publisher": "niwako-bou.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-01ee3f048e34",
+      "title": "kusakariya.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSljWWzRl1GGvggJz1xqQbUaaw7T2sK5t64ndfH3AAtEJLHvanQE39QSp8u3H0z5YrGymA_IP5fV4xJYtMnJKQRGBkPh2dGV9AI4yJhWSFyEpSKxLF4R86cFEyfxTdW8TPxRnD9XZ1yKrCIJ3ADi7BmX0lTQelXOwaXTZZlBuoBWua93To6ygOUxZuo_hqrhEyQ0Dsjmsru2MJaaI7ogYN5Dnhh0e3zha_4Hmw9TLK3y5NgsEJngbHmFR5JFnuYTPOJFQggI6Xiu-3cXS_8RiMwwSRVQQyzW_544BSC7pghqSmaiQFbflW2xfSjz5bHfS-_LSZohhDSrJup8lMnM9f9Wp_2EsGrbt6zH6Li84jMyIAHMVVPtzkj-QiNqsVDjk=",
+      "publisher": "kusakariya.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-1a50e40547a7",
+      "title": "megaderu.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE8VKlMUG90IMJ19DnVJA16YhCdvn5yvDLKRydBFK5j4XT5CtXfMQ803xwPDnF9J9ELgTuQsKbEmVi6-nbbTpPgPoIyHAjcmCLWJ8XuPzpfZx5UPBXwbuV0PtlgUYFFsGfJSn6a-j_r5GU=",
+      "publisher": "megaderu.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-44cb02150575",
+      "title": "inochio.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHHUewSSsSG6WnjgBcoOT1lN9lDkUW4DUd3SqnHrvGgOnzh3XM7QLrzaeL4zwxMNMeIQsFOBI4eAYDzbKY1ueMyR8vNR8PzhWC7tlhni_DBWCegx2oHdFUQumy1",
+      "publisher": "inochio.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-79ad7b6bc3d2",
+      "title": "agrijournal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHdfGYohpFwXAq-07JqcnTG0BnYuagU-Op353im8jG-k16TfHkFNHUW9IA-xIbVJV8Sw6aas5GNm4qcZ0xiHgfnkWWodAPgJF7YqB3j_60PtVrQDEKDr_fsW6uAS-oLfaPQ",
+      "publisher": "agrijournal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-44c523237bd4",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFIBWPlo1w53CNbBdwzysslUYU-GwjQUfq-Z6sEK-KdGLmMXslHymv76I4kY8Xjj5ACpwGcf5LV3_3KAQUqVCy0bwU7DN4jEpBjwVQ9NPlfhd8xquMnxpGQnInqtWpHhazr4AxU32qZbLl1SXrnLag=",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-fed41356f0e7",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFVaaFT1i5dZUIzGwfdCgSrS0a2mDMWCzkCtrJdbr7pTo4wqomxMfVVZdTM5h_v6Sliq6UAOJagv3K_40ZYxJwVqrl0FFrtDX9_X2GViyCOA8pueNvmkdyDmPiJpmZqPO13v_j3xsnnXhVyylDHTQ==",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6ba8a1000f08",
+      "title": "chiba.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFC0elkdnUWrXB5H6eF65kTP1duiI5_zafgQhVkBDgnRIXonvyml_6DFrJKVV9_aP502jSqgJHYxX4TS62CQMPH6k1hhPMOpPsJ2NKcBmVB6r3-PklzqJTRrLcX-fhJZpPlRDpg7FoUQ_OXLRrqMbI=",
+      "publisher": "chiba.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b7949786c33f",
+      "title": "soumu.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFW3TgOwT4j06OmwwO76UZyVGFPGrIPUEiyLgWQk17764ICCk5kcYMAlsVAIj3EwhBTshdCtpfC-axOK5bGSv2YdmzECVNgQQD57f_Mgj7633mGKQrNKbf3v9M75bcTuu4cM8YBi5OfFpO5X7Q=",
+      "publisher": "soumu.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-158ef798b17d",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGPtcXkYcckZ8aRlxf84Mt4-02eJhBGRXCo5sIUYb3raiANfiH6nxnlFEStpPJO4VvsMEaMPyGHCy-ITSWFiLbJv-uR1dIiaZkN-Qmry1-K8uBVbHvHyvrpavaEtpPuHT6LhE4YmiYWcLAC1tSziFPRWGG56kMuiNnpYE-DTy0slAEzYWxvsZZo2UG396P-nEBs_JQXRSwHF7rfpjit1As=",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-26e8dec193de",
+      "title": "imoshin.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHAjK0R2juq7B5ayVgLjuPIF4XDvo6N5zsOnIzXKOfrY2kUvTvXnR0bAz_dOqdwoxWCGJF-wMVt-_n5WZPPxzfpxANVe_s7DXK_1YLJJB18GUIpr2sA2TBMP2OnP6FRDsn_7vc2GQjBbxKtjze_",
+      "publisher": "imoshin.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-01ef860ddc2e",
+      "title": "kuno-fence.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFSmrzl4s7VBLwJHGKJ9wf0b85l1u-6vykOz2QbN58bjiEwDogK7KP_X86H9x1i-NvjoSNBLINbtcB9FV_z24SVqIeUXP49Db83SSumbWm0wKn6ywurGzF0L3BVX_bXKlFPijCetPtQ1Gc=",
+      "publisher": "kuno-fence.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-fbea637c9a81",
+      "title": "shizenenergy.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFOJ-bcV9t9GZZqDLHSfvhVoivZix7lhks8J8loRsEfIrGJFCNM3iklkqML49_PzwoBHYneuTvc3lwcfPJaC_E_dNlQZ69llscEQ33reLxxxugkr8jsAAw6k8fFqL2mspZGjWM=",
+      "publisher": "shizenenergy.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-71092a0fa0c6",
+      "title": "solaromgeo.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGc2gmlBxnsAE_ZZ7JSArmSClbSn6Vrc9VokFbEogRbHN24Kq5_wcyZ0dLrgurWGWO05xj9q5xobNGqg73Qiwrg8Hxy32257VWr8H4I_yCNMrb1PIJVwu8RrxY_h23s",
+      "publisher": "solaromgeo.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0f1e117f7661",
+      "title": "j-pma.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGY6Ga8bhvf0LG-Lh1Sut3xju6Ucvw2dyBsVVw7rDjF3rZYqaP5EwUsZIAO6PBqWm5yVW6OzenEOxl8rjue4SfMUusMUoR2bPsYiAAUIe4OCbyr2CB1BuGkdEkRnI-BcQmMmM6W8DsjZhUePN6nNZT-k5X2_wI1msghxXG6QV7pLaEGwV9EbrNq4FemlOIU1Y9B5rrph_oEudN0ObwVNO9ULPf4alynHSPhY8F0ljbkjXbJO6x5_fGXf-aWFql08QzmLAasTUTJKzrK-O2tX4I1E9Duqoa-4Y3Vr-5geiuRPLF3ANJ20Un6KXfMS01U7T7HPTDpDnhEAfpB8XrVjL2vLChCjj2wsP5HUjBeitmqAJLyfnykOgDy2O9LuQ==",
+      "publisher": "j-pma.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3adab7b28bb4",
+      "title": "jpea.gr.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEM9J1EAIulxtVfCy2w5L9sUggBKWGrIpKyCKqJ9cEkcMU8vynYuKQ_TZvbLgALmZVynoCk1vk72gl9j3TaMYCAuobsjM_MnJopuJd3aBQo32503nuGgxcd5M9c9g==",
+      "publisher": "jpea.gr.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c5cfe584286c",
+      "title": "riyama-fudousan.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHM4fDP4DPbnGiVzKe68fryLkBy6CDseBp9Bt2_oSUDqFhfnh7UQzHmhDw8hkGEaFJpJlpYnGior92hKXUOaXLr-L1Y4ok7HaCYxHjmQ0y8PBGjSUrW3OzAporYM04dBDJbYPslWU8=",
+      "publisher": "riyama-fudousan.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-54aecb62a138",
+      "title": "xn--pckua2a7gp15o89zb.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGxexc3o7Z6Ti4lC6R1yDQAiw8_inqgJGgPntQQeBYjQnJ27ybxuc0Qkq2uG3x-9vziK0R5Pk3l8F_CkUKiC10kw3FuwjdemhOPJ1hagkM6MVP4Y4wRgOdR0qUDcqv22pJ2HhhWHBIz7P3oFpdlMHYy5UCDr6yOulwJ0eQy_gIMNvEqj3mbhoA7qcSplkkX7afKyI2I9dnneo5XWfom6UHwVcemvLA=",
+      "publisher": "xn--pckua2a7gp15o89zb.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-1ec891996dc2",
+      "title": "pref.kanagawa.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGIlzU5ioB-SKFJoBMuBpowPoaZannLP_8z_ar0x20JT3RAlNUTsrLINpD_BnCmF2mdvRfq0zyCCQ99QTW0XTlkgF20d72X0cNygT2F_ea2onSBKp1v91S8MxZo2a986Cknfb1MwckimbvdGlKmvelfUwubjA==",
+      "publisher": "pref.kanagawa.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-666da0d84540",
+      "title": "saitama.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5BE3meVfyauWzoG2rsKiWnsMJ6HOK9PfYbkowHYgbNukL4ve0F5Hs5NAnVxt8fIH1qTA_9hIBIx4k0M30SACc7wk03Pqikv7z2p5puQ087QtnsH1qb-hh7o4b5iVO9a-DkLRGtrPYnYBORFl1Rf7QSFCtSnIf",
+      "publisher": "saitama.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b1856fe1e8f3",
+      "title": "maff.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHL-FLzSmD3Fnx3jvXgD3rgn40Ty19b24jV_hixtMSRmvNpY8Vbis1j4IL9mdXAyuJOf7bsg14KcQsv83bhOYoPHMoA_P5HRAmtzj3lrkUbKnPVRW6IXeGalXmJpcLOI5ylTW1_bykcxv-TEtw=",
+      "publisher": "maff.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a4a085ae38dd",
+      "title": "meetsmore.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG_Hixm3SKlzNIV-aE0bOHsR0JwoH1p1RVomYSEK_UM7aItyi78k6MFbLlprtVqLPt1gUl92o3AVJ29H4Qi35jxS9PRCTDKBY_RoGyUNnwy733tuzTOBYnEAA63d1UbO8xS836rhUka_7Lqn0tApccygF9G",
+      "publisher": "meetsmore.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e1228e8757f2",
+      "title": "akiya-pass.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFpgi4gItIwiIRcQVgIufQ9vzdMMpe3gDexRejn9yiwq60tRjQOxeNfVEsm9F2OAFUoMvU2siJ9WTxJwGsNQFO1TE00ZpBUZvjifXHXFRnjnYEJp2m4DOFQXAjxyXOZpBOC_Abz23i3RXVDDRELbd_4GKQ=",
+      "publisher": "akiya-pass.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-6dee0ac57f2c",
+      "title": "meguro-sc.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjrm3GfbJgP1FnRv22eDCm-sSWQRIkVisSWm8XXmZo7q3rETCvuhL7tfJcHK3CHoWaCBkfRa10qqhbzFdwogRsZa6XZOe_Sc5IeQuKL3JN30EStfRVQU15nn5QLl22tmHdtnreOg==",
+      "publisher": "meguro-sc.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-dbf5a7d2c0a9",
+      "title": "setagaya-sjc.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEGx0Bja_yfEwaC2WR33U8wtv8_2Xgty2es8XKY47xsqFwvqI_k-PLAhnRta768nF9LyThDPnu2wGNDIO8eLB1eRHKSM3P_w6WkrexI5-5GULB5UyCM5II0-Pi9",
+      "publisher": "setagaya-sjc.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a563807505e8",
+      "title": "anshin.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG82taLGfWszmvJZu0GmvkaWw59XoTMDbdbt36c9S8bRod-rJ9XEDqSZf5lMRSutXiHzDEq1y4YNVmEcsv9LsHpLAu39OPqbeRZ0XEFsrVr39bsWGVxvVYOaC9vGfCaZDHjUZE8",
+      "publisher": "anshin.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-a7105fc1077e",
+      "title": "sme-support.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG5DR3AG3EF2EJWaBZnZP-Zbtg40CEqz2tot55ZkTAbZnH0SmxukZeQ_xdkelWpG10jn82n6AfblH6MyZPY7HU5_lZnDcO53a55SoVDI6Uu_c7Au3TA1Cv8VFS9DOW_m3ZboQHR9IY=",
+      "publisher": "sme-support.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c2d440bc2d1a",
+      "title": "otsuka-shokai.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE-AS2gzkXSN-eT5qLvGTPXqUkFiAcPaiG-hHGHdF-DeiBXIcfr9wQBEmVFEuF_AT_GTcvFojfvVtnqIRfnHLFZM6UQl0WieOPtlnmpqA9zAbgu2xSVvG_OzViw-Dj9kp_1dZpBupOtXaYvsKM3pA0XVR_aR741whL9oNbGmZ_wqg==",
+      "publisher": "otsuka-shokai.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3a30ba1cd843",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGwcfA2fxhlT1TxYhagIf-qzKT9iH2r5t8XjQQKBiGctNr_sPLhs4jbgrvetedf_xTe0RRTsBra_sRw3FUhsSl7XOQ9GLYEvSMcnyNSuAMqDRwn31TgljUkjEJKBEfXQkc3s-hHaQvtMczUWI5Fy7RwXJXrF6KKpFm_I2wig5qeFM0=",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-9d1893a732ba",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEsXv0B9W0W3XcRinY9sIfo3T5EN6AgoigAH3glVtmIC1Mql4L_fFQKIeL6aELzmKRjvjbJruBLY87rbxjfqHUnuhYOx1LD7RkMKzrcEGVUADrKypjQ1EAw_1U5OmvRtbPeHc2LnaNzf70NawkEzR-q7hPcg3mgJGiiIuhWzrcN",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7080e0192d88",
+      "title": "seed.or.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHJVUrRT9xSYxI7Wtce0ygOt1Nl5CFgvwdVHA5wDbV49Sro4-zhy7YLjJn9KJ5GqXrREHjNWyeOIZXf6U_BIkSksfLusRI40a6URYIqq_L0zymCUzvHohUbfUfmD5TWaVyHZWusenEJGqBEoTZ9k_TQXmbB6xYaQepZvpT_2xvm",
+      "publisher": "seed.or.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-8deb3ef9aeed",
+      "title": "ksw.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFo1cWJm0iTuDkFdNr25HUFlsJQk3sgPgmoZpDphPPhx7rM-zBqFhPWLc-tZLMxNTjHqZ_olzonD9YRqlmXJm38n3pSZbctxiy7a_fhZGcETTVjht9LO7mrzjjEpCkOoulHUA==",
+      "publisher": "ksw.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ef95bfff859d",
+      "title": "medical-attend.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF7EWbRY6Y9TH-qxs2oH3VFJfv7lcQsjoaOPbNHCvt_eQgq-VV9LELLh4GtTNspsbzyMcemEI16WOOWhkYjYGO-rM_QT0zK3D9BLpCn0GWSL4xPr5l3T1ykndlNPK-GX44sB-rkxAygVQc_uL5s14YVGEv09Xyik3fjTb4s680lCMm1XGqPE0Ul1T5Hrw==",
+      "publisher": "medical-attend.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-020f966f70f8",
+      "title": "smrj.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEjYQRv9Eel_yOZ-zYEyklCe7G0kJqeRHWj-wdTaWa8jqdjUZwDdchOnFp2MtPVIRa0Cc9jXWq_nFPT1xFBuaeK4XcVGTDX0sE0XrLGX0LgC41JUTUCKlQ=",
+      "publisher": "smrj.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-4a061158d02f",
+      "title": "financeinjapan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG4gIl1gFk_ygNevCYNVt229mkZqopBV1fUZhpCu9if73Y29kvdb13qaGk4YyhsdewpwBaZUPMi9nt46lJUwh00qu8mpUgJE3ojLI36o3j2VVqtvwpDh14WGXwBZCgJOi3OGuQM5bDKmPn1fGxWEl9xV15l1ZRZpWbwiF9gycaMnnLe",
+      "publisher": "financeinjapan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d88761353848",
+      "title": "tresallir.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFe71swRleEkRcnFAzFQwod4lScfe8QQy0WmYludPAQsOHTmwhMNspoZW8go4DX4E6g4chD6B6rpsOFwFMhOCEQ4Oed6UgRhYl8NXhlrvMSSvpRJUtvxbkxgKtwZb5ybpn-iu_9J7s6ng==",
+      "publisher": "tresallir.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-72925285c561",
+      "title": "uchida-it.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHO3tOfipxIPN1r1nnaUGQGNwv7eoeOWx5VJ5YIzF1Zr5KLyhTDAU8kgh0mhkqFknwDZTz_ck0gGBlqYY8HbS7XWti2giyHkiXy6uK1GJC31UXqmrhnQ75qJC9GlOuzCGC_DUQ=",
+      "publisher": "uchida-it.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0165aebff0f7",
+      "title": "helpfeel.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzLpiFGRq6-CCHrmSJsussriFhk-T3oEG80z8jvQRedvGSqMcHowVGY6gvKYjYKPJmeVO4YyF0R5kkdKcChxIAGp4OUWVQ0s0VNjLYntQLQ_OyXzx_2c8B4c9IvqGPeb6goqgNGn8AJ-C2HpmO2es=",
+      "publisher": "helpfeel.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-64853891890e",
+      "title": "ensou.app",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFcUuk55ztdRzU9hITy8c4AGc0kcQN9PsbWqnBNUX3flbFxrvTmpUh1_NadiIo_g6pA_nN4ir2MaFr1swMM9KnzQmsRNVGwD5fX4kl7L_t-BSjxXmaxzK4UlUJ3vhSUywg3BNtxj39vXk0lx74Ai9f1oeByXlaWIq52f9V-",
+      "publisher": "ensou.app",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3073816d0b39",
+      "title": "noimosai.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG1MUKAwAI-HLKS4-2smaYhTTeKuclflCESG3XJhVPBaMPGhFO2IRRpdk1vxzmWG9X6d9_H2LaOdjpDYhkRbiyXS1h_5eqOXM1u9drhyFosP8k3ZxdCJXpSZV2WpCbFcTmrENUPSdUYs_P4B1kFTpIkQSjGkq7vdps8JUgofNn-d82lOcKZcPoKVWEsM2s9WSYKfK2j6DDjmYU20rETYE23COjpeJhmwc2pCcDn5-eJ2nfojFaVVsgHW1wJ6dqv57xyPHSsYOqrjL1WWAGoGzPoEnAC0kf9rxc2T110zXlZ4A8uvmO5ni0DfsmTJlYOhmsWpSjxYMqMJt2vVWvgIBTHUnGt_1OUhNyQDpyIOv9ajce9APNArc56tA4sVR0=",
+      "publisher": "noimosai.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-df3959879188",
+      "title": "saaske.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFqC0xjVv7fhDRnmcGojmI_M46enGj5CYB-2PcmDSlEIPrvNx-wOdWVZkdXQfYFCD9nNsHRrtVnjFiH6jt0mirNO4nWOweuQlxgA3BmbNX8GW53CrokVl_ay7tIcgWMBE_o16rrOTOmibnfChGalSaT",
+      "publisher": "saaske.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-91a77eeb4ed9",
+      "title": "rework.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGnufus4LLf_0n2wk-qP1tym_oFHCJ9hNMZON-il2BipsY_CdEbeQjgQ3soXdZSNFYfdwWFH5hLbyh3GO05qI-GlkVlezANGamtgNf6EGmIAQoGv7_jSEHlzr8gnBMie4tTFbxl606HPtpeckCs5eD_GHX_QRGagWfjmH5XXd2uUojx-S5u5UG2fZxH7CjO-tGh",
+      "publisher": "rework.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-74f9b7c632ff",
+      "title": "offloop.org",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGJSF0alcZCBrc6EbOWq2PwDZ-sxPhbEf7cMYgjqEfkpGc1al8gA9FSSrz2sbwal99mJOQkJ8MrfK16TPdGJN7K3vTDb7Jzjk2M6jpyVnMZ600aWokDcQcJCtRCFiN7arH9EN-QaQDV3FHrwrUHcKCg0piRW-LxZlYqSWXFxg==",
+      "publisher": "offloop.org",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c71ca9fcaa43",
+      "title": "kddi.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1pxbX6ttRgMSTRdn4Pa1hs28h5BLIBAka6AYVNjqXmScAxlFA3t52izENTqOSO1zPNVfIKjtjZ0Dt8L-SdKyhhPpFQ-aMaqRGIX9DpLy-WpditGHj882huFwx6cntRrjkFI2SdNpg60llxqHZ90WqTeGSJmG6jnkoZb0TvlVT",
+      "publisher": "kddi.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-78eef3a316f5",
+      "title": "liber-craft.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFztQk8TDW1IyNSFc1rjD3GoWkyZ2NY8NymQ6XcjZrl5Od-x3dBL2RhKcUrGoHxe0ApcOPba_jdhcp20FKTMkgoSdMEs7SDMmuNVqRI1iDgwIC5fWkQXdFPKdeXgI0BRViXGL-VcsoMeyjAWPRYg==",
+      "publisher": "liber-craft.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0729bdbddd28",
+      "title": "salesforce.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE3bwxw-Y9vzQzGKnykRMY5fDLxtJ7dWiJvSX-k0Q3AckD7DzS2tG52n2xpyhASvzq_Tk06wv56g2b_VNV7L9zr4n2IG4wFcq4e7GuYPfGrNeQZFVO6_UiCMKFM6aVGCRQLgKS0CU6yTZpcToO2t1Zubu8L7rIUyiNiMQ==",
+      "publisher": "salesforce.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-06827dc8a50c",
+      "title": "exawizards.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHC98mT53J7Q4OInWnbUnb172uyY7o9XjCW3EUg-xnmLWMpX5-4XoZXJIjkUe-pLUDEZQEeVbCZdiO8VWGYknVA0BD7yNkFGud01xAMmFTUpmubLjciNClbqobmj2Lan_wKfwrlP_rFRFKFXmlNqroMghZUGOSpoGUFXgTF",
+      "publisher": "exawizards.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-60a95e4fa8d0",
+      "title": "a-x.inc",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEui6wcBLGbQnPFKsLLqT8Y2NoIrjB31A95MlZ6yTZxfBHrJwO-Tgt5aA_9WE_Ji1HqVwHPzwUmOZh5koRA6o81-53cR7y3Hl32CiYi14cdiGyCZKvaqhW1VA==",
+      "publisher": "a-x.inc",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d55ce0096605",
+      "title": "jip.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEahM8Ple4GKO9Q0BJ2NG-4sk18HlxWXUaUXcS7SHWPRyuwxR5lX915ep0VTYg4ya7W8OrKhFIyiTFte8xfv4TQGgN6y8zgK5NA2_g0pSYqqqmEnZ1690Xou2EXgPY840oA",
+      "publisher": "jip.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-43a4df1de982",
+      "title": "coopel.ai",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHDJpJhqbO7hB-vxdietZ1vPyjDOy24l2wPxM0Si62K8tW6ZeM_-kUZOCeY2l-ibYahBpDb_n19-GcINLFTwk8BRipAWNbQtvZdb0XkrfIkk6hbFWXag8wswz1vvbXeTIJPPd-Ou6At0y886PSoPoE2yfYJuS0=",
+      "publisher": "coopel.ai",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-722b3c9c7cfc",
+      "title": "macroman.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEoG60e5dh-ySUttMdlpVc4yhfItl8gyVyeS5t7z274AEAB1XTKAiQXAJof_UihVjt4VyErGFdYHVndAXYYGa8FYQbYv-gqH6fMSlGT8pLfBr1FEWQPV9TD2ycNElwq54VKEKee43Qw_g==",
+      "publisher": "macroman.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c8012481505f",
+      "title": "kanautech.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGFEDK91F2VGz_5gsfKsRpI9EJPuoSNjvZQluFnNx-3fIMwhvzb_7Q3EZcsKCZm_EfGPBCAtsYFgAbrld_QDNWetgEYpCwWE-J97vGgsihzWcF0KE88pqq2D2eQnYRoP8Vzx7gUioVQ9oaddnR2wM3uhfsAYPmk6cQW1YWzwVy1oc2QkQ==",
+      "publisher": "kanautech.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-16e534311a58",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQF1wgq979YyZLUZtNQ8ZozD1v5S1LLuhaacgk4chAnOtxEN-iVTNh71-xJfhuEKORXAHB3EOGimOKORJa2JBTgqHNfOYR-oVLu57uD7HYC_HVPDhr6Cm-NrTrPXIzaFQJ_PKGZ5dnLJuD4RA9qpkyfGfc7XiCtBaHZC0Y0=",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-77a1e75a7710",
+      "title": "kasseika.club",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHaRs95YD7JWS_RWaOgn0evN_Ox4ehDDrdb3mmmsBXM25LmYjrbop_VM7FvUKKxT7hxfEbF0j2TTzkyuYw08-ynPWxKdNe63mHi95Q5QKvpH0YYa7dXKqiFSUBUpNN_hxN55-MG5pVHkuKiaXIC",
+      "publisher": "kasseika.club",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d633e2aab603",
+      "title": "mirasapo-plus.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG6k5buJBDKgPdA6aBOzBimuP_f3_Ipv14TUYSEYQ54IOvDpp2HvT8s_vqhL5LQrbMXyeSb0GdJGg_AWmSaV6S4i2fv9YErFrXjb3i-5ODrj879u2mf5Io7ZYvrlVoAqYzcg11fux2yN0SE2bWExnqXSDP6a340utIEEhPXrQY0s-7YaqE5v14rNkbuvDAN0vz-FQ==",
+      "publisher": "mirasapo-plus.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-30dd1168ce9b",
+      "title": "ai-revolution.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEgYhM09wAdGeaM81yiYBRkA7JQVYecgJQ0E0d8VyRXlALfks2g7rMbZO5WOujfxznHs7mApo8dj_46Hxg1ggCgTwZYCASq81Re50MEaNMn3_yRLwda7KIBBifqGulKXreL7xcRuPmmWR91eOTDRUQrvOWr",
+      "publisher": "ai-revolution.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-022dca63a717",
+      "title": "josis365.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAWxvV45Afg6pdphDKLs88sjxpxe_27DWI-70RJpWW_VjX3uy40i19RgYMxa1UC19AugbH8yQT4mYOqbt4BSayoTwCIL-aPWwyz1MGxrbUpz7CVLuDaF7aKpQA8Uc6__hz7SmQ0t-X3Ysg6P62SXByM39dP8Tc",
+      "publisher": "josis365.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-78384c56a8c8",
+      "title": "robse.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPHLtcptGFQKNvbFGWuYIoyW36YIy0Pk2Xi-yrnjDRHMf116loehk6M-fFNRwzoRIySmo6HkH3k_aGiIbvqb9-rqgS_8CJbFO1A75spynAN3bm1SI6ZTs2fEQREluJl7p3rhhe4DlumIq1",
+      "publisher": "robse.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-9f8f67c5b4d7",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGTnYswp1hNFHhZ8bhc01iKOMiYZDHe5hKmAgJyQAjnjzRyRpisqylQ_-gfan6GuFPUTEgn8Q4TKKRdpT1wtSmGBz5cQX_7RSnzbJUUICoi6bTDYZ-3tk6_EvvigmX9wI1rOI75mf5hJKtLjFEZ6fjYmgu9lmut1n-nBiA",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-75c6a7a7a7f8",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHtsDDS5i9cVcJJYTSBtE3sKm5Z3Yn0BcNL-pDfH68K740D8taeiHZ5s0qw29bf83TOMBfYiEoaSllMXHyzECJQ1xZWg9wZM_IboJ7gGfqOemYmGsFBgQ4m2F4iPeLg2ArD_m7uqM0ohjk1TL6f_Pq4KfqNvFQV3jgPT5gVn-i-",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-48f87e4fcf1c",
+      "title": "smrj.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFvI4WSojisSAYffIsuEj_GEMqWA5p4Q8CMMFHI-3XDOO08RzQkzDzqfPIdCLka0I9n__e5StyG_SIGdKEbBGllNH11-cQxKvuH0ouHeJ469Xo4v7KkJHq5DzIe5yBYeVSQ-0JIXOSqNPZaVso=",
+      "publisher": "smrj.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-cbb93f377395",
+      "title": "optimax.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEk73uk11zHVLr-IBqKCBpHd95xEzz4AsyZqJcfqAXQZWqLi-LOEzx-zovRiZ0jycvjD-CI_EDt0Uen38sqJdlK3VUe1Tvvwcl8Kb_RJDSEr_LwnfSehVDnYBXbA0N8Rrr2PXXEAM6wrKeTp2hCZV-V0TblUgFKrnUzRQ==",
+      "publisher": "optimax.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-751ba92adc90",
+      "title": "a-x.inc",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEkOAyBab7kc8iYNNgC2uA3bMaY67V2T12jV8hvxPetUVg13WaH_2Td8PGjmM5G5hatIvspdkWbgqYJHgPcsheSjo_sLW9KGi-vQDFE_PuNcBY71BTUKxNNXc8=",
+      "publisher": "a-x.inc",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-2b6d35057bca",
+      "title": "meti.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFJJn7ESJXFrmaVvuMyBi8MvoO1FkZRq-3oMBd2ivlvBicXsJYRFBcRKhgZL-_o0Q1lLkGVEJZfDWwRwPWpnzjci__rJyG9ueA6VkQWnw3ledtLLo2IBSsrIQ5q_MRoxD1wAxBx6A==",
+      "publisher": "meti.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5e51d4d40301",
+      "title": "jtbcorp.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH4i5Paqfof3D-6npdLzun5jIQyThIks1u9lh3sxVEV1scE_r24O7g0a7IbTxBb1YiknvUKpuysPIwFWDb6SZ1Scce9wv4W4nwg-upYcGXJ5FxkQh-itaYmNVklH9L5O9EsgoMqxR3lne-ypR_r8hYbHgcMXHJer3bAoWSH_SvVzGhYC_Xq37m3Do61",
+      "publisher": "jtbcorp.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e825f60585db",
+      "title": "travelvoice.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQe8yicHCGAbENHj1ImSetCVOIE2Vu3Sump9d6lEZWjNPcgeHdp163noZdOdRlomj-BsILd4bHaSF3Xz_LF8sRNcjp11x07JT246kmsmqMEvEu1OzS5w_MxDDdESG-unhJUKbM_g==",
+      "publisher": "travelvoice.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ae65c381b092",
+      "title": "trico.in",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEvEh0vZiwwNvI2ArRgwpY1y_s1yUIBMbQW1ouWoYl5lc0-2oQbuOWW5N-xPQrlebrM1yoRto-FqP3dBhsw9TrHTIH6dVrdr9w2mTfMGWLVTgqKlIEpLJyqJf_XIaLwTgLx23Ogluafl9KiKKQKheppwA4Wtv156gpzpYlJCV5ghxvL-w2sinVN3cnvBlOe63qhIQjg5tS3SDhHY8WQG7Hk3E-GYwl-eFpY_NxbmU1YavQDstJBYJCj8tfYcYFFBj22fIDv2V1c50vB6GzO8rQ1EkgM3SvakfVJHnfsYGcuFSkkUeYVKZQpyDIJbLIRNdRFmq8cynlA6XOH_XG647Lw7G2eeMDevvWngworUJWDDKn4kHFE6JNvEIvlQEOI_4KlcRroxmOaGFyGrRe17rFw7mdGHbksL0ZzbnanYuA4Ow==",
+      "publisher": "trico.in",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-673226d11a81",
+      "title": "ijcspublication.org",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG8ixp_q6X7SVfRo1Z61_P3CqBFR93btrBJm8TNUklnaNM0VdMhjDtj4VCom4t708AQQQzx7UwlMlwAyE2JsQzBM6Y2bgTjktXuN22zazVIUimH4N3lya7dSz4WOOH8sXf9rTrIkU6vHMVQQuTsI8y8gA==",
+      "publisher": "ijcspublication.org",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d8e9e57e61c3",
+      "title": "noonsite.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpFxMveIom-iAPyuybeqrbo9Vnksd-ShLgNkLoA40olvaaqb5Rduqv3UBFpMTbqhYeC5EI5WBeeAu2KvY8LUrBvKhAbl7axB5ZylUtabPN3s-l1IExOHIAeb6nNGflTJh_IpJPgAOtVBfyXZXC3v8h5o_VWEWe",
+      "publisher": "noonsite.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-658f0ed97f6c",
+      "title": "yamatogokoro.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHY9bzd5iEXqo-uKaR8ZNTEj-4mIHHE9TN7YM6nkO6fnouwji3Mg1s6KUtK6jhDNJGlGrLX070d4RvPQO12W2Vvpi0rKR1KG7p3h0jzU-BVr5OnrcuXDOAbsvkCmTdMioOwEa89SeU=",
+      "publisher": "yamatogokoro.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-4b21d0843a27",
+      "title": "tourism.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpk8L_UtPCjrDhh_odUWmqBAynl_-sfPUS4smuyPmT466WmTMRjg6ZVZM3WNqnUh85Qy7-fpzIOePjZVHvfDt2RiPm3On7VYc-FUFxv__OVYdSld_mIKuNrFAcDfVDZ1pAEosWSgFASqsliVY2fCcleu2GYbYYrrk=",
+      "publisher": "tourism.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-4d7b9a851d13",
+      "title": "omatsurijapan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFBtECgKc9eu1CI_u2oSW4Z6akOb48FuAMLNW-wGKIvcNZ1EHS7GYz78IzxK6U1wVvEbEsxK9L5YV7e5_uBPGN1f793CtSce0rWXIOuRJPXa4x4ZISu6maSyLaNPEM7c9sfzVOp_tC4yvsDJwOyms7w0nuGy57GWA==",
+      "publisher": "omatsurijapan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-854ad37504e3",
+      "title": "menumenu.life",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHl6P7elt94ut8COc5KG5PA30D0HQ1WjW_ugECpnDt5I5D7ejogx-SZZwbMJ0xStBYZ8kLuI5ibh8DJzH6EOpvW-lfMjCx2RICmbRUIzxjIV77cVXZ7oFGm2M14L7jNyOb0q8Bd7T6clD3tpu3hXqPn1oNXkj4-GDPNmRdx7NOoYA==",
+      "publisher": "menumenu.life",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-20ba56689a84",
+      "title": "kankokeizai.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQESGH2l66mhT5JZfsQRrcIDlRVt97nZSTeRGXs7qLf1PDK_D8o3HpG5wfzac7Q6AIlSj50B8WQ8zXPZv8G7U_gbsmYlEWW_okAe1YcaxtMaqnyEaNHuraG5hwpo7NhHBVRKlxlLTw==",
+      "publisher": "kankokeizai.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-c10f85db08a7",
+      "title": "bunka.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGTF0BcavVLiwbEeKscinMB1BRJlimM1ZLbD6Do-GoA0fES8isjtF9lO-6prxxbJsdFuRrLg0gWYjyhUyr8QDby4_c3HZz9WBoP930a8M-fYPm1nBXL8DziwwuEEujNDK_hRAoD9JWtkmAy63FyxzCtTV81U51DwrzEJUoV6QzopF7z",
+      "publisher": "bunka.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-b1e3c73ebacc",
+      "title": "tokyo.lg.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEzoJv-gAUf3XP2ZJEAdi-nbvxreOn4ePajyz99tH7fFO6b-sEakhUjtAtOSId_ylV9-AS8VK9KE1F6vqF6hJMfB_T-44FabTaBCiYnPuuNcM4u4KB5Cx7mbHxbEGiRowfgw6stYQebF3IimngbNEtF6QjUarYLzNEcMOyelg==",
+      "publisher": "tokyo.lg.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-d3baab14989a",
+      "title": "tokyo-tradition.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH6_eAFOGkdg5Nkgvb6wuVtDcjeS4uuUda-amHILPfkW03nhF2J7eLm9qeiVz1KhocMRqxpBNGxemQoq74_bF8wQZOpOtXt_LyKNN6QuxDr2QVZvHT8hq_RjBQtKKfqrQ==",
+      "publisher": "tokyo-tradition.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-92372fa50b81",
+      "title": "for-good.net",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE9L_M-85hHgYShICklFkmtyq7B4swnA7O1dpptQhpqAhJKiyUfUmakMjqzyB8r2gLj0bSqB4oKTcG28XRpl2aty73okDAhQRWSqtyAiDfha9Q3dnZqbJ9uUkDx_3LqotEA7SOGwEJzanTvzejzFBAaCQ==",
+      "publisher": "for-good.net",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-f105e9a2cd47",
+      "title": "ntt-east.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtNpdhQ9GiE9gXp6MRbo7FnXiLkfY6tug6FN1ssR96ZosyTnBuUGcZG-P8r9tOaOfSMGdgdvKu8ImuCjjLqAmUTubrJVs75O8q2vTVBtrx4PSdg9wsa0fgdLDeI35WrwNdeFWayx44mJw7BC8s1IZ9CnE8_x6bHqr4WjBMDMT01OX-k6yXYh3r7UY8IQU=",
+      "publisher": "ntt-east.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-941a58e4d487",
+      "title": "artory.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFCKFoVZKJ56TLPwHM49afl0NCzYqU2lZJTEkNa-Y7YcutsPwNYwB7gPmaWN7fF13DXslHh98BVCJ1tKPokrrpGZt_QeGyVWyYPRqCIu2CkX_Lhce24HH8XngMJIxtrqVOlvsxoJo3K-_Qxq7Vvm_j8QnsB",
+      "publisher": "artory.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-25218996dcef",
+      "title": "asobu-promotion.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHflNOY7H_nuh9Jjkym88wulC7uxJTmjUxRNvrQYyciBhO-uHnx4BWB7Wy88Bu8bBtKsKa8jZlnoDqyQpZkTtRSGu6SE5MrMdQ9leWL5ZA-ttGgljx3xrvqEy6Z_qmKk4e0KC4=",
+      "publisher": "asobu-promotion.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-0f1526d0bac9",
+      "title": "smrj.go.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGbtE6Zi1av1lFC89DARlfdBmuUMx22exMct2WzaC-6csaVRPrKw42DGDX1Gs4wsH1sHAcVgksjC_7_Gyz2W7QCwiMJY6Sh7VPXIJdAjmhdj_25cMA9yV378IpD23rcEVgCTfWllNAMUjY2ncHI1luj",
+      "publisher": "smrj.go.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-573bb4af5957",
+      "title": "shiomi-gyosei.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFkB1kczkle1dCl_MH0sbFEcG4l-mzT2DCwIepHfh0okRaSRCcHFaFsxG6y7cTsB8m8zCPqRqle6HE-Uv5DUmmChjsNzuAaQ-RxGtluNMAgwy2aW7SDM2HOZmDG9H5muDBxwWlkCfp69qcyYSgg8hYjKV55JG4T2eGURwMsx9zHbpwOxPqa0DkDYxn5lYrLgxJwI1lIQ9i1eg5oor1y92DoEOE2bKwcZxJhXZ0Dl0NY1dN4qGdJ_r7MxG44eXUYIfvHkzI9NVT0FC0eObnw",
+      "publisher": "shiomi-gyosei.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-17fcf437e5a6",
+      "title": "hojokin-dx.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFAZ8oEJtc0ArHHZoy58wcvTEKfYPpvMTbUOSuEwEhB5ZgudIwpZUrVWm3gRb6Jb4ckmSEe65zSGeT0QP5WUowAF3nRUgwlkO_RVnIHKzbka2qahAtI6ZU1G4-feFXhhjj_eJ4ld2LBR3eU3CPGhm7DNtVblJqkEw==",
+      "publisher": "hojokin-dx.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-5c914de3aca3",
+      "title": "hojyokin-portal.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHPMjTHvnrsjtD4EfpCOdRnAFptIp6_Wid3mjwY7rPuv3lY5KBB_3XOipOQSc4ODSdwFm75DBbABuc4M-mG2KYNy53avwr_OSWaa2ki8gnHRE9q_yVzznOO7pv1-UknnY01NEqEdCHw9yUm-z7k9w==",
+      "publisher": "hojyokin-portal.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-7cf7eb5cafb2",
+      "title": "hojokin-agent.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0gmvTTtxJlq7V0ynPnGYkwArIHG96F1JaobIg3538CyMIlV75KLEq_Aa4Ha3QTPFr8OgzNX55BntuvG8AV3JJ8Y09EOgOCiBUjJWZXQpkUzcFsqXdd607z5JYABwuKcnLONvOTzxDPQ==",
+      "publisher": "hojokin-agent.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-3fe0ba3d40b0",
+      "title": "omatsurijapan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHFoQuW8XZI_XTVeUg0B6ANAvCsAD3Kg-8MuN7XbNJvI2BuSsf4hK9Lix5v9BC3eGOkItgvP3RbqZBO2rZJJwJzTJ-Jzw28_cGIvfJwtkCXdiAuteHKdleZb-wvBlGSMuzjDz-boJC58ICvf7i-UlkQDQ==",
+      "publisher": "omatsurijapan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-ffbca69c98bf",
+      "title": "nt-tokyo.org",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGy6-MMcfwaiy9tvXLUMpNb1ShzX0BTslRmfisMEr6A7pqYJhfzKPKDqhXJh4vR9nR3GMos988aHIxt-68XUyligV65BCckuiRcvyb84imzC5C2fiaEKw==",
+      "publisher": "nt-tokyo.org",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-14c7acd07a2f",
+      "title": "ajinomoto.co.jp",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHWGGV4ga3IvmPN8HpBYMrGFxVT1J88o2EFDI8EsDJZAJWGUVxXqbnOyQY7-BqKSs9zYhkWw2S7A8A3FnYK6lt2U1lipqImM7Xnx8kdlu2ZtZs61kJEPFpnt36TjOVXrlfcTWiT2Qxt9Upo3xOQPlTO",
+      "publisher": "ajinomoto.co.jp",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-e56336a615a4",
+      "title": "omatsurijapan.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFA88VS1JIJVeIF2vi_ONWhGf1sjhKWkEclq1BHd3vboVywlGIZwoF3XQj8HcoR0_JU-xEBM2BWBpC73tWjNHqsc72qR1K5P_FrmQjbB0UEsON9ecYf8x-Ul-mSpYVZ0dfv2OHheFEoColpcDvRUD4FL3_UBT7ZKk8pv3X1YTB_tSWs",
+      "publisher": "omatsurijapan.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    },
+    {
+      "id": "src-95876d40920f",
+      "title": "walkerplus.com",
+      "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH5rm5dsCVTHY3aQoU3a_QkcAz_F1AB-Ogxx3B4GFHSU5njboPQSeerUzBYObJXNyLuT_g2byiKC884Fy7mWcmprgHAHK-17_jMXLOBkeblVNkjAgD_90KBaORJyyjs6Moj--eW-ldrmU_jVeHkAQ==",
+      "publisher": "walkerplus.com",
+      "publishedAt": null,
+      "accessedAt": "2026-11-23T11:16:28.786Z",
+      "type": "google-search"
+    }
+  ],
+  "warnings": [],
+  "generator": {
+    "provider": "gemini",
+    "model": "gemini-2.5-flash",
+    "observationCount": 1
+  }
+}
