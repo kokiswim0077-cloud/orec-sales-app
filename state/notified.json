@@ -126,6 +126,12 @@
       "reportPublishedAt": "2026-11-23T20:53:27.990Z",
       "sentAt": "2026-11-23T20:55:31.171Z",
       "notificationId": "6f1508c1-4c3a-4d8d-ad01-3063401e884f"
+    },
+    "2026-11-25": {
+      "status": "sent",
+      "reportPublishedAt": "2026-11-24T19:56:44.887Z",
+      "sentAt": "2026-11-24T19:57:46.765Z",
+      "notificationId": "f4c07f23-8418-406a-a67b-1d769ae9d9c2"
     }
   }
 }
